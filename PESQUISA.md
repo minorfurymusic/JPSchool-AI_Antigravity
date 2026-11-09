@@ -13,6 +13,8 @@ Data da pesquisa: 2026-11-09. Nada aqui foi instalado nem testado; é levantamen
 
 Pendente: o cabeçalho real dos arquivos da CVM não foi conferido. Deste ambiente o acesso a `dados.cvm.gov.br` está bloqueado pela regra de rede (`CONNECT tunnel failed, response 403`).
 
+Atualização (2026-11-09, mais tarde): acesso liberado num ambiente próprio e cabeçalhos conferidos. Ver `PLANO.md`, seções 1 e 2.
+
 ## Projetos abertos parecidos (para aprender)
 
 "Sem licença" significa que dá para ler e aprender, mas não para copiar o código.
