@@ -27,10 +27,57 @@ Problemas reais que apareceram e que o app precisa tratar:
 | Problema | Como tratar |
 |---|---|
 | 57 dos 360 papéis não casaram pelo ISIN | Segunda tentativa por nome; o que sobrar fica numa lista "sem vínculo" para você conferir. Nunca vincular automático na dúvida |
-| A data de fechamento saiu 19/10 num arquivo que vai até 30/10 | Meu teste pegou a última linha lida, não a data mais recente. O app tem que escolher a maior data de forma explícita |
+| A data de fechamento saiu 19/10 num arquivo que vai até 30/10 | Causa confirmada: o arquivo mensal não vem em ordem de data. Os preços desta saída estão errados; ver seção 1A |
 | MXRF11 aparece como "Logística" e XPML11 com rendimento negativo no mês | O dado oficial vem com erros de preenchimento do próprio fundo. O app mostra o dado, marca o que parece estranho e não esconde |
 | O informe da CVM chega com 1 a 2 meses de atraso | Mostrar sempre a data de referência ao lado de cada número |
 | O mesmo mês pode ter várias versões (reapresentação) | Usar sempre a versão mais alta |
+
+## 1A. Preços e dados divulgados pelos fundos (revisão de 2026-11-09)
+
+**Correção.** Os preços da seção 1 estão errados: HGLG11 saiu como R$ 156,12 "em 19/10", e o fechamento real de 30/10 foi R$ 149,50. Causa: o arquivo mensal da B3 não vem em ordem de data, e o teste pegou a última linha lida. A ligação pelo ISIN (303 de 360) continua válida; os preços e o P/VP daquela saída, não.
+
+### Como o preço fica certo
+
+| Camada | Fonte | Quando chega | Para que serve |
+|---|---|---|---|
+| Fechamento oficial | Arquivo diário da B3 (`COTAHIST_D` + data) | Na noite do mesmo dia. O de 09/11 já estava disponível às 20h39 | Base de todas as contas (P/VP, rendimento, sinais) |
+| Durante o pregão | Cotação com atraso da B3 (`cotacao.b3.com.br`) | Com atraso em relação ao pregão; o tamanho do atraso não foi medido, o teste foi com o pregão fechado | Só para mostrar na tela o preço do momento, com a hora ao lado |
+
+Prova de que as duas fontes batem (HGLG11, pregão de 09/11/2026):
+
+```
+arquivo diário:   HGLG11 pregao 20261109 abert 146.86 max 147.11 min 144.27 fech 145.1 negocios 18184
+cotação atrasada: "dtTm":"2026-11-09 20:40:38" ... "opngPric":146.86,"minPric":144.27,"maxPric":147.11,"curPrc":145.1 ... "ttlQty":18184
+```
+
+Regras para não mostrar preço errado:
+
+1. Todo preço aparece com data e hora. Nunca um número solto.
+2. A conta usa sempre o fechamento oficial escolhido pela maior data, nunca pela posição no arquivo.
+3. Toda noite o app compara o fechamento oficial com a última cotação atrasada. Se não baterem, marca o fundo e avisa.
+4. Fundo sem negócio no dia mostra o último fechamento com a data antiga em destaque.
+5. Preço com mais de um pregão de atraso fica marcado como desatualizado e não entra em sinal.
+
+Risco: a cotação com atraso é o serviço que o próprio site da B3 usa, sem documentação pública. Pode mudar sem aviso. Por isso ela só serve para a tela; as contas dependem do arquivo de fechamento, que é o histórico oficial.
+
+### Dados divulgados pelos fundos
+
+| O quê | Fonte | Quando chega | Situação |
+|---|---|---|---|
+| Rendimento anunciado: valor por cota, data limite para ter a cota, data de pagamento | Cadastro de fundos listados da B3 (`sistemaswebb3-listados.b3.com.br`) | Depois do anúncio; o prazo exato não foi medido | Confirmado |
+| Patrimônio, valor patrimonial da cota, cotistas, composição | CVM, informe mensal | 1 a 2 meses depois do mês de referência; arquivos regravados em 07/11/2026 | Confirmado |
+| Imóveis, vacância, inquilinos, contratos | CVM, informe trimestral | Após o fim do trimestre | Confirmado |
+| Relatório gerencial e fato relevante (PDF) | FNET | No dia da publicação | **Não funciona daqui**: tempo esgotado em 2 tentativas. Causa não confirmada |
+
+Prova do rendimento anunciado (HGLG11):
+
+```
+"paymentDate":"16/11/2026","rate":"1,17000000000","relatedTo":"OUTUBRO/2026","approvedOn":"30/10/2026","label":"RENDIMENTO","lastDatePrior":"30/10/2026"
+```
+
+Com isso o rendimento do app vem do valor anunciado pelo fundo dividido pelo preço de fechamento, e não depende do campo de rendimento do informe da CVM, que tem erros de preenchimento.
+
+Pendências desta parte: a lista geral de fundos desse cadastro voltou vazia nas consultas testadas (a consulta por fundo funciona); o FNET segue sem resposta.
 
 ## 2. Fontes de dados
 
