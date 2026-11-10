@@ -22,6 +22,8 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-10 — Fase 5, parte: venda de imóvel como evento. Vacância e contratos ficaram na base, sem tela.
 - [x] 2026-11-10 — 32 testes automáticos passando.
 
+- [x] 2026-11-10 — Estudo de relações (13 sinais, data limite, juros, bolsa): `docs/ESTUDO_RELACOES.md`.
+
 ## Pendente: decisões do dono
 
 - [ ] Onde usar: só computador ou endereço na internet.
@@ -41,7 +43,14 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] 220 fundos sem histórico de rendimento confiável: procurar outra fonte oficial.
 - [ ] Conferir a rotina diária num dia com pregão novo (arquivo diário da B3).
 
+- [ ] Testar juro longo (títulos do Tesouro): falta liberar a fonte.
+- [ ] Medir expectativa em eleições: sem fonte de dado.
+
 ## Pendente: construção
+
+- [ ] Levar para o painel a nota combinada dos 4 sinais que passaram no estudo.
+- [ ] Separar, em cada fundo, o que foi movimento do mercado do que foi do fundo.
+- [ ] Ler comunicados com IA (o dono tem chave Gemini; pedir pelo formulário seguro, nunca no chat).
 
 - [x] Fase 1: base de dados (CVM mensal, cotações B3, ligação, indicadores).
 - [x] Fase 2: painel (lista com filtros, página do fundo). Comparação lado a lado não feita.
