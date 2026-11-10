@@ -10,8 +10,8 @@ Feito em 2026-11-11 com `estudos/trimestral.py`. Para refazer: `PYTHONPATH=. .ve
 
 | Situação | Fundos | Ainda negociados | Negociados com liquidez |
 |---|---|---|---|
-| Rendimento mensal conferido (entra em tudo) | 237 | 169 | 119 |
-| Informe mensal não bate com o valor anunciado na B3 | 67 | cerca de 62 | cerca de 40 |
+| Rendimento mensal conferido (entra em tudo) | 237 | 169 | 116 |
+| Informe mensal não bate com o valor anunciado na B3 | 67 | 62 | 45 |
 | Sem valor da B3 para conferir e as contas da CVM não concordam | 220 | 54 | 20 |
 
 Dos 220 do último grupo, 166 não são mais negociados (saíram da bolsa entre 2017 e 2026). Dos 54 ainda negociados: 19 têm menos de 12 meses de informe, 18 não informam rendimento (quase tudo zero), 7 pagam em poucos meses do ano, 9 preenchem as duas contas mas elas não concordam, 1 preenche só uma.
