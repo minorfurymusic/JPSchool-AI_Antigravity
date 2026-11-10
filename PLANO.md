@@ -203,3 +203,68 @@ Depende de duas coisas ainda abertas: o FNET responder e uma chave de IA paga.
 4. **Nome do repositório**: `JPSchool-AI_Antigravity` não tem relação com FIIs. Sigo aqui, ou você cria outro?
 
 As fases 1 e 2 não dependem de nenhuma dessas respostas.
+
+## 7. Entrega 1: app construído (2026-11-10)
+
+Fases 1, 2, 4 e parte da 5 feitas. Fase 3 (carteira), 6 (documentos) e 7 (automático) não foram feitas.
+
+### O que mudou em relação ao plano
+
+- **Painel**: página única gerada pelo próprio app, em vez de Streamlit. Abre em qualquer navegador, sem servidor.
+- **Rendimento por cota**: o informe da CVM não tem esse número pronto, e cada fundo preenche de um jeito. O app faz duas contas (rendimentos a distribuir ÷ cotas; rendimento percentual × valor patrimonial) e só usa a que bate com o valor anunciado na B3 em pelo menos 85% dos meses. Fundo que não bate fica sem histórico antigo.
+- **Fundos que trocaram de CNPJ** (viraram "classe"): o app junta os dois históricos pelo ISIN. Se os dois CNPJs informam os mesmos meses por mais de 6 meses, o papel é tratado como ambíguo e sai.
+- **Desdobramento**: salto de preço só é ajustado quando o número de cotas na CVM muda na mesma proporção ou a B3 lista o desdobramento.
+- **A B3 só mostra ~12 meses de rendimentos**: o app guarda o que já viu e acumula.
+
+### Bibliotecas (nome, versão, licença conferidos na instalação)
+
+duckdb 2.0.0 (MIT), pandas 3.1.1 (BSD-3-Clause), pyarrow 26.0.1 (Apache-2.0), requests 2.34.2 (Apache-2.0), pytest 9.2.0 (MIT).
+
+### Saída real da rotina completa (`python -m fii.atualizar`, 2026-11-10)
+
+```
+"base": {"cotacoes": 527834, "papeis": 761, "vinculados": 524, "sem_vinculo": 237, "quebras": 466,
+         "quebras_confirmadas": 87, "mensal": 26166, "fundos_no_mensal": 524, "vendas": 2151,
+         "primeiro_pregao": "2017-01-02", "ultimo_pregao": "2026-11-09"},
+"eventos": {"queda sem venda": 164, "queda com venda": 17, "salto sem venda": 226, "salto com venda": 33,
+            "salto mantido sem venda": 100, "salto mantido com venda": 7, "venda com venda": 46},
+"oportunidades": {"rendimento já voltou ao nível anterior": 38, "queda": 21, "passou da janela: rever": 12,
+                  "queda recente": 9, "em andamento": 8, "venda de imóvel informada": 7, "novo": 4}
+real    0m19.517s
+```
+
+Origem do rendimento antigo, por fundo:
+
+```
+sem B3 e as contas da CVM não concordam: sem histórico     220
+                                           CVM conta A     182
+    histórico da CVM não bate com a B3: só meses da B3      78
+                                           CVM conta B      44
+```
+
+### O que o histórico mostrou (2017 a 2026)
+
+Retorno acima do mercado de FIIs (mediana), comprando no pregão seguinte ao fim do mês do evento:
+
+```
+       evento               grupo  casos  1 mês  3 meses  6 meses  12 meses  só cota 3m  acerto 3m  cota +10% em 6m  meses até voltar
+        salto      todos os casos    259   1,5%     2,4%     3,0%      5,6%        1,3%        69%              12%                 3
+        salto com venda de imóvel     33   0,9%     1,5%     2,0%      4,0%        0,9%        63%               4%                 0
+        salto               papel     43   2,5%     5,2%     8,0%      9,7%        3,5%        86%              12%                 9
+        salto              tijolo    123   0,8%     1,7%     2,4%      4,3%        1,0%        66%              13%                 3
+salto mantido      todos os casos    107   0,9%     2,0%     2,9%      5,9%        0,2%        65%               8%                10
+        venda      todos os casos     46   0,5%     0,3%     1,4%      0,6%       -0,6%        58%              17%                 0
+```
+
+Comprando dez pregões depois, o ganho do primeiro mês cai de 1,5% para 0,8%.
+
+Leitura: o efeito existe e é consistente (cerca de 70% dos casos), mas a mediana é pequena. A alta de 10 a 15% na cota aconteceu em cerca de 1 caso em 8. Com venda de imóvel há só 33 casos, o que é pouco para concluir.
+
+### Limitações reais
+
+- A data do evento no histórico é o fim do mês de referência, não a data do comunicado. O app não lê comunicados (FNET não responde deste ambiente).
+- Venda de imóvel só é vista quando sai no informe trimestral da CVM, semanas depois.
+- 220 fundos ficaram sem histórico de rendimento por falta de dado confiável; 237 papéis sem vínculo com a CVM.
+- 379 saltos de preço sem explicação confirmada; os períodos afetados ficam fora da conta.
+- Custos e imposto não descontados.
+- Os testes cobrem leitura de formato e as contas; não há teste automático do painel além da abertura em navegador sem erros.

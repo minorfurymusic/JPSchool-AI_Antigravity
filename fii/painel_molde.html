@@ -1,0 +1,321 @@
+<title>Radar de FIIs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: barra de abas fixa no topo; cada aba é uma coluna de blocos; tabelas roláveis dentro do próprio bloco. */
+:root{
+  --fundo:#f3f5f4; --papel:#ffffff; --tinta:#16211f; --suave:#5a6966; --linha:#d9dfdd;
+  --marca:#0b6b5c; --marca-fraca:#dcefeb;
+  --bom:#11734b; --bom-f:#dff2e8; --alerta:#8a5a00; --alerta-f:#fbeccb; --ruim:#a8322b; --ruim-f:#f8dfdc;
+  --titulo:"Space Grotesk","Inter",system-ui,sans-serif; --texto:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --num:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --fundo:#0f1614; --papel:#172220; --tinta:#e6eeec; --suave:#9aaba7; --linha:#2a3936;
+  --marca:#5fd0bb; --marca-fraca:#173c36;
+  --bom:#6fdca7; --bom-f:#153a2a; --alerta:#f0c060; --alerta-f:#3d2f0c; --ruim:#ff9b92; --ruim-f:#47201d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --fundo:#0f1614; --papel:#172220; --tinta:#e6eeec; --suave:#9aaba7; --linha:#2a3936;
+  --marca:#5fd0bb; --marca-fraca:#173c36;
+  --bom:#6fdca7; --bom-f:#153a2a; --alerta:#f0c060; --alerta-f:#3d2f0c; --ruim:#ff9b92; --ruim-f:#47201d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--fundo);color:var(--tinta);font:15px/1.5 var(--texto);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--papel)}
+.faixa{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.dentro{max-width:1180px;margin:0 auto}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--papel);border-bottom:1px solid var(--linha)}
+header .dentro{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding-block:10px}
+h1{font:600 20px/1.1 var(--titulo);margin:0;letter-spacing:-.01em}
+h1 small{display:block;font:400 12px/1.4 var(--texto);color:var(--suave);letter-spacing:0}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{padding:7px 12px;border-radius:6px;color:var(--suave);text-decoration:none;font-weight:500}
+nav a[aria-current="page"]{background:var(--marca-fraca);color:var(--marca)}
+nav a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,tr:focus-visible{outline:2px solid var(--marca);outline-offset:2px}
+main{padding-block:20px 48px;display:flex;flex-direction:column;gap:20px}
+h2{font:600 18px/1.25 var(--titulo);margin:0;text-wrap:balance}
+h3{font:600 15px/1.3 var(--texto);margin:0}
+p{margin:0;max-width:68ch}
+.nota{color:var(--suave);font-size:13.5px}
+.bloco{background:var(--papel);border:1px solid var(--linha);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.rolo{overflow-x:auto;margin-inline:-16px;padding-inline:16px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:7px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--linha)}
+th{font-weight:500;color:var(--suave);font-size:12px;vertical-align:bottom;white-space:normal;min-width:74px}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--papel)}
+td.t,th.t{text-align:left;white-space:normal;min-width:150px}
+td{font-family:var(--num);font-variant-numeric:tabular-nums}
+td.t,td:first-child{font-family:var(--texto)}
+tbody tr:last-child td{border-bottom:0}
+.tk{font:600 14px var(--titulo)}
+.sub{display:block;color:var(--suave);font:400 12px var(--texto)}
+.pos{color:var(--bom)} .neg{color:var(--ruim)}
+.selo{display:inline-block;padding:2px 8px;border-radius:99px;font:500 12px var(--texto);white-space:nowrap}
+.selo.novo{background:var(--bom-f);color:var(--bom)} .selo.and{background:var(--marca-fraca);color:var(--marca)}
+.selo.rev{background:var(--alerta-f);color:var(--alerta)} .selo.que{background:var(--ruim-f);color:var(--ruim)}
+.selo.neu{background:var(--fundo);color:var(--suave);border:1px solid var(--linha)}
+.resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.resumo div{border-left:3px solid var(--linha);padding-left:10px}
+.resumo b{display:block;font:600 22px/1.2 var(--titulo);font-variant-numeric:tabular-nums}
+.resumo span{color:var(--suave);font-size:12.5px}
+.controles{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--suave)}
+input,select,button{font:14px var(--texto);color:var(--tinta);background:var(--papel);border:1px solid var(--linha);border-radius:6px;padding:7px 10px}
+button{cursor:pointer}
+th button{border:0;padding:0;background:none;color:inherit;font:inherit;text-align:inherit}
+tr.clicavel{cursor:pointer} tr.clicavel:hover td{background:var(--marca-fraca)}
+ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+svg text{font:11px var(--num);fill:var(--suave)}
+.graficos{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.graficos figure{margin:0;min-width:0} figcaption{font-size:12.5px;color:var(--suave);margin-bottom:4px}
+.legenda{display:flex;gap:14px;font-size:12px;color:var(--suave);flex-wrap:wrap}
+.legenda i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:5px}
+.vazio{color:var(--suave);font-style:italic}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<header class="faixa"><div class="dentro">
+  <h1>Radar de FIIs<small id="carimbo"></small></h1>
+  <nav aria-label="Seções">
+    <a href="#oportunidades">Oportunidades</a><a href="#historico">O que o histórico ensina</a><a href="#fundos">Todos os fundos</a><a href="#dados">Qualidade dos dados</a>
+  </nav>
+</div></header>
+<div class="faixa"><main class="dentro" id="conteudo"></main></div>
+
+<script id="dados" type="application/json">/*__DADOS__*/null</script>
+<script>
+const D = JSON.parse(document.getElementById("dados").textContent) || {meta:{},oportunidades:[],aprendido:[],aprendido_d10:[],por_ano:[],fundos:[],qualidade:{regras:[],sem_vinculo:[],quebras:[]}};
+const $ = (h) => { const t = document.createElement("template"); t.innerHTML = h.trim(); return t.content; };
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const nf = (casas) => new Intl.NumberFormat("pt-BR", {minimumFractionDigits:casas, maximumFractionDigits:casas});
+const rs = (v, c=2) => v == null ? "–" : "R$ " + nf(c).format(v);
+const num = (v, c=2) => v == null ? "–" : nf(c).format(v);
+const pct = (v, c=1, sinal=false) => v == null ? "–" : (sinal && v > 0 ? "+" : "") + nf(c).format(v*100) + "%";
+const cor = (v) => v == null ? "" : v > 0 ? "pos" : v < 0 ? "neg" : "";
+const pcor = (v, c=1) => `<span class="${cor(v)}">${pct(v, c, true)}</span>`;
+const dia = (s) => s ? s.slice(8,10) + "/" + s.slice(5,7) + "/" + s.slice(0,4) : "–";
+const mesAno = (s) => s ? s.slice(5,7) + "/" + s.slice(0,4) : "–";
+const grande = (v) => v == null ? "–" : v >= 1e9 ? "R$ " + nf(1).format(v/1e9) + " bi" : v >= 1e6 ? "R$ " + nf(0).format(v/1e6) + " mi" : "R$ " + nf(0).format(v/1e3) + " mil";
+const M = D.meta;
+document.getElementById("carimbo").textContent = M.ultimo_pregao ? `Preço de fechamento de ${dia(M.ultimo_pregao)} · informe da CVM até ${mesAno(M.ultimo_cvm + "-01")}` : "";
+
+const selo = (s) => { const c = s === "novo" ? "novo" : s === "em andamento" ? "and" : s.startsWith("passou") ? "rev" : s.startsWith("queda") ? "que" : "neu"; return `<span class="selo ${c}">${esc(s)}</span>`; };
+const NOME_EVENTO = {"salto":"Salto de rendimento","salto mantido":"Salto que se manteve no mês seguinte","queda":"Queda de rendimento","venda":"Venda de imóvel informada"};
+
+function tabelaOp(linhas, tipo){
+  if (!linhas.length) return `<p class="vazio">Nenhum caso hoje.</p>`;
+  const cab = tipo === "venda"
+    ? `<th>Fundo</th><th class="t">Imóvel vendido</th><th>Mês da venda</th><th>Parte do patrimônio</th><th>Rendimento antes</th><th>Rendimento atual</th><th>Preço na época</th><th>Preço hoje</th><th>Variação da cota</th>`
+    : `<th>Fundo</th><th>Situação</th><th>Rendimento antes</th><th>Rendimento novo</th><th>Variação</th><th>Mês</th><th>Venda de imóvel no período</th><th>Preço na época</th><th>Preço hoje</th><th>Variação da cota</th><th>Preço de hoje ÷ valor patrimonial</th><th>Casos parecidos</th><th>Acima do mercado em 3 meses</th><th>Acima do mercado em 6 meses</th><th>Casos acima do mercado</th><th>Voltou ao nível anterior em 12 meses</th>`;
+  const corpo = linhas.map(o => tipo === "venda" ? `<tr>
+      <td><span class="tk">${esc(o.ticker)}</span><span class="sub">${esc(o.tipo_fundo)}</span></td>
+      <td class="t">${esc(o.imoveis_vendidos || "–")}</td><td>${mesAno(o.mes)}</td><td>${pct(o.pct_venda)}</td>
+      <td>${rs(o.rend_antes,3)}</td><td>${rs(o.rend_atual,3)}</td><td>${rs(o.preco_referencia)}</td><td>${rs(o.preco_hoje)}</td><td>${pcor(o.desde)}</td></tr>`
+    : `<tr>
+      <td><span class="tk">${esc(o.ticker)}</span><span class="sub">${esc(o.tipo_fundo)}${o.mantido ? " · manteve no mês seguinte" : ""}</span></td>
+      <td style="text-align:left">${selo(o.situacao)}</td>
+      <td>${rs(o.rend_antes,3)}</td><td>${rs(o.rend_novo,3)}</td><td>${pcor(o.variacao,0)}</td>
+      <td>${mesAno(o.mes)}<span class="sub">${o.anuncio ? "anunciado " + dia(o.anuncio) : "fonte: " + esc(o.origem || "CVM")}</span></td>
+      <td class="t">${o.com_venda ? esc(o.imoveis_vendidos) : "não aparece nos informes"}</td>
+      <td>${rs(o.preco_referencia)}</td><td>${rs(o.preco_hoje)}</td><td>${pcor(o.desde)}</td><td>${num(o.pvp)}</td>
+      <td>${o.hist_n_6 ?? "–"}<span class="sub">${esc(o.grupo || "")}</span></td>
+      <td>${pcor(o.hist_exc_med_3)}</td><td>${pcor(o.hist_exc_med_6)}</td><td>${pct(o.hist_acerto_6,0)}</td><td>${pct(o.hist_pct_voltou_12m,0)}</td></tr>`).join("");
+  return `<div class="rolo"><table><thead><tr>${cab}</tr></thead><tbody>${corpo}</tbody></table></div>`;
+}
+
+function verOportunidades(){
+  const O = D.oportunidades;
+  const mantidos = new Set(O.filter(o => o.evento === "salto mantido" && o.aberto).map(o => o.ticker));
+  const saltos = O.filter(o => o.evento === "salto").map(o => ({...o, mantido: mantidos.has(o.ticker)}));
+  const agora = saltos.filter(o => o.situacao === "novo" || o.situacao === "em andamento");
+  const rever = saltos.filter(o => o.situacao.startsWith("passou"));
+  const vendas = O.filter(o => o.evento === "venda" && o.situacao.startsWith("venda de"));
+  const quedas = O.filter(o => o.situacao === "queda recente");
+  const g = D.aprendido.find(a => a.evento === "salto" && a.criterio === "todos") || {};
+  return `
+  <section class="bloco">
+    <h2>Fundos em que o rendimento por cota saltou</h2>
+    <p>Um salto é o primeiro mês em que o rendimento fica pelo menos ${pct(M.salto - 1,0)} acima do nível dos seis meses anteriores. A lista mostra os saltos dos últimos 12 meses em que o rendimento ainda não voltou ao nível antigo.</p>
+    <div class="resumo">
+      <div><b>${agora.length}</b><span>para olhar agora</span></div>
+      <div><b>${rever.length}</b><span>passaram da janela: rever</span></div>
+      <div><b>${vendas.length}</b><span>vendas de imóvel informadas</span></div>
+      <div><b>${quedas.length}</b><span>quedas de rendimento recentes</span></div>
+    </div>
+  </section>
+  <section class="bloco"><h3>Para olhar agora</h3>
+    <p class="nota">As colunas de “casos parecidos” mostram o que aconteceu no passado com fundos na mesma situação, contado a partir do pregão seguinte ao fim do mês do salto. São medianas de casos antigos, não previsão.</p>
+    ${tabelaOp(agora)}</section>
+  <section class="bloco"><h3>Passaram da janela em que a cota mais subiu no passado</h3>
+    <p class="nota">O rendimento continua alto, mas já se passaram mais meses do que o período em que, no histórico, a valorização acima do mercado foi maior. Vale conferir se o motivo do salto ainda existe.</p>
+    ${tabelaOp(rever)}</section>
+  <section class="bloco"><h3>Venda de imóvel informada à CVM nos últimos 12 meses</h3>
+    <p class="nota">Vendas de pelo menos 3% do patrimônio, pela data real da venda. O informe trimestral sai semanas depois do fim do trimestre, então a venda aparece aqui com atraso.</p>
+    ${tabelaOp(vendas, "venda")}</section>
+  <section class="bloco"><h3>Quedas de rendimento recentes</h3>
+    <p class="nota">Rendimento pelo menos ${pct(1 - M.queda,0)} abaixo do nível dos seis meses anteriores, nos últimos dois meses.</p>
+    ${tabelaOp(quedas)}</section>`;
+}
+
+function frases(){
+  const a = (ev, grupo) => D.aprendido.find(x => x.evento === ev && x.grupo === grupo);
+  const b = (ev, grupo) => D.aprendido_d10.find(x => x.evento === ev && x.grupo === grupo);
+  const s = a("salto","todos os casos"), sd = b("salto","todos os casos"), sm = a("salto mantido","todos os casos"),
+        cv = a("salto","com venda de imóvel"), v = a("venda","todos os casos"), pa = a("salto","papel"), ti = a("salto","tijolo"), q = a("queda","todos os casos");
+  const f = [];
+  if (s) f.push(`Foram ${s.casos} saltos de rendimento desde ${M.primeiro_ano}. Em ${pct(s.acerto_3,0)} deles o fundo rendeu mais que o mercado de FIIs nos 3 meses seguintes. O ganho mediano acima do mercado foi de ${pct(s.exc_med_3,1,true)} em 3 meses e ${pct(s.exc_med_6,1,true)} em 6 meses, somando cota e rendimentos.`);
+  if (s) f.push(`A cota sozinha subiu pouco: mediana de ${pct(s.pex_med_3,1,true)} acima do mercado em 3 meses. Só ${pct(s.subiu10_6,0)} dos casos tiveram a cota 10% mais cara depois de 6 meses.`);
+  if (s && sd) f.push(`Entrar rápido conta. Comprando no pregão seguinte, o ganho mediano no primeiro mês foi ${pct(s.exc_med_1,1,true)}; comprando dez pregões depois, ${pct(sd.exc_med_1,1,true)}.`);
+  if (s) f.push(`Metade dos saltos durou até ${num(s.duracao_med,0)} meses antes de o rendimento voltar ao nível antigo; ${pct(s.pct_voltou_12m,0)} voltaram em até 12 meses.`);
+  if (cv) f.push(`Saltos com venda de imóvel no período: ${cv.casos} casos, ganho mediano de ${pct(cv.exc_med_3,1,true)} em 3 meses, e ${pct(cv.pct_voltou_3m,0)} voltaram ao nível antigo em até 3 meses. São poucos casos; a conclusão é fraca.`);
+  if (v) f.push(`Depois de uma venda de imóvel informada (${v.casos} casos), o fundo ficou praticamente igual ao mercado: ${pct(v.exc_med_3,1,true)} em 3 meses e ${pct(v.exc_med_6,1,true)} em 6.`);
+  if (pa && ti) f.push(`Por tipo de fundo: nos fundos de papel o ganho mediano em 6 meses foi ${pct(pa.exc_med_6,1,true)} (${pa.casos} casos); nos de tijolo, ${pct(ti.exc_med_6,1,true)} (${ti.casos} casos).`);
+  if (q) f.push(`Depois de uma queda de rendimento (${q.casos} casos), o fundo perdeu ${pct(q.exc_med_1,1,true)} para o mercado no primeiro mês e depois ficou perto de zero.`);
+  return f;
+}
+
+function tabelaAprendido(ev, entrada){
+  const base = entrada === "d10" ? D.aprendido_d10 : D.aprendido;
+  const linhas = base.filter(a => a.evento === ev);
+  const hs = [1,3,6,12];
+  const cab = `<th>Grupo de casos</th><th>Casos</th>` + hs.map(h => `<th>Acima do mercado em ${h} ${h>1?"meses":"mês"}</th>`).join("") + `<th>Só a cota, em 3 meses</th><th>Só a cota, em 6 meses</th><th>Casos acima do mercado em 6 meses</th><th>Cota 10% mais cara em 6 meses</th><th>Meses até voltar (mediana)</th><th>Rendimento 12 a 18 meses depois ÷ antes</th>`;
+  const corpo = linhas.map(a => `<tr><td class="t">${esc(a.grupo)}</td><td>${a.casos}</td>` + hs.map(h => `<td>${pcor(a["exc_med_"+h])}</td>`).join("") + `<td>${pcor(a.pex_med_3)}</td><td>${pcor(a.pex_med_6)}</td><td>${pct(a.acerto_6,0)}</td><td>${pct(a.subiu10_6,0)}</td><td>${num(a.duracao_med,0)}</td><td>${num(a.rend_12a18_med)}</td></tr>`).join("");
+  return `<div class="rolo"><table><thead><tr>${cab}</tr></thead><tbody>${corpo}</tbody></table></div>`;
+}
+
+let evSel = "salto", entSel = "ini";
+function verHistorico(){
+  const anos = D.por_ano.map(a => `<tr><td>${a.ano}</td><td>${a.n}</td><td>${pcor(a.exc3)}</td><td>${pcor(a.exc6)}</td><td>${pct(a.acerto6,0)}</td></tr>`).join("");
+  return `
+  <section class="bloco"><h2>O que aconteceu depois de cada evento, de ${M.primeiro_ano} até hoje</h2>
+    <p>O app refaz esta conta toda vez que roda. Cada mês novo de dados entra como mais casos, e os números mudam sozinhos.</p>
+    <ul>${frases().map(x => `<li>${x}</li>`).join("")}</ul></section>
+  <section class="bloco"><h3>Resultado por grupo de casos</h3>
+    <div class="controles">
+      <label>Evento<select id="sel-evento">${Object.entries(NOME_EVENTO).map(([k,v]) => `<option value="${k}" ${k===evSel?"selected":""}>${v}</option>`).join("")}</select></label>
+      <label>Momento da compra<select id="sel-entrada"><option value="ini" ${entSel==="ini"?"selected":""}>Pregão seguinte ao fim do mês</option><option value="d10" ${entSel==="d10"?"selected":""}>Dez pregões depois</option></select></label>
+    </div>
+    <p class="nota">“Acima do mercado” compara o retorno do fundo (cota mais rendimentos) com a mediana de todos os FIIs com liquidez no mesmo período. Valores são medianas. Grupos com menos de 15 casos não aparecem.</p>
+    <div id="tab-aprendido">${tabelaAprendido(evSel, entSel)}</div></section>
+  <section class="bloco"><h3>Saltos de rendimento, ano a ano</h3>
+    <p class="nota">Serve para ver se o efeito é estável. Os anos mais recentes ainda têm casos sem 6 meses completos.</p>
+    <div class="rolo"><table><thead><tr><th>Ano</th><th>Casos</th><th>Acima do mercado em 3 meses</th><th>Acima do mercado em 6 meses</th><th>Casos acima do mercado em 6 meses</th></tr></thead><tbody>${anos}</tbody></table></div></section>
+  <section class="bloco"><h3>Limites desta conta</h3><ul>
+    <li>No histórico não há a data do anúncio. A conta usa o fim do mês de referência e supõe a compra no pregão seguinte. Quem soube antes pode ter feito melhor; quem demorou, pior.</li>
+    <li>O motivo do salto não é lido: o app ainda não abre os comunicados dos fundos. Venda de imóvel só entra quando aparece no informe trimestral da CVM.</li>
+    <li>Só entram fundos em que o rendimento calculado pelo informe da CVM bate com o valor anunciado na B3. Os demais ficam fora do histórico.</li>
+    <li>Fundos com menos de ${grande(M.volume_minimo)} negociados por dia ficam fora.</li>
+    <li>Custos de corretagem e imposto sobre ganho de capital (20%) não estão descontados.</li>
+    <li>Resultado passado não garante o próximo.</li></ul></section>`;
+}
+
+let busca = "", tipoSel = "", ordem = {c:"vol", d:-1}, aberto = null;
+const COLS = [["t","Fundo"],["p","Preço"],["pvp","Preço ÷ valor patrimonial"],["r","Último rendimento"],["dy12","Rendimento em 12 meses ÷ preço"],["vol","Negociado por dia"],["cot","Cotistas"],["pl","Patrimônio"]];
+function linhasFundos(){
+  const b = busca.trim().toUpperCase();
+  let L = D.fundos.filter(f => (!b || f.t.includes(b) || (f.nome||"").toUpperCase().includes(b)) && (!tipoSel || f.tipo === tipoSel));
+  const c = ordem.c, d = ordem.d;
+  L.sort((x,y) => { const a = x[c], z = y[c]; if (a == null) return 1; if (z == null) return -1; return (typeof a === "string" ? a.localeCompare(z) : a - z) * d; });
+  return L;
+}
+function grafico(pontos, opts){
+  const W = 520, H = 190, me = 46, md = 8, mt = 8, mb = 22;
+  const vals = pontos.flatMap(p => opts.series.map(s => p[s.i])).filter(v => v != null);
+  if (vals.length < 2) return `<p class="vazio">Sem dados suficientes.</p>`;
+  let mn = opts.zero ? 0 : Math.min(...vals), mx = Math.max(...vals); if (mx === mn) mx = mn + 1;
+  const pad = (mx - mn) * 0.06; if (!opts.zero) mn -= pad; mx += pad;
+  const x = (i) => me + (W - me - md) * (pontos.length === 1 ? 0.5 : i / (pontos.length - 1));
+  const y = (v) => mt + (H - mt - mb) * (1 - (v - mn) / (mx - mn));
+  let g = "";
+  for (let k = 0; k <= 3; k++){ const v = mn + (mx - mn) * k / 3; g += `<line x1="${me}" x2="${W-md}" y1="${y(v)}" y2="${y(v)}" stroke="var(--linha)" stroke-width="1"/><text x="${me-6}" y="${y(v)+4}" text-anchor="end">${nf(opts.casas).format(v)}</text>`; }
+  const passo = Math.max(1, Math.ceil(pontos.length / 6));
+  pontos.forEach((p,i) => { if (i % passo === 0 && x(i) < W - 40) g += `<text x="${x(i)}" y="${H-6}" text-anchor="start">${p[0].slice(5,7)}/${p[0].slice(2,4)}</text>`; });
+  for (const s of opts.series){
+    if (s.barras){ const larg = Math.max(1.5, (W - me - md) / pontos.length * 0.62); pontos.forEach((p,i) => { if (p[s.i] != null) g += `<rect x="${x(i)-larg/2}" y="${y(p[s.i])}" width="${larg}" height="${Math.max(0, y(mn)-y(p[s.i]))}" fill="${s.cor}"/>`; }); }
+    else { let d = "", pen = false; pontos.forEach((p,i) => { if (p[s.i] == null){ pen = false; return; } d += (pen ? "L" : "M") + x(i).toFixed(1) + " " + y(p[s.i]).toFixed(1); pen = true; }); g += `<path d="${d}" fill="none" stroke="${s.cor}" stroke-width="${s.fina?1.5:2}" ${s.fina?'stroke-dasharray="4 3"':""}/>`; }
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(opts.rotulo)}">${g}</svg>`;
+}
+function detalhe(f){
+  const evs = D.oportunidades.filter(o => o.ticker === f.t);
+  return `<section class="bloco" id="detalhe"><div class="controles" style="justify-content:space-between"><div><h2>${esc(f.t)}</h2><p class="nota">${esc(f.nome || "")} · ${esc(f.seg || "segmento não informado")} · ${esc(f.tipo || "")}</p></div><button type="button" id="fechar">Fechar</button></div>
+    <div class="resumo">
+      <div><b>${rs(f.p)}</b><span>fechamento de ${dia(f.dp)}</span></div>
+      <div><b>${num(f.pvp)}</b><span>preço ÷ valor patrimonial (${rs(f.vp)} em ${mesAno(f.dvp+"-01")})</span></div>
+      <div><b>${rs(f.r,3)}</b><span>último rendimento por cota (${mesAno((f.dr||"")+"-01")}, fonte ${esc(f.or||"–")})</span></div>
+      <div><b>${pct(f.dy12)}</b><span>rendimento de 12 meses ÷ preço de hoje</span></div>
+    </div>
+    ${f.susp ? `<p class="nota"><span class="selo rev">atenção</span> Houve salto de preço não explicado neste papel nos últimos 12 meses. Confira antes de confiar na variação.</p>` : ""}
+    ${evs.length ? `<p class="nota">Eventos recentes: ${evs.map(o => `${esc(NOME_EVENTO[o.evento]||o.evento).toLowerCase()} em ${mesAno(o.mes)} (${pct(o.variacao,0,true)})`).join("; ")}.</p>` : ""}
+    <div class="graficos">
+      <figure><figcaption>Cota no fim de cada mês e valor patrimonial (R$)</figcaption>${grafico(f.s, {series:[{i:1,cor:"var(--marca)"},{i:3,cor:"var(--suave)",fina:true}], casas:2, rotulo:"Preço e valor patrimonial"})}
+        <div class="legenda"><span><i style="background:var(--marca)"></i>preço da cota</span><span><i style="background:var(--suave)"></i>valor patrimonial</span></div></figure>
+      <figure><figcaption>Rendimento por cota, mês a mês (R$)</figcaption>${grafico(f.s, {series:[{i:2,cor:"var(--marca)",barras:true}], casas:2, zero:true, rotulo:"Rendimento por cota"})}</figure>
+    </div>
+    <p class="nota">Origem do rendimento: ${esc(f.regra || "–")}.</p></section>`;
+}
+function verFundos(){
+  const L = linhasFundos();
+  const tipos = [...new Set(D.fundos.map(f => f.tipo).filter(Boolean))].sort();
+  const f = aberto && D.fundos.find(x => x.t === aberto);
+  const cab = COLS.map(([c,n]) => `<th><button type="button" data-ord="${c}">${n}${ordem.c===c ? (ordem.d>0?" ▲":" ▼") : ""}</button></th>`).join("");
+  const corpo = L.slice(0, 400).map(x => `<tr class="clicavel" tabindex="0" data-t="${esc(x.t)}">
+    <td><span class="tk">${esc(x.t)}</span><span class="sub">${esc(x.seg || x.tipo || "")}</span></td>
+    <td>${rs(x.p)}</td><td>${num(x.pvp)}</td><td>${rs(x.r,3)}</td><td>${pct(x.dy12)}</td><td>${grande(x.vol)}</td><td>${x.cot==null?"–":nf(0).format(x.cot)}</td><td>${grande(x.pl)}</td></tr>`).join("");
+  return `${f ? detalhe(f) : ""}
+  <section class="bloco"><h2>Todos os fundos negociados</h2>
+    <div class="controles">
+      <label>Buscar por código ou nome<input id="busca" type="search" value="${esc(busca)}" placeholder="HGLG11" autocomplete="off"></label>
+      <label>Tipo<select id="sel-tipo"><option value="">Todos</option>${tipos.map(t => `<option ${t===tipoSel?"selected":""}>${esc(t)}</option>`).join("")}</select></label>
+      <p class="nota" id="contagem">${L.length} ${L.length === 1 ? "fundo" : "fundos"}. Toque em uma linha para ver os gráficos.</p>
+    </div>
+    <div class="rolo"><table><thead><tr>${cab}</tr></thead><tbody id="corpo-fundos">${corpo}</tbody></table></div></section>`;
+}
+
+function verDados(){
+  const Q = D.qualidade;
+  return `
+  <section class="bloco"><h2>De onde vêm os dados e o que ficou de fora</h2>
+    <div class="resumo">
+      <div><b>${dia(M.ultimo_pregao)}</b><span>último fechamento oficial da B3</span></div>
+      <div><b>${mesAno((M.ultimo_cvm||"")+"-01")}</b><span>último informe mensal da CVM</span></div>
+      <div><b>${M.fundos}</b><span>fundos acompanhados</span></div>
+      <div><b>${M.eventos}</b><span>eventos no histórico</span></div>
+      <div><b>${M.sinais}</b><span>sinais guardados desde ${dia(M.sinais_desde)}</span></div>
+    </div>
+    <ul><li>Preço: arquivo de cotações históricas da B3, fechamento oficial, escolhido pela data mais recente.</li>
+    <li>Valor patrimonial, cotistas, composição e venda de imóveis: informes mensal e trimestral da CVM. Chegam com um a dois meses de atraso.</li>
+    <li>Rendimento anunciado: cadastro de fundos listados da B3, que só mostra cerca de 12 meses. O app guarda o que já viu.</li></ul></section>
+  <section class="bloco"><h3>Como o rendimento antigo de cada fundo foi obtido</h3>
+    <div class="rolo"><table><thead><tr><th>Situação</th><th>Fundos</th></tr></thead><tbody>${Q.regras.map(r => `<tr><td class="t">${esc(r.regra)}</td><td>${r.n}</td></tr>`).join("")}</tbody></table></div></section>
+  <section class="bloco"><h3>Papéis negociados que não foi possível ligar à CVM (${Q.sem_vinculo_total})</h3>
+    <p class="nota">Ficam fora do app até alguém conferir manualmente. O app não liga por semelhança de nome.</p>
+    <div class="rolo"><table><thead><tr><th>Papel</th><th class="t">Nome na B3</th><th>Último pregão</th><th class="t">Motivo</th></tr></thead><tbody>${Q.sem_vinculo.map(s => `<tr><td><span class="tk">${esc(s.ticker)}</span></td><td class="t">${esc(s.nome)}</td><td>${dia(s.ultimo_pregao)}</td><td class="t">${esc(s.motivo)}</td></tr>`).join("")}</tbody></table></div></section>
+  <section class="bloco"><h3>Saltos de preço sem explicação confirmada (${Q.quebras_total} no histórico; os 40 mais recentes)</h3>
+    <p class="nota">Podem ser desdobramento, grupamento ou negócio isolado em papel sem liquidez. Os períodos afetados ficam fora do histórico.</p>
+    <div class="rolo"><table><thead><tr><th>Papel</th><th>Data</th><th>Fechamento anterior</th><th>Fechamento</th></tr></thead><tbody>${Q.quebras.map(q => `<tr><td><span class="tk">${esc(q.ticker)}</span></td><td>${dia(q.data)}</td><td>${rs(q.ant)}</td><td>${rs(q.fechamento)}</td></tr>`).join("")}</tbody></table></div></section>`;
+}
+
+const VISTAS = {oportunidades: verOportunidades, historico: verHistorico, fundos: verFundos, dados: verDados};
+function desenhar(manterFoco){
+  const nome = VISTAS[location.hash.slice(1)] ? location.hash.slice(1) : "oportunidades";
+  document.querySelectorAll("nav a").forEach(a => a.getAttribute("href") === "#" + nome ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
+  const alvo = document.getElementById("conteudo");
+  alvo.replaceChildren($(VISTAS[nome]()));
+  if (nome === "historico"){
+    document.getElementById("sel-evento").onchange = (e) => { evSel = e.target.value; document.getElementById("tab-aprendido").innerHTML = tabelaAprendido(evSel, entSel); };
+    document.getElementById("sel-entrada").onchange = (e) => { entSel = e.target.value; document.getElementById("tab-aprendido").innerHTML = tabelaAprendido(evSel, entSel); };
+  }
+  if (nome === "fundos"){
+    const b = document.getElementById("busca");
+    b.oninput = () => { busca = b.value; desenhar(true); };
+    if (manterFoco){ b.focus(); b.setSelectionRange(b.value.length, b.value.length); }
+    document.getElementById("sel-tipo").onchange = (e) => { tipoSel = e.target.value; desenhar(); };
+    alvo.querySelectorAll("[data-ord]").forEach(bt => bt.onclick = () => { const c = bt.dataset.ord; ordem = {c, d: ordem.c === c ? -ordem.d : (c === "t" ? 1 : -1)}; desenhar(); });
+    const abrir = (tr) => { aberto = tr.dataset.t; desenhar(); document.getElementById("detalhe").scrollIntoView({block:"start"}); };
+    alvo.querySelectorAll("tr.clicavel").forEach(tr => { tr.onclick = () => abrir(tr); tr.onkeydown = (e) => { if (e.key === "Enter") abrir(tr); }; });
+    const fe = document.getElementById("fechar"); if (fe) fe.onclick = () => { aberto = null; desenhar(); };
+  }
+}
+addEventListener("hashchange", () => desenhar());
+desenhar();
+</script>

@@ -16,6 +16,12 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-09 — Rendimento anunciado pelo fundo conferido no cadastro de fundos listados da B3.
 - [x] 2026-11-09 — Ambiente: liberados também `cotacao.b3.com.br` e `sistemaswebb3-listados.b3.com.br`.
 
+- [x] 2026-11-10 — Coleta completa: cotações B3 2017–2026, informes CVM 2016–2026, rendimentos anunciados de 390 códigos.
+- [x] 2026-11-10 — Fase 1 (base de dados) e Fase 2 (painel em página única).
+- [x] 2026-11-10 — Fase 4 (eventos, estudo do histórico, lista de oportunidades, registro de sinais).
+- [x] 2026-11-10 — Fase 5, parte: venda de imóvel como evento. Vacância e contratos ficaram na base, sem tela.
+- [x] 2026-11-10 — 32 testes automáticos passando.
+
 ## Pendente: decisões do dono
 
 - [ ] Onde usar: só computador ou endereço na internet.
@@ -30,14 +36,17 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] Lista geral de fundos no cadastro da B3 voltou vazia; achar a consulta certa (a consulta por fundo funciona).
 - [ ] Escolher as séries do Banco Central (Selic, CDI, IPCA) e conferir o formato da resposta.
 - [ ] Conferir o dicionário de dados da CVM (`META/meta_inf_mensal_fii.zip`) para o significado exato de cada coluna.
-- [ ] Entender os 57 papéis que não casaram pelo ISIN.
+- [x] Papéis que não casaram pelo ISIN: parte trocou de ISIN ou de CNPJ na CVM. Com todo o histórico de ISINs, 524 papéis ligados e 237 sem vínculo (a maioria recibos e direitos; 67 fundos ativos de final 11).
+- [ ] Ler o motivo do salto (comunicado do fundo). Depende do FNET ou de outra fonte.
+- [ ] 220 fundos sem histórico de rendimento confiável: procurar outra fonte oficial.
+- [ ] Conferir a rotina diária num dia com pregão novo (arquivo diário da B3).
 
 ## Pendente: construção
 
-- [ ] Fase 1: base de dados (CVM mensal, cotações B3, ligação, indicadores).
-- [ ] Fase 2: painel (lista com filtros, página do fundo, comparação).
+- [x] Fase 1: base de dados (CVM mensal, cotações B3, ligação, indicadores).
+- [x] Fase 2: painel (lista com filtros, página do fundo). Comparação lado a lado não feita.
 - [ ] Fase 3: minha carteira.
-- [ ] Fase 4: sinais e indicação.
-- [ ] Fase 5: imóveis e contratos (trimestral).
+- [x] Fase 4: sinais e indicação. Falta: comparação com Selic/CDI/IPCA e registrar a decisão do dono em cada sinal.
+- [ ] Fase 5: imóveis e contratos (trimestral). Feito só o evento de venda de imóvel.
 - [ ] Fase 6: documentos (FNET e IA).
 - [ ] Fase 7: atualização e avisos automáticos.
