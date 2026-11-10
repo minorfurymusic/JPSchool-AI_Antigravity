@@ -34,6 +34,11 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-11 — FNET destravado: travava com HTTP/2, funciona com HTTP/1.1, sem login. Lista, PDF, XML de rendimento e histórico desde 2017 testados (PLANO.md, seção 9).
 - [x] 2026-11-11 — Decidido pelo dono: roda em computador de casa; todos os fundos; erros viram pendência reprocessável; estimativas em faixas.
 
+- [x] 2026-11-12 — Coletor do FNET com fila de pendências e reprocessamento (commit `b510b5a`).
+- [x] 2026-11-12 — Histórico de avisos de rendimento desde 2017: 35.773 avisos lidos, 40.043 rendimentos, 1 erro (arquivo vazio no FNET).
+- [x] 2026-11-12 — Estudo com a data real do anúncio: `docs/ESTUDO_ANUNCIO_REAL.md`.
+- [x] 2026-11-12 — Decidido pelo dono: Windows 11 Pro, rodar às 20h.
+
 ## Pendente: decisões do dono
 
 - [ ] Onde usar: só computador ou endereço na internet.
@@ -59,10 +64,13 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 
 ## Pendente: construção
 
-- [ ] Coletor do FNET (lista diária, download, guarda do original).
+- [x] Coletor do FNET (lista diária, download, guarda do original).
 - [ ] Leitura: XML de rendimento direto; PDF com IA (chave Gemini do dono, pelo formulário seguro).
-- [ ] Fila de pendências com reprocessamento em lote ou um a um, com tela de resultado.
-- [ ] Carga do histórico de avisos de rendimento desde 2017 (datas reais de anúncio).
+- [x] Fila de pendências com reprocessamento em lote ou um a um (por comando).
+- [ ] Tela de pendências no painel, com resultado por documento.
+- [ ] Usar os rendimentos do FNET como fonte principal do app (hoje o painel ainda usa CVM e B3).
+- [ ] Listar todas as categorias do FNET desde 2017 para ligar cada salto ao fato relevante do mesmo período.
+- [x] Carga do histórico de avisos de rendimento desde 2017 (datas reais de anúncio).
 - [ ] Instalação nos computadores de casa: disparo em horários definidos e retomada depois de queda de luz.
 
 - [ ] Mostrar no painel, para cada oportunidade, o pico e o fundo desde a entrada e o que casos parecidos fizeram dia a dia.

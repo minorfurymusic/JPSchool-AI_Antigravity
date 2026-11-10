@@ -99,7 +99,8 @@ def controle(p, liq, posicoes, fora, rng, n=25):
     for i0 in posicoes:
         if i0 >= len(p):
             continue
-        cand = [t for t in p.columns[liq.iloc[i0].to_numpy()] if t not in fora]
+        # fora do controle: fundos com salto anunciado nos 6 meses antes ou depois desta data
+        cand = [t for t in p.columns[liq.iloc[i0].to_numpy()] if not any(abs(i0 - j) <= 126 for j in fora.get(t, ()))]
         ent += [(t, i0) for t in (rng.choice(cand, size=min(n, len(cand)), replace=False) if cand else [])]
     return ent
 
@@ -135,7 +136,7 @@ def main():
     ev = ev[ev["ticker"].isin(p.columns)].reset_index(drop=True)
     ev["i0"] = [dia_de_entrada(datas, e) for e in ev["entrega"]]
     ev = ev[[i < len(datas) and bool(liq.iloc[i][t]) for i, t in zip(ev["i0"], ev["ticker"])]].reset_index(drop=True)
-    fora = set(ev["ticker"])  # controle: fundos sem nenhum salto anunciado
+    fora = ev.groupby("ticker")["i0"].apply(list).to_dict()
     rng = np.random.default_rng(11)
     print(f"\nSaltos anunciados (>= {SALTO - 1:.0%} sobre a mediana dos 6 anúncios anteriores), fundos com liquidez: {len(ev)} em {ev['ticker'].nunique()} fundos")
     print(ev.groupby("classe").agg(casos=("ticker", "size"), salto_mediano=("razao", lambda s: (s.median() - 1) * 100),
