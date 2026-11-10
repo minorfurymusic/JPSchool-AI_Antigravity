@@ -39,6 +39,12 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-12 — Estudo com a data real do anúncio: `docs/ESTUDO_ANUNCIO_REAL.md`.
 - [x] 2026-11-12 — Decidido pelo dono: Windows 11 Pro, rodar às 20h.
 
+- [x] 2026-11-12 — Lista de 10.813 fatos relevantes e 14.938 comunicados desde 2017.
+- [x] 2026-11-12 — Classificação por palavras e leitura da frase em que o fundo declara o efeito no rendimento (`fii/classificar.py`).
+- [x] 2026-11-12 — Estudo em dias, em reais sobre cota de R$ 10: aviso de rendimento e primeira amostra de 2.969 fatos relevantes (`docs/ESTUDO_DIAS.md`).
+- [ ] Baixar os 7.794 fatos relevantes restantes (abr/2021 em diante) e refazer o estudo.
+- [ ] 3 fatos relevantes com erro por PDF protegido: falta a biblioteca `cryptography`.
+
 ## Pendente: decisões do dono
 
 - [ ] Onde usar: só computador ou endereço na internet.

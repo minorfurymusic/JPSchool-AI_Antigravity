@@ -193,3 +193,22 @@ def test_classificacao_de_fatos_relevantes():
     assert r["tipo"] == "rendimento_reducao" and r["sentido"] == "queda"
     r = cl.classificar("O preço de emissão será de R$ 98,50 por cota. Estima-se incremento na distribuição de rendimentos de R$ 0,05/cota.")
     assert r["valor_por_cota"] == 0.05 and r["valores_citados"] == 2
+
+
+def test_impacto_no_rendimento_informado_pelo_fundo():
+    from fii import classificar as cl
+    imp = lambda txt: cl.classificar(txt)["impacto"]
+    # trechos reais: TBOF11 01/12/2017, MXRF11 01/07/2019, e variações vistas no histórico
+    r = imp("A nova locação reduzirá a vacância para 36,00%. Ademais, a receita do Fundo será impactada positivamente em 6,80%, gerando um "
+            "impacto positivo na distribuição de rendimentos de aproximadamente 10,58%, com base na última distribuição de rendimentos.")
+    assert r["direcao"] == 1 and r["pct"] == pytest.approx(0.1058)
+    r = imp("equivalente a R$ 0,013212 por cota , representando um impacto positivo na distribuição de rendimentos de aproximadamente 18,87%")
+    assert r["direcao"] == 1 and r["pct"] == pytest.approx(0.1887)
+    r = imp("A desocupação gerará um impacto negativo na distribuição de rendimentos do Fundo de, aproximadamente, 7,5%.")
+    assert r["direcao"] == -1 and r["pct"] == pytest.approx(0.075)
+    r = imp("A receita do fundo será impactada negativamente em, aproximadamente, R$ 1,90 (um real e noventa centavos) por cota.")
+    assert r["direcao"] == -1 and r["pct"] is None and r["valor_por_cota"] == 1.90
+    # o fundo diz que não sabe ou que não há efeito: não é declaração de impacto
+    assert imp("O impacto na distribuição de rendimentos por cota apenas poderá ser determinado após a conclusão da operação.") is None
+    assert imp("A operação não gera impacto relevante na distribuição de rendimentos do Fundo.") is None
+    assert imp("A vacância do imóvel caiu para 12%.") is None

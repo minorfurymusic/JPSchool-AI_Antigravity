@@ -68,6 +68,52 @@ DESAGIO = re.compile(r"(venda|alienac)\w*[^.]{0,60}(com desagio|com prejuizo|aba
 GANHO = re.compile(r"(lucro|ganho de capital|ganho estimado|resultado (liquido|positivo|estimado|da (venda|transacao|operacao))|\btir\b|taxa interna de retorno|acima do (custo|valor (contabil|patrimonial|de aquisicao|de avaliacao|do laudo)))")
 
 
+# o fundo diz o efeito no rendimento: "a receita será impactada positivamente em 6,80%, gerando um impacto
+# positivo na distribuição de rendimentos de aproximadamente 10,58%" / "impactada negativamente em R$ 1,90 por cota"
+FRASE_IMPACTO = re.compile(r"[^.;]{0,260}\bimpact\w+[^.;]{0,320}")
+ASSUNTO = re.compile(r"(distribuic|rendimento|provento|receita|resultado|renda mensal)")
+SEM_EFEITO = re.compile(r"(\bnao\b|\bsem\b|nenhum|qualquer)[^.;]{0,50}impact|impact\w+[^.;]{0,90}(apenas poder|somente poder|nao e possivel|oportunamente|ainda nao|serao (informad|divulgad)|a ser (apurad|determinad))"
+                        r"|(eventua(l|is)|possive(l|is)|potencia(l|is)) impact")
+SOBE = re.compile(r"(positiv|increment|aument|acrescim|elev|adicional)")
+DESCE = re.compile(r"(negativ|reduc|reduz|queda|diminu|perda)")
+PCT = re.compile(r"(\d{1,4}(?: ?, ?\d{1,4})?) ?%")
+
+
+def _num(txt: str) -> float | None:
+    try:
+        return float(txt.replace(" ", "").replace(".", "").replace(",", "."))
+    except ValueError:
+        return None
+
+
+def impacto_declarado(norm: str) -> dict | None:
+    """Primeira frase em que o fundo declara efeito no rendimento. Devolve direção (+1/-1),
+    percentual (se disser) e valor por cota (se disser). None quando não declara ou diz que não sabe."""
+    for m in FRASE_IMPACTO.finditer(norm):
+        frase = m.group(0)
+        if not ASSUNTO.search(frase) or SEM_EFEITO.search(frase):
+            continue
+        apos = frase[frase.find("impact"):]
+        sobe, desce = SOBE.search(apos[:120]), DESCE.search(apos[:120])
+        if bool(sobe) == bool(desce):
+            if sobe and desce:  # os dois aparecem: vale o que vem primeiro depois de "impact"
+                direcao = 1 if sobe.start() < desce.start() else -1
+            else:
+                continue
+        else:
+            direcao = 1 if sobe else -1
+        # percentual: de preferência o que vem depois de "distribuição/rendimento" (o da receita costuma vir antes)
+        pos = min((x.start() for x in re.finditer(r"distribuic|rendimento|provento", apos)), default=-1)
+        pcts = [(x.start(), _num(x.group(1))) for x in PCT.finditer(apos)]
+        pcts = [(i, v) for i, v in pcts if v is not None and 0 < v <= 2000]
+        depois = [v for i, v in pcts if i > pos >= 0]
+        pct = (depois[0] if depois else pcts[0][1] if pcts else None)
+        vals = [v["valor"] for v in valores_por_cota(apos) if 0 < v["valor"] < 1000]
+        return {"direcao": direcao, "pct": pct / 100 if pct is not None else None, "valor_por_cota": vals[0] if vals else None,
+                "frase": frase.strip()[:400]}
+    return None
+
+
 def classificar(texto: str) -> dict:
     """Devolve tipos encontrados (em ordem de prioridade), sentido provável para o rendimento,
     valor por cota informado (se houver) e se é continuação de anúncio anterior."""
@@ -91,6 +137,6 @@ def classificar(texto: str) -> dict:
         sentido = "neutro"
     vals = valores_por_cota(norm)
     bons = [v["valor"] for v in vals if v["de_resultado"] and 0 < v["valor"] < 1000]
-    return {"tipos": nomes, "tipo": nomes[0] if nomes else "outro", "sentido": sentido,
+    return {"tipos": nomes, "tipo": nomes[0] if nomes else "outro", "sentido": sentido, "impacto": impacto_declarado(norm),
             "valor_por_cota": max(bons) if bons else None, "valores_citados": len(vals),
             "continuacao": CONTINUACAO.search(norm[:2500]) is not None, "tamanho": len(norm)}
