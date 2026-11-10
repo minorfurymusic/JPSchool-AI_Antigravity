@@ -297,3 +297,41 @@ sem B3 e as contas da CVM não concordam: sem histórico     220
                            CVM conta A, um mês adiante      11
                            CVM conta B, um mês adiante       5
 ```
+
+## 9. FNET destravado e os 5 pontos do dono (2026-11-11)
+
+### Por que o FNET não respondia
+
+Não era login, nem bloqueio por país, nem regra de rede. A página de consulta fica sem resposta quando a conexão usa HTTP/2 e responde normalmente com HTTP/1.1. Confirmado por execução real:
+
+```
+200 14618b 0.635590s http1.1 <- --http1.1 https://fnet.bmfbovespa.com.br/fnet/publico/abrirGerenciadorDocumentosCVM
+(com HTTP/2: Operation timed out after 40002 milliseconds with 0 bytes received)
+```
+
+A biblioteca que o app usa para baixar (`requests`) fala HTTP/1.1, então a coleta funciona sem ajuste especial.
+
+### O que o FNET entrega (testado, sem login)
+
+- **Lista de documentos** por período: `/fnet/publico/pesquisarGerenciadorDocumentosDados`, com `tipoFundo=1` (FII), `dataInicial`, `dataFinal`, paginação `s` e `l`. Em 09 e 10/11/2026: 298 documentos. Cada linha traz `id`, nome do fundo, categoria, tipo, data de referência, **data e hora de entrega**, versão, situação, nome de pregão.
+- **Documento**: `/fnet/publico/downloadDocumento?id=...`. O nome do arquivo traz o CNPJ do fundo (`11728688000147-FRV09112026V01-001373549.pdf`).
+- **Fato relevante** vem em PDF; o texto sai com `pypdf` 7.0.1 (BSD-3-Clause): 2 páginas, 3.233 caracteres no teste.
+- **Aviso de rendimento** vem estruturado em XML, sem precisar de IA: `CodISIN`, `DataBase`, `ValorProvento`, `DataPagamento`, `PeriodoReferencia`.
+- **Histórico**: a consulta de março de 2017, 2020 e 2023 devolveu 1.380, 2.314 e 4.024 documentos. Os avisos de rendimento com data existem desde 2017.
+
+Categorias vistas em dois dias: Assembleia 43, Relatório Gerencial 27, Fato Relevante 11, Informe Trimestral 8, Regulamento 4, Comunicado ao Mercado 3, Aviso de Rendimento 1, outros.
+
+Não confirmado: o fuso da hora de entrega (presumo horário de Brasília, o FNET não diz); limite de requisições por minuto; se há documentos que só aparecem com filtro de categoria.
+
+### Os 5 pontos e o que cada um precisa
+
+| Ponto | Situação | Falta |
+|---|---|---|
+| 1. Baixar e ler documentos todo dia | Fonte destravada | Coletor do FNET, leitura (XML direto; PDF com IA), fila de pendências com reprocessamento manual em lote ou um a um |
+| 2. Preços de fechamento | Feito | Disparo automático |
+| 3. Cruzar com dólar, bolsa e setor | Estudado | Levar para o app: movimento do mercado x movimento do fundo; grupos de fundos parecidos |
+| 4. Datas e valores de pagamento | 12 meses pela B3 | Histórico desde 2017 pelos avisos de rendimento do FNET |
+| 5. Estimar entrada, saída, faixa de preço | Estudos gerais | Refazer com a data real do anúncio; padrão por fundo em volta do pagamento; duas âncoras de preço |
+| 6. Notícias, leis, incerteza econômica | Adiado pelo dono | — |
+
+Decisões do dono em 2026-11-11: roda em computador de casa (dois ociosos; quedas de luz menos de 10 vezes por ano); todos os fundos; erros viram pendência reprocessável; estimativas em faixas.

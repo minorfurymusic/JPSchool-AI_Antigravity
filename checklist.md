@@ -31,6 +31,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 
 - [x] 2026-11-11 — Estudo do caminho diário da cota depois do salto, com grupo de controle: `docs/ESTUDO_CAMINHO_DIARIO.md`.
 
+- [x] 2026-11-11 — FNET destravado: travava com HTTP/2, funciona com HTTP/1.1, sem login. Lista, PDF, XML de rendimento e histórico desde 2017 testados (PLANO.md, seção 9).
+- [x] 2026-11-11 — Decidido pelo dono: roda em computador de casa; todos os fundos; erros viram pendência reprocessável; estimativas em faixas.
+
 ## Pendente: decisões do dono
 
 - [ ] Onde usar: só computador ou endereço na internet.
@@ -40,7 +43,8 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 
 ## Pendente: verificação
 
-- [ ] FNET: tempo esgotado em 2 tentativas. Causa não confirmada. Testar de fora deste ambiente antes de concluir.
+- [x] FNET: causa achada (HTTP/2). Resolvido.
+- [ ] FNET: confirmar fuso da hora de entrega e limite de requisições.
 - [ ] Medir o atraso real da cotação com atraso, com o pregão aberto.
 - [ ] Lista geral de fundos no cadastro da B3 voltou vazia; achar a consulta certa (a consulta por fundo funciona).
 - [ ] Escolher as séries do Banco Central (Selic, CDI, IPCA) e conferir o formato da resposta.
@@ -54,6 +58,12 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] Medir expectativa em eleições: sem fonte de dado.
 
 ## Pendente: construção
+
+- [ ] Coletor do FNET (lista diária, download, guarda do original).
+- [ ] Leitura: XML de rendimento direto; PDF com IA (chave Gemini do dono, pelo formulário seguro).
+- [ ] Fila de pendências com reprocessamento em lote ou um a um, com tela de resultado.
+- [ ] Carga do histórico de avisos de rendimento desde 2017 (datas reais de anúncio).
+- [ ] Instalação nos computadores de casa: disparo em horários definidos e retomada depois de queda de luz.
 
 - [ ] Mostrar no painel, para cada oportunidade, o pico e o fundo desde a entrada e o que casos parecidos fizeram dia a dia.
 - [ ] Refazer o estudo do caminho com a data real do anúncio (só existe para os últimos ~12 meses, na B3).
