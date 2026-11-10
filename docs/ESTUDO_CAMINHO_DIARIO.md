@@ -37,7 +37,28 @@ Os estudos anteriores comparavam o preço na entrada com o preço 1, 3, 6 ou 12 
 | Vender em +5%, sem limite de perda | +3,2% | 80% | 97 | +1,4% | 69% | +1,8% |
 | Segurar 6 meses | +5,3% | 72% | 126 | +2,1% | 61% | +3,2% |
 
-### "Sobe 6 a 10% num mês e devolve no seguinte"
+### A partir da entrada: sobe nos primeiros 30 dias e devolve nos 30 seguintes?
+
+Acrescentado em 2026-11-11. O dono esclareceu que "mês seguinte" são os 30 dias depois dos primeiros 30 dias da posição, não o mês do calendário. Conta feita com 21 pregões para cada período de 30 dias.
+
+| Pico nos primeiros 30 dias | | Casos | No 21º pregão | No 42º pregão | Devolveu metade ou mais do pico | Voltou ao preço de entrada ou abaixo | Queda a partir do pico nos 30 dias seguintes |
+|---|---|---|---|---|---|---|---|
+| 3% a 6% | depois de salto | 53 (22%) | +2,4% | +1,0% | 60% | 42% | −4,7% |
+| 3% a 6% | controle | 1.129 (18%) | +2,0% | +1,5% | 56% | 37% | −4,3% |
+| 6% a 10% | depois de salto | 29 (12%) | +5,2% | +5,1% | 34% | 17% | −4,5% |
+| 6% a 10% | controle | 457 (7%) | +5,4% | +4,0% | 47% | 23% | −5,4% |
+| 10% ou mais | depois de salto | 8 (3%) | +11,1% | +9,2% | 38% | 0% | −10,9% |
+| 10% ou mais | controle | 260 (4%) | +10,4% | +9,6% | 36% | 15% | −6,7% |
+
+- Depois de um salto, 12% dos casos tiveram pico de 6% a 10% nos primeiros 30 dias (7% no controle).
+- Desses, 34% devolveram metade ou mais até o 42º pregão e 17% voltaram ao preço de entrada. No controle, 47% e 23%.
+- A partir do pico, a cota recua cerca de 4,5% nos 30 dias seguintes, com ou sem salto.
+- São 29 casos na faixa de 6% a 10% e 8 acima de 10%: pouco para conclusão firme.
+
+### Por mês do calendário (primeira versão, mantida como histórico)
+
+A conta abaixo usa meses do calendário, não a data de entrada. Não responde à pergunta do dono.
+
 
 - Em 11.717 fundo-meses, a cota subiu 6% ou mais em 7,8% e caiu 6% ou mais em 9,0%.
 - Depois de subir 6% ou mais, o mês seguinte foi em média +0,3%. Devolveu metade ou mais da alta em 16% dos casos.
@@ -145,4 +166,14 @@ vender em +10% ou em -10%            4.15              6.02           0.66      
    depois de cair 3 a 6%           1561 casos | mês seguinte: média -1.29%, mediana -1.03% | devolveu metade ou mais: 20%
    depois de cair 6% ou mais       1053 casos | mês seguinte: média -0.21%, mediana -0.31% | devolveu metade ou mais: 20%
 Dentro de um mês, distância entre o menor e o maior fechamento: mediana 4.7% | 6% ou mais em 36% dos meses | 10% ou mais em 15%
+
+=== 5. A PARTIR DA ENTRADA: sobe nos primeiros 30 dias e devolve nos 30 seguintes? (21 pregões = ~30 dias) ===
+depois de salto: 245 casos
+   pico de 3% a 6% nos primeiros 30 dias: 53 casos (22%) | dia do pico 14º | no 21º pregão estava em +2.4% | no 42º em +1.0% | devolveu metade ou mais do pico até o 42º: 60% | devolveu tudo (voltou ao preço de entrada ou abaixo): 42% | queda a partir do pico nos 30 dias seguintes (mediana): -4.7%
+   pico de 6% a 10% nos primeiros 30 dias: 29 casos (12%) | dia do pico 18º | no 21º pregão estava em +5.2% | no 42º em +5.1% | devolveu metade ou mais do pico até o 42º: 34% | devolveu tudo (voltou ao preço de entrada ou abaixo): 17% | queda a partir do pico nos 30 dias seguintes (mediana): -4.5%
+   pico de 10% ou mais nos primeiros 30 dias: 8 casos (3%) | dia do pico 20º | no 21º pregão estava em +11.1% | no 42º em +9.2% | devolveu metade ou mais do pico até o 42º: 38% | devolveu tudo (voltou ao preço de entrada ou abaixo): 0% | queda a partir do pico nos 30 dias seguintes (mediana): -10.9%
+controle: 6116 casos
+   pico de 3% a 6% nos primeiros 30 dias: 1129 casos (18%) | dia do pico 16º | no 21º pregão estava em +2.0% | no 42º em +1.5% | devolveu metade ou mais do pico até o 42º: 56% | devolveu tudo (voltou ao preço de entrada ou abaixo): 37% | queda a partir do pico nos 30 dias seguintes (mediana): -4.3%
+   pico de 6% a 10% nos primeiros 30 dias: 457 casos (7%) | dia do pico 17º | no 21º pregão estava em +5.4% | no 42º em +4.0% | devolveu metade ou mais do pico até o 42º: 47% | devolveu tudo (voltou ao preço de entrada ou abaixo): 23% | queda a partir do pico nos 30 dias seguintes (mediana): -5.4%
+   pico de 10% ou mais nos primeiros 30 dias: 260 casos (4%) | dia do pico 19º | no 21º pregão estava em +10.4% | no 42º em +9.6% | devolveu metade ou mais do pico até o 42º: 36% | devolveu tudo (voltou ao preço de entrada ou abaixo): 15% | queda a partir do pico nos 30 dias seguintes (mediana): -6.7%
 ```

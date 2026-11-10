@@ -174,5 +174,26 @@ def main():
     print(f"Dentro de um mês, distância entre o menor e o maior fechamento: mediana {amp[0]*100:.1f}% | 6% ou mais em {amp[1]:.0%} dos meses | 10% ou mais em {amp[2]:.0%}")
 
 
+    print("\n=== 5. A PARTIR DA ENTRADA: sobe nos primeiros 30 dias e devolve nos 30 seguintes? (21 pregões = ~30 dias) ===")
+    ce, cc = cam["3 meses"]
+    for nome, c in (("depois de salto", ce), ("controle", cc)):
+        c = c[~np.isnan(c).any(axis=1)]
+        pico1 = c[:, :21].max(axis=1)      # maior alta nos primeiros ~30 dias
+        d21, d42 = c[:, 20], c[:, 41]      # onde estava no 21º e no 42º pregão
+        print(f"{nome}: {len(c)} casos")
+        for lo, hi in ((0.03, 0.06), (0.06, 0.10), (0.10, 9)):
+            m = (pico1 >= lo) & (pico1 < hi)
+            if m.sum() < 5:
+                print(f"   pico de {lo:.0%} a {hi:.0%} nos primeiros 30 dias: {m.sum()} casos (poucos)")
+                continue
+            dia = np.median(c[m, :21].argmax(axis=1) + 1)
+            apos = np.array([l[np.argmax(l[:21]):np.argmax(l[:21]) + 22].min() - l[:21].max() for l in c[m]])  # pior ponto nos 21 pregões depois do pico
+            rot = f"{lo:.0%} a {hi:.0%}" if hi < 1 else f"{lo:.0%} ou mais"
+            print(f"   pico de {rot} nos primeiros 30 dias: {m.sum()} casos ({m.mean():.0%}) | dia do pico {dia:.0f}º | "
+                  f"no 21º pregão estava em {np.median(d21[m])*100:+.1f}% | no 42º em {np.median(d42[m])*100:+.1f}% | "
+                  f"devolveu metade ou mais do pico até o 42º: {(d42[m] <= pico1[m] / 2).mean():.0%} | devolveu tudo (voltou ao preço de entrada ou abaixo): {(d42[m] <= 0).mean():.0%} | "
+                  f"queda a partir do pico nos 30 dias seguintes (mediana): {np.median(apos)*100:+.1f}%")
+
+
 if __name__ == "__main__":
     main()
