@@ -29,6 +29,8 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-11 — Diagnóstico dos fundos sem histórico e estudo por trimestre: `docs/ESTUDO_TRIMESTRAL.md`.
 - [x] 2026-11-11 — 36 testes automáticos passando.
 
+- [x] 2026-11-11 — Estudo do caminho diário da cota depois do salto, com grupo de controle: `docs/ESTUDO_CAMINHO_DIARIO.md`.
+
 ## Pendente: decisões do dono
 
 - [ ] Onde usar: só computador ou endereço na internet.
@@ -52,6 +54,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] Medir expectativa em eleições: sem fonte de dado.
 
 ## Pendente: construção
+
+- [ ] Mostrar no painel, para cada oportunidade, o pico e o fundo desde a entrada e o que casos parecidos fizeram dia a dia.
+- [ ] Refazer o estudo do caminho com a data real do anúncio (só existe para os últimos ~12 meses, na B3).
 
 - [ ] Levar para o painel a nota combinada dos 3 sinais que passaram no estudo corrigido (a tendência de 12 meses caiu).
 - [ ] Separar, em cada fundo, o que foi movimento do mercado do que foi do fundo.
