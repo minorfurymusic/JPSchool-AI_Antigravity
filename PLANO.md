@@ -268,3 +268,32 @@ Leitura: o efeito existe e é consistente (cerca de 70% dos casos), mas a median
 - 379 saltos de preço sem explicação confirmada; os períodos afetados ficam fora da conta.
 - Custos e imposto não descontados.
 - Os testes cobrem leitura de formato e as contas; não há teste automático do painel além da abertura em navegador sem erros.
+
+## 8. Correção e entrega 2 (2026-11-11)
+
+### Erro corrigido
+
+A conta de retorno tratava como zero o rendimento dos fundos sem histórico mensal confiável. Isso baixava o retorno do "mercado" usado como comparação e inflava os ganhos mostrados na seção 7. Corrigido usando o total de rendimentos declarados do informe trimestral da CVM (campo `Rendimentos_Declarados`, acumulado no semestre), repartido pelos meses que faltam.
+
+Números da seção 7 que mudaram (salto de rendimento, todos os casos): ganho mediano acima do mercado de 2,4% / 3,0% / 5,6% em 3 / 6 / 12 meses passou para 1,7% / 1,3% / 1,8%; casos acima do mercado em 3 meses, de 69% para 64%. A "tendência de 12 meses" do estudo de relações deixou de se sustentar. Detalhe em `docs/ESTUDO_RELACOES.md`.
+
+### O que entrou
+
+- Tabela `trimestral`: rendimento declarado por trimestre e ganho com venda de imóveis e de títulos, para todos os fundos.
+- Coluna `rend_ret` no histórico mensal: rendimento usado só para calcular retorno.
+- Validação do rendimento mensal aceita a conta da CVM "um mês adiante" (fundos que anunciam no mês seguinte ao de referência): 16 fundos recuperados.
+- Estudo por trimestre com todos os fundos: `docs/ESTUDO_TRIMESTRAL.md`.
+
+### Saída real
+
+```
+36 passed in 0.59s
+trimestres comparados: 4342 | dentro de 5%: 0.735 | dentro de 15%: 0.842 | mediana da razão: 1.0
+                                                 regra  fundos
+sem B3 e as contas da CVM não concordam: sem histórico     220
+                                           CVM conta A     179
+    histórico da CVM não bate com a B3: só meses da B3      67
+                                           CVM conta B      42
+                           CVM conta A, um mês adiante      11
+                           CVM conta B, um mês adiante       5
+```

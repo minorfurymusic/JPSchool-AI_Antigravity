@@ -24,6 +24,11 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 
 - [x] 2026-11-10 — Estudo de relações (13 sinais, data limite, juros, bolsa): `docs/ESTUDO_RELACOES.md`.
 
+- [x] 2026-11-11 — Erro corrigido: rendimento zero para fundos sem histórico mensal inflava os retornos. Resultados refeitos.
+- [x] 2026-11-11 — Rendimentos declarados por trimestre (CVM) para todos os fundos; ganho com venda de ativos.
+- [x] 2026-11-11 — Diagnóstico dos fundos sem histórico e estudo por trimestre: `docs/ESTUDO_TRIMESTRAL.md`.
+- [x] 2026-11-11 — 36 testes automáticos passando.
+
 ## Pendente: decisões do dono
 
 - [ ] Onde usar: só computador ou endereço na internet.
@@ -40,7 +45,7 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] Conferir o dicionário de dados da CVM (`META/meta_inf_mensal_fii.zip`) para o significado exato de cada coluna.
 - [x] Papéis que não casaram pelo ISIN: parte trocou de ISIN ou de CNPJ na CVM. Com todo o histórico de ISINs, 524 papéis ligados e 237 sem vínculo (a maioria recibos e direitos; 67 fundos ativos de final 11).
 - [ ] Ler o motivo do salto (comunicado do fundo). Depende do FNET ou de outra fonte.
-- [ ] 220 fundos sem histórico de rendimento confiável: procurar outra fonte oficial.
+- [x] Fundos sem histórico mensal: resolvido para retorno e para estudo trimestral com o informe trimestral da CVM. Para salto mensal, 67 fundos ativos seguem só com os meses da B3 (o histórico cresce sozinho a cada mês).
 - [ ] Conferir a rotina diária num dia com pregão novo (arquivo diário da B3).
 
 - [ ] Testar juro longo (títulos do Tesouro): falta liberar a fonte.
@@ -48,7 +53,7 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 
 ## Pendente: construção
 
-- [ ] Levar para o painel a nota combinada dos 4 sinais que passaram no estudo.
+- [ ] Levar para o painel a nota combinada dos 3 sinais que passaram no estudo corrigido (a tendência de 12 meses caiu).
 - [ ] Separar, em cada fundo, o que foi movimento do mercado do que foi do fundo.
 - [ ] Ler comunicados com IA (o dono tem chave Gemini; pedir pelo formulário seguro, nunca no chat).
 

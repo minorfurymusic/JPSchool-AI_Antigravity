@@ -27,7 +27,8 @@ USADAS = {
     "inf_trimestral_fii_imovel": CHAVE + ["Nome_Imovel", "Percentual_Vacancia", "Percentual_Inadimplencia",
                                           "Percentual_Receitas_FII"],
     "inf_trimestral_fii_resultado_contabil_financeiro": CHAVE + [
-        "Receita_Venda_Investimento_Financeiro", "Receita_Aluguel_Investimento_Financeiro"],
+        "Receita_Venda_Investimento_Financeiro", "Receita_Aluguel_Investimento_Financeiro",
+        "Custo_Investimento_Financeiro", "Resultado_Venda_TVM_Financeiro", "Rendimentos_Declarados"],
 }
 
 

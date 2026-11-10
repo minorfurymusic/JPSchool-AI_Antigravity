@@ -1,5 +1,20 @@
 # Estudo: quais relações separam os FIIs que rendem mais (2017 a 2026)
 
+> **Correção de 2026-11-11.** A primeira versão deste estudo (commit `f08dafa`) tinha um erro na conta de retorno: fundos sem rendimento mensal confiável entravam com rendimento zero. Isso baixava o retorno do "mercado" e dos fundos sem dado, e inflava os resultados. Agora o rendimento desses fundos vem do total declarado no informe trimestral da CVM. O que mudou:
+>
+> | Resultado | Antes (errado) | Agora |
+> |---|---|---|
+> | Tendência de 12 meses | +0,98% no mês seguinte, t 3,7 | +0,38%, t 1,4: **não se sustenta, retirada** |
+> | Rendimento acima do nível dos 6 meses anteriores | +1,48%, t 7,7 | +1,51%, t 8,0: mantida |
+> | Rendimento do mês sobre o preço | +1,45%, t 5,6 | +1,37%, t 5,0: mantida |
+> | Valor patrimonial crescendo (3 meses seguintes) | +1,64%, t 5,1 | +0,91% nos meses 2 e 3, t 3,5: mantida |
+> | Os sinais combinados | +1,54%, t 5,6 | +1,52%, t 5,5: mantida |
+> | Salto de rendimento, ganho mediano em 3 / 6 / 12 meses | +2,4% / +3,0% / +5,6% | +1,7% / +1,3% / +1,8% |
+> | Salto, casos acima do mercado em 3 / 6 meses | 69% / 67% | 64% / 57% |
+>
+> As tabelas abaixo desta nota são da versão antiga e ficam como histórico. A saída literal no fim do arquivo é a nova.
+
+
 Feito em 2026-11-10 com `estudos/relacoes.py`, sobre a base oficial (B3 e CVM). Para refazer: `PYTHONPATH=. .venv/bin/python estudos/relacoes.py`.
 
 ## Método
@@ -65,83 +80,83 @@ Em 259 saltos, o fundo rendeu +2,16% acima do mercado no próprio mês do salto 
 - No histórico, "rendimento do mês" pode ter sido anunciado alguns dias depois do fim do mês. O teste entrando no 10º pregão cobre esse risco.
 - Resultado passado não garante o próximo, e o efeito vem caindo.
 
-## Saída literal
+## Saída literal (versão corrigida, 2026-11-11)
 
 ```
 Painel: 01/2017 a 10/2026, 396 fundos, 12140 fundo-meses com liquidez >= R$ 200,000/dia
 
 === 1. SINAIS E O RETORNO DO MÊS SEGUINTE (acima do mercado) ===
                                             sinal  meses  fundos/mês  grupo baixo %  grupo alto %  alto-baixo %     t  meses a favor  1ª metade %    t1  2ª metade %    t2                    monotônico
-   queda_no_mes (retorno do mês acima do mercado)    101         123          -0.06          0.10          0.17  0.66           0.53        -0.10 -0.19         0.37  1.55 -0.06 +0.01 +0.19 +0.26 +0.10
-tendencia_12m (retorno de 12 meses, sem o último)     95         115          -0.48          0.50          0.98  3.74           0.69         0.88  2.07         1.04  3.12 -0.48 +0.01 +0.12 +0.39 +0.50
-    tendencia_3m (retorno dos 3 meses anteriores)     98         119          -0.04          0.10          0.13  0.52           0.58        -0.11 -0.23         0.30  1.00 -0.04 +0.12 +0.14 +0.33 +0.10
-           preco_sobre_vp (com 2 meses de atraso)    100         121           0.00         -0.15         -0.15 -0.51           0.46        -0.42 -1.03         0.05  0.12 +0.00 +0.33 +0.25 +0.13 -0.15
-                       rendimento_12m_sobre_preco     81          79           0.27          0.71          0.43  1.47           0.60         0.95  2.01         0.23  0.62 +0.27 +0.41 +0.47 +0.80 +0.71
-                    rendimento_do_mes_sobre_preco     89          84          -0.08          1.37          1.45  5.57           0.76         2.24  5.56         1.03  3.16 -0.08 +0.22 +0.36 +0.77 +1.37
-                rendimento_vs_6m (salto ou queda)     85          82          -0.26          1.22          1.48  7.66           0.76         2.29  6.90         1.10  4.96 -0.26 +0.28 +0.60 +0.84 +1.22
-         volume_fora_do_normal (mês ÷ média de 6)     98         120          -0.13          0.18          0.31  1.62           0.61         0.44  1.48         0.22  0.87 -0.13 -0.01 +0.19 +0.44 +0.18
-         cotistas_crescendo (3 meses, com atraso)     98         119           0.01          0.11          0.10  0.48           0.57        -0.12 -0.31         0.25  1.11 +0.01 +0.20 +0.11 +0.30 +0.11
-                 tamanho (patrimônio, com atraso)    100         121           0.17          0.19          0.01  0.08           0.52        -0.18 -0.61         0.16  0.73 +0.17 +0.13 +0.03 +0.05 +0.19
-         oscilacao_12m (desvio do retorno mensal)     97         116           0.14         -0.22         -0.36 -1.24           0.58        -0.59 -1.27        -0.20 -0.55 +0.14 +0.19 +0.37 +0.17 -0.22
-                   liquidez (volume diário médio)    102         124           0.19          0.12         -0.07 -0.41           0.53         0.19  0.63        -0.27 -1.38 +0.19 -0.09 +0.04 +0.22 +0.12
-               vp_crescendo (6 meses, com atraso)     97         117          -0.12          0.26          0.38  2.54           0.63         0.20  0.71         0.49  3.14 -0.12 +0.01 +0.26 +0.22 +0.26
+   queda_no_mes (retorno do mês acima do mercado)    101         123           0.01          0.01         -0.00 -0.01           0.46        -0.27 -0.51         0.19  0.89 +0.01 +0.01 +0.23 +0.27 +0.01
+tendencia_12m (retorno de 12 meses, sem o último)     95         115          -0.20          0.18          0.38  1.36           0.60         0.52  1.16         0.29  0.81 -0.20 +0.20 +0.17 +0.23 +0.18
+    tendencia_3m (retorno dos 3 meses anteriores)     98         119           0.13         -0.03         -0.17 -0.62           0.46        -0.34 -0.71        -0.05 -0.16 +0.13 +0.26 +0.23 +0.10 -0.03
+           preco_sobre_vp (com 2 meses de atraso)    100         121           0.03         -0.14         -0.17 -0.58           0.44        -0.46 -1.12         0.04  0.10 +0.03 +0.31 +0.25 +0.16 -0.14
+                       rendimento_12m_sobre_preco     84          80          -0.04          0.39          0.42  1.38           0.62         0.97  1.66         0.18  0.50 -0.04 +0.14 +0.26 +0.55 +0.39
+                    rendimento_do_mes_sobre_preco     89          86          -0.28          1.09          1.37  4.99           0.76         2.19  4.51         0.94  2.91 -0.28 -0.07 +0.12 +0.58 +1.09
+                rendimento_vs_6m (salto ou queda)     86          84          -0.52          0.98          1.51  8.03           0.80         2.33  7.49         1.11  5.11 -0.52 +0.15 +0.33 +0.55 +0.98
+         volume_fora_do_normal (mês ÷ média de 6)     98         120          -0.11          0.24          0.36  1.83           0.63         0.51  1.68         0.25  0.97 -0.11 -0.01 +0.15 +0.44 +0.24
+         cotistas_crescendo (3 meses, com atraso)     98         119           0.06          0.14          0.08  0.39           0.57        -0.14 -0.36         0.23  1.04 +0.06 +0.20 +0.10 +0.27 +0.14
+                 tamanho (patrimônio, com atraso)    100         121           0.25          0.11         -0.15 -0.82           0.52        -0.36 -1.17         0.01  0.03 +0.25 +0.15 +0.05 +0.06 +0.11
+         oscilacao_12m (desvio do retorno mensal)     97         116           0.15         -0.21         -0.36 -1.26           0.57        -0.49 -1.01        -0.28 -0.77 +0.15 +0.19 +0.41 +0.14 -0.21
+                   liquidez (volume diário médio)    102         124           0.21          0.11         -0.11 -0.64           0.53         0.10  0.33        -0.27 -1.37 +0.21 -0.06 +0.05 +0.18 +0.11
+               vp_crescendo (6 meses, com atraso)     97         117          -0.12          0.25          0.37  2.49           0.63         0.17  0.60         0.51  3.23 -0.12 +0.02 +0.27 +0.26 +0.25
 
 === 2. MESMOS SINAIS, RETORNO DOS 3 MESES SEGUINTES ===
                                             sinal  meses  alto-baixo %     t  meses a favor  1ª metade %    t1  2ª metade %    t2                    monotônico
-   queda_no_mes (retorno do mês acima do mercado)     97         -0.14 -0.35           0.52        -0.95 -1.41         0.45  0.93 -0.39 +0.12 +0.33 +0.29 -0.53
-tendencia_12m (retorno de 12 meses, sem o último)     93          1.99  4.30           0.71         1.53  2.30         2.29  3.63 -1.37 -0.18 +0.26 +0.65 +0.62
-    tendencia_3m (retorno dos 3 meses anteriores)     96          0.17  0.39           0.51         0.05  0.08         0.26  0.43 -0.49 +0.34 +0.29 +0.20 -0.32
-           preco_sobre_vp (com 2 meses de atraso)     97          0.02  0.04           0.57        -0.86 -1.30         0.66  0.82 -0.51 +0.60 +0.51 -0.25 -0.49
-                       rendimento_12m_sobre_preco     79         -0.06 -0.10           0.43         1.74  2.33        -0.80 -1.10 +0.73 +0.72 +0.64 +1.23 +0.67
-                    rendimento_do_mes_sobre_preco     87          1.66  3.43           0.64         3.26  4.98         0.77  1.22 +0.36 +0.32 +0.70 +1.34 +2.01
-                rendimento_vs_6m (salto ou queda)     82          2.11  5.55           0.70         3.60  5.50         1.41  3.22 -0.34 +0.34 +0.95 +1.32 +1.76
-         volume_fora_do_normal (mês ÷ média de 6)     96          0.25  0.72           0.56        -0.06 -0.12         0.47  0.97 -0.34 -0.16 +0.36 +0.27 -0.09
-         cotistas_crescendo (3 meses, com atraso)     96          0.01  0.04           0.55        -0.21 -0.40         0.17  0.38 +0.01 -0.22 +0.16 +0.05 +0.03
-                 tamanho (patrimônio, com atraso)     97          0.67  2.14           0.58         0.36  0.72         0.90  2.24 -0.34 +0.19 -0.29 -0.04 +0.34
-         oscilacao_12m (desvio do retorno mensal)     95         -1.39 -2.61           0.67        -1.59 -1.89        -1.25 -1.80 +0.27 +0.21 +0.64 -0.01 -1.12
-                   liquidez (volume diário médio)     98          0.43  1.22           0.54         0.83  1.29         0.12  0.33 -0.05 -0.36 -0.37 +0.20 +0.38
-               vp_crescendo (6 meses, com atraso)     95          1.64  5.06           0.68         1.30  2.13         1.88  5.33 -1.00 +0.03 +0.14 +0.18 +0.64
+   queda_no_mes (retorno do mês acima do mercado)     97         -0.43 -1.06           0.53        -1.08 -1.59         0.05  0.10 -0.26 +0.19 +0.45 +0.19 -0.69
+tendencia_12m (retorno de 12 meses, sem o último)     93          0.84  1.69           0.59         0.68  0.89         0.95  1.43 -0.83 +0.20 +0.45 +0.14 +0.01
+    tendencia_3m (retorno dos 3 meses anteriores)     96         -0.45 -1.03           0.56        -0.23 -0.34        -0.61 -1.04 -0.12 +0.60 +0.28 -0.12 -0.57
+           preco_sobre_vp (com 2 meses de atraso)     97         -0.04 -0.07           0.47        -0.94 -1.42         0.62  0.78 -0.46 +0.52 +0.52 -0.18 -0.50
+                       rendimento_12m_sobre_preco     81          0.05  0.09           0.58         2.08  3.02        -0.86 -1.20 -0.17 -0.13 -0.10 +0.58 -0.12
+                    rendimento_do_mes_sobre_preco     87          1.65  3.46           0.66         3.44  5.44         0.66  1.06 -0.35 -0.41 -0.15 +0.67 +1.29
+                rendimento_vs_6m (salto ou queda)     84          2.21  5.88           0.69         3.69  5.54         1.47  3.46 -1.14 -0.10 +0.29 +0.61 +1.07
+         volume_fora_do_normal (mês ÷ média de 6)     96          0.38  1.08           0.55         0.18  0.37         0.52  1.07 -0.31 -0.19 +0.26 +0.26 +0.07
+         cotistas_crescendo (3 meses, com atraso)     96         -0.07 -0.22           0.45        -0.30 -0.57         0.09  0.21 +0.18 -0.23 +0.11 -0.08 +0.11
+                 tamanho (patrimônio, com atraso)     97          0.18  0.57           0.51        -0.16 -0.33         0.43  1.06 -0.11 +0.22 -0.25 -0.02 +0.07
+         oscilacao_12m (desvio do retorno mensal)     95         -1.39 -2.63           0.67        -1.33 -1.53        -1.43 -2.15 +0.27 +0.26 +0.67 -0.08 -1.12
+                   liquidez (volume diário médio)     98          0.30  0.88           0.55         0.55  0.86         0.12  0.32 +0.03 -0.27 -0.32 +0.08 +0.33
+               vp_crescendo (6 meses, com atraso)     95          1.62  4.90           0.71         1.18  1.93         1.93  5.30 -1.03 +0.04 +0.15 +0.27 +0.59
 
 === 2b. OS SINAIS FORTES RESISTEM A ENTRAR MAIS TARDE? ===
 entrando no 10º pregão do mês seguinte (retorno do resto do mês)
                                             sinal  meses  alto-baixo %    t  meses a favor  1ª metade %    t1  2ª metade %   t2                    monotônico
-tendencia_12m (retorno de 12 meses, sem o último)     95          0.77 4.38           0.71         0.71  2.60         0.80 3.50 -0.24 -0.04 +0.17 +0.30 +0.53
-                    rendimento_do_mes_sobre_preco     89          1.39 9.09           0.85         1.87  6.79         1.13 6.46 -0.08 +0.34 +0.41 +0.66 +1.31
-                rendimento_vs_6m (salto ou queda)     85          0.70 5.09           0.72         1.16  4.19         0.48 3.27 +0.19 +0.38 +0.52 +0.63 +0.88
-               vp_crescendo (6 meses, com atraso)     97          0.09 0.76           0.52        -0.06 -0.28         0.20 1.47 +0.02 +0.14 +0.19 +0.25 +0.11
+tendencia_12m (retorno de 12 meses, sem o último)     95          0.29 1.53           0.58         0.62  2.14         0.08 0.33 +0.00 +0.12 +0.18 +0.16 +0.29
+                    rendimento_do_mes_sobre_preco     89          1.35 8.54           0.88         1.82  6.37         1.09 6.04 -0.28 +0.10 +0.19 +0.45 +1.07
+                rendimento_vs_6m (salto ou queda)     86          0.73 5.73           0.72         1.16  4.55         0.53 3.82 -0.05 +0.22 +0.31 +0.37 +0.68
+               vp_crescendo (6 meses, com atraso)     97          0.09 0.71           0.54        -0.10 -0.42         0.21 1.52 +0.02 +0.15 +0.20 +0.28 +0.11
 pulando o mês seguinte inteiro (retorno dos meses 2 e 3)
                                             sinal  meses  alto-baixo %    t  meses a favor  1ª metade %   t1  2ª metade %    t2                    monotônico
-tendencia_12m (retorno de 12 meses, sem o último)     93          1.22 3.37           0.67         0.89 1.52         1.45  3.10 -0.99 -0.10 +0.15 +0.32 +0.23
-                    rendimento_do_mes_sobre_preco     87          0.20 0.52           0.56         0.98 1.57        -0.24 -0.50 +0.43 +0.11 +0.49 +0.52 +0.63
-                rendimento_vs_6m (salto ou queda)     82          0.58 2.04           0.59         1.28 2.68         0.25  0.72 -0.06 +0.12 +0.51 +0.45 +0.52
-               vp_crescendo (6 meses, com atraso)     95          0.87 3.44           0.60         0.66 1.43         1.01  3.58 -0.60 +0.04 -0.13 -0.09 +0.27
+tendencia_12m (retorno de 12 meses, sem o último)     93          0.79 1.98           0.63         0.56 0.83         0.93  1.91 -0.81 +0.08 +0.30 -0.04 -0.03
+                    rendimento_do_mes_sobre_preco     87          0.27 0.71           0.56         1.22 1.98        -0.25 -0.53 -0.10 -0.31 -0.13 +0.10 +0.17
+                rendimento_vs_6m (salto ou queda)     84          0.63 2.27           0.58         1.27 2.69         0.31  0.91 -0.56 -0.25 +0.12 -0.00 +0.07
+               vp_crescendo (6 meses, com atraso)     95          0.91 3.52           0.61         0.71 1.50         1.05  3.62 -0.68 +0.04 -0.13 -0.02 +0.23
 Correlação entre os sinais fortes (posição no ranking):
                                tendencia_12m  rendimento_do_mes_sobre_preco  rendimento_vs_6m  vp_crescendo
-tendencia_12m                           1.00                          -0.00              0.00          0.23
-rendimento_do_mes_sobre_preco          -0.00                           1.00              0.18         -0.16
-rendimento_vs_6m                        0.00                           0.18              1.00          0.04
+tendencia_12m                           1.00                           0.00             -0.00          0.23
+rendimento_do_mes_sobre_preco           0.00                           1.00              0.19         -0.16
+rendimento_vs_6m                       -0.00                           0.19              1.00          0.04
 vp_crescendo                            0.23                          -0.16              0.04          1.00
 Sinal combinado (média da posição nos 4 sinais):
  meses  fundos/mês  grupo baixo %  grupo alto %  alto-baixo %    t  meses a favor  1ª metade %   t1  2ª metade %   t2                    monotônico
-    83          80          -0.38          1.16          1.54 5.57           0.71         2.45 4.72         1.15 3.64 -0.38 +0.29 +0.58 +0.81 +1.16
+    84          82          -0.63           0.9          1.52 5.47           0.75         2.63 4.67         1.03 3.47 -0.63 +0.08 +0.40 +0.51 +0.90
 Sinal combinado, ano a ano (grupo alto acima do mercado, % ao mês | alto menos baixo):
 ano      2019   2020   2021   2022   2023   2024   2025   2026
-meses    1.00  12.00  12.00  12.00  12.00  12.00  12.00  10.00
-alto     1.93   2.03   1.54   1.00   1.09   0.78   1.25   0.21
-dif      8.01   2.26   2.18   1.35   1.70   1.30   0.52   0.83
-a_favor  1.00   0.75   0.92   0.75   0.75   0.75   0.50   0.50
+meses    2.00  12.00  12.00  12.00  12.00  12.00  12.00  10.00
+alto     2.95   1.68   1.29   0.62   0.65   0.50   0.93   0.13
+dif      6.33   2.33   2.31   1.42   1.46   1.18   0.31   0.73
+a_favor  1.00   0.83   0.92   0.83   0.75   0.83   0.50   0.50
 
 === 3. O PREÇO JÁ SE MEXE ANTES DO SALTO DE RENDIMENTO? ===
-salto: 259 casos | retorno acima do mercado (média %, estatística t) e volume relativo (mediana):
-   3 mês(es) antes  retorno -0.50% (t -1.7, 35% positivos) | volume 0.95x
-   2 mês(es) antes  retorno +0.58% (t +1.8, 42% positivos) | volume 1.00x
-   1 mês(es) antes  retorno +0.60% (t +2.3, 44% positivos) | volume 1.00x
-   mês do evento    retorno +2.16% (t +7.8, 57% positivos) | volume 1.08x
-queda: 181 casos | retorno acima do mercado (média %, estatística t) e volume relativo (mediana):
-   3 mês(es) antes  retorno +0.25% (t +0.6, 44% positivos) | volume 1.02x
-   2 mês(es) antes  retorno -0.36% (t -0.7, 51% positivos) | volume 1.09x
-   1 mês(es) antes  retorno -0.19% (t -0.4, 35% positivos) | volume 1.05x
-   mês do evento    retorno -2.25% (t -3.3, 31% positivos) | volume 1.02x
+salto: 268 casos | retorno acima do mercado (média %, estatística t) e volume relativo (mediana):
+   3 mês(es) antes  retorno -0.79% (t -2.8, 31% positivos) | volume 0.97x
+   2 mês(es) antes  retorno +0.43% (t +1.3, 41% positivos) | volume 0.99x
+   1 mês(es) antes  retorno +0.31% (t +1.2, 40% positivos) | volume 1.00x
+   mês do evento    retorno +1.96% (t +7.3, 56% positivos) | volume 1.08x
+queda: 189 casos | retorno acima do mercado (média %, estatística t) e volume relativo (mediana):
+   3 mês(es) antes  retorno +0.12% (t +0.3, 42% positivos) | volume 1.02x
+   2 mês(es) antes  retorno -0.70% (t -1.4, 42% positivos) | volume 1.08x
+   1 mês(es) antes  retorno -0.51% (t -1.0, 32% positivos) | volume 1.05x
+   mês do evento    retorno -2.33% (t -3.5, 29% positivos) | volume 1.01x
 
 === 4. DATA LIMITE DO RENDIMENTO ("data com"): o que a cota faz em volta ===
 2608 pagamentos de 276 fundos (jun/2025 em diante). Rendimento médio: 1.04% da cota.
@@ -155,15 +170,15 @@ queda: 181 casos | retorno acima do mercado (média %, estatística t) e volume 
 === 5. JUROS (SELIC) E O MERCADO DE FIIs ===
                meses  retorno_no_mes  retorno_mes_seguinte  positivos
 fase                                                                 
-Selic caindo      49            0.12                  0.05       0.63
-Selic parada      37            1.00                  0.93       0.70
-Selic subindo     32           -0.06                  0.03       0.47
+Selic caindo      49            0.30                  0.23       0.65
+Selic parada      37            1.20                  1.14       0.78
+Selic subindo     32            0.25                  0.33       0.50
 Saltos de rendimento por fase dos juros (retorno acima do mercado, mediana %):
                casos  em_3m  em_6m  acerto_3m
 fase                                         
-Selic caindo     119   1.73   2.55       0.64
-Selic parada      74   3.37   3.30       0.79
-Selic subindo     66   2.96   3.64       0.68
+Selic caindo     122   1.44   1.25       0.61
+Selic parada      77   2.54   1.57       0.70
+Selic subindo     69   1.78   1.03       0.62
 
 === 6. A BOLSA DE HOJE AVISA O FII DE AMANHÃ? (diário) ===
 2443 pregões. Correlação do FII de hoje com: bolsa de hoje +0.44 | bolsa de ontem +0.08 | bolsa de anteontem +0.15 | FII de ontem +0.08 | dólar de ontem -0.04

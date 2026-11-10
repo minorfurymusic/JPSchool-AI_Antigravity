@@ -123,3 +123,50 @@ def test_retorno_acima_do_mercado_e_duracao():
     assert l["pre_ini_3"] == pytest.approx(1.02 ** 3 - 1, abs=1e-6)
     assert l["exc_ini_3"] > 0.06 and l["pex_ini_3"] == pytest.approx(1.02 ** 3 - 1, abs=1e-6)
     assert l["duracao"] == 3 and not l["censurado"]
+
+
+def test_serie_reconhece_fundo_que_anuncia_no_mes_seguinte():
+    # caso real RECR11: a conta da CVM é do mês de referência, a B3 registra no mês da data limite (o seguinte)
+    a = [1.0, 2.0, 1.0, 2.0, 1.0, 2.0, 1.0, 2.0, 1.0, 2.0, 1.0, 2.0]
+    b3 = [np.nan] * 6 + [2.0, 1.0, 2.0, 1.0, 2.0, 1.0]  # igual à conta A do mês anterior
+    final, _, regra = base.escolher_serie(quadro(a, [0.1] * 12, b3))
+    assert "um mês adiante" in regra
+    assert list(final[1:6]) == pytest.approx([1.0, 2.0, 1.0, 2.0, 1.0])
+
+
+def resultado_tri(linhas):
+    cols = ["CNPJ_Fundo_Classe", "Data_Referencia", "Rendimentos_Declarados", "Receita_Venda_Investimento_Financeiro",
+            "Custo_Investimento_Financeiro", "Resultado_Venda_TVM_Financeiro", "Receita_Aluguel_Investimento_Financeiro"]
+    df = pd.DataFrame(linhas, columns=cols)
+    df["Data_Referencia"] = pd.to_datetime(df["Data_Referencia"])
+    return df
+
+
+def test_rendimento_declarado_vem_acumulado_no_semestre():
+    # valores reais de HGLG11 em 2024 (28/03 é o último dia útil do trimestre)
+    res = resultado_tri([["1", "2024-03-28", 111498997, 0, 0, 7492056, 1], ["1", "2024-06-30", 222997995, 10335090, None, 25017322, 1],
+                         ["1", "2024-09-30", 111498997, 7200294, 0, 8937590, 1], ["1", "2024-12-31", 222997995, 0, 0, 15164305, 1]])
+    vinc = pd.DataFrame({"ticker": ["HGLG11"], "cnpj": ["1"]})
+    mensal = pd.DataFrame({"ticker": "HGLG11", "mes": meses(12), "cotas": 33787575.0, "fator": 1.0, "pl": 5.5e9, "preco_fim": 160.0})
+    t = base.montar_trimestral(res, vinc, mensal)
+    assert list(t["trimestre"].dt.strftime("%Y-%m-%d")) == ["2024-03-31", "2024-06-30", "2024-09-30", "2024-12-31"]
+    assert list(t["declarado"]) == pytest.approx([111498997, 111498998, 111498997, 111498998])
+    assert t["rend_tri_aj"].iloc[0] == pytest.approx(3.30, abs=0.001)  # 3 meses de R$ 1,10
+    assert t["ganho_venda_pl"].iloc[1] == pytest.approx((10335090 + 25017322) / 5.5e9)
+
+
+def test_semestre_sem_o_trimestre_anterior_fica_sem_valor():
+    res = resultado_tri([["1", "2024-06-30", 200.0, 0, 0, 0, 1], ["1", "2024-09-30", -5.0, 0, 0, 0, 1]])
+    mensal = pd.DataFrame({"ticker": "X11", "mes": meses(9), "cotas": 100.0, "fator": 1.0, "pl": 1e6, "preco_fim": 10.0})
+    t = base.montar_trimestral(res, pd.DataFrame({"ticker": ["X11"], "cnpj": ["1"]}), mensal)
+    assert t["declarado"].isna().all()  # não dá para separar o trimestre; negativo não é rendimento
+
+
+def test_rendimento_para_retorno_reparte_o_que_falta_do_trimestre():
+    mensal = pd.DataFrame({"ticker": "X11", "mes": meses(6), "rend_aj": [1.0, np.nan, np.nan, np.nan, np.nan, np.nan],
+                           "origem_rend": ["CVM", None, None, None, None, None]})
+    tri = pd.DataFrame({"ticker": ["X11", "X11"], "trimestre": pd.to_datetime(["2024-03-31", "2024-06-30"]), "rend_tri_aj": [3.4, 3.0]})
+    m = base.completar_rendimento(mensal, tri)
+    assert list(m["rend_ret"]) == pytest.approx([1.0, 1.2, 1.2, 1.0, 1.0, 1.0])
+    assert list(m["origem_ret"]) == ["CVM"] + ["CVM trimestral"] * 5
+    assert m["rend_aj"].isna().sum() == 5  # a série usada para detectar salto não é alterada

@@ -229,14 +229,17 @@ def escolher_serie(g: pd.DataFrame) -> tuple[pd.Series, pd.Series, str]:
     """
     a, b, b3 = g["rend_a"], g["rend_b"], g["rend_b3"]
     tem = b3.notna() & (b3 > 0) & ~g["emissao"]
+    # alguns fundos anunciam no mês seguinte ao de referência: a mesma conta, um mês adiante
+    candidatas = {"A": a, "B": b, "A, um mês adiante": a.shift(1), "B, um mês adiante": b.shift(1)}
     acordo = {}
-    for nome, serie in (("A", a), ("B", b)):
+    for nome, serie in candidatas.items():
         comp = tem & serie.notna()
-        acordo[nome] = float(((serie[comp] / b3[comp] - 1).abs() < TOLERANCIA_SERIE).mean()) if comp.sum() >= 4 else None
-    if any(v is not None for v in acordo.values()):
-        nome = max((k for k in acordo if acordo[k] is not None), key=lambda k: acordo[k])
+        if comp.sum() >= 4:
+            acordo[nome] = float(((serie[comp] / b3[comp] - 1).abs() < TOLERANCIA_SERIE).mean())
+    if acordo:
+        nome = max(acordo, key=lambda k: acordo[k])  # em empate vale a primeira (sem deslocamento)
         if acordo[nome] >= MIN_ACORDO:
-            antiga, regra = (a if nome == "A" else b), f"CVM conta {nome} (bate com a B3 em {acordo[nome]:.0%} dos meses)"
+            antiga, regra = candidatas[nome], f"CVM conta {nome} (bate com a B3 em {acordo[nome]:.0%} dos meses)"
         else:
             antiga, regra = pd.Series(np.nan, index=g.index), "histórico da CVM não bate com a B3: só meses da B3"
     else:
@@ -249,6 +252,59 @@ def escolher_serie(g: pd.DataFrame) -> tuple[pd.Series, pd.Series, str]:
     final = b3.where(b3.notna(), antiga)
     origem = pd.Series(np.where(b3.notna(), "B3", np.where(antiga.notna(), "CVM", None)), index=g.index)
     return final, origem, regra
+
+
+def montar_trimestral(resultado: pd.DataFrame, vinc: pd.DataFrame, mensal: pd.DataFrame) -> pd.DataFrame:
+    """Uma linha por fundo e trimestre, do informe trimestral da CVM.
+
+    `Rendimentos_Declarados` vem acumulado no semestre (conferido contra a soma
+    mensal de HGLG11, KNRI11 e MXRF11): o 2º e o 4º trimestres saem por diferença.
+    Existe para todos os fundos, inclusive os que não têm rendimento mensal confiável.
+    """
+    r = resultado.rename(columns={"CNPJ_Fundo_Classe": "cnpj"}).copy()
+    for col in ["Rendimentos_Declarados", "Receita_Venda_Investimento_Financeiro", "Custo_Investimento_Financeiro",
+                "Resultado_Venda_TVM_Financeiro", "Receita_Aluguel_Investimento_Financeiro"]:
+        r[col] = cvm.numero(r[col])
+    r["trimestre"] = r["Data_Referencia"] + pd.offsets.QuarterEnd(0)  # 28/03 e 31/03 são o mesmo trimestre
+    r = r.merge(vinc[["ticker", "cnpj"]].drop_duplicates(), on="cnpj")
+    r = r.sort_values(["ticker", "trimestre", "Rendimentos_Declarados"]).drop_duplicates(["ticker", "trimestre"], keep="last")
+    r = r.sort_values(["ticker", "trimestre"]).reset_index(drop=True)
+    ant = r.groupby("ticker")[["trimestre", "Rendimentos_Declarados"]].shift()
+    seguido = (r["trimestre"] - pd.offsets.QuarterEnd(1)) == ant["trimestre"]
+    fim_de_semestre = r["trimestre"].dt.month.isin([6, 12])
+    decl = r["Rendimentos_Declarados"].where(r["Rendimentos_Declarados"] > 0)
+    r["declarado"] = np.where(fim_de_semestre, np.where(seguido, decl - ant["Rendimentos_Declarados"].clip(lower=0).fillna(0).where(seguido), np.nan), decl)
+    r.loc[r["declarado"] < 0, "declarado"] = np.nan
+    custo = r["Custo_Investimento_Financeiro"].where(r["Custo_Investimento_Financeiro"] < 0, 0).fillna(0)
+    r["ganho_imoveis"] = (r["Receita_Venda_Investimento_Financeiro"].fillna(0) + custo).clip(lower=0)
+    r["ganho_titulos"] = r["Resultado_Venda_TVM_Financeiro"].fillna(0).clip(lower=0)
+    r["aluguel"] = r["Receita_Aluguel_Investimento_Financeiro"]
+
+    m = mensal.assign(trimestre=mensal["mes"] + pd.offsets.QuarterEnd(0))
+    q = m.groupby(["ticker", "trimestre"]).agg(cotas=("cotas", "mean"), fator=("fator", "last"), pl=("pl", "last"),
+                                                 preco=("preco_fim", "last")).reset_index()
+    t = r[["ticker", "trimestre", "declarado", "ganho_imoveis", "ganho_titulos", "aluguel"]].merge(q, on=["ticker", "trimestre"], how="left")
+    t["rend_tri_aj"] = np.where(t["cotas"] > 0, t["declarado"] / t["cotas"] * t["fator"], np.nan)
+    t["ganho_venda_pl"] = np.where(t["pl"] > 0, (t["ganho_imoveis"] + t["ganho_titulos"]) / t["pl"], np.nan)
+    return t
+
+
+def completar_rendimento(mensal: pd.DataFrame, tri: pd.DataFrame) -> pd.DataFrame:
+    """Cria `rend_ret`: rendimento por cota usado para calcular RETORNO.
+    Onde não há valor mensal confiável, reparte pelos meses o que falta do total
+    declarado no trimestre. Não é usado para detectar salto (é uma média)."""
+    m = mensal.copy()
+    m["trimestre"] = m["mes"] + pd.offsets.QuarterEnd(0)
+    m = m.merge(tri[["ticker", "trimestre", "rend_tri_aj"]], on=["ticker", "trimestre"], how="left")
+    g = m.groupby(["ticker", "trimestre"])
+    conhecido = g["rend_aj"].transform(lambda s: s.fillna(0).sum())
+    faltam = g["rend_aj"].transform(lambda s: s.isna().sum())
+    meses = g["rend_aj"].transform("size")
+    # só reparte quando o trimestre está inteiro na base
+    parte = ((m["rend_tri_aj"] - conhecido) / faltam.where(faltam > 0)).clip(lower=0).where(meses == 3)
+    m["rend_ret"] = m["rend_aj"].where(m["rend_aj"].notna(), parte)
+    m["origem_ret"] = np.where(m["rend_aj"].notna(), m["origem_rend"], np.where(m["rend_ret"].notna(), "CVM trimestral", None))
+    return m.drop(columns=["trimestre", "rend_tri_aj"])
 
 
 def montar_fundos(geral: pd.DataFrame) -> pd.DataFrame:
@@ -279,6 +335,7 @@ def montar(con=None, pasta_b3=None, pasta_cvm=None) -> dict:
     comp = cvm.ler_tabela(pasta_cvm, "inf_mensal_fii_complemento")
     ap = cvm.ler_tabela(pasta_cvm, "inf_mensal_fii_ativo_passivo")
     alien = cvm.ler_tabela(pasta_cvm, "inf_trimestral_fii_alienacao_imovel")
+    resultado = cvm.ler_tabela(pasta_cvm, "inf_trimestral_fii_resultado_contabil_financeiro")
     imov = cvm.ler_tabela(pasta_cvm, "inf_trimestral_fii_imovel")
 
     from . import coleta
@@ -295,6 +352,8 @@ def montar(con=None, pasta_b3=None, pasta_cvm=None) -> dict:
     # CNPJ atual de cada papel: o do informe mais recente
     atual = mensal.dropna(subset=["cnpj"]).sort_values("mes").groupby("ticker")["cnpj"].last()
     mensal["cnpj"] = mensal["ticker"].map(atual)
+    trimestral = montar_trimestral(resultado, vinc, mensal)
+    mensal = completar_rendimento(mensal, trimestral)
     fundos = montar_fundos(geral)
     vendas = montar_vendas(alien).merge(vinc[["ticker", "cnpj"]].drop_duplicates(), on="cnpj")
 
@@ -307,7 +366,7 @@ def montar(con=None, pasta_b3=None, pasta_cvm=None) -> dict:
     iv = iv.merge(vinc[["ticker", "cnpj"]].drop_duplicates(), on="cnpj")
 
     for nome, df in [("cotacoes", cot), ("vinculo", vinc), ("sem_vinculo", sem), ("quebras", quebras),
-                     ("mensal", mensal), ("fundos", fundos), ("vendas", vendas), ("imoveis", iv)]:
+                     ("mensal", mensal), ("trimestral", trimestral), ("fundos", fundos), ("vendas", vendas), ("imoveis", iv)]:
         gravar(con, nome, df)
     return {"cotacoes": len(cot), "papeis": cot["ticker"].nunique(), "vinculados": vinc["ticker"].nunique(), "sem_vinculo": len(sem),
             "quebras": len(quebras), "quebras_confirmadas": int(quebras["confirmada"].sum()) if len(quebras) else 0,

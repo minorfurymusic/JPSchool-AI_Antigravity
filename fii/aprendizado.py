@@ -124,7 +124,8 @@ def retornos_mensais(mensal: pd.DataFrame) -> pd.DataFrame:
     m = mensal.sort_values(["ticker", "mes"]).copy()
     ant = m.groupby("ticker")["preco_fim"].shift()
     mes_ant = m.groupby("ticker")["mes"].shift()
-    rend = m["rend_aj"].fillna(0)
+    # para retorno vale o rendimento mais completo que houver (mensal conferido ou repartido do trimestre)
+    rend = (m["rend_ret"] if "rend_ret" in m else m["rend_aj"]).fillna(0)
     m["tr"] = (m["preco_fim"] + rend) / ant - 1            # mês cheio, com rendimento
     m["tr_ini"] = (m["preco_fim"] + rend) / m["preco_ini"] - 1   # entrando no 1º pregão do mês
     m["tr_d10"] = (m["preco_fim"] + rend) / m["preco_d10"] - 1   # entrando no 10º pregão
