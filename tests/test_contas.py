@@ -170,3 +170,26 @@ def test_rendimento_para_retorno_reparte_o_que_falta_do_trimestre():
     assert list(m["rend_ret"]) == pytest.approx([1.0, 1.2, 1.2, 1.0, 1.0, 1.0])
     assert list(m["origem_ret"]) == ["CVM"] + ["CVM trimestral"] * 5
     assert m["rend_aj"].isna().sum() == 5  # a série usada para detectar salto não é alterada
+
+
+def test_classificacao_de_fatos_relevantes():
+    from fii import classificar as cl
+    # trecho real, fato relevante do CPLG11 de 10/11/2026 (FNET 1373612)
+    venda = ("vem, por meio deste fato relevante, em continuidade ao fato relevante publicado em 03 de setembro de 2026, informar que assinou a "
+             "documentação final da venda dos ativos CPLG Meli Imigrantes e CPLG Amazon SJP. O resultado líquido estimado é equivalente a "
+             "R$ 2, 49 (dois reais e quarenta e nove centavos) por cota, possibilitando uma TIR estimada de 42,8% a.a.")
+    r = cl.classificar(venda)
+    assert r["tipo"] == "venda_com_ganho" and r["sentido"] == "alta" and r["valor_por_cota"] == 2.49 and r["continuacao"]
+    # trecho real, fato relevante do HGLG11 de 09/11/2026 (FNET 1373549): reorganização, sem efeito no rendimento
+    r = cl.classificar("Em continuidade ao Fato relevante divulgado em 30 de dezembro de 2025, informamos que o Fundo CUMPRIU todas as condições "
+                       "para a realização da incorporação, ao patrimônio do Fundo, do FII VBI LOGÍSTICO, a partir desta data.")
+    assert r["tipo"] == "reorganizacao" and r["sentido"] == "neutro" and r["valor_por_cota"] is None
+    # "a partir" não pode ser lido como TIR; aviso legal com "venda" não é notícia de venda
+    r = cl.classificar("A administradora assumiu os serviços a partir desta data. Este material não constitui oferta de compra ou venda de cotas.")
+    assert r["tipo"] == "outro" and r["sentido"] == "neutro"
+    r = cl.classificar("O patrimônio caiu em virtude da venda com deságio dos ativos imobiliários do fundo.")
+    assert r["tipo"] == "venda_com_perda"
+    r = cl.classificar("O Fundo informa a redução dos rendimentos a serem distribuídos em razão da rescisão do contrato de locação pelo locatário.")
+    assert r["tipo"] == "rendimento_reducao" and r["sentido"] == "queda"
+    r = cl.classificar("O preço de emissão será de R$ 98,50 por cota. Estima-se incremento na distribuição de rendimentos de R$ 0,05/cota.")
+    assert r["valor_por_cota"] == 0.05 and r["valores_citados"] == 2
