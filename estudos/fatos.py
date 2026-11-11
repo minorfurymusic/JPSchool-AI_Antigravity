@@ -49,27 +49,35 @@ def carregar(con_app, con_fnet):
 
 
 def em_reais(M, C, titulo):
-    """Tabela do dono: cota comprada a R$ 10,00, onde fechou em cada dia e até onde chegou."""
+    """Cota comprada a R$ 10,00. Três tabelas: o dia típico; fechamento em três cenários; até onde chegou.
+    Pessimista = 1 em cada 4 casos foi pior que isso. Típico = o caso do meio. Otimista = 1 em cada 4 foi melhor."""
     if M is None or M[0].shape[0] < 15:
         print(f"\n--- {titulo}: poucos casos ({0 if M is None else M[0].shape[0]}) ---")
         return
+    q = lambda x, p: float(10 * (1 + np.quantile(x, p)))
     print(f"\n--- {titulo}: {M[0].shape[0]} casos | cota comprada a R$ 10,00 ---")
-    lin = []
-    for d in DIAS:
-        f, c = 10 * (1 + M[0][:, d]), 10 * (1 + C[0][:, d])
-        mx, mn = 10 * (1 + M[1][:, :d + 1].max(axis=1)), 10 * (1 + M[2][:, :d + 1].min(axis=1))
-        q = lambda x, p: float(np.quantile(x, p))
-        lin.append({"dia": f"D+{d}", "1 em 10 abaixo de": q(f, .1), "1 em 4 abaixo de": q(f, .25), "FECHOU EM (caso do meio)": q(f, .5),
-                    "1 em 4 acima de": q(f, .75), "1 em 10 acima de": q(f, .9), "ganho % (meio)": (q(f, .5) / 10 - 1) * 100,
-                    "fechou acima de 10,00": (f > 10).mean(), "acima de 10,30": (f >= 10.3).mean(), "acima de 10,50": (f >= 10.5).mean(),
-                    "máxima tocada até o dia (meio)": q(mx, .5), "mínima tocada até o dia (meio)": q(mn, .5),
-                    "outros fundos: fechou em": q(c, .5), "outros: acima de 10,50": (c >= 10.5).mean()})
-    print(pd.DataFrame(lin).round(2).to_string(index=False))
-    for h in (10, 20, 30, 60):
-        pico, dia = M[1][:, :h + 1].max(axis=1), M[1][:, :h + 1].argmax(axis=1)
-        pc = C[1][:, :h + 1].max(axis=1)
-        print(f"   máxima até D+{h}: caso do meio R$ {10*(1+np.median(pico)):.2f} (outros fundos R$ {10*(1+np.median(pc)):.2f}) | 1 em 4 passou de R$ {10*(1+np.quantile(pico,.75)):.2f} | "
-              f"1 em 10 passou de R$ {10*(1+np.quantile(pico,.9)):.2f} | dia da máxima: {np.median(dia):.0f}º pregão (metade entre o {np.quantile(dia,.25):.0f}º e o {np.quantile(dia,.75):.0f}º)")
+    t1, t2, t3 = [], [], []
+    for d in [0] + DIAS:
+        F, H, L = M[0][:, d], M[1][:, d], M[2][:, d]
+        Hc, Lc = M[1][:, :d + 1].max(axis=1), M[2][:, :d + 1].min(axis=1)
+        dia = f"D+{d}" if d else "D0 (compra)"
+        t1.append({"dia": dia, "mínima do dia": q(L, .5), "fechamento": q(F, .5), "máxima do dia": q(H, .5)})
+        t2.append({"dia": dia, "pessimista": q(F, .25), "típico": q(F, .5), "otimista": q(F, .75), "fechou acima da compra": (F > 0).mean(),
+                   "acima de 10,30": (F >= .03).mean(), "acima de 10,50": (F >= .05).mean()})
+        t3.append({"até o dia": dia, "maior preço: típico": q(Hc, .5), "maior preço: otimista": q(Hc, .75), "menor preço: típico": q(Lc, .5),
+                   "menor preço: pessimista": q(Lc, .25)})
+    print("Tabela 1. O dia típico:")
+    print(pd.DataFrame(t1).round(2).to_string(index=False))
+    print("Tabela 2. Fechamento nos três cenários:")
+    print(pd.DataFrame(t2).round(2).to_string(index=False))
+    print("Tabela 3. Até onde a cota chegou desde a compra:")
+    print(pd.DataFrame(t3).round(2).to_string(index=False))
+    print("Dia em que a cota fez o maior preço: " + " | ".join(
+        f"até D+{h}: {np.median(M[1][:, :h + 1].argmax(axis=1)):.0f}º pregão" for h in (10, 20, 30, 60)))
+    print("Ordem de venda executada (a máxima do dia tocou o preço): " + " | ".join(
+        f"R$ {10 * (1 + a):.2f}: " + ", ".join(f"{(M[1][:, :h + 1].max(axis=1) >= a).mean():.0%} até D+{h}" for h in (5, 10, 20, 30)) for a in (.03, .05, .10)))
+    print("Comparação com outros fundos comprados na mesma abertura (fechamento típico): " + " | ".join(
+        f"D+{d}: {q(M[0][:, d], .5):.2f} x {q(C[0][:, d], .5):.2f}" for d in (1, 5, 10, 20, 30)))
 
 
 def main():

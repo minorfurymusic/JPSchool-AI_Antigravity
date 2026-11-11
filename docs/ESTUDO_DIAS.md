@@ -32,7 +32,7 @@ Este é o aviso formal, que sai depois do fechamento do último dia com direito.
 
 Leitura: comprando no aviso formal, a vantagem nos primeiros 5 pregões é quase nula e só aparece do 7º pregão em diante. O tamanho do aumento (25–50%, 50–100%, acima de 100%) não muda o máximo de forma relevante. Isso confirma que o gatilho tem que ser o fato relevante, não o aviso de rendimento.
 
-## Parte 2: fato relevante (primeira amostra, 2.969 documentos)
+## Parte 2: fato relevante (primeira amostra, 2.969 documentos; substituída pela parte 3)
 
 Feito em 2026-11-12 com `estudos/fatos.py`. Para refazer: `PYTHONPATH=. .venv/bin/python estudos/fatos.py`.
 
@@ -196,265 +196,851 @@ depois se viu: temporário         D+60    132               5.02               
            2022 em diante         D+60    189               4.56                8.70                15.89                    22.0                         9 e 45                          NaN                          NaN                          NaN                         0.57
 ```
 
-## Saída literal (parte 2)
+## Parte 3: fato relevante, todos os documentos (10.696), formato novo
+
+Feito em 2026-11-11, depois de concluído o download. Substitui a parte 2, que era só o começo da fila (2017 a março de 2021) e mostrava um efeito maior do que o conjunto completo confirma.
+
+### Download
+
+- 10.696 fatos relevantes com texto, de 02/01/2017 a 10/11/2026.
+- 111 sem texto (PDF só de imagem) e 6 com erro (4 arquivos vazios no FNET, 2 recusas do FNET). Ficam como pendência.
+- 7.980 com papel identificado; 4.034 com liquidez na data; 692 repetições do mesmo fundo e tipo em até 10 pregões foram descartadas.
+- Os 14.929 comunicados ao mercado estão só listados, não baixados.
+
+### Nomes das colunas
+
+Pessimista: 1 em cada 4 casos foi pior. Típico: o caso do meio. Otimista: 1 em cada 4 foi melhor. Cota comprada a R$ 10,00 na abertura do pregão seguinte.
+
+### O fundo declarou AUMENTO de rendimento (147 casos)
+
+| Dia | Mínima do dia | Fechamento | Máxima do dia | Fechamento pessimista | Fechamento otimista | Maior preço até o dia: típico | Maior preço: otimista | Menor preço até o dia: típico | Menor preço: pessimista |
+|---|---|---|---|---|---|---|---|---|---|
+| D0 | 9,94 | 10,01 | 10,07 | 9,95 | 10,09 | 10,07 | 10,15 | 9,94 | 9,86 |
+| D+1 | 9,94 | 10,02 | 10,08 | 9,94 | 10,12 | 10,10 | 10,19 | 9,91 | 9,81 |
+| D+3 | 9,96 | 10,03 | 10,10 | 9,91 | 10,17 | 10,15 | 10,29 | 9,89 | 9,76 |
+| D+5 | 9,95 | 10,02 | 10,10 | 9,92 | 10,20 | 10,18 | 10,34 | 9,87 | 9,72 |
+| D+7 | 9,96 | 10,04 | 10,09 | 9,91 | 10,21 | 10,20 | 10,39 | 9,85 | 9,70 |
+| D+10 | 9,94 | 10,01 | 10,08 | 9,89 | 10,24 | 10,24 | 10,44 | 9,82 | 9,68 |
+| D+15 | 9,96 | 10,01 | 10,10 | 9,81 | 10,30 | 10,30 | 10,54 | 9,75 | 9,59 |
+| D+20 | 9,96 | 10,03 | 10,10 | 9,80 | 10,38 | 10,35 | 10,65 | 9,73 | 9,55 |
+| D+30 | 9,92 | 10,02 | 10,09 | 9,69 | 10,36 | 10,41 | 10,79 | 9,69 | 9,38 |
+| D+60 | 9,85 | 9,91 | 9,97 | 9,41 | 10,48 | 10,59 | 10,97 | 9,49 | 9,00 |
+
+Maior preço: no 4º pregão (até D+10), no 10º (até D+20), no 13º (até D+30).
+Ordem de venda a R$ 10,30: executada em 29% até D+5, 43% até D+10, 54% até D+20, 61% até D+30.
+Outros fundos na mesma abertura (fechamento típico): 10,00 em D+1, D+5 e D+10; 9,96 em D+20.
+
+### O fundo declarou REDUÇÃO de rendimento (101 casos)
+
+Fechamento típico: 9,97 em D0, 9,95 em D+1, 9,93 em D+3, 9,94 em D+10, 9,96 em D+20, 9,90 em D+30. Fechou acima da compra em 36% a 44% dos casos nos primeiros 20 pregões. Outros fundos: 9,99 a 10,00.
+
+### Por assunto do texto
+
+- Venda de ativo com ganho (229 casos): fechamento típico de 10,00 a 10,01 até D+5 e 9,99 em D+10 e D+20. Praticamente igual aos outros fundos.
+- Valor por cota informado de 3% do preço ou mais (73 casos): típico de 10,04 em D+5 e D+7, 10,05 em D+15; ordem a R$ 10,50 executada em 37% até D+20.
+- Valor por cota entre 1% e 3% (71 casos): sem diferença para os outros fundos.
+
+### Leitura
+
+- No conjunto completo, o caso típico quase não sai do lugar: a cota fecha entre R$ 10,01 e R$ 10,04 nos primeiros 30 pregões depois de um aumento declarado.
+- A vantagem sobre os outros fundos existe, mas é de 2 a 7 centavos por cota de R$ 10.
+- O que há de aproveitável é a parte de cima: o cenário otimista chega a R$ 10,38 no D+20, e o maior preço tocado até lá passa de R$ 10,65 em 1 caso a cada 4.
+- A redução declarada tem efeito mais nítido que o aumento: 6 em cada 10 fecham abaixo da compra nos primeiros 20 pregões.
+- A parte 2, com 66 casos, mostrava R$ 10,14 no D+15. Com 147 casos é R$ 10,01. Amostra pequena engana.
+
+### Limites
+
+- Leitura por palavras: acha 147 aumentos declarados em 10.696 fatos relevantes. Há mais, escritos de outro jeito.
+- Só 35 aumentos dizem o percentual; não dá para separar por tamanho.
+- Sem rendimento recebido, custos ou imposto.
+
+## Saída literal (parte 3, todos os documentos)
 
 ```
-Fatos relevantes lidos: 2969, de 02/01/2017 a 10/11/2026 | com papel na bolsa identificado: 2555
-Hora de entrega: antes das 10h 12% | 10h às 17h 3% | 17h em diante 85%
+Fatos relevantes lidos: 10696, de 02/01/2017 a 10/11/2026 | com papel na bolsa identificado: 7980
+Hora de entrega: antes das 10h 13% | 10h às 17h 3% | 17h em diante 84%
 
 Tipo principal de cada fato relevante (classificação por palavras):
                                                  documentos  com_valor_por_cota  continuacao
-outros assuntos                                         696                  45           53
-aumento de rendimento dito no texto                     375                 129           63
-emissão de cotas                                        354                  29           13
-venda de ativo, sem falar em ganho                      325                  98           33
-saída de inquilino ou inadimplência                     251                  86           25
-reorganização do fundo                                  217                   9           12
-redução de rendimento dita no texto                     195                  38           11
-compra de ativo                                         190                  41           33
-locação nova ou renovada                                174                  45           10
-recebimento extraordinário (multa, indenização)         105                  25           20
-venda de ativo com ganho                                 86                  38           17
-venda de ativo com perda                                  1                   0            0
+outros assuntos                                        3001                 253          319
+venda de ativo, sem falar em ganho                     1480                 272          222
+aumento de rendimento dito no texto                     925                 386          158
+emissão de cotas                                        904                  57           33
+redução de rendimento dita no texto                     815                  92           25
+reorganização do fundo                                  805                  42           75
+saída de inquilino ou inadimplência                     659                 213           71
+locação nova ou renovada                                651                 272           41
+compra de ativo                                         588                  96           86
+venda de ativo com ganho                                572                 325          112
+recebimento extraordinário (multa, indenização)         292                 112           47
+venda de ativo com perda                                  4                   0            0
 
-Com liquidez e preço: 1252 | repetições do mesmo fundo e tipo em até 10 pregões: 239
+Com liquidez e preço: 4034 | repetições do mesmo fundo e tipo em até 10 pregões: 692
 
 ========================================================================================================================
 COMPRA NA ABERTURA DO PREGÃO SEGUINTE AO FATO RELEVANTE
 ========================================================================================================================
 
---- TODOS os que se encaixam: aumento ou possível aumento de rendimento, sem sinal contrário no texto: 212 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.81              9.92                     10.01            10.09             10.23            0.06                   0.52            0.06            0.03                           10.08                            9.92                     10.00                    0.01
- D+2               9.74              9.90                     10.01            10.10             10.25            0.10                   0.52            0.07            0.02                           10.10                            9.91                     10.00                    0.02
- D+3               9.74              9.90                     10.02            10.11             10.30            0.16                   0.54            0.10            0.02                           10.12                            9.90                     10.00                    0.03
- D+5               9.66              9.89                     10.03            10.19             10.34            0.28                   0.58            0.13            0.06                           10.17                            9.87                     10.00                    0.05
- D+7               9.55              9.84                     10.03            10.19             10.45            0.31                   0.57            0.17            0.07                           10.22                            9.85                     10.00                    0.07
-D+10               9.54              9.81                     10.01            10.24             10.53            0.13                   0.52            0.23            0.12                           10.24                            9.82                     10.00                    0.09
-D+15               9.46              9.78                     10.01            10.28             10.60            0.06                   0.51            0.24            0.13                           10.31                            9.76                     10.00                    0.11
-D+20               9.41              9.73                     10.02            10.32             10.71            0.21                   0.51            0.26            0.20                           10.38                            9.73                     10.01                    0.15
-D+30               9.13              9.67                     10.03            10.43             10.77            0.27                   0.53            0.32            0.22                           10.48                            9.63                     10.01                    0.18
-D+45               8.86              9.55                     10.03            10.63             11.01            0.27                   0.52            0.36            0.29                           10.59                            9.56                     10.01                    0.21
-D+60               8.48              9.31                     10.05            10.58             11.27            0.53                   0.51            0.35            0.27                           10.66                            9.49                      9.99                    0.24
-   máxima até D+10: caso do meio R$ 10.24 (outros fundos R$ 10.19) | 1 em 4 passou de R$ 10.51 | 1 em 10 passou de R$ 10.73 | dia da máxima: 4º pregão (metade entre o 1º e o 8º)
-   máxima até D+20: caso do meio R$ 10.38 (outros fundos R$ 10.29) | 1 em 4 passou de R$ 10.70 | 1 em 10 passou de R$ 11.05 | dia da máxima: 7º pregão (metade entre o 2º e o 16º)
-   máxima até D+30: caso do meio R$ 10.48 (outros fundos R$ 10.35) | 1 em 4 passou de R$ 10.81 | 1 em 10 passou de R$ 11.14 | dia da máxima: 12º pregão (metade entre o 3º e o 22º)
-   máxima até D+60: caso do meio R$ 10.66 (outros fundos R$ 10.52) | 1 em 4 passou de R$ 11.07 | 1 em 10 passou de R$ 11.61 | dia da máxima: 23º pregão (metade entre o 5º e o 48º)
+--- TODOS os que se encaixam: aumento ou possível aumento de rendimento, sem sinal contrário no texto: 708 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.95       10.00          10.06
+        D+1           9.95       10.00          10.06
+        D+2           9.95       10.00          10.06
+        D+3           9.94       10.00          10.06
+        D+5           9.94       10.00          10.06
+        D+7           9.93        9.99          10.05
+       D+10           9.92        9.99          10.04
+       D+15           9.93        9.98          10.04
+       D+20           9.93        9.98          10.05
+       D+30           9.90        9.95          10.01
+       D+45           9.86        9.94          10.00
+       D+60           9.85        9.90           9.97
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.95   10.00     10.06                    0.49            0.03            0.01
+        D+1        9.93   10.00     10.08                    0.49            0.05            0.02
+        D+2        9.92   10.00     10.09                    0.51            0.07            0.02
+        D+3        9.91   10.00     10.10                    0.51            0.07            0.02
+        D+5        9.89   10.00     10.13                    0.50            0.10            0.04
+        D+7        9.87    9.99     10.14                    0.48            0.12            0.05
+       D+10        9.83    9.99     10.16                    0.47            0.15            0.07
+       D+15        9.79    9.98     10.19                    0.46            0.17            0.09
+       D+20        9.77    9.98     10.19                    0.47            0.19            0.12
+       D+30        9.69    9.95     10.26                    0.45            0.23            0.14
+       D+45        9.58    9.94     10.35                    0.45            0.27            0.19
+       D+60        9.41    9.90     10.38                    0.44            0.28            0.20
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.06                  10.12                 9.95                     9.88
+        D+1                10.08                  10.17                 9.92                     9.84
+        D+2                10.10                  10.20                 9.90                     9.81
+        D+3                10.11                  10.24                 9.89                     9.78
+        D+5                10.14                  10.29                 9.87                     9.73
+        D+7                10.16                  10.34                 9.84                     9.70
+       D+10                10.18                  10.39                 9.81                     9.65
+       D+15                10.23                  10.46                 9.76                     9.58
+       D+20                10.25                  10.54                 9.73                     9.48
+       D+30                10.31                  10.64                 9.67                     9.38
+       D+45                10.39                  10.79                 9.57                     9.20
+       D+60                10.44                  10.88                 9.49                     9.04
+Dia em que a cota fez o maior preço: até D+10: 3º pregão | até D+20: 7º pregão | até D+30: 11º pregão | até D+60: 21º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 24% até D+5, 35% até D+10, 46% até D+20, 52% até D+30 | R$ 10.50: 10% até D+5, 17% até D+10, 28% até D+20, 34% até D+30 | R$ 11.00: 2% até D+5, 4% até D+10, 8% até D+20, 10% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.00 x 9.99 | D+5: 10.00 x 9.99 | D+10: 9.99 x 9.98 | D+20: 9.98 x 9.96 | D+30: 9.95 x 9.95
 
---- aumento de rendimento dito no texto: 121 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.81              9.91                     10.01            10.11             10.23            0.07                   0.55            0.07            0.02                           10.08                            9.91                     10.00                    0.01
- D+2               9.73              9.85                     10.00            10.11             10.23            0.00                   0.50            0.07            0.02                           10.09                            9.90                     10.00                    0.02
- D+3               9.73              9.87                     10.01            10.12             10.31            0.12                   0.53            0.11            0.02                           10.11                            9.90                     10.00                    0.02
- D+5               9.66              9.87                     10.03            10.19             10.33            0.29                   0.58            0.12            0.05                           10.18                            9.88                     10.00                    0.04
- D+7               9.55              9.84                     10.03            10.18             10.43            0.28                   0.57            0.17            0.07                           10.25                            9.85                     10.00                    0.05
-D+10               9.54              9.81                     10.01            10.26             10.52            0.07                   0.53            0.23            0.11                           10.28                            9.83                     10.00                    0.08
-D+15               9.55              9.76                     10.06            10.29             10.59            0.61                   0.57            0.25            0.12                           10.33                            9.77                     10.00                    0.12
-D+20               9.44              9.80                     10.05            10.37             10.71            0.47                   0.58            0.30            0.22                           10.42                            9.75                     10.00                    0.15
-D+30               9.27              9.75                     10.12            10.53             10.77            1.20                   0.61            0.38            0.26                           10.54                            9.66                     10.01                    0.20
-D+45               8.98              9.73                     10.10            10.69             11.05            1.00                   0.62            0.41            0.31                           10.66                            9.64                     10.02                    0.22
-D+60               8.78              9.59                     10.10            10.58             11.32            1.02                   0.55            0.38            0.27                           10.68                            9.57                      9.99                    0.25
-   máxima até D+10: caso do meio R$ 10.28 (outros fundos R$ 10.18) | 1 em 4 passou de R$ 10.54 | 1 em 10 passou de R$ 10.70 | dia da máxima: 5º pregão (metade entre o 1º e o 8º)
-   máxima até D+20: caso do meio R$ 10.42 (outros fundos R$ 10.28) | 1 em 4 passou de R$ 10.70 | 1 em 10 passou de R$ 11.05 | dia da máxima: 9º pregão (metade entre o 2º e o 17º)
-   máxima até D+30: caso do meio R$ 10.54 (outros fundos R$ 10.37) | 1 em 4 passou de R$ 10.80 | 1 em 10 passou de R$ 11.14 | dia da máxima: 15º pregão (metade entre o 3º e o 24º)
-   máxima até D+60: caso do meio R$ 10.68 (outros fundos R$ 10.52) | 1 em 4 passou de R$ 11.18 | 1 em 10 passou de R$ 11.73 | dia da máxima: 29º pregão (metade entre o 6º e o 50º)
+--- aumento de rendimento dito no texto: 264 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.93       10.00          10.04
+        D+1           9.93        9.99          10.04
+        D+2           9.92        9.98          10.05
+        D+3           9.92        9.99          10.04
+        D+5           9.92        9.98          10.03
+        D+7           9.91        9.99          10.04
+       D+10           9.93        9.99          10.03
+       D+15           9.96       10.01          10.05
+       D+20           9.93        9.99          10.05
+       D+30           9.94       10.00          10.04
+       D+45           9.93       10.00          10.04
+       D+60           9.89        9.94          10.01
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.94   10.00     10.06                    0.44            0.04            0.01
+        D+1        9.91    9.99     10.09                    0.46            0.05            0.02
+        D+2        9.89    9.98     10.09                    0.44            0.06            0.02
+        D+3        9.89    9.99     10.10                    0.47            0.08            0.02
+        D+5        9.87    9.98     10.12                    0.46            0.09            0.04
+        D+7        9.85    9.99     10.12                    0.48            0.11            0.05
+       D+10        9.83    9.99     10.16                    0.47            0.16            0.08
+       D+15        9.79   10.01     10.22                    0.50            0.17            0.09
+       D+20        9.78    9.99     10.21                    0.49            0.19            0.13
+       D+30        9.69   10.00     10.30                    0.50            0.25            0.16
+       D+45        9.61   10.00     10.40                    0.50            0.30            0.20
+       D+60        9.46    9.94     10.41                    0.45            0.30            0.19
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.04                  10.11                 9.93                     9.87
+        D+1                10.07                  10.15                 9.91                     9.82
+        D+2                10.09                  10.19                 9.89                     9.77
+        D+3                10.10                  10.23                 9.88                     9.75
+        D+5                10.12                  10.26                 9.86                     9.69
+        D+7                10.15                  10.32                 9.84                     9.67
+       D+10                10.18                  10.40                 9.81                     9.64
+       D+15                10.23                  10.50                 9.76                     9.56
+       D+20                10.25                  10.58                 9.74                     9.47
+       D+30                10.30                  10.67                 9.66                     9.37
+       D+45                10.40                  10.83                 9.60                     9.20
+       D+60                10.46                  10.88                 9.56                     9.08
+Dia em que a cota fez o maior preço: até D+10: 3º pregão | até D+20: 8º pregão | até D+30: 12º pregão | até D+60: 24º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 20% até D+5, 34% até D+10, 44% até D+20, 51% até D+30 | R$ 10.50: 11% até D+5, 19% até D+10, 30% até D+20, 37% até D+30 | R$ 11.00: 2% até D+5, 5% até D+10, 8% até D+20, 9% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 9.99 x 10.00 | D+5: 9.98 x 9.99 | D+10: 9.99 x 9.98 | D+20: 9.99 x 9.97 | D+30: 10.00 x 9.95
 
---- venda de ativo com ganho: 36 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.84              9.96                     10.00            10.06             10.16            0.04                   0.53            0.06            0.03                           10.07                            9.94                     10.00                    0.01
- D+2               9.86              9.94                     10.03            10.07             10.32            0.25                   0.61            0.11            0.03                           10.11                            9.93                     10.00                    0.04
- D+3               9.81              9.96                     10.03            10.11             10.40            0.26                   0.58            0.14            0.06                           10.14                            9.93                     10.00                    0.05
- D+5               9.66              9.94                     10.05            10.20             10.52            0.50                   0.64            0.17            0.11                           10.17                            9.88                     10.00                    0.08
- D+7               9.55              9.79                     10.00            10.30             10.51            0.01                   0.50            0.25            0.11                           10.19                            9.86                     10.00                    0.09
-D+10               9.65              9.82                     10.01            10.31             10.62            0.10                   0.50            0.28            0.17                           10.21                            9.83                     10.02                    0.13
-D+15               9.64              9.89                     10.02            10.43             10.59            0.22                   0.56            0.31            0.17                           10.26                            9.77                     10.02                    0.14
-D+20               9.56              9.82                     10.09            10.27             10.75            0.89                   0.58            0.25            0.17                           10.35                            9.77                     10.02                    0.16
-D+30               9.47              9.68                      9.93            10.31             10.75           -0.67                   0.47            0.25            0.17                           10.41                            9.66                     10.01                    0.18
-D+45               8.98              9.45                      9.99            10.63             10.95           -0.11                   0.50            0.36            0.31                           10.59                            9.55                     10.00                    0.21
-D+60               7.62              9.09                     10.14            10.61             10.90            1.39                   0.56            0.42            0.36                           10.73                            9.55                      9.97                    0.23
-   máxima até D+10: caso do meio R$ 10.21 (outros fundos R$ 10.20) | 1 em 4 passou de R$ 10.52 | 1 em 10 passou de R$ 10.87 | dia da máxima: 4º pregão (metade entre o 1º e o 6º)
-   máxima até D+20: caso do meio R$ 10.35 (outros fundos R$ 10.30) | 1 em 4 passou de R$ 10.80 | 1 em 10 passou de R$ 11.04 | dia da máxima: 6º pregão (metade entre o 2º e o 17º)
-   máxima até D+30: caso do meio R$ 10.41 (outros fundos R$ 10.39) | 1 em 4 passou de R$ 10.85 | 1 em 10 passou de R$ 11.20 | dia da máxima: 14º pregão (metade entre o 5º e o 25º)
-   máxima até D+60: caso do meio R$ 10.73 (outros fundos R$ 10.57) | 1 em 4 passou de R$ 11.02 | 1 em 10 passou de R$ 11.59 | dia da máxima: 22º pregão (metade entre o 5º e o 51º)
+--- venda de ativo com ganho: 229 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.95       10.00          10.06
+        D+1           9.96       10.00          10.06
+        D+2           9.96       10.01          10.07
+        D+3           9.96       10.01          10.07
+        D+5           9.95       10.01          10.06
+        D+7           9.94        9.99          10.05
+       D+10           9.94        9.99          10.04
+       D+15           9.94        9.98          10.04
+       D+20           9.95        9.99          10.08
+       D+30           9.89        9.95          10.01
+       D+45           9.88        9.95          10.00
+       D+60           9.90        9.96          10.03
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.97   10.00     10.05                    0.51            0.02            0.01
+        D+1        9.95   10.00     10.06                    0.49            0.03            0.02
+        D+2        9.94   10.01     10.07                    0.55            0.09            0.01
+        D+3        9.93   10.01     10.09                    0.53            0.08            0.02
+        D+5        9.91   10.01     10.14                    0.52            0.11            0.05
+        D+7        9.89    9.99     10.15                    0.49            0.13            0.06
+       D+10        9.83    9.99     10.19                    0.49            0.16            0.07
+       D+15        9.82    9.98     10.16                    0.47            0.16            0.07
+       D+20        9.80    9.99     10.16                    0.49            0.17            0.08
+       D+30        9.73    9.95     10.26                    0.45            0.22            0.12
+       D+45        9.62    9.95     10.37                    0.46            0.28            0.20
+       D+60        9.56    9.96     10.42                    0.47            0.30            0.22
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.06                  10.12                 9.95                     9.90
+        D+1                10.08                  10.17                 9.93                     9.87
+        D+2                10.10                  10.18                 9.92                     9.84
+        D+3                10.11                  10.21                 9.90                     9.82
+        D+5                10.14                  10.27                 9.87                     9.78
+        D+7                10.16                  10.31                 9.86                     9.73
+       D+10                10.17                  10.37                 9.84                     9.68
+       D+15                10.20                  10.44                 9.80                     9.59
+       D+20                10.24                  10.49                 9.77                     9.55
+       D+30                10.31                  10.57                 9.70                     9.44
+       D+45                10.39                  10.75                 9.58                     9.29
+       D+60                10.43                  10.84                 9.53                     9.11
+Dia em que a cota fez o maior preço: até D+10: 4º pregão | até D+20: 7º pregão | até D+30: 12º pregão | até D+60: 24º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 24% até D+5, 33% até D+10, 45% até D+20, 51% até D+30 | R$ 10.50: 8% até D+5, 15% até D+10, 24% até D+20, 31% até D+30 | R$ 11.00: 2% até D+5, 3% até D+10, 7% até D+20, 9% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.00 x 9.99 | D+5: 10.01 x 9.98 | D+10: 9.99 x 9.97 | D+20: 9.99 x 9.96 | D+30: 9.95 x 9.93
 
---- recebimento extraordinário (multa, indenização): poucos casos (14) ---
+--- recebimento extraordinário (multa, indenização): 50 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.94       10.00          10.07
+        D+1           9.96        9.99          10.06
+        D+2           9.94       10.00          10.06
+        D+3           9.95        9.99          10.06
+        D+5           9.94       10.00          10.04
+        D+7           9.93        9.97          10.04
+       D+10           9.93        9.96          10.03
+       D+15           9.95        9.98          10.00
+       D+20           9.95       10.00          10.05
+       D+30           9.82        9.87           9.93
+       D+45           9.83        9.93           9.98
+       D+60           9.69        9.73           9.84
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.91   10.00     10.05                    0.48            0.02            0.00
+        D+1        9.92    9.99     10.06                    0.46            0.06            0.02
+        D+2        9.92   10.00     10.06                    0.50            0.06            0.00
+        D+3        9.93    9.99     10.09                    0.46            0.04            0.02
+        D+5        9.93   10.00     10.09                    0.48            0.08            0.02
+        D+7        9.89    9.97     10.06                    0.44            0.14            0.00
+       D+10        9.77    9.96     10.16                    0.40            0.16            0.06
+       D+15        9.82    9.98     10.16                    0.46            0.18            0.14
+       D+20        9.70   10.00     10.20                    0.54            0.22            0.12
+       D+30        9.66    9.87     10.08                    0.30            0.12            0.12
+       D+45        9.60    9.93     10.05                    0.28            0.12            0.12
+       D+60        9.52    9.73     10.19                    0.36            0.22            0.12
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.07                  10.11                 9.94                     9.86
+        D+1                10.09                  10.14                 9.94                     9.82
+        D+2                10.10                  10.15                 9.93                     9.78
+        D+3                10.12                  10.18                 9.90                     9.76
+        D+5                10.13                  10.29                 9.88                     9.74
+        D+7                10.15                  10.44                 9.83                     9.72
+       D+10                10.16                  10.48                 9.79                     9.59
+       D+15                10.17                  10.57                 9.76                     9.51
+       D+20                10.23                  10.59                 9.72                     9.49
+       D+30                10.28                  10.67                 9.64                     9.40
+       D+45                10.30                  10.71                 9.58                     9.28
+       D+60                10.43                  10.74                 9.51                     9.14
+Dia em que a cota fez o maior preço: até D+10: 3º pregão | até D+20: 8º pregão | até D+30: 10º pregão | até D+60: 15º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 26% até D+5, 38% até D+10, 46% até D+20, 50% até D+30 | R$ 10.50: 14% até D+5, 20% até D+10, 30% até D+20, 32% até D+30 | R$ 11.00: 0% até D+5, 0% até D+10, 8% até D+20, 10% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 9.99 x 9.99 | D+5: 10.00 x 10.00 | D+10: 9.96 x 10.00 | D+20: 10.00 x 9.99 | D+30: 9.87 x 9.96
 
---- locação nova ou renovada: 41 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.87              9.92                      9.99            10.08             10.20           -0.08                   0.46            0.02            0.02                           10.08                            9.90                     10.00                    0.01
- D+2               9.87              9.91                     10.00            10.06             10.26           -0.02                   0.49            0.05            0.02                           10.10                            9.90                     10.00                    0.02
- D+3               9.80              9.91                     10.00            10.07             10.21            0.02                   0.54            0.07            0.00                           10.10                            9.89                     10.00                    0.02
- D+5               9.76              9.88                     10.03            10.16             10.26            0.28                   0.61            0.10            0.05                           10.18                            9.85                     10.00                    0.04
- D+7               9.82              9.95                     10.07            10.19             10.44            0.67                   0.68            0.12            0.07                           10.19                            9.85                     10.01                    0.05
-D+10               9.70              9.91                     10.06            10.14             10.50            0.55                   0.59            0.20            0.12                           10.21                            9.78                     10.01                    0.07
-D+15               9.71              9.82                      9.96            10.08             10.65           -0.35                   0.41            0.17            0.15                           10.25                            9.76                     10.02                    0.13
-D+20               9.53              9.73                      9.94            10.16             10.70           -0.60                   0.34            0.22            0.20                           10.35                            9.70                     10.01                    0.14
-D+30               9.19              9.67                      9.91            10.34             10.71           -0.88                   0.46            0.27            0.17                           10.38                            9.57                     10.02                    0.18
-D+45               9.25              9.47                      9.70            10.54             10.78           -3.00                   0.39            0.27            0.27                           10.38                            9.44                      9.98                    0.22
-D+60               8.49              9.22                      9.73            10.24             10.82           -2.71                   0.41            0.24            0.22                           10.39                            9.31                      9.94                    0.23
-   máxima até D+10: caso do meio R$ 10.21 (outros fundos R$ 10.19) | 1 em 4 passou de R$ 10.39 | 1 em 10 passou de R$ 10.68 | dia da máxima: 4º pregão (metade entre o 1º e o 8º)
-   máxima até D+20: caso do meio R$ 10.35 (outros fundos R$ 10.29) | 1 em 4 passou de R$ 10.67 | 1 em 10 passou de R$ 11.11 | dia da máxima: 7º pregão (metade entre o 2º e o 13º)
-   máxima até D+30: caso do meio R$ 10.38 (outros fundos R$ 10.39) | 1 em 4 passou de R$ 10.81 | 1 em 10 passou de R$ 11.11 | dia da máxima: 10º pregão (metade entre o 2º e o 20º)
-   máxima até D+60: caso do meio R$ 10.39 (outros fundos R$ 10.55) | 1 em 4 passou de R$ 10.95 | 1 em 10 passou de R$ 11.33 | dia da máxima: 14º pregão (metade entre o 4º e o 38º)
+--- locação nova ou renovada: 165 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.95       10.01          10.08
+        D+1           9.96       10.01          10.08
+        D+2           9.95       10.02          10.08
+        D+3           9.95       10.02          10.08
+        D+5           9.95       10.02          10.08
+        D+7           9.94       10.00          10.08
+       D+10           9.89        9.98          10.05
+       D+15           9.88        9.94          10.02
+       D+20           9.89        9.95          10.01
+       D+30           9.85        9.93          10.00
+       D+45           9.78        9.86           9.92
+       D+60           9.69        9.76           9.83
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.95   10.01     10.07                    0.56            0.02            0.01
+        D+1        9.94   10.01     10.12                    0.53            0.05            0.02
+        D+2        9.93   10.02     10.12                    0.56            0.07            0.02
+        D+3        9.91   10.02     10.12                    0.55            0.07            0.02
+        D+5        9.90   10.02     10.14                    0.56            0.10            0.04
+        D+7        9.89   10.00     10.15                    0.50            0.11            0.07
+       D+10        9.84    9.98     10.14                    0.47            0.13            0.08
+       D+15        9.73    9.94     10.17                    0.40            0.17            0.12
+       D+20        9.71    9.95     10.19                    0.41            0.20            0.13
+       D+30        9.66    9.93     10.26                    0.44            0.22            0.13
+       D+45        9.43    9.86     10.29                    0.39            0.25            0.19
+       D+60        9.22    9.76     10.28                    0.38            0.25            0.21
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.08                  10.15                 9.95                     9.86
+        D+1                10.10                  10.19                 9.92                     9.84
+        D+2                10.13                  10.26                 9.90                     9.82
+        D+3                10.14                  10.28                 9.89                     9.79
+        D+5                10.17                  10.34                 9.86                     9.74
+        D+7                10.18                  10.37                 9.84                     9.72
+       D+10                10.20                  10.40                 9.79                     9.67
+       D+15                10.27                  10.45                 9.74                     9.56
+       D+20                10.29                  10.53                 9.70                     9.43
+       D+30                10.35                  10.70                 9.59                     9.29
+       D+45                10.38                  10.86                 9.45                     9.08
+       D+60                10.45                  10.97                 9.31                     8.83
+Dia em que a cota fez o maior preço: até D+10: 4º pregão | até D+20: 6º pregão | até D+30: 8º pregão | até D+60: 17º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 29% até D+5, 38% até D+10, 49% até D+20, 55% até D+30 | R$ 10.50: 10% até D+5, 14% até D+10, 27% até D+20, 36% até D+30 | R$ 11.00: 2% até D+5, 5% até D+10, 11% até D+20, 13% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.01 x 10.00 | D+5: 10.02 x 9.99 | D+10: 9.98 x 9.98 | D+20: 9.95 x 9.96 | D+30: 9.93 x 9.92
 
---- valor informado por cota abaixo de 1% do preço: 57 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.82              9.93                     10.02            10.12             10.25            0.19                   0.60            0.05            0.05                           10.10                            9.96                     10.00                    0.02
- D+2               9.75              9.90                     10.03            10.11             10.29            0.32                   0.60            0.11            0.05                           10.12                            9.95                     10.00                    0.03
- D+3               9.80              9.93                     10.05            10.17             10.34            0.47                   0.63            0.14            0.05                           10.14                            9.93                     10.00                    0.04
- D+5               9.75              9.94                     10.03            10.25             10.55            0.29                   0.63            0.21            0.14                           10.20                            9.91                     10.00                    0.07
- D+7               9.55              9.91                     10.07            10.25             10.45            0.75                   0.63            0.23            0.07                           10.23                            9.86                     10.00                    0.07
-D+10               9.55              9.87                     10.00            10.26             10.56           -0.02                   0.49            0.25            0.12                           10.30                            9.83                     10.00                    0.08
-D+15               9.54              9.75                      9.99            10.29             10.53           -0.07                   0.49            0.25            0.11                           10.33                            9.76                      9.98                    0.10
-D+20               9.40              9.63                      9.94            10.19             10.55           -0.60                   0.40            0.21            0.12                           10.37                            9.72                      9.97                    0.11
-D+30               9.00              9.59                      9.85            10.13             10.67           -1.49                   0.37            0.19            0.16                           10.39                            9.57                      9.96                    0.15
-D+45               8.99              9.43                      9.79            10.15             10.64           -2.12                   0.35            0.19            0.12                           10.45                            9.50                      9.94                    0.18
-D+60               8.01              8.98                      9.87            10.15             10.74           -1.32                   0.40            0.21            0.16                           10.56                            9.38                      9.86                    0.19
-   máxima até D+10: caso do meio R$ 10.30 (outros fundos R$ 10.18) | 1 em 4 passou de R$ 10.53 | 1 em 10 passou de R$ 10.69 | dia da máxima: 5º pregão (metade entre o 1º e o 7º)
-   máxima até D+20: caso do meio R$ 10.37 (outros fundos R$ 10.27) | 1 em 4 passou de R$ 10.66 | 1 em 10 passou de R$ 10.92 | dia da máxima: 5º pregão (metade entre o 2º e o 12º)
-   máxima até D+30: caso do meio R$ 10.39 (outros fundos R$ 10.36) | 1 em 4 passou de R$ 10.68 | 1 em 10 passou de R$ 11.24 | dia da máxima: 7º pregão (metade entre o 2º e o 17º)
-   máxima até D+60: caso do meio R$ 10.56 (outros fundos R$ 10.48) | 1 em 4 passou de R$ 10.83 | 1 em 10 passou de R$ 11.38 | dia da máxima: 14º pregão (metade entre o 4º e o 47º)
+--- valor informado por cota abaixo de 1% do preço: 254 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.95       10.00          10.06
+        D+1           9.96       10.00          10.06
+        D+2           9.96       10.00          10.06
+        D+3           9.95       10.01          10.06
+        D+5           9.94       10.00          10.06
+        D+7           9.93        9.99          10.04
+       D+10           9.91        9.97          10.03
+       D+15           9.90        9.96          10.01
+       D+20           9.90        9.96          10.01
+       D+30           9.85        9.91           9.98
+       D+45           9.78        9.85           9.94
+       D+60           9.77        9.84           9.90
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.95   10.00     10.06                    0.51            0.03            0.01
+        D+1        9.93   10.00     10.08                    0.50            0.03            0.02
+        D+2        9.91   10.00     10.10                    0.51            0.07            0.02
+        D+3        9.90   10.01     10.10                    0.52            0.06            0.02
+        D+5        9.90   10.00     10.14                    0.50            0.10            0.06
+        D+7        9.86    9.99     10.15                    0.46            0.13            0.04
+       D+10        9.81    9.97     10.15                    0.45            0.15            0.07
+       D+15        9.75    9.96     10.17                    0.43            0.16            0.09
+       D+20        9.74    9.96     10.17                    0.44            0.19            0.11
+       D+30        9.63    9.91     10.15                    0.42            0.18            0.10
+       D+45        9.46    9.85     10.24                    0.41            0.22            0.14
+       D+60        9.28    9.84     10.26                    0.41            0.24            0.17
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.06                  10.12                 9.95                     9.89
+        D+1                10.08                  10.16                 9.94                     9.86
+        D+2                10.10                  10.18                 9.91                     9.83
+        D+3                10.11                  10.23                 9.90                     9.79
+        D+5                10.14                  10.29                 9.87                     9.74
+        D+7                10.15                  10.32                 9.84                     9.69
+       D+10                10.17                  10.37                 9.82                     9.66
+       D+15                10.19                  10.44                 9.76                     9.56
+       D+20                10.23                  10.47                 9.72                     9.47
+       D+30                10.28                  10.59                 9.60                     9.32
+       D+45                10.33                  10.72                 9.52                     9.14
+       D+60                10.37                  10.81                 9.40                     8.95
+Dia em que a cota fez o maior preço: até D+10: 3º pregão | até D+20: 6º pregão | até D+30: 10º pregão | até D+60: 20º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 23% até D+5, 35% até D+10, 43% até D+20, 47% até D+30 | R$ 10.50: 9% até D+5, 16% até D+10, 24% até D+20, 30% até D+30 | R$ 11.00: 2% até D+5, 4% até D+10, 7% até D+20, 9% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.00 x 9.99 | D+5: 10.00 x 9.99 | D+10: 9.97 x 9.97 | D+20: 9.96 x 9.94 | D+30: 9.91 x 9.91
 
---- valor informado por cota entre 1% e 3% do preço: poucos casos (10) ---
+--- valor informado por cota entre 1% e 3% do preço: 71 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.93       10.00          10.06
+        D+1           9.96       10.00          10.05
+        D+2           9.95        9.99          10.04
+        D+3           9.95        9.99          10.04
+        D+5           9.92        9.96          10.03
+        D+7           9.91        9.99          10.02
+       D+10           9.91        9.98          10.04
+       D+15           9.91       10.00          10.04
+       D+20           9.88        9.99          10.04
+       D+30           9.90       10.00          10.04
+       D+45           9.82        9.92           9.97
+       D+60           9.89        9.96           9.99
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.97   10.00     10.04                    0.46            0.01            0.00
+        D+1        9.96   10.00     10.07                    0.49            0.07            0.03
+        D+2        9.94    9.99     10.07                    0.48            0.11            0.03
+        D+3        9.92    9.99     10.07                    0.48            0.06            0.01
+        D+5        9.87    9.96     10.08                    0.44            0.08            0.03
+        D+7        9.88    9.99     10.12                    0.46            0.11            0.08
+       D+10        9.81    9.98     10.19                    0.48            0.14            0.07
+       D+15        9.74   10.00     10.16                    0.49            0.14            0.04
+       D+20        9.66    9.99     10.14                    0.46            0.14            0.08
+       D+30        9.70   10.00     10.22                    0.49            0.21            0.13
+       D+45        9.66    9.92     10.33                    0.44            0.27            0.18
+       D+60        9.57    9.96     10.42                    0.44            0.37            0.21
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.06                  10.11                 9.93                     9.88
+        D+1                10.08                  10.15                 9.91                     9.86
+        D+2                10.09                  10.17                 9.90                     9.82
+        D+3                10.10                  10.18                 9.88                     9.80
+        D+5                10.12                  10.24                 9.86                     9.74
+        D+7                10.14                  10.30                 9.84                     9.71
+       D+10                10.16                  10.40                 9.81                     9.66
+       D+15                10.20                  10.45                 9.78                     9.53
+       D+20                10.24                  10.48                 9.73                     9.48
+       D+30                10.32                  10.53                 9.71                     9.40
+       D+45                10.43                  10.65                 9.58                     9.23
+       D+60                10.46                  10.81                 9.50                     9.05
+Dia em que a cota fez o maior preço: até D+10: 3º pregão | até D+20: 8º pregão | até D+30: 9º pregão | até D+60: 24º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 20% até D+5, 32% até D+10, 46% até D+20, 51% até D+30 | R$ 10.50: 10% até D+5, 17% até D+10, 24% até D+20, 30% até D+30 | R$ 11.00: 4% até D+5, 6% até D+10, 8% até D+20, 10% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.00 x 10.00 | D+5: 9.96 x 9.98 | D+10: 9.98 x 9.98 | D+20: 9.99 x 9.95 | D+30: 10.00 x 9.97
 
---- valor informado por cota de 3% do preço ou mais: poucos casos (14) ---
+--- valor informado por cota de 3% do preço ou mais: 73 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.95       10.01          10.07
+        D+1           9.95       10.01          10.07
+        D+2           9.96       10.03          10.07
+        D+3           9.98       10.02          10.09
+        D+5           9.97       10.04          10.09
+        D+7           9.95       10.04          10.09
+       D+10           9.96       10.03          10.07
+       D+15           9.97       10.05          10.09
+       D+20           9.96       10.01          10.11
+       D+30           9.93        9.98          10.06
+       D+45           9.95       10.03          10.07
+       D+60           9.95       10.01          10.10
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.94   10.01     10.11                    0.52            0.07            0.05
+        D+1        9.94   10.01     10.14                    0.51            0.11            0.07
+        D+2        9.96   10.03     10.08                    0.59            0.16            0.05
+        D+3        9.95   10.02     10.13                    0.56            0.11            0.07
+        D+5        9.92   10.04     10.18                    0.56            0.15            0.10
+        D+7        9.91   10.04     10.18                    0.58            0.16            0.10
+       D+10        9.88   10.03     10.26                    0.55            0.19            0.10
+       D+15        9.86   10.05     10.23                    0.59            0.21            0.12
+       D+20        9.87   10.01     10.22                    0.55            0.23            0.14
+       D+30        9.79    9.98     10.30                    0.48            0.25            0.15
+       D+45        9.64   10.03     10.38                    0.52            0.32            0.18
+       D+60        9.57   10.01     10.45                    0.51            0.30            0.23
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.07                  10.17                 9.95                     9.87
+        D+1                10.10                  10.26                 9.94                     9.84
+        D+2                10.11                  10.30                 9.92                     9.83
+        D+3                10.15                  10.30                 9.91                     9.81
+        D+5                10.18                  10.35                 9.88                     9.77
+        D+7                10.18                  10.44                 9.87                     9.75
+       D+10                10.20                  10.55                 9.86                     9.74
+       D+15                10.28                  10.66                 9.83                     9.66
+       D+20                10.33                  10.73                 9.79                     9.64
+       D+30                10.38                  10.74                 9.72                     9.57
+       D+45                10.47                  10.78                 9.71                     9.43
+       D+60                10.47                  10.84                 9.65                     9.29
+Dia em que a cota fez o maior preço: até D+10: 3º pregão | até D+20: 7º pregão | até D+30: 13º pregão | até D+60: 18º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 33% até D+5, 42% até D+10, 55% até D+20, 59% até D+30 | R$ 10.50: 16% até D+5, 26% até D+10, 37% até D+20, 45% até D+30 | R$ 11.00: 3% até D+5, 7% até D+10, 11% até D+20, 12% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.01 x 10.00 | D+5: 10.04 x 10.01 | D+10: 10.03 x 10.01 | D+20: 10.01 x 10.00 | D+30: 9.98 x 9.98
 
---- primeira notícia (texto não diz que é continuação de fato anterior): 176 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.82              9.92                     10.01            10.10             10.23            0.06                   0.53            0.05            0.02                           10.08                            9.92                     10.00                    0.01
- D+2               9.77              9.91                     10.02            10.10             10.22            0.18                   0.54            0.06            0.01                           10.10                            9.91                     10.00                    0.02
- D+3               9.75              9.92                     10.02            10.11             10.29            0.20                   0.56            0.10            0.02                           10.12                            9.90                     10.00                    0.03
- D+5               9.69              9.91                     10.03            10.18             10.34            0.32                   0.60            0.14            0.06                           10.17                            9.88                     10.00                    0.05
- D+7               9.65              9.85                     10.04            10.18             10.43            0.35                   0.59            0.16            0.06                           10.22                            9.85                     10.00                    0.07
-D+10               9.56              9.83                     10.02            10.23             10.53            0.20                   0.53            0.22            0.12                           10.24                            9.83                     10.00                    0.09
-D+15               9.54              9.79                     10.01            10.28             10.56            0.11                   0.52            0.24            0.12                           10.32                            9.76                     10.00                    0.13
-D+20               9.47              9.78                     10.02            10.30             10.62            0.21                   0.52            0.26            0.19                           10.38                            9.74                     10.01                    0.15
-D+30               9.28              9.69                     10.03            10.41             10.76            0.31                   0.54            0.31            0.20                           10.48                            9.63                     10.02                    0.19
-D+45               8.89              9.58                     10.04            10.58             11.00            0.36                   0.54            0.35            0.27                           10.59                            9.56                     10.02                    0.22
-D+60               8.41              9.31                     10.05            10.59             11.31            0.53                   0.51            0.35            0.28                           10.67                            9.48                     10.00                    0.24
-   máxima até D+10: caso do meio R$ 10.24 (outros fundos R$ 10.20) | 1 em 4 passou de R$ 10.48 | 1 em 10 passou de R$ 10.72 | dia da máxima: 4º pregão (metade entre o 1º e o 8º)
-   máxima até D+20: caso do meio R$ 10.38 (outros fundos R$ 10.29) | 1 em 4 passou de R$ 10.69 | 1 em 10 passou de R$ 11.03 | dia da máxima: 8º pregão (metade entre o 2º e o 16º)
-   máxima até D+30: caso do meio R$ 10.48 (outros fundos R$ 10.36) | 1 em 4 passou de R$ 10.80 | 1 em 10 passou de R$ 11.13 | dia da máxima: 12º pregão (metade entre o 3º e o 21º)
-   máxima até D+60: caso do meio R$ 10.67 (outros fundos R$ 10.51) | 1 em 4 passou de R$ 11.08 | 1 em 10 passou de R$ 11.61 | dia da máxima: 22º pregão (metade entre o 5º e o 48º)
+--- primeira notícia (texto não diz que é continuação de fato anterior): 595 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.94       10.00          10.06
+        D+1           9.95       10.00          10.06
+        D+2           9.95       10.01          10.06
+        D+3           9.94       10.01          10.06
+        D+5           9.94       10.00          10.06
+        D+7           9.93        9.99          10.05
+       D+10           9.91        9.98          10.04
+       D+15           9.92        9.97          10.03
+       D+20           9.92        9.97          10.04
+       D+30           9.88        9.95          10.00
+       D+45           9.85        9.92           9.99
+       D+60           9.81        9.89           9.97
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.95   10.00     10.06                    0.50            0.03            0.01
+        D+1        9.93   10.00     10.08                    0.50            0.05            0.02
+        D+2        9.92   10.01     10.10                    0.52            0.08            0.01
+        D+3        9.91   10.01     10.11                    0.51            0.08            0.02
+        D+5        9.89   10.00     10.13                    0.51            0.10            0.04
+        D+7        9.87    9.99     10.14                    0.48            0.12            0.05
+       D+10        9.83    9.98     10.15                    0.46            0.15            0.07
+       D+15        9.78    9.97     10.18                    0.45            0.16            0.09
+       D+20        9.75    9.97     10.18                    0.46            0.18            0.11
+       D+30        9.69    9.95     10.26                    0.44            0.22            0.13
+       D+45        9.57    9.92     10.34                    0.44            0.26            0.18
+       D+60        9.34    9.89     10.39                    0.43            0.29            0.20
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.06                  10.12                 9.94                     9.87
+        D+1                10.09                  10.17                 9.92                     9.84
+        D+2                10.10                  10.20                 9.90                     9.82
+        D+3                10.11                  10.24                 9.89                     9.79
+        D+5                10.14                  10.30                 9.87                     9.73
+        D+7                10.16                  10.35                 9.84                     9.71
+       D+10                10.18                  10.40                 9.81                     9.65
+       D+15                10.23                  10.46                 9.76                     9.57
+       D+20                10.26                  10.53                 9.73                     9.46
+       D+30                10.32                  10.64                 9.65                     9.37
+       D+45                10.38                  10.79                 9.56                     9.20
+       D+60                10.45                  10.90                 9.45                     9.01
+Dia em que a cota fez o maior preço: até D+10: 3º pregão | até D+20: 7º pregão | até D+30: 10º pregão | até D+60: 20º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 25% até D+5, 35% até D+10, 46% até D+20, 52% até D+30 | R$ 10.50: 10% até D+5, 16% até D+10, 27% até D+20, 34% até D+30 | R$ 11.00: 2% até D+5, 4% até D+10, 8% até D+20, 10% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.00 x 10.00 | D+5: 10.00 x 9.99 | D+10: 9.98 x 9.98 | D+20: 9.97 x 9.96 | D+30: 9.95 x 9.94
 
---- continuação de fato relevante anterior: 36 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.77              9.88                     10.00            10.09             10.30           -0.02                   0.47            0.11            0.06                           10.09                            9.94                     10.00                    0.01
- D+2               9.71              9.82                     10.00            10.09             10.35           -0.04                   0.44            0.11            0.08                           10.09                            9.92                     10.01                    0.02
- D+3               9.74              9.82                     10.00            10.08             10.33           -0.01                   0.47            0.14            0.06                           10.11                            9.90                     10.00                    0.02
- D+5               9.50              9.74                      9.99            10.20             10.27           -0.08                   0.50            0.08            0.06                           10.18                            9.79                     10.00                    0.04
- D+7               9.08              9.70                     10.01            10.24             10.49            0.11                   0.50            0.22            0.11                           10.22                            9.78                      9.99                    0.05
-D+10               8.69              9.63                     10.00            10.30             10.50           -0.01                   0.47            0.28            0.11                           10.27                            9.76                     10.00                    0.08
-D+15               8.23              9.65                     10.00            10.31             10.66            0.00                   0.47            0.25            0.19                           10.27                            9.74                     10.00                    0.10
-D+20               8.41              9.49                     10.00            10.42             10.78            0.05                   0.50            0.31            0.25                           10.38                            9.66                     10.00                    0.14
-D+30               8.51              9.49                     10.01            10.67             10.89            0.06                   0.50            0.39            0.31                           10.47                            9.58                     10.02                    0.21
-D+45               8.65              9.32                      9.97            10.74             11.00           -0.33                   0.44            0.39            0.39                           10.54                            9.54                     10.01                    0.20
-D+60               8.56              9.29                     10.04            10.47             10.84            0.41                   0.50            0.33            0.25                           10.55                            9.54                     10.00                    0.20
-   máxima até D+10: caso do meio R$ 10.27 (outros fundos R$ 10.22) | 1 em 4 passou de R$ 10.55 | 1 em 10 passou de R$ 10.77 | dia da máxima: 4º pregão (metade entre o 2º e o 7º)
-   máxima até D+20: caso do meio R$ 10.38 (outros fundos R$ 10.31) | 1 em 4 passou de R$ 10.73 | 1 em 10 passou de R$ 11.12 | dia da máxima: 5º pregão (metade entre o 2º e o 15º)
-   máxima até D+30: caso do meio R$ 10.47 (outros fundos R$ 10.41) | 1 em 4 passou de R$ 10.83 | 1 em 10 passou de R$ 11.15 | dia da máxima: 8º pregão (metade entre o 2º e o 25º)
-   máxima até D+60: caso do meio R$ 10.55 (outros fundos R$ 10.54) | 1 em 4 passou de R$ 11.01 | 1 em 10 passou de R$ 11.66 | dia da máxima: 24º pregão (metade entre o 3º e o 49º)
+--- continuação de fato relevante anterior: 113 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.96       10.00          10.05
+        D+1           9.96        9.99          10.04
+        D+2           9.96       10.00          10.05
+        D+3           9.95       10.00          10.06
+        D+5           9.93       10.00          10.05
+        D+7           9.94       10.00          10.07
+       D+10           9.98       10.02          10.08
+       D+15           9.99       10.03          10.06
+       D+20           9.97       10.02          10.07
+       D+30           9.95       10.01          10.05
+       D+45           9.95        9.99          10.02
+       D+60           9.91        9.99          10.02
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.97   10.00     10.05                    0.46            0.05            0.01
+        D+1        9.92    9.99     10.07                    0.43            0.04            0.03
+        D+2        9.90   10.00     10.07                    0.47            0.05            0.04
+        D+3        9.89   10.00     10.08                    0.48            0.06            0.03
+        D+5        9.88   10.00     10.12                    0.49            0.06            0.04
+        D+7        9.91   10.00     10.11                    0.50            0.12            0.07
+       D+10        9.87   10.02     10.20                    0.54            0.17            0.10
+       D+15        9.88   10.03     10.24                    0.53            0.19            0.13
+       D+20        9.88   10.02     10.21                    0.56            0.20            0.13
+       D+30        9.70   10.01     10.25                    0.52            0.24            0.17
+       D+45        9.62    9.99     10.42                    0.48            0.29            0.22
+       D+60        9.61    9.99     10.32                    0.48            0.26            0.18
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.05                  10.12                 9.96                     9.90
+        D+1                10.07                  10.15                 9.94                     9.82
+        D+2                10.09                  10.17                 9.92                     9.79
+        D+3                10.10                  10.22                 9.90                     9.75
+        D+5                10.13                  10.27                 9.89                     9.73
+        D+7                10.15                  10.30                 9.86                     9.69
+       D+10                10.19                  10.38                 9.83                     9.66
+       D+15                10.23                  10.51                 9.82                     9.59
+       D+20                10.24                  10.54                 9.77                     9.55
+       D+30                10.30                  10.68                 9.70                     9.42
+       D+45                10.41                  10.81                 9.64                     9.29
+       D+60                10.43                  10.82                 9.59                     9.18
+Dia em que a cota fez o maior preço: até D+10: 4º pregão | até D+20: 9º pregão | até D+30: 15º pregão | até D+60: 27º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 20% até D+5, 31% até D+10, 43% até D+20, 51% até D+30 | R$ 10.50: 11% até D+5, 20% até D+10, 30% até D+20, 37% até D+30 | R$ 11.00: 1% até D+5, 4% até D+10, 9% até D+20, 11% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 9.99 x 9.99 | D+5: 10.00 x 9.99 | D+10: 10.02 x 9.98 | D+20: 10.02 x 9.98 | D+30: 10.01 x 9.95
 
 ========================================================================================================================
 O FUNDO INFORMOU O TAMANHO DO EFEITO NO RENDIMENTO (texto do próprio fato relevante)
 ========================================================================================================================
-111 fatos relevantes em que o fundo declara efeito no rendimento | aumento: 67 (com percentual: 26, mediana 13.4%) | redução: 44 (com percentual: 23, mediana 11.6%)
+264 fatos relevantes em que o fundo declara efeito no rendimento | aumento: 156 (com percentual: 35, mediana 12.7%) | redução: 108 (com percentual: 26, mediana 11.5%)
 
---- O FUNDO DECLAROU AUMENTO de rendimento (qualquer tamanho): 66 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.82              9.95                     10.04            10.12             10.36            0.39                   0.61            0.12            0.08                           10.10                            9.92                     10.00                    0.03
- D+2               9.73              9.89                     10.03            10.16             10.54            0.29                   0.56            0.17            0.12                           10.16                            9.90                     10.00                    0.05
- D+3               9.73              9.90                     10.03            10.20             10.41            0.29                   0.58            0.18            0.09                           10.18                            9.89                     10.01                    0.06
- D+5               9.73              9.93                     10.06            10.25             10.54            0.63                   0.65            0.21            0.12                           10.20                            9.88                     10.02                    0.07
- D+7               9.74              9.97                     10.10            10.26             10.46            1.00                   0.67            0.21            0.09                           10.25                            9.87                     10.02                    0.08
-D+10               9.72              9.95                     10.08            10.28             10.57            0.82                   0.61            0.24            0.14                           10.32                            9.86                     10.04                    0.11
-D+15               9.52              9.88                     10.14            10.38             10.70            1.40                   0.62            0.33            0.20                           10.39                            9.82                     10.04                    0.14
-D+20               9.31              9.88                     10.12            10.54             10.97            1.15                   0.62            0.38            0.29                           10.42                            9.78                     10.06                    0.19
-D+30               8.74              9.72                     10.11            10.61             11.07            1.08                   0.61            0.36            0.29                           10.47                            9.75                     10.05                    0.23
-D+45               8.97              9.63                     10.17            10.65             11.23            1.72                   0.61            0.41            0.32                           10.62                            9.69                     10.06                    0.26
-D+60               8.27              9.34                     10.08            10.60             11.71            0.80                   0.53            0.38            0.30                           10.70                            9.62                     10.03                    0.29
-   máxima até D+10: caso do meio R$ 10.32 (outros fundos R$ 10.22) | 1 em 4 passou de R$ 10.46 | 1 em 10 passou de R$ 10.92 | dia da máxima: 5º pregão (metade entre o 0º e o 8º)
-   máxima até D+20: caso do meio R$ 10.42 (outros fundos R$ 10.34) | 1 em 4 passou de R$ 10.74 | 1 em 10 passou de R$ 11.25 | dia da máxima: 10º pregão (metade entre o 3º e o 17º)
-   máxima até D+30: caso do meio R$ 10.47 (outros fundos R$ 10.42) | 1 em 4 passou de R$ 10.89 | 1 em 10 passou de R$ 11.52 | dia da máxima: 16º pregão (metade entre o 6º e o 25º)
-   máxima até D+60: caso do meio R$ 10.70 (outros fundos R$ 10.63) | 1 em 4 passou de R$ 11.29 | 1 em 10 passou de R$ 12.26 | dia da máxima: 30º pregão (metade entre o 10º e o 50º)
+--- O FUNDO DECLAROU AUMENTO de rendimento (qualquer tamanho): 147 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.94       10.01          10.07
+        D+1           9.94       10.02          10.08
+        D+2           9.95       10.02          10.08
+        D+3           9.96       10.03          10.10
+        D+5           9.95       10.02          10.10
+        D+7           9.96       10.04          10.09
+       D+10           9.94       10.01          10.08
+       D+15           9.96       10.01          10.10
+       D+20           9.96       10.03          10.10
+       D+30           9.92       10.02          10.09
+       D+45           9.89        9.99          10.09
+       D+60           9.85        9.91           9.97
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.95   10.01     10.09                    0.54            0.06            0.03
+        D+1        9.94   10.02     10.12                    0.58            0.07            0.05
+        D+2        9.92   10.02     10.14                    0.56            0.12            0.07
+        D+3        9.91   10.03     10.17                    0.57            0.11            0.05
+        D+5        9.92   10.02     10.20                    0.56            0.14            0.07
+        D+7        9.91   10.04     10.21                    0.56            0.16            0.07
+       D+10        9.89   10.01     10.24                    0.53            0.18            0.10
+       D+15        9.81   10.01     10.30                    0.53            0.25            0.12
+       D+20        9.80   10.03     10.38                    0.56            0.29            0.20
+       D+30        9.69   10.02     10.36                    0.51            0.27            0.18
+       D+45        9.63    9.99     10.39                    0.50            0.31            0.21
+       D+60        9.41    9.91     10.48                    0.46            0.30            0.24
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.07                  10.15                 9.94                     9.86
+        D+1                10.10                  10.19                 9.91                     9.81
+        D+2                10.13                  10.24                 9.90                     9.78
+        D+3                10.15                  10.29                 9.89                     9.76
+        D+5                10.18                  10.34                 9.87                     9.72
+        D+7                10.20                  10.39                 9.85                     9.70
+       D+10                10.24                  10.44                 9.82                     9.68
+       D+15                10.30                  10.54                 9.75                     9.59
+       D+20                10.35                  10.65                 9.73                     9.55
+       D+30                10.41                  10.79                 9.69                     9.38
+       D+45                10.49                  10.88                 9.58                     9.29
+       D+60                10.59                  10.97                 9.49                     9.00
+Dia em que a cota fez o maior preço: até D+10: 4º pregão | até D+20: 10º pregão | até D+30: 13º pregão | até D+60: 23º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 29% até D+5, 43% até D+10, 54% até D+20, 61% até D+30 | R$ 10.50: 13% até D+5, 20% até D+10, 35% até D+20, 39% até D+30 | R$ 11.00: 5% até D+5, 7% até D+10, 12% até D+20, 14% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.02 x 10.00 | D+5: 10.02 x 10.00 | D+10: 10.01 x 10.00 | D+20: 10.03 x 9.96 | D+30: 10.02 x 9.95
 
---- aumento declarado de até 5%: poucos casos (2) ---
+--- aumento declarado de até 5%: poucos casos (3) ---
 
---- aumento declarado de 5% a 15%: poucos casos (12) ---
+--- aumento declarado de 5% a 15%: 15 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.95       10.07          10.07
+        D+1           9.95       10.01          10.08
+        D+2           9.97       10.06          10.08
+        D+3           9.99       10.02          10.09
+        D+5          10.00       10.07          10.10
+        D+7          10.02       10.11          10.13
+       D+10          10.00       10.05          10.11
+       D+15          10.05       10.16          10.22
+       D+20          10.07       10.22          10.23
+       D+30          10.36       10.60          10.68
+       D+45          10.59       10.60          10.66
+       D+60          10.48       10.54          10.60
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.99   10.07     10.11                    0.53            0.00            0.00
+        D+1        9.96   10.01     10.10                    0.53            0.00            0.00
+        D+2        9.97   10.06     10.13                    0.60            0.07            0.00
+        D+3        9.96   10.02     10.15                    0.53            0.07            0.00
+        D+5        9.97   10.07     10.14                    0.60            0.13            0.00
+        D+7        9.99   10.11     10.19                    0.67            0.13            0.07
+       D+10       10.00   10.05     10.22                    0.60            0.13            0.07
+       D+15        9.95   10.16     10.31                    0.67            0.27            0.20
+       D+20       10.08   10.22     10.55                    0.80            0.47            0.40
+       D+30       10.23   10.60     10.76                    0.87            0.67            0.53
+       D+45       10.24   10.60     10.87                    0.87            0.60            0.53
+       D+60       10.06   10.54     11.16                    0.73            0.67            0.60
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.07                  10.13                 9.95                     9.91
+        D+1                10.08                  10.15                 9.94                     9.82
+        D+2                10.08                  10.18                 9.94                     9.81
+        D+3                10.09                  10.29                 9.94                     9.81
+        D+5                10.10                  10.30                 9.94                     9.80
+        D+7                10.20                  10.40                 9.89                     9.73
+       D+10                10.20                  10.41                 9.89                     9.71
+       D+15                10.35                  10.55                 9.77                     9.40
+       D+20                10.42                  10.74                 9.77                     9.34
+       D+30                10.74                  10.91                 9.77                     9.34
+       D+45                10.88                  11.11                 9.75                     9.34
+       D+60                10.94                  11.34                 9.75                     9.13
+Dia em que a cota fez o maior preço: até D+10: 6º pregão | até D+20: 13º pregão | até D+30: 26º pregão | até D+60: 49º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 27% até D+5, 40% até D+10, 67% até D+20, 87% até D+30 | R$ 10.50: 0% até D+5, 13% até D+10, 47% até D+20, 67% até D+30 | R$ 11.00: 0% até D+5, 0% até D+10, 7% até D+20, 13% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.01 x 10.00 | D+5: 10.07 x 10.01 | D+10: 10.05 x 10.02 | D+20: 10.22 x 10.08 | D+30: 10.60 x 10.08
 
---- aumento declarado de 15% ou mais: poucos casos (12) ---
+--- aumento declarado de 15% ou mais: poucos casos (13) ---
 
---- aumento declarado sem dizer o percentual: 40 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.84              9.95                     10.04            10.14             10.57            0.39                   0.62            0.18            0.12                           10.09                            9.90                     10.00                    0.05
- D+2               9.70              9.89                     10.03            10.18             10.64            0.29                   0.55            0.22            0.20                           10.15                            9.89                     10.00                    0.08
- D+3               9.63              9.89                     10.03            10.28             10.69            0.28                   0.57            0.25            0.15                           10.19                            9.87                     10.00                    0.10
- D+5               9.60              9.92                     10.04            10.29             10.84            0.43                   0.68            0.25            0.20                           10.21                            9.86                     10.00                    0.11
- D+7               9.54              9.95                     10.09            10.35             11.04            0.93                   0.62            0.28            0.12                           10.27                            9.84                     10.01                    0.12
-D+10               9.62              9.93                     10.10            10.32             11.05            1.04                   0.57            0.28            0.18                           10.34                            9.83                     10.02                    0.15
-D+15               9.20              9.77                     10.14            10.50             10.97            1.41                   0.60            0.35            0.25                           10.40                            9.82                     10.04                    0.17
-D+20               8.10              9.73                     10.09            10.48             11.21            0.91                   0.55            0.32            0.25                           10.42                            9.74                     10.04                    0.21
-D+30               7.94              9.59                     10.02            10.52             11.37            0.23                   0.52            0.32            0.25                           10.45                            9.74                     10.02                    0.23
-D+45               8.16              9.29                     10.04            10.60             11.35            0.36                   0.52            0.40            0.28                           10.61                            9.65                      9.94                    0.23
-D+60               7.70              9.18                      9.93            10.64             11.98           -0.66                   0.45            0.30            0.25                           10.66                            9.56                      9.92                    0.25
-   máxima até D+10: caso do meio R$ 10.34 (outros fundos R$ 10.19) | 1 em 4 passou de R$ 10.66 | 1 em 10 passou de R$ 11.48 | dia da máxima: 5º pregão (metade entre o 0º e o 8º)
-   máxima até D+20: caso do meio R$ 10.42 (outros fundos R$ 10.35) | 1 em 4 passou de R$ 10.76 | 1 em 10 passou de R$ 11.94 | dia da máxima: 8º pregão (metade entre o 3º e o 15º)
-   máxima até D+30: caso do meio R$ 10.45 (outros fundos R$ 10.41) | 1 em 4 passou de R$ 11.24 | 1 em 10 passou de R$ 12.10 | dia da máxima: 12º pregão (metade entre o 5º e o 21º)
-   máxima até D+60: caso do meio R$ 10.66 (outros fundos R$ 10.56) | 1 em 4 passou de R$ 11.55 | 1 em 10 passou de R$ 12.68 | dia da máxima: 20º pregão (metade entre o 6º e o 47º)
+--- aumento declarado sem dizer o percentual: 116 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.93       10.01          10.07
+        D+1           9.94       10.02          10.09
+        D+2           9.95       10.02          10.07
+        D+3           9.95       10.03          10.08
+        D+5           9.94       10.02          10.09
+        D+7           9.95       10.01          10.08
+       D+10           9.94       10.00          10.07
+       D+15           9.95       10.01          10.07
+       D+20           9.95       10.01          10.09
+       D+30           9.87        9.94          10.06
+       D+45           9.82        9.89          10.01
+       D+60           9.78        9.88           9.92
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.95   10.01     10.09                    0.54            0.07            0.03
+        D+1        9.94   10.02     10.12                    0.59            0.09            0.06
+        D+2        9.93   10.02     10.14                    0.54            0.13            0.09
+        D+3        9.91   10.03     10.17                    0.57            0.12            0.07
+        D+5        9.90   10.02     10.16                    0.57            0.14            0.09
+        D+7        9.89   10.01     10.20                    0.53            0.17            0.09
+       D+10        9.86   10.00     10.23                    0.51            0.17            0.11
+       D+15        9.79   10.01     10.29                    0.51            0.24            0.13
+       D+20        9.76   10.01     10.30                    0.53            0.25            0.17
+       D+30        9.62    9.94     10.23                    0.47            0.23            0.14
+       D+45        9.58    9.89     10.32                    0.44            0.28            0.18
+       D+60        9.36    9.88     10.29                    0.41            0.25            0.21
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.07                  10.15                 9.93                     9.84
+        D+1                10.11                  10.19                 9.91                     9.82
+        D+2                10.13                  10.22                 9.89                     9.77
+        D+3                10.15                  10.25                 9.87                     9.76
+        D+5                10.17                  10.32                 9.86                     9.72
+        D+7                10.20                  10.39                 9.82                     9.69
+       D+10                10.24                  10.46                 9.80                     9.66
+       D+15                10.30                  10.55                 9.74                     9.58
+       D+20                10.34                  10.63                 9.72                     9.55
+       D+30                10.38                  10.73                 9.68                     9.39
+       D+45                10.47                  10.86                 9.57                     9.19
+       D+60                10.54                  10.96                 9.45                     8.97
+Dia em que a cota fez o maior preço: até D+10: 4º pregão | até D+20: 9º pregão | até D+30: 12º pregão | até D+60: 20º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 27% até D+5, 42% até D+10, 53% até D+20, 57% até D+30 | R$ 10.50: 15% até D+5, 22% até D+10, 35% até D+20, 38% até D+30 | R$ 11.00: 7% até D+5, 9% até D+10, 14% até D+20, 16% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.02 x 10.00 | D+5: 10.02 x 10.00 | D+10: 10.00 x 10.00 | D+20: 10.01 x 9.95 | D+30: 9.94 x 9.91
 
---- O FUNDO DECLAROU REDUÇÃO de rendimento (qualquer tamanho): 42 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.58              9.86                      9.98            10.11             10.20           -0.18                   0.43            0.05            0.00                           10.08                            9.86                     10.00                    0.02
- D+2               9.55              9.85                      9.99            10.08             10.29           -0.14                   0.45            0.10            0.00                           10.09                            9.84                     10.00                    0.04
- D+3               9.57              9.86                      9.96            10.09             10.22           -0.43                   0.45            0.10            0.02                           10.12                            9.84                     10.01                    0.05
- D+5               9.55              9.86                      9.99            10.10             10.34           -0.11                   0.45            0.12            0.07                           10.14                            9.82                     10.03                    0.08
- D+7               9.60              9.75                      9.98            10.16             10.35           -0.18                   0.48            0.12            0.10                           10.14                            9.76                     10.02                    0.11
-D+10               9.62              9.72                      9.95            10.13             10.51           -0.49                   0.45            0.14            0.12                           10.20                            9.70                     10.03                    0.15
-D+15               9.53              9.76                      9.98            10.16             10.70           -0.17                   0.45            0.19            0.14                           10.22                            9.68                     10.06                    0.20
-D+20               9.55              9.86                      9.99            10.14             10.63           -0.11                   0.48            0.17            0.17                           10.23                            9.66                     10.08                    0.22
-D+30               9.38              9.74                     10.05            10.50             10.78            0.49                   0.52            0.36            0.26                           10.28                            9.62                     10.11                    0.26
-D+45               9.56              9.79                     10.10            10.61             11.04            0.99                   0.55            0.36            0.31                           10.48                            9.55                     10.15                    0.30
-D+60               9.39              9.73                     10.07            10.64             10.94            0.66                   0.55            0.43            0.33                           10.61                            9.45                     10.18                    0.34
-   máxima até D+10: caso do meio R$ 10.20 (outros fundos R$ 10.21) | 1 em 4 passou de R$ 10.41 | 1 em 10 passou de R$ 10.78 | dia da máxima: 1º pregão (metade entre o 0º e o 5º)
-   máxima até D+20: caso do meio R$ 10.23 (outros fundos R$ 10.34) | 1 em 4 passou de R$ 10.43 | 1 em 10 passou de R$ 10.95 | dia da máxima: 4º pregão (metade entre o 0º e o 12º)
-   máxima até D+30: caso do meio R$ 10.28 (outros fundos R$ 10.43) | 1 em 4 passou de R$ 10.76 | 1 em 10 passou de R$ 11.58 | dia da máxima: 13º pregão (metade entre o 1º e o 25º)
-   máxima até D+60: caso do meio R$ 10.61 (outros fundos R$ 10.70) | 1 em 4 passou de R$ 11.54 | 1 em 10 passou de R$ 11.72 | dia da máxima: 37º pregão (metade entre o 14º e o 54º)
+--- O FUNDO DECLAROU REDUÇÃO de rendimento (qualquer tamanho): 101 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.86        9.97          10.07
+        D+1           9.85        9.95          10.02
+        D+2           9.89        9.95          10.00
+        D+3           9.86        9.93          10.00
+        D+5           9.88        9.95          10.02
+        D+7           9.86        9.93          10.00
+       D+10           9.86        9.94          10.00
+       D+15           9.86        9.96          10.01
+       D+20           9.86        9.96          10.01
+       D+30           9.82        9.90           9.96
+       D+45           9.84        9.91           9.96
+       D+60           9.93        9.97          10.07
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.84    9.97     10.04                    0.36            0.02            0.00
+        D+1        9.81    9.95     10.06                    0.37            0.03            0.00
+        D+2        9.77    9.95     10.06                    0.37            0.06            0.02
+        D+3        9.75    9.93     10.06                    0.38            0.07            0.03
+        D+5        9.75    9.95     10.10                    0.41            0.12            0.06
+        D+7        9.69    9.93     10.11                    0.36            0.13            0.07
+       D+10        9.66    9.94     10.19                    0.43            0.17            0.11
+       D+15        9.61    9.96     10.16                    0.44            0.18            0.13
+       D+20        9.58    9.96     10.12                    0.41            0.15            0.15
+       D+30        9.52    9.90     10.25                    0.42            0.24            0.18
+       D+45        9.37    9.91     10.47                    0.43            0.28            0.23
+       D+60        9.28    9.97     10.69                    0.49            0.39            0.31
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.07                  10.15                 9.86                     9.73
+        D+1                10.09                  10.21                 9.83                     9.64
+        D+2                10.10                  10.22                 9.80                     9.60
+        D+3                10.13                  10.26                 9.78                     9.57
+        D+5                10.15                  10.36                 9.76                     9.52
+        D+7                10.16                  10.41                 9.71                     9.46
+       D+10                10.21                  10.43                 9.67                     9.40
+       D+15                10.21                  10.46                 9.63                     9.32
+       D+20                10.24                  10.49                 9.61                     9.25
+       D+30                10.30                  10.68                 9.52                     9.08
+       D+45                10.45                  11.06                 9.39                     8.79
+       D+60                10.54                  11.36                 9.36                     8.58
+Dia em que a cota fez o maior preço: até D+10: 1º pregão | até D+20: 4º pregão | até D+30: 10º pregão | até D+60: 25º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 30% até D+5, 38% até D+10, 41% até D+20, 50% até D+30 | R$ 10.50: 14% até D+5, 20% até D+10, 25% até D+20, 32% até D+30 | R$ 11.00: 3% até D+5, 5% até D+10, 11% até D+20, 17% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 9.95 x 9.99 | D+5: 9.95 x 9.99 | D+10: 9.94 x 9.99 | D+20: 9.96 x 10.00 | D+30: 9.90 x 9.98
 
---- redução declarada de 10% ou mais: poucos casos (13) ---
+--- redução declarada de 10% ou mais: poucos casos (14) ---
 
---- COMPARAÇÃO: notícia ruim (saída de inquilino, redução de rendimento, venda com perda): 112 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.67              9.87                      9.99            10.09             10.28           -0.14                   0.46            0.07            0.03                           10.09                            9.84                     10.00                    0.03
- D+2               9.49              9.83                      9.96            10.09             10.29           -0.38                   0.44            0.09            0.05                           10.12                            9.84                     10.00                    0.04
- D+3               9.48              9.83                      9.94            10.09             10.23           -0.56                   0.40            0.09            0.05                           10.13                            9.80                     10.00                    0.04
- D+5               9.34              9.73                      9.95            10.10             10.24           -0.52                   0.41            0.08            0.04                           10.18                            9.77                     10.00                    0.06
- D+7               9.35              9.78                      9.94            10.12             10.38           -0.58                   0.44            0.12            0.06                           10.21                            9.76                      9.99                    0.07
-D+10               9.38              9.76                      9.93            10.09             10.33           -0.73                   0.40            0.13            0.09                           10.24                            9.72                     10.00                    0.10
-D+15               9.36              9.78                      9.94            10.20             10.78           -0.57                   0.43            0.19            0.14                           10.28                            9.66                     10.00                    0.14
-D+20               9.26              9.72                      9.98            10.22             10.80           -0.19                   0.46            0.21            0.15                           10.31                            9.62                     10.00                    0.17
-D+30               9.12              9.72                     10.01            10.44             11.01            0.07                   0.50            0.31            0.24                           10.40                            9.57                      9.99                    0.20
-D+45               8.62              9.63                      9.99            10.69             11.44           -0.05                   0.49            0.38            0.30                           10.55                            9.48                     10.00                    0.23
-D+60               8.61              9.41                      9.96            10.62             11.42           -0.39                   0.48            0.41            0.30                           10.65                            9.44                     10.00                    0.25
-   máxima até D+10: caso do meio R$ 10.24 (outros fundos R$ 10.20) | 1 em 4 passou de R$ 10.41 | 1 em 10 passou de R$ 10.82 | dia da máxima: 2º pregão (metade entre o 0º e o 6º)
-   máxima até D+20: caso do meio R$ 10.31 (outros fundos R$ 10.30) | 1 em 4 passou de R$ 10.60 | 1 em 10 passou de R$ 11.34 | dia da máxima: 6º pregão (metade entre o 0º e o 14º)
-   máxima até D+30: caso do meio R$ 10.40 (outros fundos R$ 10.37) | 1 em 4 passou de R$ 10.86 | 1 em 10 passou de R$ 11.67 | dia da máxima: 11º pregão (metade entre o 0º e o 22º)
-   máxima até D+60: caso do meio R$ 10.65 (outros fundos R$ 10.53) | 1 em 4 passou de R$ 11.55 | 1 em 10 passou de R$ 12.24 | dia da máxima: 32º pregão (metade entre o 6º e o 49º)
+--- COMPARAÇÃO: notícia ruim (saída de inquilino, redução de rendimento, venda com perda): 398 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.92        9.99          10.05
+        D+1           9.92       10.00          10.04
+        D+2           9.91        9.99          10.04
+        D+3           9.90        9.97          10.04
+        D+5           9.89        9.96          10.02
+        D+7           9.90        9.96          10.01
+       D+10           9.88        9.94          10.01
+       D+15           9.87        9.95          10.01
+       D+20           9.86        9.94           9.99
+       D+30           9.87        9.95          10.00
+       D+45           9.87        9.94           9.99
+       D+60           9.79        9.85           9.91
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.92    9.99     10.04                    0.41            0.03            0.01
+        D+1        9.90   10.00     10.06                    0.46            0.04            0.02
+        D+2        9.86    9.99     10.07                    0.45            0.05            0.03
+        D+3        9.85    9.97     10.06                    0.42            0.07            0.02
+        D+5        9.82    9.96     10.08                    0.40            0.08            0.03
+        D+7        9.79    9.96     10.09                    0.40            0.10            0.04
+       D+10        9.78    9.94     10.08                    0.39            0.12            0.07
+       D+15        9.76    9.95     10.13                    0.41            0.15            0.09
+       D+20        9.71    9.94     10.13                    0.40            0.15            0.09
+       D+30        9.67    9.95     10.20                    0.42            0.20            0.12
+       D+45        9.52    9.94     10.25                    0.41            0.22            0.16
+       D+60        9.30    9.85     10.29                    0.39            0.25            0.19
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.05                  10.12                 9.92                     9.83
+        D+1                10.07                  10.17                 9.88                     9.77
+        D+2                10.08                  10.20                 9.86                     9.75
+        D+3                10.10                  10.22                 9.84                     9.71
+        D+5                10.14                  10.29                 9.81                     9.65
+        D+7                10.16                  10.32                 9.79                     9.61
+       D+10                10.18                  10.36                 9.77                     9.56
+       D+15                10.21                  10.41                 9.73                     9.48
+       D+20                10.24                  10.44                 9.68                     9.42
+       D+30                10.27                  10.54                 9.63                     9.31
+       D+45                10.33                  10.68                 9.53                     9.16
+       D+60                10.40                  10.79                 9.43                     8.95
+Dia em que a cota fez o maior preço: até D+10: 3º pregão | até D+20: 5º pregão | até D+30: 9º pregão | até D+60: 22º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 24% até D+5, 33% até D+10, 40% até D+20, 46% até D+30 | R$ 10.50: 9% até D+5, 14% até D+10, 20% até D+20, 28% até D+30 | R$ 11.00: 3% até D+5, 5% até D+10, 9% até D+20, 12% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 10.00 x 9.99 | D+5: 9.96 x 9.98 | D+10: 9.94 x 9.97 | D+20: 9.94 x 9.95 | D+30: 9.95 x 9.92
 
---- COMPARAÇÃO: fatos relevantes sobre outros assuntos: 449 casos | cota comprada a R$ 10,00 ---
- dia  1 em 10 abaixo de  1 em 4 abaixo de  FECHOU EM (caso do meio)  1 em 4 acima de  1 em 10 acima de  ganho % (meio)  fechou acima de 10,00  acima de 10,30  acima de 10,50  máxima tocada até o dia (meio)  mínima tocada até o dia (meio)  outros fundos: fechou em  outros: acima de 10,50
- D+1               9.78              9.90                     10.00            10.10             10.22            0.00                   0.48            0.06            0.02                           10.08                            9.89                     10.00                    0.02
- D+2               9.71              9.90                     10.00            10.11             10.26            0.00                   0.49            0.08            0.04                           10.10                            9.87                     10.00                    0.02
- D+3               9.69              9.87                     10.00            10.12             10.30           -0.02                   0.49            0.10            0.05                           10.12                            9.85                     10.00                    0.04
- D+5               9.61              9.84                     10.00            10.16             10.44            0.01                   0.50            0.16            0.08                           10.16                            9.82                     10.00                    0.05
- D+7               9.56              9.81                      9.99            10.21             10.51           -0.08                   0.49            0.19            0.11                           10.18                            9.80                     10.00                    0.06
-D+10               9.54              9.78                     10.00            10.23             10.67            0.00                   0.49            0.20            0.14                           10.21                            9.77                     10.01                    0.09
-D+15               9.46              9.78                     10.00            10.29             10.82            0.04                   0.51            0.24            0.17                           10.26                            9.73                     10.02                    0.13
-D+20               9.36              9.74                     10.02            10.38             10.80            0.24                   0.53            0.28            0.20                           10.30                            9.69                     10.03                    0.16
-D+30               9.21              9.71                     10.04            10.48             10.89            0.42                   0.53            0.33            0.24                           10.40                            9.65                     10.04                    0.20
-D+45               9.00              9.60                     10.05            10.52             11.11            0.45                   0.54            0.35            0.26                           10.51                            9.57                     10.04                    0.24
-D+60               8.82              9.41                     10.00            10.62             11.25            0.00                   0.50            0.37            0.29                           10.63                            9.48                     10.03                    0.26
-   máxima até D+10: caso do meio R$ 10.21 (outros fundos R$ 10.20) | 1 em 4 passou de R$ 10.47 | 1 em 10 passou de R$ 10.97 | dia da máxima: 3º pregão (metade entre o 0º e o 8º)
-   máxima até D+20: caso do meio R$ 10.30 (outros fundos R$ 10.30) | 1 em 4 passou de R$ 10.66 | 1 em 10 passou de R$ 11.20 | dia da máxima: 8º pregão (metade entre o 1º e o 16º)
-   máxima até D+30: caso do meio R$ 10.40 (outros fundos R$ 10.38) | 1 em 4 passou de R$ 10.87 | 1 em 10 passou de R$ 11.43 | dia da máxima: 13º pregão (metade entre o 2º e o 24º)
-   máxima até D+60: caso do meio R$ 10.63 (outros fundos R$ 10.56) | 1 em 4 passou de R$ 11.18 | 1 em 10 passou de R$ 11.88 | dia da máxima: 26º pregão (metade entre o 6º e o 46º)
+--- COMPARAÇÃO: fatos relevantes sobre outros assuntos: 1214 casos | cota comprada a R$ 10,00 ---
+Tabela 1. O dia típico:
+        dia  mínima do dia  fechamento  máxima do dia
+D0 (compra)           9.93        9.99          10.05
+        D+1           9.93        9.99          10.05
+        D+2           9.93        9.99          10.04
+        D+3           9.92        9.98          10.04
+        D+5           9.92        9.98          10.04
+        D+7           9.91        9.97          10.03
+       D+10           9.91        9.97          10.03
+       D+15           9.90        9.96          10.02
+       D+20           9.90        9.96          10.02
+       D+30           9.88        9.95          10.00
+       D+45           9.86        9.91           9.98
+       D+60           9.82        9.90           9.95
+Tabela 2. Fechamento nos três cenários:
+        dia  pessimista  típico  otimista  fechou acima da compra  acima de 10,30  acima de 10,50
+D0 (compra)        9.93    9.99     10.04                    0.42            0.02            0.01
+        D+1        9.91    9.99     10.06                    0.44            0.04            0.01
+        D+2        9.89    9.99     10.07                    0.44            0.06            0.03
+        D+3        9.87    9.98     10.08                    0.44            0.07            0.03
+        D+5        9.84    9.98     10.11                    0.44            0.11            0.05
+        D+7        9.82    9.97     10.14                    0.44            0.14            0.06
+       D+10        9.78    9.97     10.16                    0.45            0.15            0.09
+       D+15        9.77    9.96     10.19                    0.45            0.18            0.11
+       D+20        9.72    9.96     10.21                    0.44            0.19            0.12
+       D+30        9.65    9.95     10.26                    0.44            0.23            0.15
+       D+45        9.54    9.91     10.34                    0.44            0.26            0.18
+       D+60        9.44    9.90     10.37                    0.43            0.28            0.21
+Tabela 3. Até onde a cota chegou desde a compra:
+  até o dia  maior preço: típico  maior preço: otimista  menor preço: típico  menor preço: pessimista
+D0 (compra)                10.05                  10.12                 9.93                     9.86
+        D+1                10.07                  10.16                 9.90                     9.81
+        D+2                10.09                  10.19                 9.88                     9.77
+        D+3                10.11                  10.22                 9.86                     9.73
+        D+5                10.13                  10.27                 9.83                     9.68
+        D+7                10.15                  10.32                 9.81                     9.64
+       D+10                10.17                  10.37                 9.78                     9.58
+       D+15                10.20                  10.44                 9.74                     9.52
+       D+20                10.23                  10.48                 9.69                     9.46
+       D+30                10.29                  10.63                 9.62                     9.32
+       D+45                10.36                  10.79                 9.53                     9.17
+       D+60                10.42                  10.91                 9.45                     9.00
+Dia em que a cota fez o maior preço: até D+10: 3º pregão | até D+20: 7º pregão | até D+30: 10º pregão | até D+60: 20º pregão
+Ordem de venda executada (a máxima do dia tocou o preço): R$ 10.30: 22% até D+5, 32% até D+10, 41% até D+20, 48% até D+30 | R$ 10.50: 10% até D+5, 16% até D+10, 24% até D+20, 31% até D+30 | R$ 11.00: 2% até D+5, 5% até D+10, 10% até D+20, 13% até D+30
+Comparação com outros fundos comprados na mesma abertura (fechamento típico): D+1: 9.99 x 10.00 | D+5: 9.98 x 9.99 | D+10: 9.97 x 9.99 | D+20: 9.96 x 9.97 | D+30: 9.95 x 9.96
 ```

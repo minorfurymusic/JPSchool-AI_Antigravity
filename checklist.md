@@ -42,8 +42,11 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-12 — Lista de 10.813 fatos relevantes e 14.938 comunicados desde 2017.
 - [x] 2026-11-12 — Classificação por palavras e leitura da frase em que o fundo declara o efeito no rendimento (`fii/classificar.py`).
 - [x] 2026-11-12 — Estudo em dias, em reais sobre cota de R$ 10: aviso de rendimento e primeira amostra de 2.969 fatos relevantes (`docs/ESTUDO_DIAS.md`).
-- [ ] Baixar os 7.794 fatos relevantes restantes (abr/2021 em diante) e refazer o estudo.
-- [ ] 3 fatos relevantes com erro por PDF protegido: falta a biblioteca `cryptography`.
+- [x] 2026-11-11 — Fatos relevantes completos: 10.696 com texto, 111 sem texto (imagem), 6 com erro. Estudo refeito no formato novo (`docs/ESTUDO_DIAS.md`, parte 3).
+- [ ] Baixar os 14.929 comunicados ao mercado (só listados).
+- [ ] Ler os 111 fatos relevantes que são imagem e melhorar a leitura da declaração de efeito no rendimento (IA).
+- [ ] Grade de regras de entrada e saída (alvo, limite de perda, prazo), escolhida numa parte dos anos e conferida na outra.
+- [x] PDFs protegidos: biblioteca `cryptography` instalada; relidos.
 
 ## Pendente: decisões do dono
 
