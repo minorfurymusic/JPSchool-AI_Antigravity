@@ -172,6 +172,81 @@ Só 4 entradas em 9 anos, todas fechadas, nenhuma em aberto. Não dá para tirar
 - A saída "fundo saiu da bolsa" (8 no moderado) pode incluir fundos que só tiveram um trecho de preço descartado da base. Não conferido.
 - A base de anúncios só tem fundos com R$ 200 mil ou mais negociados por dia; o agressivo aceitaria a partir de R$ 100 mil.
 
+### Estudo 1.1c — Agressivo definido pelo desconto (decisão do dono em 2026-11-13)
+
+**Regras:** as mesmas do Estudo 1.1 (entrada na abertura do pregão seguinte ao anúncio; saída quando o rendimento cai 10% ou mais, quando o fundo declara redução, em 252 pregões ou quando o fundo sai da bolsa; custos e imposto descontados). **Filtro do agressivo:** patrimônio de R$ 50 milhões ou mais, sem teto, e cota entre 30% e 75% do valor patrimonial no dia da entrada. Usa sempre o preço sobre valor patrimonial do próprio fundo, sem ajuste pela média do mercado.
+
+Cada operação aparece em uma coluna só; quando o anúncio cabe em dois tipos, vale o primeiro da esquerda.
+
+| | 1A venda com lucro | 1A multa ou indenização | 1B locação nova | 1C aumento declarado | Todas |
+|---|---|---|---|---|---|
+| Entradas | 23 | 3 | 20 | 13 | 59 |
+| Fechadas | 17 | 3 | 19 | 13 | 52 |
+| Em aberto | 6 | 0 | 1 | 0 | 7 |
+| Fechadas: pregões entre entrada e saída (média) | 107 | 132 | 121 | 129 | 119 |
+| Fechadas em que a cota subiu | 53% | 33% | 47% | 62% | 52% |
+| … valorização média dessas | +9,3% | +6,4% | +14,2% | +14,7% | +12,4% |
+| Fechadas em que a cota caiu | 47% | 67% | 53% | 38% | 48% |
+| … queda média dessas | −13,5% | −7,0% | −16,7% | −10,4% | −13,6% |
+| Fechadas: valorização média | −1,4% | −2,5% | −2,1% | +5,0% | −0,1% |
+| Fechadas: rendimento médio recebido | +4,9% | +4,9% | +4,8% | +5,6% | +5,0% |
+| Fechadas: valorização + rendimento | +3,4% | +2,4% | +2,8% | +10,7% | +4,9% |
+| Fechadas: depois de custos e imposto | +2,4% | +1,9% | +1,4% | +8,8% | +3,6% |
+| Fechadas: Selic líquida no mesmo período | +4,3% | +5,3% | +5,0% | +5,2% | +4,9% |
+| Fechadas que ganharam da Selic líquida | 53% | 33% | 53% | 69% | 56% |
+| Fechadas em que o rendimento subiu 5% ou mais depois da entrada | 41% | 67% | 26% | 69% | 44% |
+| Em aberto: pregões desde a entrada (média) | 55 | — | 7 | — | 48 |
+| Em aberto: valorização média | −3,2% | — | −2,1% | — | −3,0% |
+| Em aberto: rendimento médio recebido | +2,9% | — | +1,4% | — | +2,7% |
+| Em aberto: valorização + rendimento | −0,3% | — | −0,7% | — | −0,3% |
+| Em aberto: Selic líquida no mesmo período | +2,4% | — | +0,3% | — | +2,1% |
+
+Patrimônio dos fundos que entraram: 0 de R$ 50 a 100 milhões, 15 de R$ 100 a 400 milhões, 44 de R$ 400 milhões ou mais. Fundos diferentes: 28.
+
+**Por motivo da saída (fechadas)**
+
+| Motivo da saída | Quantas | Pregões | Valorização | Rendimento | Depois de custos e imposto | Selic líquida |
+|---|---|---|---|---|---|---|
+| Rendimento caiu | 29 | 92 | −0,7% | +4,2% | +2,3% | +3,5% |
+| Prazo de 252 pregões | 11 | 252 | +8,0% | +10,7% | +15,9% | +11,1% |
+| Fundo declarou redução | 8 | 47 | −3,7% | +1,4% | −2,5% | +1,7% |
+| Fundo saiu da bolsa | 4 | 94 | −11,0% | +2,8% | −8,9% | +3,7% |
+
+**Por tamanho do desconto (fechadas)**
+
+| Faixa de preço sobre valor patrimonial na entrada | Fechadas | Valorização | Rendimento | Depois de custos e imposto | Selic líquida | Ganharam da Selic |
+|---|---|---|---|---|---|---|
+| 0,30 a 0,50 | 8 | −10,6% | +6,4% | −4,9% | +6,8% | 38% |
+| 0,50 a 0,60 | 10 | +2,9% | +5,2% | +6,1% | +4,1% | 80% |
+| 0,60 a 0,75 | 34 | +1,5% | +4,7% | +4,9% | +4,6% | 53% |
+
+**Por ano da entrada**
+
+| Ano da entrada | Entradas | Depois de custos e imposto (fechadas) | Selic líquida |
+|---|---|---|---|
+| 2018 | 1 | +3,8% | +0,3% |
+| 2020 | 1 | +12,0% | +0,6% |
+| 2021 | 2 | −14,0% | +4,7% |
+| 2022 | 9 | +1,6% | +5,9% |
+| 2023 | 8 | +8,4% | +4,9% |
+| 2024 | 18 | −3,1% | +4,1% |
+| 2025 | 14 | +13,4% | +5,8% |
+| 2026 | 6 | — | — |
+
+**Em aberto em 09/11/2026**
+
+| Fundo | Entrada | Preço de entrada | Preço atual | Pregões | Valorização | Rendimento | Preço sobre valor patrimonial na entrada |
+|---|---|---|---|---|---|---|---|
+| RCRB11 | 2025-12-01 | 128.47 | 128.82 | 232 | +0,3% | +9,8% | 0.65 |
+| CXAG11 | 2026-09-08 | 70.82 | 74.50 | 42 | +5,2% | +2,9% | 0.68 |
+| RBRP11 | 2026-09-11 | 46.99 | 42.70 | 39 | −9,1% | +2,2% | 0.59 |
+| RECT11 | 2026-10-28 | 33.00 | 32.32 | 7 | −2,1% | +1,4% | 0.37 |
+| RBRR11 | 2026-10-29 | 65.70 | 63.00 | 6 | −4,1% | +0,0% | 0.71 |
+| RPRI11 | 2026-10-29 | 72.75 | 68.00 | 6 | −6,5% | +1,2% | 0.73 |
+| VCJR11 | 2026-10-29 | 66.15 | 63.00 | 6 | −4,8% | +1,2% | 0.72 |
+
+Números tirados de `docs/anuncio_saida_operacoes.csv` (filtro aplicado sobre as 287 operações do Estudo 1.1b; nenhum estudo novo foi rodado).
+
 ### Estudo 1.2 — Carteira de R$ 10.000 em 2026 (com saída, custos e imposto)
 
 **Regras rodadas** (01/01/2026 a 31/10/2026)

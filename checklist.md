@@ -65,7 +65,8 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-13 — Estratégia 1 medida da entrada até a saída (saída quando o rendimento cai), no formato pedido pelo dono: `estudos/anuncio_saida.py`, `docs/ESTRATEGIAS.md`.
 - [x] 2026-11-13 — Decidido pelo dono: execução de estudos por agentes auxiliares (modelo menor); preço em D+5/D+10/D+20 sai do documento; resultados em média, separando cota em alta e em queda.
 - [x] 2026-11-13 — Estratégia 1 separada em moderado e agressivo, com em aberto na mesma tabela e fundos que saíram da bolsa corrigidos (`docs/ESTRATEGIAS.md`, Estudo 1.1b).
-- [ ] Decisão do dono: como definir o agressivo na Estratégia 1 (a faixa de R$ 50 a 100 milhões deu só 4 entradas).
+- [x] 2026-11-13 — Decidido pelo dono: agressivo = cota de 30% a 75% do valor patrimonial, patrimônio de R$ 50 milhões ou mais; moderado começa em 60%; usar sempre o preço sobre valor patrimonial do fundo, sem ajuste pela média do mercado. Tabela do agressivo em `docs/ESTRATEGIAS.md` (Estudo 1.1c).
+- [ ] Ideia do dono a testar: em fundos muito descontados (0,30 a 0,40), saída em valor fixo (ex.: +7%) e regra de retorno depois de queda.
 - [ ] Conferir a saída "fundo saiu da bolsa" (pode pegar trecho de preço descartado).
 - [ ] Estratégia 2: saída em anúncios muito sérios (pendência do dono, levantar dados).
 - [ ] Dono rever o perfil conservador (seção final de `docs/ESTRATEGIAS.md`).
