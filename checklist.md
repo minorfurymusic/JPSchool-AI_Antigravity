@@ -52,9 +52,15 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] Refazer o perfil conservador (o atual rende menos que o caixa) e rever o gatilho de aviso confirmado.
 - [ ] Simulação com execução mais dura (ordem só executa se o preço passar do alvo; limite pelo volume do dia).
 
+- [x] 2026-11-13 — Estratégia 2 (desconto com renda estável), dia a dia, três perfis: `docs/ESTUDO_DESCONTO.md`.
+- [x] 2026-11-13 — Decidido pelo dono: perfil se define pela qualidade do fundo; piso de patrimônio de R$ 50, 100 e 400 milhões; ordem até 2% do volume do dia; excluir fundos em encerramento; saída da estratégia 2 pelo rendimento encostar na Selic.
+- [ ] Estratégia 3 (inquilino inadimplente que se recupera, caso SPTW11): pendência registrada pelo dono, sem estudo.
+- [ ] Nota de qualidade dos fundos e nova simulação da estratégia 1 com filtros de armadilha.
+
 ## Pendente: decisões do dono
 
-- [ ] Onde usar: só computador ou endereço na internet.
+- [x] Onde usar: computador de casa (Windows 11 Pro), rodando às 20h.
+- [ ] Selic bruta ou líquida de imposto como régua do rendimento.
 - [ ] Carteira: repositório privado ou dado só no aparelho.
 - [ ] IA paga para ler PDFs (só na Fase 6).
 - [ ] Seguir neste repositório ou criar outro.
