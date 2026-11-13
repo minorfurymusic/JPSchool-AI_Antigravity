@@ -48,6 +48,10 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] Grade de regras de entrada e saída (alvo, limite de perda, prazo), escolhida numa parte dos anos e conferida na outra.
 - [x] PDFs protegidos: biblioteca `cryptography` instalada; relidos.
 
+- [x] 2026-11-13 — Simulação de carteira (R$ 10.000, 2026, três perfis), mesmas regras em 2018–2025 e teste de sorteio: `docs/SIMULACAO_2026.md`.
+- [ ] Refazer o perfil conservador (o atual rende menos que o caixa) e rever o gatilho de aviso confirmado.
+- [ ] Simulação com execução mais dura (ordem só executa se o preço passar do alvo; limite pelo volume do dia).
+
 ## Pendente: decisões do dono
 
 - [ ] Onde usar: só computador ou endereço na internet.
