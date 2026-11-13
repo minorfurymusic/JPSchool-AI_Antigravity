@@ -64,7 +64,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] Rodar de novo as estratégias 1, 2 e o conservador no quadro padrão (entradas, saídas, em aberto, pregões, valorização, rendimento, Selic líquida, custos e imposto).
 - [x] 2026-11-13 — Estratégia 1 medida da entrada até a saída (saída quando o rendimento cai), no formato pedido pelo dono: `estudos/anuncio_saida.py`, `docs/ESTRATEGIAS.md`.
 - [x] 2026-11-13 — Decidido pelo dono: execução de estudos por agentes auxiliares (modelo menor); preço em D+5/D+10/D+20 sai do documento; resultados em média, separando cota em alta e em queda.
-- [ ] Estratégia 1: filtrar entradas por qualidade e desconto; corrigir saída de fundos que pararam de negociar (15 casos).
+- [x] 2026-11-13 — Estratégia 1 separada em moderado e agressivo, com em aberto na mesma tabela e fundos que saíram da bolsa corrigidos (`docs/ESTRATEGIAS.md`, Estudo 1.1b).
+- [ ] Decisão do dono: como definir o agressivo na Estratégia 1 (a faixa de R$ 50 a 100 milhões deu só 4 entradas).
+- [ ] Conferir a saída "fundo saiu da bolsa" (pode pegar trecho de preço descartado).
 - [ ] Estratégia 2: saída em anúncios muito sérios (pendência do dono, levantar dados).
 - [ ] Dono rever o perfil conservador (seção final de `docs/ESTRATEGIAS.md`).
 - [ ] Decisão do dono sobre as 7 mudanças propostas em `docs/ESTUDO_CONSERVADOR.md`.

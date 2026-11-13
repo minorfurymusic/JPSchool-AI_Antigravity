@@ -112,6 +112,66 @@ O programa marcou 43 como em aberto; 15 delas são fundos que saíram da bolsa (
 
 O estudo antigo, que olhava o preço em D+5, D+10, D+20, D+30 e D+60, saiu deste documento por decisão do dono. Continua em `docs/ESTUDO_DIAS.md`.
 
+### Estudo 1.1b — Separado por perfil (moderado e agressivo)
+
+Mesmo programa e mesmas regras do Estudo 1.1, com duas mudanças: o perfil é dado pelo patrimônio do fundo no dia da entrada, e fundo que saiu da bolsa passa a fechar a operação no último preço (antes ficava "em aberto"). Os números do Estudo 1.1 são da versão anterior a essa correção.
+
+**Onde caíram as 287 entradas**
+
+| Perfil | Patrimônio | Entradas |
+|---|---|---|
+| Agressivo | R$ 50 a 100 milhões | 4 |
+| Moderado | R$ 100 a 400 milhões | 80 |
+| Conservador (fora desta estratégia) | R$ 400 milhões ou mais | 199 |
+| Sem patrimônio conhecido | — | 4 |
+
+**Moderado**
+
+| | 1A venda com lucro | 1A multa ou indenização | 1B locação nova | 1C aumento declarado | Todas | Com desconto (cota até 90% do valor patrimonial) | Sem desconto |
+|---|---|---|---|---|---|---|---|
+| Entradas | 23 | 9 | 32 | 39 | 80 | 42 | 38 |
+| Fechadas | 20 | 9 | 32 | 39 | 77 | 39 | 38 |
+| Em aberto | 3 | 0 | 0 | 0 | 3 | 3 | 0 |
+| Fechadas: pregões entre entrada e saída (média) | 99 | 107 | 100 | 106 | 104 | 115 | 92 |
+| Fechadas em que a cota subiu | 35% | 33% | 47% | 46% | 40% | 36% | 45% |
+| … valorização média dessas | +5,6% | +7,8% | +9,1% | +6,8% | +8,4% | +10,2% | +6,9% |
+| Fechadas em que a cota caiu | 65% | 67% | 53% | 54% | 60% | 64% | 55% |
+| … queda média dessas | −7,1% | −13,0% | −11,2% | −12,4% | −10,0% | −9,3% | −10,7% |
+| Fechadas: valorização média | −2,7% | −6,1% | −1,7% | −3,6% | −2,6% | −2,3% | −2,9% |
+| Fechadas: rendimento médio recebido | +6,1% | +5,0% | +4,0% | +3,7% | +4,5% | +5,4% | +3,6% |
+| Fechadas: valorização + rendimento | +3,4% | −1,0% | +2,3% | +0,2% | +1,9% | +3,1% | +0,7% |
+| Fechadas: depois de custos e imposto | +3,0% | −1,6% | +1,4% | −0,5% | +1,2% | +2,3% | 0,0% |
+| Fechadas: Selic líquida no mesmo período | +3,7% | +4,1% | +2,8% | +2,6% | +3,1% | +4,3% | +1,9% |
+| Fechadas que ganharam da Selic líquida | 35% | 33% | 50% | 51% | 44% | 36% | 53% |
+| Em aberto: pregões desde a entrada (média) | 88 | — | — | — | 88 | 88 | — |
+| Em aberto: valorização média | −2,2% | — | — | — | −2,2% | −2,2% | — |
+| Em aberto: rendimento médio recebido | +4,7% | — | — | — | +4,7% | +4,7% | — |
+| Em aberto: valorização + rendimento | +2,5% | — | — | — | +2,5% | +2,5% | — |
+| Em aberto: Selic líquida no mesmo período | +3,9% | — | — | — | +3,9% | +3,9% | — |
+
+Em aberto em 09/11/2026: NEWL11 (entrada 22/12/2025 a R$ 110,90, hoje R$ 105,00, 217 pregões, cota −5,3%, rendimento +10,0%); CXAG11 (08/09/2026 a R$ 70,82, hoje R$ 74,50, 42 pregões, +5,2%, +2,9%); RPRI11 (29/10/2026 a R$ 72,75, hoje R$ 68,00, 6 pregões, −6,5%, +1,2%).
+
+| Motivo da saída (moderado, 77 fechadas) | Quantas | Pregões | Valorização | Rendimento | Depois de custos e imposto | Selic líquida |
+|---|---|---|---|---|---|---|
+| Rendimento caiu 10% ou mais | 49 | 72 | −4,2% | +3,3% | −1,3% | +2,2% |
+| 252 pregões | 15 | 252 | −0,6% | +9,1% | +6,9% | +7,8% |
+| Fundo saiu da bolsa | 8 | 42 | −1,1% | +3,9% | +2,5% | +1,2% |
+| Fundo declarou redução | 5 | 69 | +5,0% | +2,8% | +6,6% | +1,8% |
+
+**Agressivo**
+
+Só 4 entradas em 9 anos, todas fechadas, nenhuma em aberto. Não dá para tirar conclusão. Uma delas subiu 46%; as outras três, de 0,5% a 2,2%.
+
+**O que diz**
+- O moderado perdeu da Selic líquida: +1,2% contra +3,1%.
+- Com desconto foi melhor que sem (+2,3% contra 0,0%), mas ainda abaixo da Selic líquida do período (+4,3%).
+- Sair quando o rendimento cai deu prejuízo (−1,3%): a cota já tinha caído 4,2% antes.
+- 7 de cada 10 anúncios são de fundos de R$ 400 milhões ou mais. Com as faixas de patrimônio atuais, o agressivo fica quase vazio nesta estratégia.
+
+**Limites**
+- A saída "fundo saiu da bolsa" (8 no moderado) pode incluir fundos que só tiveram um trecho de preço descartado da base. Não conferido.
+- A base de anúncios só tem fundos com R$ 200 mil ou mais negociados por dia; o agressivo aceitaria a partir de R$ 100 mil.
+
 ### Estudo 1.2 — Carteira de R$ 10.000 em 2026 (com saída, custos e imposto)
 
 **Regras rodadas** (01/01/2026 a 31/10/2026)
