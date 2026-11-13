@@ -40,31 +40,77 @@ Situação hoje: **nenhum estudo cumpre os 5 itens.** Cada seção diz o que tem
 - **1B, por mudança no lucro:** área vaga que foi alugada, contrato novo. O rendimento sobe e fica.
 - **1C, o fundo declara o aumento:** o texto diz que o rendimento vai subir; o programa não sabe se é 1A ou 1B.
 
-### Estudo 1.1 — O que a cota faz depois do anúncio (sem saída)
+### Estudo 1.1 — Da entrada até a saída (2018 a 2026)
+
+Programa: `estudos/anuncio_saida.py`, escrito e rodado por agente auxiliar; operações uma a uma em `docs/anuncio_saida_operacoes.csv`.
 
 **Regras rodadas**
-- Fatos relevantes de 2017 a 2026, separados por tipo pelas palavras do texto.
-- Só fundo com R$ 200 mil ou mais negociados por dia.
-- Entrada na abertura do pregão seguinte.
-- **Não há perfil** (conservador, moderado, agressivo) nem regra de saída: o estudo só acompanha o preço dia a dia depois da entrada.
-- Cota convertida para R$ 10,00 na entrada. Ex.: 10,14 = subiu 1,4%.
-- Não inclui rendimento, custos, imposto nem Selic.
+- **Entrada:** abertura do pregão seguinte ao fato relevante.
+- **Saída 1, rendimento caiu:** abertura do pregão em que fica conhecido um rendimento 10% ou mais abaixo do maior desde a entrada.
+- **Saída 2:** o fundo declara redução de rendimento.
+- **Saída 3:** 252 pregões sem nada acontecer.
+- Não há saída por preço. Não há perfil (conservador, moderado, agressivo): entram todos os fundos com R$ 200 mil ou mais negociados por dia.
+- **Custos:** taxa de 0,03% na compra e na venda; imposto de 20% sobre a valorização; rendimento isento.
+- **Selic:** líquida de imposto, nos mesmos pregões de cada operação.
+- Os 10%, os 252 pregões e a saída na abertura são escolha minha. Não há preço de dentro do dia.
 
-| | 1A venda com lucro | 1A multa ou indenização | 1B locação nova | 1C aumento declarado | Outros fundos no mesmo dia |
+**Operações fechadas**
+
+| | 1A venda com lucro | 1A multa ou indenização | 1B locação nova | 1C aumento declarado | Todas |
 |---|---|---|---|---|---|
-| Entradas | 229 | 50 | 165 | 147 | — |
-| Preço típico em D+5 | 10,01 | 10,00 | 10,02 | 10,02 | 9,99 |
-| Preço típico em D+10 | 9,99 | 9,96 | 9,98 | 10,01 | 9,98 |
-| Preço típico em D+20 | 9,99 | 10,00 | 9,95 | 10,03 | 9,96 |
-| Preço típico em D+30 | 9,95 | 9,87 | 9,93 | 10,02 | 9,93 |
-| Preço típico em D+60 | 9,96 | 9,73 | 9,76 | 9,91 | — |
-| Preço pessimista em D+20 | 9,80 | 9,70 | 9,71 | 9,80 | — |
-| Preço otimista em D+20 | 10,16 | 10,20 | 10,19 | 10,38 | — |
-| Maior preço tocado até D+20 (típico) | 10,24 | 10,23 | 10,29 | 10,35 | — |
-| Ordem de venda a 10,30 executada até D+20 | 45% | 46% | 49% | 54% | — |
-| Ordem de venda a 10,50 executada até D+20 | 24% | 30% | 27% | não medido | — |
+| Entradas | 150 | 38 | 96 | 99 | 287 |
+| Fechadas | 116 | 35 | 87 | 93 | 244 |
+| Pregões entre entrada e saída (média) | 128 | 144 | 118 | 118 | 119 |
+| Fechadas em que a cota subiu | 47% | 40% | 44% | 51% | 49% |
+| … valorização média dessas | +6,3% | +7,2% | +7,2% | +7,7% | +7,8% |
+| Fechadas em que a cota caiu | 53% | 57% | 56% | 49% | 51% |
+| … queda média dessas | −9,0% | −10,8% | −10,3% | −10,5% | −9,8% |
+| Valorização média (todas as fechadas) | −1,7% | −3,3% | −2,7% | −1,3% | −1,2% |
+| Rendimento médio recebido | +5,5% | +5,6% | +4,4% | +4,2% | +4,7% |
+| Valorização + rendimento | +3,7% | +2,3% | +1,7% | +2,9% | +3,5% |
+| Depois de custos e imposto | +3,1% | +1,7% | +1,0% | +2,1% | +2,7% |
+| Selic líquida no mesmo período | +4,5% | +4,9% | +3,8% | +3,4% | +3,9% |
+| Operações que ganharam da Selic líquida | 50% | 34% | 46% | 54% | 52% |
+| O rendimento subiu de fato 5% ou mais depois da entrada | 61% | 60% | 46% | 67% | 58% |
 
-**O que diz:** no caso típico a cota quase não sai do lugar nos três tipos. O ganho está em vender numa alta do meio do caminho: perto de metade das vezes a cota toca +3% em até 20 pregões.
+**Por motivo da saída (todas, 244 fechadas)**
+
+| Motivo | Quantas | Pregões | Valorização | Rendimento | Depois de custos e imposto | Selic líquida |
+|---|---|---|---|---|---|---|
+| Rendimento caiu 10% ou mais | 167 | 85 | −1,0% | +3,7% | +1,9% | +2,7% |
+| Fundo declarou redução | 25 | 65 | −3,4% | +2,1% | −1,9% | +1,7% |
+| 252 pregões | 52 | 252 | −0,6% | +9,3% | +7,5% | +8,9% |
+
+**O rendimento subiu mesmo? (todas, 244 fechadas)**
+
+| | Quantas | Pregões | Valorização | Rendimento | Depois de custos e imposto | Selic líquida |
+|---|---|---|---|---|---|---|
+| Subiu 5% ou mais depois da entrada | 141 | 141 | +0,1% | +5,7% | +4,7% | +4,6% |
+| Não subiu | 103 | 89 | −2,9% | +3,4% | 0,0% | +2,9% |
+
+**Operações em aberto**
+
+| | Quantas | Pregões | Valorização | Rendimento | Valorização + rendimento | Selic líquida |
+|---|---|---|---|---|---|---|
+| Em aberto de verdade (menos de 252 pregões) | 28 | 96 | −8,0% | +4,0% | −4,1% | +4,2% |
+| Fundos que pararam de negociar (não são operações reais em aberto) | 15 | — | — | — | — | — |
+
+O programa marcou 43 como em aberto; 15 delas são fundos que saíram da bolsa (incorporados ou encerrados) e ficaram sem preço de saída. É um defeito a corrigir: falta tratar a saída desses fundos.
+
+**O que diz**
+- Na média, a Estratégia 1 com estas regras **perdeu da Selic líquida**: +2,7% contra +3,9%, em cerca de 119 pregões.
+- A cota, na média, não valorizou (−1,2%). O ganho veio do rendimento.
+- Metade das operações teve a cota em alta (+7,8% em média) e metade em queda (−9,8% em média).
+- Em 4 de cada 10 anúncios o rendimento não subiu depois. Nessas, o resultado foi zero.
+- Quando o rendimento subiu de fato, a operação empatou com a Selic líquida (+4,7% contra +4,6%).
+- O melhor tipo foi o 1A venda com lucro (+3,1%); o pior, o 1B locação nova (+1,0%).
+
+**Limites**
+- Todos os fundos entram juntos. Falta filtrar por qualidade e por desconto (o exemplo do dono é de um fundo com cota a 50% do valor patrimonial).
+- O tipo do anúncio é lido por palavras e erra.
+- Conferência: os totais fecham e uma operação foi refeita à mão; o programa não foi revisado linha a linha.
+
+O estudo antigo, que olhava o preço em D+5, D+10, D+20, D+30 e D+60, saiu deste documento por decisão do dono. Continua em `docs/ESTUDO_DIAS.md`.
 
 ### Estudo 1.2 — Carteira de R$ 10.000 em 2026 (com saída, custos e imposto)
 
@@ -96,9 +142,8 @@ Custos: corretagem zero, taxa da B3 de 0,03%, imposto de 20% sobre o ganho do m�
 
 ### O que falta na Estratégia 1
 
-- Separar, por entrada, valorização e rendimento, com pregões entre entrada e saída e quantas ficaram em aberto.
-- Medir 1A, 1B e 1C separados **com** regra de saída (hoje só há o conjunto).
-- Medir 120 e 250 pregões: o exemplo original do dono (rendimento 30% maior por 12 meses, cota subindo 10–15% em alguns meses) ainda não foi testado.
+- Filtrar as entradas por qualidade do fundo e por desconto sobre o valor patrimonial, e medir de novo.
+- Corrigir a saída dos fundos que pararam de negociar.
 - Ler quanto tempo dura e de quanto é o aumento. A separação 1A/1B é por palavras e erra.
 
 ---
@@ -153,6 +198,7 @@ O típico de cada linha é calculado separado, por isso valorização + rendimen
 - Refazer com a Selic líquida de imposto (decisão do dono).
 - Comparar com a Selic no mesmo período e descontar custos e imposto.
 - Decidir se sai ou segura quando a Selic sobe e o fundo passa a render menos que ela sem a cota ter subido.
+- Pendência do dono: saída também em anúncios muito sérios. Levantar mais dados antes de definir.
 
 ---
 
