@@ -1,219 +1,226 @@
 # Estratégias do Radar de FIIs
 
-Data: 2026-11-13. Este documento separa as estratégias, uma por seção. Os números vêm dos estudos já rodados (dia a dia, 2017/2018 a 2026); cada seção aponta o estudo de origem.
+Atualizado em 2026-11-13 (versão refeita a pedido do dono; a anterior está no histórico do repositório).
+Tudo aqui foi medido **dia a dia** (pregão a pregão). Nada é mensal.
 
-## Palavras usadas
+## Como ler
 
-| Palavra | O que quer dizer aqui |
+| Termo | Significado |
 |---|---|
-| Comprar / entrar | Abrir a operação: comprar a cota. Sempre na abertura do pregão seguinte ao sinal. |
-| Vender / sair | Fechar a operação: vender a cota. |
-| Queda | Queda do **preço da cota**. Nunca do rendimento. |
-| Corte | Queda do **rendimento** (o valor em reais pago por cota). Nunca do preço. |
-| Pico | O maior fechamento da cota nos 252 pregões anteriores. |
-| Rendimento mantido | O valor pago por cota hoje é pelo menos 95% do que era 126 pregões antes. |
-| Pessimista / Típico / Otimista | 1 em cada 4 casos foi pior / o caso do meio / 1 em cada 4 foi melhor. |
-| Cota a R$ 10,00 | Todos os preços estão convertidos para uma cota comprada a R$ 10,00. |
+| Entrada | Compra da cota. Sempre na abertura do pregão seguinte ao sinal. |
+| Saída | Venda da cota. |
+| Em aberto | Entrou e ainda não saiu até 09/11/2026 (último pregão da base). |
+| Pregões | Dias de bolsa entre a entrada e a saída. |
+| Valorização | Quanto o **preço da cota** subiu ou caiu entre a entrada e a saída. |
+| Rendimento | O dinheiro pago pelo fundo por cota durante a operação. |
+| Total | Valorização + rendimento. |
+| Queda | Sempre do preço da cota. |
+| Corte | Sempre do rendimento. |
+| Típico | A operação do meio. "Típico +10,9%" = metade das operações ganhou mais que 10,9% e metade ganhou menos. **Não** quer dizer que 10,9% dos fundos subiram. |
+| Pessimista / Otimista | 1 em cada 4 operações foi pior que isso / 1 em cada 4 foi melhor. |
+| D+5, D+20 | 5º e 20º pregão depois da entrada. |
 
-Então:
-- **"Comprar na queda"** = entrar na operação quando o preço da cota caiu e o rendimento continua o mesmo.
-- **"Vender no corte"** = sair quando o fundo passa a pagar menos. Não é vender porque o preço caiu.
+## Quadro que todo estudo deve trazer (pedido do dono)
+
+1. Quantidade de entradas, de saídas e em aberto.
+2. Pregões entre a entrada e a saída.
+3. Lucro ou prejuízo em duas contas: valorização e rendimento.
+4. Selic no mesmo período.
+5. Tudo já descontado de custos e imposto.
+
+Situação hoje: **nenhum estudo cumpre os 5 itens.** Cada seção diz o que tem e o que falta.
 
 ---
 
 ## Estratégia 1 — Anúncio de aumento de rendimento
 
-**Ideia do dono:** o fundo publica um fato relevante que leva a aumento de rendimento; compra-se no pregão seguinte e vende-se depois da valorização da cota.
+**Ideia:** o fundo publica um fato relevante que faz o rendimento subir. Entrada no pregão seguinte, saída depois que a cota valoriza.
 
-**Sinal:** fato relevante no FNET. **Entrada:** abertura do pregão seguinte.
+- **1A, por tempo determinado:** venda de imóvel com lucro, multa, indenização. O rendimento sobe e depois volta.
+- **1B, por mudança no lucro:** área vaga que foi alugada, contrato novo. O rendimento sobe e fica.
+- **1C, o fundo declara o aumento:** o texto diz que o rendimento vai subir; o programa não sabe se é 1A ou 1B.
 
-A estratégia tem dois casos, que o dono pediu para separar.
+### Estudo 1.1 — O que a cota faz depois do anúncio (sem saída)
 
-### 1A — Aumento por tempo determinado (não recorrente)
+**Regras rodadas**
+- Fatos relevantes de 2017 a 2026, separados por tipo pelas palavras do texto.
+- Só fundo com R$ 200 mil ou mais negociados por dia.
+- Entrada na abertura do pregão seguinte.
+- **Não há perfil** (conservador, moderado, agressivo) nem regra de saída: o estudo só acompanha o preço dia a dia depois da entrada.
+- Cota convertida para R$ 10,00 na entrada. Ex.: 10,14 = subiu 1,4%.
+- Não inclui rendimento, custos, imposto nem Selic.
 
-O dinheiro entra uma vez ou por prazo certo: venda de imóvel com lucro, multa de rescisão, indenização. O rendimento sobe por alguns meses e depois volta.
-
-| Venda de ativo com ganho (229 casos) | D+5 | D+10 | D+20 | D+30 | D+60 |
+| | 1A venda com lucro | 1A multa ou indenização | 1B locação nova | 1C aumento declarado | Outros fundos no mesmo dia |
 |---|---|---|---|---|---|
-| Fechamento pessimista | 9,91 | 9,83 | 9,80 | 9,73 | 9,56 |
-| Fechamento típico | 10,01 | 9,99 | 9,99 | 9,95 | 9,96 |
-| Fechamento otimista | 10,14 | 10,19 | 10,16 | 10,26 | 10,42 |
-| Maior preço até o dia (típico) | 10,14 | 10,17 | 10,24 | 10,31 | 10,43 |
-| Maior preço até o dia (otimista) | 10,27 | 10,37 | 10,49 | 10,57 | 10,84 |
-| Menor preço até o dia (típico) | 9,87 | 9,84 | 9,77 | 9,70 | 9,53 |
-| Outros fundos, mesma abertura (típico) | 9,98 | 9,97 | 9,96 | 9,93 | — |
+| Entradas | 229 | 50 | 165 | 147 | — |
+| Preço típico em D+5 | 10,01 | 10,00 | 10,02 | 10,02 | 9,99 |
+| Preço típico em D+10 | 9,99 | 9,96 | 9,98 | 10,01 | 9,98 |
+| Preço típico em D+20 | 9,99 | 10,00 | 9,95 | 10,03 | 9,96 |
+| Preço típico em D+30 | 9,95 | 9,87 | 9,93 | 10,02 | 9,93 |
+| Preço típico em D+60 | 9,96 | 9,73 | 9,76 | 9,91 | — |
+| Preço pessimista em D+20 | 9,80 | 9,70 | 9,71 | 9,80 | — |
+| Preço otimista em D+20 | 10,16 | 10,20 | 10,19 | 10,38 | — |
+| Maior preço tocado até D+20 (típico) | 10,24 | 10,23 | 10,29 | 10,35 | — |
+| Ordem de venda a 10,30 executada até D+20 | 45% | 46% | 49% | 54% | — |
+| Ordem de venda a 10,50 executada até D+20 | 24% | 30% | 27% | não medido | — |
 
-- Ordem de venda a R$ 10,30: executada em 24% até D+5, 33% até D+10, 45% até D+20, 51% até D+30.
-- Ordem de venda a R$ 10,50: 8%, 15%, 24%, 31%.
-- Maior preço: no 4º pregão (até D+10), no 7º (até D+20), no 12º (até D+30).
+**O que diz:** no caso típico a cota quase não sai do lugar nos três tipos. O ganho está em vender numa alta do meio do caminho: perto de metade das vezes a cota toca +3% em até 20 pregões.
 
-| Recebimento extraordinário: multa, indenização (50 casos) | D+5 | D+10 | D+20 | D+30 | D+60 |
-|---|---|---|---|---|---|
-| Fechamento pessimista | 9,93 | 9,77 | 9,70 | 9,66 | 9,52 |
-| Fechamento típico | 10,00 | 9,96 | 10,00 | 9,87 | 9,73 |
-| Fechamento otimista | 10,09 | 10,16 | 10,20 | 10,08 | 10,19 |
-| Outros fundos, mesma abertura (típico) | 10,00 | 10,00 | 9,99 | 9,96 | — |
+### Estudo 1.2 — Carteira de R$ 10.000 em 2026 (com saída, custos e imposto)
 
-Leitura: a multa costuma vir junto com a saída do inquilino. O dinheiro entra uma vez e o aluguel some. A cota fecha abaixo dos outros fundos depois de D+30.
+**Regras rodadas** (01/01/2026 a 31/10/2026)
 
-### 1B — Aumento por mudança no lucro (recorrente)
+| | Conservador | Moderado | Agressivo |
+|---|---|---|---|
+| Entra quando | fundo declara aumento (1C), ou aviso seguinte a um salto continua alto | os do conservador + valor por cota de 3% do preço ou mais + aviso 25% acima dos anteriores | os do moderado + 1A e 1B só pelo assunto |
+| Fundo aceito (negociado por dia) | R$ 1 milhão | R$ 300 mil | R$ 200 mil |
+| Quanto por operação | 10% | 20% | 33% |
+| Sai com ganho de | +3% | +5% | +10% |
+| Sai com perda de | −3% | −5% | −8% |
+| Prazo máximo | 15 pregões | 20 pregões | 30 pregões |
 
-Entra dinheiro novo que continua entrando: área vaga que foi alugada, contrato novo ou renovado.
+Custos: corretagem zero, taxa da B3 de 0,03%, imposto de 20% sobre o ganho do mês, rendimento isento. Dinheiro parado rende a Selic menos 22,5%.
 
-| Locação nova ou renovada (165 casos) | D+5 | D+10 | D+20 | D+30 | D+60 |
-|---|---|---|---|---|---|
-| Fechamento pessimista | 9,90 | 9,84 | 9,71 | 9,66 | 9,22 |
-| Fechamento típico | 10,02 | 9,98 | 9,95 | 9,93 | 9,76 |
-| Fechamento otimista | 10,14 | 10,14 | 10,19 | 10,26 | 10,28 |
-| Maior preço até o dia (típico) | 10,17 | 10,20 | 10,29 | 10,35 | 10,45 |
-| Maior preço até o dia (otimista) | 10,34 | 10,40 | 10,53 | 10,70 | 10,97 |
-| Menor preço até o dia (típico) | 9,86 | 9,79 | 9,70 | 9,59 | 9,31 |
-| Outros fundos, mesma abertura (típico) | 9,99 | 9,98 | 9,96 | 9,92 | — |
+| Resultado | Conservador | Moderado | Agressivo |
+|---|---|---|---|
+| Entradas | 16 | 41 | 24 |
+| Entradas com ganho | 25% | 63% | 67% |
+| Resultado médio por entrada | −1,70% | +0,83% | +2,93% |
+| Rendimento recebido | R$ 27 | R$ 446 | R$ 999 |
+| Imposto pago | R$ 0 | R$ 98 | R$ 295 |
+| Dinheiro no fim | R$ 10.566 | R$ 11.005 | R$ 12.297 |
+| Resultado no período | +5,7% | +10,1% | +23,0% |
+| Mesmo dinheiro na Selic, com imposto | R$ 10.901 (+9,0%) | igual | igual |
 
-- Ordem de venda a R$ 10,30: 29% até D+5, 38% até D+10, 49% até D+20, 55% até D+30.
-- Ordem de venda a R$ 10,50: 10%, 14%, 27%, 36%.
-- Maior preço: no 4º pregão (até D+10), no 6º (até D+20), no 8º (até D+30).
+**O que diz:** só moderado e agressivo ganharam da Selic. No teste com fundos sorteados, cerca de metade do ganho veio do mercado e das regras de saída, não do anúncio.
 
-### 1C — O fundo declara o aumento, sem o programa saber a origem
+### O que falta na Estratégia 1
 
-Fato relevante em que o próprio texto diz que o rendimento vai subir (147 casos). Mistura 1A e 1B.
-
-| Aumento declarado (147 casos) | D+5 | D+10 | D+20 | D+30 | D+60 |
-|---|---|---|---|---|---|
-| Fechamento pessimista | 9,92 | 9,89 | 9,80 | 9,69 | 9,41 |
-| Fechamento típico | 10,02 | 10,01 | 10,03 | 10,02 | 9,91 |
-| Fechamento otimista | 10,20 | 10,24 | 10,38 | 10,36 | 10,48 |
-| Maior preço até o dia (típico) | 10,18 | 10,24 | 10,35 | 10,41 | 10,59 |
-| Maior preço até o dia (otimista) | 10,34 | 10,44 | 10,65 | 10,79 | 10,97 |
-
-- Ordem de venda a R$ 10,30: 29% até D+5, 43% até D+10, 54% até D+20, 61% até D+30.
-- Quando o texto informa valor por cota de 3% do preço ou mais (73 casos): típico de 10,04 em D+5 e 10,05 em D+15; ordem a R$ 10,50 executada em 37% até D+20.
-
-### O que os números da Estratégia 1 dizem
-
-- No caso típico, a cota quase não sai do lugar nos três tipos. A vantagem sobre os outros fundos é de 1 a 7 centavos por cota de R$ 10.
-- O ganho está na parte de cima: em 1 caso a cada 4, o maior preço passa de R$ 10,50 em 20 pregões.
-- O tipo 1A (venda com ganho) e o 1B (locação nova) se comportam de forma parecida nos primeiros 20 pregões. Depois de D+30 o 1B cai mais.
-- O melhor resultado é o 1C: o fundo dizendo com as próprias palavras que o rendimento sobe.
-- Na simulação de carteira de 2026 (R$ 10.000, com custos e imposto): conservador R$ 10.566, moderado R$ 11.005, agressivo R$ 12.297; dinheiro parado no caixa R$ 10.901. Cerca de metade do ganho veio do mercado e das regras de saída, não do sinal (teste de sorteio).
-
-### O que NÃO foi medido na Estratégia 1
-
-- **O exemplo original do dono** (rendimento sobe 30% por 12 meses, cota sobe 10–15% ao longo de alguns meses): os estudos param em 60 pregões. Falta medir 120 e 250 pregões.
-- **Tempo do aumento:** o programa não lê por quantos meses o rendimento extra vai durar.
-- **Tamanho do aumento:** só 35 dos 147 aumentos declarados dizem o percentual.
-- **Separação 1A x 1B é por palavras** e erra. Leitura com IA ainda não foi feita.
-- **Qualidade do fundo** (tamanho, liquidez, desconto, regularidade) ainda não entra como filtro.
-
-Origem: `docs/ESTUDO_DIAS.md` (parte 3), `docs/SIMULACAO_2026.md`.
+- Separar, por entrada, valorização e rendimento, com pregões entre entrada e saída e quantas ficaram em aberto.
+- Medir 1A, 1B e 1C separados **com** regra de saída (hoje só há o conjunto).
+- Medir 120 e 250 pregões: o exemplo original do dono (rendimento 30% maior por 12 meses, cota subindo 10–15% em alguns meses) ainda não foi testado.
+- Ler quanto tempo dura e de quanto é o aumento. A separação 1A/1B é por palavras e erra.
 
 ---
 
 ## Estratégia 2 — Desconto com renda estável
 
-**Ideia do dono:** a cota está bem abaixo do valor patrimonial, o rendimento em reais não mudou, então o rendimento sobre o preço está alto. Compra-se, não se vende por queda de preço, e vende-se quando a cota sobe a ponto de o rendimento sobre o preço chegar perto da Selic.
+**Ideia:** a cota caiu, o rendimento em reais não mudou, então o fundo rende muito sobre o preço. Entra, não sai por queda, e sai quando a cota sobe a ponto de o rendimento sobre o preço chegar na Selic (exemplo do dono: rendia 20% ao ano, a cota subiu, passou a render 13%).
 
-Exemplo do dono: fundo rendia 20% ao ano sobre o preço; a cota valorizou e passou a render 13%; hora de sair.
+**Regras rodadas** (2018 a 2026)
 
-**Entrada:** rendimento sobre o preço acima da Selic (+2 pontos no moderado, +4 no agressivo), cota com desconto sobre o valor patrimonial, rendimento regular, patrimônio e liquidez mínimos, sem amortização relevante.
-
-**Saída:** ordem de venda no preço em que o rendimento iguala a Selic; ou corte de 15% ou mais; ou o fundo declarar redução. Sem limite de perda pelo preço.
-
-| 2018–2026, por operação | Moderado | Agressivo |
-|---|---|---|
-| Operações | 168 | 52 |
-| Tempo típico | 98 pregões | 84 pregões |
-| Pessimista | −5,0% | +1,1% |
-| Típico | +1,8% | +12,5% |
-| Otimista | +8,8% | +19,5% |
-| Operações com ganho | 58% | 75% |
-| Menor preço no caminho (típico) | −13,8% | −12,3% |
-
-| Como terminou (moderado) | Operações | Pregões | Resultado típico |
+| | Conservador | Moderado | Agressivo |
 |---|---|---|---|
-| A cota subiu até o rendimento encostar na Selic | 40 | 70 | +10,9% |
+| Patrimônio mínimo | R$ 400 milhões | R$ 100 milhões | R$ 50 milhões |
+| Negociado por dia | R$ 500 mil | R$ 200 mil | R$ 100 mil |
+| Preço sobre valor patrimonial | 0,80 a 1,00 | 0,30 a 0,90 | 0,30 a 0,75 |
+| Rendimento regular | 12 avisos variando até 10% | 6 avisos até 15% | 6 avisos até 15% |
+| Entra com rendimento de | Selic + 1 ponto | Selic + 2 pontos | Selic + 4 pontos |
+| Sai quando o rendimento chega a | Selic − 1 ponto | Selic | Selic |
+
+Nos três: sai também por corte de 15% ou mais, ou se o fundo declarar redução, ou em 2 anos. Não sai por queda. Fundo com amortização relevante não entra. Selic usada: **bruta**.
+
+| Resultado | Conservador | Moderado | Agressivo |
+|---|---|---|---|
+| Entradas | 26 | 168 | 52 |
+| Saídas | 20 | 147 | 46 |
+| Em aberto | 6 | 21 | 6 |
+| Pregões entre entrada e saída (típico) | 134 | 98 | 84 |
+| Valorização (típico) | −4,5% | −2,5% | +4,3% |
+| Rendimento (típico) | +3,9% | +4,7% | +5,0% |
+| Total (pessimista) | −7,9% | −5,0% | +1,1% |
+| Total (típico) | +0,6% | +1,8% | +12,5% |
+| Total (otimista) | +9,1% | +8,8% | +19,5% |
+| Entradas com ganho | 50% | 58% | 75% |
+| Menor preço no caminho (típico) | −13,1% | −13,8% | −12,3% |
+| Selic no mesmo período | não medido | não medido | não medido |
+| Custos e imposto | não descontados | não descontados | não descontados |
+
+O típico de cada linha é calculado separado, por isso valorização + rendimento não fecha exato com o total.
+
+| Motivo da saída (moderado) | Quantas | Pregões | Total típico |
+|---|---|---|---|
+| Cota subiu até o rendimento chegar na Selic | 40 | 70 | +10,9% |
 | Rendimento ficou abaixo da Selic sem a cota subir | 51 | 133 | −2,5% |
 | Corte de 15% ou mais | 52 | 104 | +0,6% |
 | Fundo declarou redução | 3 | 36 | −14,8% |
-| Ainda aberta | 21 | 60 | −0,3% |
+| Em aberto | 21 | 60 | −0,3% |
+
+**O que diz:** só o agressivo foi bem. Quando a saída é pela cota ter subido, o ganho é bom (+10,9%), mas isso foi 1 em cada 4 entradas.
 
 ### O que falta na Estratégia 2
 
-- Refazer com a **Selic líquida de imposto** (decisão do dono em 2026-11-13). Os números acima usam a Selic bruta.
-- Decidir o que fazer quando a Selic sobe e o fundo passa a render menos que ela sem a cota ter subido (51 operações, −2,5%).
-- Separar fundo de papel de fundo de imóveis.
-
-Origem: `docs/ESTUDO_DESCONTO.md`.
+- Refazer com a Selic líquida de imposto (decisão do dono).
+- Comparar com a Selic no mesmo período e descontar custos e imposto.
+- Decidir se sai ou segura quando a Selic sobe e o fundo passa a render menos que ela sem a cota ter subido.
 
 ---
 
-## Estratégia 3 — Inquilino com problema que se recupera
+## Estratégia 3 — Inquilino com problema que se recupera (caso SPTW11)
 
-**Ideia do dono (caso SPTW11):** o fundo sofre por problema com o inquilino, a cota cai muito, e depois o problema se resolve. Registrada pelo dono como oportunidade a estudar no futuro.
+**Ideia do dono:** fundo cai muito por problema com o inquilino e depois o problema se resolve.
 
-**Situação: nenhum estudo feito.** O que está abaixo é só o que existe na base para começar, não é resultado.
-
-- Há 223 fatos relevantes classificados como saída de inquilino ou inadimplência.
-- Falta definir, com o dono: o que é o sinal de entrada (a notícia ruim, ou a primeira notícia de solução?), o que conta como "recuperado" e quando sair.
-- Falta ler os textos com IA para separar inadimplência, saída, renegociação e acordo.
+**Nenhum estudo feito.** Há 223 fatos relevantes de saída de inquilino ou inadimplência na base. Falta o dono definir o sinal de entrada e o de saída.
 
 ---
 
-## Perfil conservador — a base da carteira (para o dono rever)
+## Conservador — a base da carteira (para o dono rever)
 
-Este não é uma estratégia de gatilho. É a parte da carteira que fica.
+Não é estratégia de gatilho. É a parte da carteira que fica.
 
-### A proposta
+**Proposta**
+1. **Fundo aceito:** patrimônio de R$ 400 milhões ou mais, R$ 500 mil negociados por dia ou mais, 12 avisos seguidos de rendimento variando até 10%, sem amortização relevante.
+2. **Entrada:** quando o preço da cota está 15% a 20% abaixo do maior preço dos últimos 252 pregões e o rendimento em reais continua o mesmo.
+3. **Não sai** por queda do preço.
+4. **Saída:** corte do rendimento de 15% ou mais, fundo declarar redução, ou amortização relevante.
 
-1. **O que compra:** fundo grande, líquido e de rendimento regular. No estudo: patrimônio de R$ 400 milhões ou mais, liquidez de R$ 500 mil por dia ou mais, 12 avisos seguidos de rendimento variando até 10%, sem amortização relevante.
-2. **Quando compra (entra):** quando o preço da cota desse fundo está 15% a 20% abaixo do pico e o rendimento em reais continua o mesmo.
-3. **O que NÃO faz vender:** queda do preço da cota.
-4. **O que faz vender:** corte do rendimento de 15% ou mais, o fundo declarar redução, ou amortização relevante.
-5. **Fica fora** dos gatilhos das Estratégias 1 e 2.
+Exemplo do dono: a cota valia R$ 100 e pagava R$ 1. Hoje vale R$ 80 e paga R$ 1. Não vende; pela proposta, é hora de entrar ou comprar mais.
 
-### Exemplo do dono
+**Regras rodadas** (2018 a 2026): entrada na abertura do pregão seguinte ao dia em que a cota ficou 15% abaixo do maior preço, com rendimento mantido. Sem regra de saída: conta feita 252 pregões depois.
 
-A cota valia R$ 100 e pagava R$ 1 por mês. Hoje a cota vale R$ 80 e continua pagando R$ 1. O conservador não vende. Pela proposta, esse é justamente o momento de comprar mais.
+| Resultado | Queda de 15% |
+|---|---|
+| Entradas | 83 |
+| Com 252 pregões completos | 55 |
+| Em aberto (menos de 252 pregões) | 28 |
+| Pregões | 252 (fixo) |
+| Valorização (típico) | +1,8% |
+| Rendimento (típico) | cerca de +9,5% |
+| Total (pessimista) | +0,4% |
+| Total (típico) | +11,3% |
+| Total (otimista) | +23,8% |
+| Entradas com ganho | 75% |
+| Selic líquida no mesmo período | +11,0% |
+| Fundo cortou o rendimento nesses 252 pregões | 16% |
+| Menor preço no caminho (típico) | −10,9% |
+| Custos e imposto | não descontados |
 
-### O que foi medido
+Outras quedas, total típico em 252 pregões: queda de 10%, +8,0% (104 entradas); queda de 20%, +18,0% (53 entradas).
 
-Compra na abertura do pregão seguinte ao dia em que a cota ficou X% abaixo do pico com rendimento mantido. Resultado = cota + rendimentos, 252 pregões depois.
+Teste da regra de saída (504 pregões, 33 entradas):
 
-| Queda do preço desde o pico | 10% | 15% | 20% |
+| | Pessimista | Típico | Otimista |
 |---|---|---|---|
-| Casos | 104 | 83 | 53 |
-| O fundo cortou o rendimento nos 252 pregões seguintes | 17% | 16% | 15% |
-| Pessimista | −1,7% | +0,4% | +4,5% |
-| Típico | +8,0% | +11,3% | +18,0% |
-| Otimista | +21,0% | +23,8% | +26,2% |
-| Terminou com ganho | 70% | 75% | 78% |
-| Selic líquida no mesmo período | +11,0% | +11,0% | +10,9% |
-| Menor preço no caminho (típico) | −12,6% | −10,9% | −10,8% |
-| A cota voltou ao pico em até 504 pregões | 36% | 31% | 25% |
+| Nunca sair | −0,1% | +9,4% | +14,6% |
+| Sair só no corte do rendimento | +5,2% | +12,1% | +20,5% |
 
-Regra de venda, mesmos casos, 504 pregões (queda de 15%, 33 casos):
+**O que diz**
+- Queda do preço com rendimento mantido não avisou corte: só 1 em cada 6 fundos cortou depois.
+- Sair só no corte foi melhor que nunca sair.
+- O ganho veio quase todo do rendimento; a cota pouco se mexeu.
+- Empatou com a Selic líquida em 252 pregões (+11,3% contra +11,0%).
 
-| | Pessimista | Típico | Otimista | Pior 1 em 10 |
-|---|---|---|---|---|
-| Nunca vender | −0,1% | +9,4% | +14,6% | −7,2% |
-| Vender só no corte do rendimento | +5,2% | +12,1% | +20,5% | −3,0% |
+**Para o dono rever**
+- Os critérios de fundo aceito são rígidos: 17 fundos em 2025.
+- A queda que dá a entrada: 10%, 15% ou 20%.
+- O corte que dá a saída: 15% foi escolha minha.
+- Vender com prejuízo gera crédito que só abate ganho de outro fundo imobiliário ou Fiagro (20%). Não está no estudo.
+- Faltam: inquilinos, vacância, dívida e se o rendimento é recorrente.
 
-Comparação: comprar o mesmo tipo de fundo no primeiro pregão do ano, sem esperar queda (48 casos): típico +2,0% em 252 pregões.
+---
 
-### O que os números dizem
+## Próximo passo sugerido
 
-- A queda do preço com rendimento mantido não previu corte: só 1 em cada 6 fundos cortou depois.
-- Vender só no corte foi melhor que nunca vender.
-- A cota demora a voltar: só 1 em cada 3 voltou ao pico em dois anos. O ganho é a renda.
-- Com a Selic alta, a renda sozinha perde dela: em 504 pregões só 18% dos casos ganharam da Selic líquida.
+Rodar as Estratégias 1 e 2 e o conservador de novo, uma vez, já no quadro padrão: entradas, saídas, em aberto, pregões, valorização, rendimento, Selic líquida, custos e imposto descontados.
 
-### Pontos para o dono rever
-
-- Os critérios do "fundo de base" (R$ 400 milhões, R$ 500 mil por dia, 12 avisos até 10%) são rígidos: deixam 17 fundos em 2025.
-- A faixa de queda para entrar: 10%, 15% ou 20%.
-- O corte que faz vender: 15% foi escolha minha.
-- Uso do prejuízo: vender com prejuízo gera crédito que só abate ganho de outro fundo imobiliário ou Fiagro (20%). Não está no estudo.
-- Faltam no critério: inquilinos, vacância, dívida e origem do rendimento (recorrente ou não).
-- Poucos casos, concentrados em 2024–2026, período de juro alto.
-
-Origem: `docs/ESTUDO_CONSERVADOR.md`.
+Estudos de origem: `docs/ESTUDO_DIAS.md`, `docs/SIMULACAO_2026.md`, `docs/ESTUDO_DESCONTO.md`, `docs/ESTUDO_CONSERVADOR.md`.

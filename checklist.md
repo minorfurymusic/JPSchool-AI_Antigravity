@@ -60,6 +60,8 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-13 — Perfil conservador como base: queda com rendimento mantido, vender só no corte, compra em data fixa; pesquisa na internet por três agentes: `docs/ESTUDO_CONSERVADOR.md`.
 - [x] 2026-11-13 — Estratégias separadas num documento só, com glossário (queda = preço, corte = rendimento): `docs/ESTRATEGIAS.md`.
 - [ ] Estratégia 1: medir 120 e 250 pregões depois do anúncio (o exemplo original do dono); ler duração e tamanho do aumento.
+- [x] 2026-11-13 — `docs/ESTRATEGIAS.md` refeito: termos entrada/saída, regras rodadas e quadro padrão em cada estratégia.
+- [ ] Rodar de novo as estratégias 1, 2 e o conservador no quadro padrão (entradas, saídas, em aberto, pregões, valorização, rendimento, Selic líquida, custos e imposto).
 - [ ] Dono rever o perfil conservador (seção final de `docs/ESTRATEGIAS.md`).
 - [ ] Decisão do dono sobre as 7 mudanças propostas em `docs/ESTUDO_CONSERVADOR.md`.
 - [ ] Separar fundo de papel de fundo de imóveis nos estudos.
