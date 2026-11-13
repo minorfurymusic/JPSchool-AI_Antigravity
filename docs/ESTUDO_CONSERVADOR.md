@@ -2,6 +2,8 @@
 
 Data: 2026-11-13. Programa: `estudos/conservador.py`. Saída completa: `dados/conservador.txt` (fora do repositório).
 
+Palavras: "queda" é sempre do preço da cota; "corte" é sempre do rendimento; "comprar na queda" é entrar na operação quando o preço caiu e o rendimento continua o mesmo. Glossário completo e as estratégias separadas em `docs/ESTRATEGIAS.md`.
+
 ## Pergunta do dono
 
 O conservador olha o fundo em si. Se a cota cai 10–15% e o rendimento continua igual, ele não venderia.
