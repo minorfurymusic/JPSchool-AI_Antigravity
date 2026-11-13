@@ -247,6 +247,90 @@ Patrimônio dos fundos que entraram: 0 de R$ 50 a 100 milhões, 15 de R$ 100 a 4
 
 Números tirados de `docs/anuncio_saida_operacoes.csv` (filtro aplicado sobre as 287 operações do Estudo 1.1b; nenhum estudo novo foi rodado).
 
+### Estudo 1.1d — Régua de rendimento igual para os dois perfis; o desconto separa moderado de agressivo (decisão do dono em 2026-11-14)
+
+**Regras**
+- **Gatilho:** fato relevante de aumento de rendimento (1A, 1B, 1C). Entrada na abertura do pregão seguinte.
+- **Checagem na entrada, igual para os dois perfis:** rendimento do último aviso x 12 sobre o preço de entrada maior ou igual à Selic líquida + 3 pontos. Selic líquida = Selic do dia menos 17,5% de imposto. Patrimônio de R$ 50 milhões ou mais.
+- **O que separa os perfis:** só o preço sobre valor patrimonial. O dono definiu agressivo de 0,30 a 0,75 e moderado a partir de 0,60; a faixa de 0,60 a 0,75 ficou nos dois e aparece separada para o dono decidir.
+- **Saída, custos e imposto:** os mesmos do Estudo 1.1. Declaração de redução vale só como saída.
+
+Das 147 operações entre 0,30 e 0,90, 39 passam na régua de rendimento e 108 não passam.
+
+**Com a régua de rendimento (39 operações)**
+
+| | Agressivo: 0,30 a 0,60 | Faixa em aberto: 0,60 a 0,75 | Moderado: 0,75 a 0,90 | Todas: 0,30 a 0,90 |
+|---|---|---|---|---|
+| Entradas | 6 | 9 | 24 | 39 |
+| Fechadas | 5 | 9 | 24 | 38 |
+| Em aberto | 1 | 0 | 0 | 1 |
+| Fechadas: pregões entre entrada e saída (média) | 75 | 107 | 77 | 84 |
+| Fechadas em que a cota subiu | 20% | 67% | 42% | 45% |
+| … valorização média dessas | +9,7% | +9,7% | +4,3% | +6,6% |
+| Fechadas em que a cota caiu | 80% | 33% | 58% | 55% |
+| … queda média dessas | −13,1% | −14,8% | −8,7% | −10,4% |
+| Fechadas: valorização média | −8,5% | +1,6% | −3,3% | −2,8% |
+| Fechadas: rendimento médio recebido | +5,4% | +5,1% | +3,7% | +4,2% |
+| Fechadas: valorização + rendimento | −3,2% | +6,7% | +0,4% | +1,4% |
+| Fechadas: depois de custos e imposto | −3,6% | +5,3% | −0,0% | +0,8% |
+| Fechadas: Selic líquida no mesmo período | +2,7% | +4,1% | +2,0% | +2,6% |
+| Fechadas que ganharam da Selic líquida | 60% | 67% | 46% | 53% |
+| Em aberto: pregões desde a entrada (média) | 7 | — | — | 7 |
+| Em aberto: valorização média | −2,1% | — | — | −2,1% |
+| Em aberto: rendimento médio recebido | +1,4% | — | — | +1,4% |
+| Em aberto: valorização + rendimento | −0,7% | — | — | −0,7% |
+| Em aberto: Selic líquida no mesmo período | +0,3% | — | — | +0,3% |
+
+**Sem passar na régua, para comparação (108 operações)**
+
+| | Agressivo: 0,30 a 0,60 | Faixa em aberto: 0,60 a 0,75 | Moderado: 0,75 a 0,90 | Todas: 0,30 a 0,90 |
+|---|---|---|---|---|
+| Entradas | 14 | 29 | 65 | 108 |
+| Fechadas | 13 | 24 | 53 | 90 |
+| Em aberto | 1 | 5 | 12 | 18 |
+| Fechadas: pregões entre entrada e saída (média) | 152 | 117 | 122 | 125 |
+| Fechadas em que a cota subiu | 62% | 46% | 51% | 51% |
+| … valorização média dessas | +14,1% | +13,5% | +7,6% | +10,2% |
+| Fechadas em que a cota caiu | 38% | 54% | 49% | 49% |
+| … queda média dessas | −25,1% | −9,1% | −7,5% | −10,0% |
+| Fechadas: valorização média | −1,0% | +1,2% | +0,2% | +0,3% |
+| Fechadas: rendimento médio recebido | +5,8% | +4,6% | +5,1% | +5,1% |
+| Fechadas: valorização + rendimento | +4,8% | +5,8% | +5,3% | +5,4% |
+| Fechadas: depois de custos e imposto | +3,0% | +4,6% | +4,5% | +4,3% |
+| Fechadas: Selic líquida no mesmo período | +6,3% | +4,9% | +4,6% | +4,9% |
+| Fechadas que ganharam da Selic líquida | 62% | 46% | 51% | 51% |
+| Em aberto: pregões desde a entrada (média) | 39 | 58 | 86 | 76 |
+| Em aberto: valorização média | −9,1% | −2,0% | −8,1% | −6,5% |
+| Em aberto: rendimento médio recebido | +2,2% | +3,0% | +4,4% | +3,9% |
+| Em aberto: valorização + rendimento | −6,9% | +1,0% | −3,7% | −2,6% |
+| Em aberto: Selic líquida no mesmo período | +1,6% | +2,6% | +3,7% | +3,3% |
+
+**Com a régua, por tipo do anúncio (fechadas)**
+
+| Tipo do anúncio | Fechadas | Depois de custos e imposto | Selic líquida | Ganharam da Selic |
+|---|---|---|---|---|
+| 1A multa | 4 | +2,4% | +3,2% | 75% |
+| 1A venda | 17 | +1,2% | +3,1% | 41% |
+| 1B | 10 | −2,6% | +2,0% | 50% |
+| 1C | 7 | +3,8% | +1,7% | 71% |
+
+**Com a régua, por motivo da saída (fechadas)**
+
+| Motivo da saída | Quantas | Pregões | Valorização | Rendimento | Depois de custos e imposto | Selic líquida |
+|---|---|---|---|---|---|---|
+| Rendimento caiu | 27 | 72 | −2,6% | +3,7% | +0,4% | +1,8% |
+| Fundo saiu da bolsa | 5 | 22 | +0,4% | +1,1% | +1,4% | +0,8% |
+| Prazo de 252 pregões | 4 | 252 | −5,1% | +12,6% | +6,5% | +10,3% |
+| Fundo declarou redução | 2 | 57 | −9,0% | +2,1% | −7,0% | +1,8% |
+
+**Com a régua, em aberto em 09/11/2026**
+
+| Fundo | Entrada | Preço de entrada | Preço atual | Pregões | Valorização | Rendimento | Preço sobre valor patrimonial | Rendimento ao ano na entrada | Régua na entrada |
+|---|---|---|---|---|---|---|---|---|---|
+| RECT11 | 28/10/2026 | 33,00 | 32,32 | 7 | −2,1% | +1,4% | 0,37 | 16,4% | 14,3% |
+
+Números tirados de `docs/anuncio_saida_operacoes.csv` e da Selic oficial (`dados/bruto/sgs_432.json`); o filtro foi aplicado sobre as 287 operações já calculadas.
+
 ### Estudo 1.2 — Carteira de R$ 10.000 em 2026 (com saída, custos e imposto)
 
 **Regras rodadas** (01/01/2026 a 31/10/2026)

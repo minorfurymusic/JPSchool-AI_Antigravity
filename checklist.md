@@ -66,6 +66,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-13 — Decidido pelo dono: execução de estudos por agentes auxiliares (modelo menor); preço em D+5/D+10/D+20 sai do documento; resultados em média, separando cota em alta e em queda.
 - [x] 2026-11-13 — Estratégia 1 separada em moderado e agressivo, com em aberto na mesma tabela e fundos que saíram da bolsa corrigidos (`docs/ESTRATEGIAS.md`, Estudo 1.1b).
 - [x] 2026-11-13 — Decidido pelo dono: agressivo = cota de 30% a 75% do valor patrimonial, patrimônio de R$ 50 milhões ou mais; moderado começa em 60%; usar sempre o preço sobre valor patrimonial do fundo, sem ajuste pela média do mercado. Tabela do agressivo em `docs/ESTRATEGIAS.md` (Estudo 1.1c).
+- [x] 2026-11-14 — Decidido pelo dono: foco na Estratégia 1 (gatilho de aumento) para moderado e agressivo; régua de rendimento igual para os dois (Selic líquida + 3 pontos); o que separa os perfis é só o preço sobre valor patrimonial; declaração de redução vale só como saída. Tabela em `docs/ESTRATEGIAS.md` (Estudo 1.1d).
+- [ ] Decisão do dono: a faixa de 0,60 a 0,75 é do agressivo ou do moderado.
+- [ ] Estratégia 2: tirar a trava de entrada por declaração de redução (decisão do dono), quando voltar a ela.
 - [ ] Ideia do dono a testar: em fundos muito descontados (0,30 a 0,40), saída em valor fixo (ex.: +7%) e regra de retorno depois de queda.
 - [ ] Conferir a saída "fundo saiu da bolsa" (pode pegar trecho de preço descartado).
 - [ ] Estratégia 2: saída em anúncios muito sérios (pendência do dono, levantar dados).
