@@ -331,6 +331,104 @@ Das 147 operações entre 0,30 e 0,90, 39 passam na régua de rendimento e 108 n
 
 Números tirados de `docs/anuncio_saida_operacoes.csv` e da Selic oficial (`dados/bruto/sgs_432.json`); o filtro foi aplicado sobre as 287 operações já calculadas.
 
+### Estudo 1.1e — Sem piso fixo de liquidez: ordem de até 2% do negociado por dia (regra do dono)
+
+O piso de R$ 200 mil negociados por dia, usado nos estudos anteriores, era escolha minha e contrariava a regra do dono. Aqui entra todo fundo que aguenta uma ordem de R$ 200 ou mais (2% da média negociada por dia nos 60 pregões anteriores). "Faixa de ordem" é a maior ordem que o fundo aguenta.
+
+**Regras:** gatilho de aumento (1A, 1B, 1C), entrada na abertura do pregão seguinte, patrimônio de R$ 50 milhões ou mais, cota entre 0,30 e 0,90 do valor patrimonial. Saída, custos e imposto iguais aos do Estudo 1.1. A Tabela C aplica também a régua de rendimento (Selic líquida + 3 pontos).
+
+Anúncios: 413 operações no total; 17 ficam fora pelo patrimônio e 186 pela faixa de valor patrimonial (a maioria acima de 0,90); restam 210. Programa escrito e rodado por agente auxiliar.
+
+**Tabela A — por faixa de ordem**
+
+| Faixa de ordem | Entradas | Fechadas | Em aberto | Pregões (média, fechadas) | Cota subiu (% das fechadas) | Valorização média (fechadas) | Rendimento médio (fechadas) | Valorização + rendimento (fechadas) | Depois de custos e imposto (fechadas) | Selic líquida no período (fechadas) | Ganharam da Selic líquida (% das fechadas, líquido > selic) | Em aberto: valorização + rendimento (média) | Em aberto: Selic líquida (média) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 200 a 400 | 6 | 6 | 0 | 112,3 | 33,3% | +0,6% | +3,1% | +3,7% | +2,4% | +4,5% | 33,3% | — | — |
+| 400 a 600 | 7 | 7 | 0 | 73,7 | 28,6% | −1,1% | +2,9% | +1,8% | +0,9% | +2,6% | 28,6% | — | — |
+| 600 a 800 | 7 | 7 | 0 | 104,7 | 57,1% | −0,9% | +3,6% | +2,7% | +2,0% | +4,3% | 42,9% | — | — |
+| 800 a 1.000 | 6 | 5 | 1 | 170,4 | 80,0% | −0,9% | +4,7% | +3,7% | +2,3% | +6,6% | 80,0% | +16,9% | +4,7% |
+| 1.000 a 1.200 | 0 | 0 | 0 | — | — | — | — | — | — | — | — | — | — |
+| 1.200 a 1.400 | 3 | 3 | 0 | 176,0 | 100,0% | +7,0% | +7,8% | +14,8% | +13,4% | +7,4% | 100,0% | — | — |
+| 1.400 a 1.600 | 5 | 5 | 0 | 103,8 | 60,0% | −8,8% | +3,2% | −5,6% | −6,3% | +2,5% | 60,0% | — | — |
+| 1.600 a 1.800 | 3 | 3 | 0 | 178,0 | 66,7% | −2,5% | +4,5% | +1,9% | +0,7% | +7,1% | 66,7% | — | — |
+| 1.800 a 2.000 | 1 | 1 | 0 | 252,0 | 0,0% | −20,8% | +0,0% | −20,8% | −20,9% | +7,3% | 0,0% | — | — |
+| 2.000 a 4.000 | 23 | 22 | 1 | 75,3 | 45,5% | +0,2% | +3,2% | +3,3% | +2,6% | +3,1% | 45,5% | +4,3% | +0,2% |
+| 4.000 ou mais | 149 | 130 | 19 | 113,7 | 48,5% | −0,8% | +4,8% | +4,0% | +3,0% | +4,2% | 50,8% | −2,5% | +3,1% |
+| Ordem de 500 ou mais | 200 | 179 | 21 | 112,3 | 49,7% | −1,1% | +4,5% | +3,4% | +2,5% | +4,2% | 50,8% | −1,2% | +3,1% |
+| Todas | 210 | 189 | 21 | 111,4 | 49,2% | −0,9% | +4,4% | +3,5% | +2,6% | +4,2% | 50,3% | −1,2% | +3,1% |
+
+**Tabela B — por perfil (pvp) e grupo de liquidez**
+
+| Perfil | Grupo de liquidez | Entradas | Fechadas | Em aberto | Pregões (média, fechadas) | Cota subiu (% das fechadas) | Valorização média (fechadas) | Rendimento médio (fechadas) | Valorização + rendimento (fechadas) | Depois de custos e imposto (fechadas) | Selic líquida no período (fechadas) | Ganharam da Selic líquida (% das fechadas, líquido > selic) | Em aberto: valorização + rendimento (média) | Em aberto: Selic líquida (média) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Agressivo 0,30 a 0,60 | ordem de 200 a 500 | 6 | 6 | 0 | 115,5 | 33,3% | +2,9% | +1,9% | +4,9% | +3,6% | +4,4% | 33,3% | — | — |
+| Agressivo 0,30 a 0,60 | ordem de 500 a 4.000 | 15 | 15 | 0 | 76,9 | 26,7% | −7,4% | +1,5% | −5,9% | −6,3% | +2,9% | 26,7% | — | — |
+| Agressivo 0,30 a 0,60 | ordem de 4.000 ou mais | 20 | 18 | 2 | 130,4 | 50,0% | −3,1% | +5,7% | +2,6% | +1,2% | +5,3% | 61,1% | −3,8% | +0,9% |
+| Agressivo 0,30 a 0,60 | Total | 41 | 39 | 2 | 107,5 | 38,5% | −3,8% | +3,5% | −0,3% | −1,3% | +4,2% | 43,6% | −3,8% | +0,9% |
+| Faixa a decidir 0,60 a 0,75 | ordem de 200 a 500 | 0 | 0 | 0 | — | — | — | — | — | — | — | — | — | — |
+| Faixa a decidir 0,60 a 0,75 | ordem de 500 a 4.000 | 15 | 14 | 1 | 139,3 | 50,0% | −1,8% | +5,4% | +3,6% | +2,9% | +5,6% | 42,9% | +16,9% | +4,7% |
+| Faixa a decidir 0,60 a 0,75 | ordem de 4.000 ou mais | 39 | 34 | 5 | 114,3 | 50,0% | +1,0% | +4,7% | +5,8% | +4,5% | +4,6% | 50,0% | +1,0% | +2,6% |
+| Faixa a decidir 0,60 a 0,75 | Total | 54 | 48 | 6 | 121,6 | 50,0% | +0,2% | +4,9% | +5,1% | +4,0% | +4,9% | 47,9% | +3,7% | +3,0% |
+| Moderado 0,75 a 0,90 | ordem de 200 a 500 | 4 | 4 | 0 | 61,0 | 50,0% | +0,9% | +4,1% | +5,0% | +3,4% | +1,9% | 50,0% | — | — |
+| Moderado 0,75 a 0,90 | ordem de 500 a 4.000 | 21 | 20 | 1 | 111,2 | 75,0% | +2,7% | +4,1% | +6,8% | +5,6% | +4,2% | 75,0% | +4,3% | +0,2% |
+| Moderado 0,75 a 0,90 | ordem de 4.000 ou mais | 90 | 78 | 12 | 109,6 | 47,4% | −1,2% | +4,6% | +3,5% | +2,8% | +3,8% | 48,7% | −3,7% | +3,7% |
+| Moderado 0,75 a 0,90 | Total | 115 | 102 | 13 | 108,0 | 52,9% | −0,3% | +4,5% | +4,2% | +3,3% | +3,8% | 53,9% | −3,1% | +3,4% |
+
+**Tabela C — por perfil (pvp) e grupo de liquidez, só operações que passam na régua**
+
+| Perfil | Grupo de liquidez | Entradas | Fechadas | Em aberto | Pregões (média, fechadas) | Cota subiu (% das fechadas) | Valorização média (fechadas) | Rendimento médio (fechadas) | Valorização + rendimento (fechadas) | Depois de custos e imposto (fechadas) | Selic líquida no período (fechadas) | Ganharam da Selic líquida (% das fechadas, líquido > selic) | Em aberto: valorização + rendimento (média) | Em aberto: Selic líquida (média) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Agressivo 0,30 a 0,60 | ordem de 200 a 500 | 1 | 1 | 0 | 9,0 | 0,0% | −1,2% | +0,9% | −0,3% | −0,3% | +0,3% | 0,0% | — | — |
+| Agressivo 0,30 a 0,60 | ordem de 500 a 4.000 | 1 | 1 | 0 | 19,0 | 0,0% | −4,9% | +0,0% | −4,9% | −4,9% | +0,7% | 0,0% | — | — |
+| Agressivo 0,30 a 0,60 | ordem de 4.000 ou mais | 6 | 5 | 1 | 75,0 | 20,0% | −8,5% | +5,4% | −3,2% | −3,6% | +2,7% | 60,0% | −0,7% | +0,3% |
+| Agressivo 0,30 a 0,60 | Total | 8 | 7 | 1 | 57,6 | 14,3% | −7,0% | +4,0% | −3,0% | −3,3% | +2,0% | 42,9% | −0,7% | +0,3% |
+| Faixa a decidir 0,60 a 0,75 | ordem de 200 a 500 | 0 | 0 | 0 | — | — | — | — | — | — | — | — | — | — |
+| Faixa a decidir 0,60 a 0,75 | ordem de 500 a 4.000 | 2 | 2 | 0 | 129,0 | 50,0% | −18,6% | +0,0% | −18,6% | −18,9% | +3,7% | 50,0% | — | — |
+| Faixa a decidir 0,60 a 0,75 | ordem de 4.000 ou mais | 9 | 9 | 0 | 107,1 | 66,7% | +1,6% | +5,1% | +6,7% | +5,3% | +4,1% | 66,7% | — | — |
+| Faixa a decidir 0,60 a 0,75 | Total | 11 | 11 | 0 | 111,1 | 63,6% | −2,1% | +4,2% | +2,1% | +0,9% | +4,0% | 63,6% | — | — |
+| Moderado 0,75 a 0,90 | ordem de 200 a 500 | 1 | 1 | 0 | 85,0 | 0,0% | −25,9% | +5,0% | −20,9% | −21,0% | +2,9% | 0,0% | — | — |
+| Moderado 0,75 a 0,90 | ordem de 500 a 4.000 | 5 | 5 | 0 | 80,2 | 60,0% | −4,7% | +3,1% | −1,6% | −2,2% | +1,6% | 60,0% | — | — |
+| Moderado 0,75 a 0,90 | ordem de 4.000 ou mais | 24 | 24 | 0 | 77,2 | 41,7% | −3,3% | +3,7% | +0,4% | 0,0% | +2,0% | 45,8% | — | — |
+| Moderado 0,75 a 0,90 | Total | 30 | 30 | 0 | 77,9 | 43,3% | −4,3% | +3,6% | −0,6% | −1,1% | +1,9% | 46,7% | — | — |
+
+**Tabela D — operações em aberto**
+
+| Ticker | Entrada | Preço de entrada | Preço atual | Pregões | Valorização | Rendimento | PVP na entrada | Ordem máx. (R$) | Perfil |
+|---|---|---|---|---|---|---|---|---|---|
+| RCRB11 | 01/12/2025 | 128,4700 | 128,8200 | 232 | +0,3% | +9,8% | 0,65 | 15.493 | Faixa a decidir 0,60 a 0,75 |
+| NEWL11 | 22/12/2025 | 110,9000 | 105,0000 | 217 | −5,3% | +10,0% | 0,85 | 11.851 | Moderado 0,75 a 0,90 |
+| RBRX11 | 28/01/2026 | 8,5200 | 6,4000 | 194 | −24,9% | +9,5% | 0,87 | 53.811 | Moderado 0,75 a 0,90 |
+| IBBP11 | 17/04/2026 | 8,0000 | 7,9200 | 140 | −1,0% | +7,2% | 0,81 | 10.454 | Moderado 0,75 a 0,90 |
+| RNGO11 | 28/05/2026 | 50,5500 | 55,9900 | 113 | +10,8% | +6,2% | 0,61 | 989 | Faixa a decidir 0,60 a 0,75 |
+| GARE11 | 29/06/2026 | 8,1700 | 8,1800 | 92 | +0,1% | +5,1% | 0,87 | 257.403 | Moderado 0,75 a 0,90 |
+| RBVA11 | 29/06/2026 | 9,0400 | 7,9400 | 92 | −12,2% | +5,0% | 0,85 | 40.411 | Moderado 0,75 a 0,90 |
+| GGRC11 | 30/06/2026 | 9,8400 | 8,4900 | 91 | −13,7% | +5,1% | 0,89 | 224.075 | Moderado 0,75 a 0,90 |
+| RZTR11 | 24/07/2026 | 87,0000 | 66,0400 | 73 | −24,1% | +4,0% | 0,89 | 77.098 | Moderado 0,75 a 0,90 |
+| HGRE11 | 31/08/2026 | 116,4100 | 111,8500 | 47 | −3,9% | +2,2% | 0,79 | 44.385 | Moderado 0,75 a 0,90 |
+| CXAG11 | 08/09/2026 | 70,8200 | 74,5000 | 42 | +5,2% | +2,9% | 0,68 | 7.513 | Faixa a decidir 0,60 a 0,75 |
+| RBRP11 | 11/09/2026 | 46,9900 | 42,7000 | 39 | −9,1% | +2,2% | 0,59 | 24.027 | Agressivo 0,30 a 0,60 |
+| TEPP11 | 17/09/2026 | 7,5000 | 6,6500 | 35 | −11,3% | +1,8% | 0,80 | 24.632 | Moderado 0,75 a 0,90 |
+| LVBI11 | 30/09/2026 | 97,0000 | 97,5000 | 26 | +0,5% | +1,6% | 0,81 | 75.953 | Moderado 0,75 a 0,90 |
+| TJKB11 | 02/10/2026 | 251,5000 | 247,0000 | 24 | −1,8% | +1,2% | 0,90 | 13.969 | Moderado 0,75 a 0,90 |
+| RECT11 | 28/10/2026 | 33,0000 | 32,3200 | 7 | −2,1% | +1,4% | 0,37 | 7.158 | Agressivo 0,30 a 0,60 |
+| RBRR11 | 29/10/2026 | 65,7000 | 63,0000 | 6 | −4,1% | +0,0% | 0,71 | 92.989 | Faixa a decidir 0,60 a 0,75 |
+| RPRI11 | 29/10/2026 | 72,7500 | 68,0000 | 6 | −6,5% | +1,2% | 0,73 | 16.248 | Faixa a decidir 0,60 a 0,75 |
+| VCJR11 | 29/10/2026 | 66,1500 | 63,0000 | 6 | −4,8% | +1,2% | 0,72 | 67.608 | Faixa a decidir 0,60 a 0,75 |
+| ALZR11 | 30/10/2026 | 9,5500 | 9,5900 | 5 | +0,4% | +0,0% | 0,89 | 74.264 | Moderado 0,75 a 0,90 |
+| CCME11 | 30/10/2026 | 8,3700 | 8,7300 | 5 | +4,3% | +0,0% | 0,80 | 3.661 | Moderado 0,75 a 0,90 |
+
+**O que diz**
+- Tirar o piso acrescentou 61 operações às 149 que já existiam. Cada faixa de R$ 200 tem de 0 a 7 casos: não dá para ver efeito de faixa em faixa.
+- Ordem de R$ 500 ou mais (200 operações): +2,5% depois de custos, contra Selic líquida de +4,2%.
+- Agressivo (0,30 a 0,60), 41 operações: −1,3% contra +4,2%. O pior grupo foi o de fundos de liquidez intermediária (−6,3%, 15 casos).
+- Moderado (0,75 a 0,90) com ordem de R$ 500 a 4.000: +5,6% contra +4,2%, 20 fechadas, 3 de cada 4 ganharam da Selic líquida. É o único grupo com mais de 15 casos que ganhou.
+- A régua de rendimento piorou os três perfis de novo.
+
+**Limites**
+- A saída "fundo declarou redução" ainda só enxerga anúncios de fundos com R$ 200 mil ou mais por dia. Nos fundos menores essa saída pode ter deixado de acontecer.
+- Em fundo pouco negociado, o preço de abertura do estudo é menos confiável.
+- Conferido: soma das faixas = 210; fechadas + em aberto = entradas em todas as linhas; nenhuma em aberto com 252 pregões ou mais; 285 operações com ordem de R$ 4.000 ou mais, contra 287 do estudo anterior. O programa não foi revisado linha a linha.
+
 ### Estudo 1.2 — Carteira de R$ 10.000 em 2026 (com saída, custos e imposto)
 
 **Regras rodadas** (01/01/2026 a 31/10/2026)
