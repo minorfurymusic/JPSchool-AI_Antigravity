@@ -12,7 +12,15 @@ Aqui estão os dados dos fundos imobiliários negociados na bolsa, organizados e
 
 - **Preços ajustados por desdobramento.** Quando um fundo divide suas cotas em partes (por exemplo, uma cota vira duas), o preço antigo é ajustado para continuar comparável com o preço de hoje.
 - **Valor patrimonial e patrimônio só aparecem 75 dias depois do mês a que se referem.** Esse é o prazo em que o fundo costuma divulgar essas informações. Antes disso, a célula fica vazia.
-- **Dinheiro (R$)** aparece sem centavos, para facilitar a leitura.
+- **Valores grandes em reais** (negociado no dia, patrimônio) aparecem sem centavos. Preços e rendimentos por cota aparecem com centavos.
+
+## Pontos conhecidos (conferência de 15/11/2026)
+
+- Em `precos_2020.csv` há 5 linhas em que máxima, mínima e fechamento não combinam entre si.
+- Em `rendimentos.csv` há 3 linhas repetidas.
+- Em `anuncios.csv`, 1.807 dos 7.962 anúncios estão sem preço de entrada (o fundo não tinha preço naquele dia).
+- Em `anuncios.csv`, 14 anúncios têm preço sobre valor patrimonial abaixo de 0,2 e 12 acima de 3. São valores suspeitos; desconfie deles.
+- Nos primeiros anos faltam mais dados: em 2017, 25% das linhas de preço estão sem valor patrimonial e 33% sem rendimento.
 
 ## Arquivos
 
