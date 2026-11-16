@@ -1,0 +1,1277 @@
+﻿Carteira;Ano;Indicador;Valor
+A;2018;ordens;14
+A;2018;fechadas;14
+A;2018;em aberto;0
+A;2018;sinais nao aceitos (< R$ 1.000);0
+A;2018;total aplicado (R$);38113.1425
+A;2018;valor medio da ordem (R$);2722.3673214285714
+A;2018;dias corridos medios;166.07142857142858
+A;2018;pregoes medios;112.21428571428571
+A;2018;valorizacao (R$);2844.0720990000023
+A;2018;valorizacao (%);7.462182104243968
+A;2018;rendimentos recebidos (R$);1413.3945
+A;2018;rendimentos (%);3.7084176409751572
+A;2018;taxas (R$);23.7211071297
+A;2018;imposto (R$);666.7464370020605
+A;2018;resultado total (R$);3566.9990548682417
+A;2018;resultado total (%);9.358973889041664
+A;2018;Selic liquida no mesmo dinheiro (R$);847.9397449730942
+A;2018;Selic liquida no mesmo dinheiro (%);2.224796197199153
+A;2018;diferenca para a Selic (R$);2719.0593098951476
+A;2018;diferenca para a Selic (pontos);7.1341776918425115
+A;2018;% com resultado > 0;85.71428571428571
+A;2018;% que ganharam da Selic;78.57142857142857
+A;2018;valorizacao media dos com ganho (%);9.974114202538754
+A;2018;n com ganho;12
+A;2018;valorizacao media dos com perda (%);-11.04931808471923
+A;2018;n com perda;2
+A;2018;% que ficaram abaixo da entrada;100.0
+A;2018;queda media (%);-9.785044720736941
+A;2018;queda maxima (%);-28.978149973444
+A;2018;fundo da queda maxima;ALMI11 (entrada 23/05/2018)
+A;2018;queda media, >= 10 pts (%);-27.363247172152462
+A;2018;n >= 10 pts;2
+A;2018;queda media, >= 20 pts (%);
+A;2018;n >= 20 pts;0
+A;2018;media dos 10% piores (%);-28.978149973444
+A;2018;pregoes entrada ate o fundo;49.142857142857146
+A;2018;% que voltou ao preco de entrada;85.71428571428571
+A;2018;pregoes fundo ate voltar;13.25
+A;2018;pregoes fundo ate a saida;63.07142857142857
+A;2018;saida: volta à média;14
+A;2018;saida: prazo;0
+A;2018;saida: fundo saiu da bolsa;0
+A;2018;saida: dado suspeito;0
+A;2018;saida: em aberto;0
+A;2019;ordens;1
+A;2019;fechadas;1
+A;2019;em aberto;0
+A;2019;sinais nao aceitos (< R$ 1.000);0
+A;2019;total aplicado (R$);2944.46
+A;2019;valor medio da ordem (R$);2944.46
+A;2019;dias corridos medios;139.0
+A;2019;pregoes medios;97.0
+A;2019;valorizacao (R$);644.0966000000003
+A;2019;valorizacao (%);21.87486330260898
+A;2019;rendimentos recebidos (R$);152.72000000000003
+A;2019;rendimentos (%);5.186689579753165
+A;2019;taxas (R$);1.95990498
+A;2019;imposto (R$);128.42733900400006
+A;2019;resultado total (R$);666.4293560160003
+A;2019;resultado total (%);22.63333025464772
+A;2019;Selic liquida no mesmo dinheiro (R$);49.608914438976875
+A;2019;Selic liquida no mesmo dinheiro (%);1.684822155470846
+A;2019;diferenca para a Selic (R$);616.8204415770234
+A;2019;diferenca para a Selic (pontos);20.948508099176873
+A;2019;% com resultado > 0;100.0
+A;2019;% que ganharam da Selic;100.0
+A;2019;valorizacao media dos com ganho (%);21.874863302608976
+A;2019;n com ganho;1
+A;2019;valorizacao media dos com perda (%);
+A;2019;n com perda;0
+A;2019;% que ficaram abaixo da entrada;100.0
+A;2019;queda media (%);-22.184033744727394
+A;2019;queda maxima (%);-22.184033744727394
+A;2019;fundo da queda maxima;XPCM11 (entrada 11/07/2019)
+A;2019;queda media, >= 10 pts (%);
+A;2019;n >= 10 pts;0
+A;2019;queda media, >= 20 pts (%);
+A;2019;n >= 20 pts;0
+A;2019;media dos 10% piores (%);-22.184033744727394
+A;2019;pregoes entrada ate o fundo;1.0
+A;2019;% que voltou ao preco de entrada;100.0
+A;2019;pregoes fundo ate voltar;84.0
+A;2019;pregoes fundo ate a saida;96.0
+A;2019;saida: volta à média;1
+A;2019;saida: prazo;0
+A;2019;saida: fundo saiu da bolsa;0
+A;2019;saida: dado suspeito;0
+A;2019;saida: em aberto;0
+A;2020;ordens;70
+A;2020;fechadas;70
+A;2020;em aberto;0
+A;2020;sinais nao aceitos (< R$ 1.000);0
+A;2020;total aplicado (R$);201019.25540000002
+A;2020;valor medio da ordem (R$);2871.703648571429
+A;2020;dias corridos medios;139.0
+A;2020;pregoes medios;94.32857142857142
+A;2020;valorizacao (R$);31103.1581755
+A;2020;valorizacao (%);15.472725791173136
+A;2020;rendimentos recebidos (R$);4289.8912
+A;2020;rendimentos (%);2.1340697892168192
+A;2020;taxas (R$);129.94250069265001
+A;2020;imposto (R$);6750.887563987472
+A;2020;resultado total (R$);28512.21931081988
+A;2020;resultado total (%);14.18382495452218
+A;2020;Selic liquida no mesmo dinheiro (R$);1619.4141488799316
+A;2020;Selic liquida no mesmo dinheiro (%);0.8056015060137027
+A;2020;diferenca para a Selic (R$);26892.805161939945
+A;2020;diferenca para a Selic (pontos);13.378223448508477
+A;2020;% com resultado > 0;90.0
+A;2020;% que ganharam da Selic;87.14285714285714
+A;2020;valorizacao media dos com ganho (%);18.24917368047427
+A;2020;n com ganho;63
+A;2020;valorizacao media dos com perda (%);-14.403618413262384
+A;2020;n com perda;7
+A;2020;% que ficaram abaixo da entrada;98.57142857142858
+A;2020;queda media (%);-16.796298233607356
+A;2020;queda maxima (%);-42.72334293948127
+A;2020;fundo da queda maxima;HTMX11 (entrada 13/03/2020)
+A;2020;queda media, >= 10 pts (%);-35.08226913434131
+A;2020;n >= 10 pts;14
+A;2020;queda media, >= 20 pts (%);-39.62136856819776
+A;2020;n >= 20 pts;6
+A;2020;media dos 10% piores (%);-38.95285121379156
+A;2020;pregoes entrada ate o fundo;11.942028985507246
+A;2020;% que voltou ao preco de entrada;92.7536231884058
+A;2020;pregoes fundo ate voltar;4.0
+A;2020;pregoes fundo ate a saida;83.71014492753623
+A;2020;saida: volta à média;61
+A;2020;saida: prazo;7
+A;2020;saida: fundo saiu da bolsa;1
+A;2020;saida: dado suspeito;1
+A;2020;saida: em aberto;0
+A;2021;ordens;62
+A;2021;fechadas;62
+A;2021;em aberto;0
+A;2021;sinais nao aceitos (< R$ 1.000);0
+A;2021;total aplicado (R$);176606.5623
+A;2021;valor medio da ordem (R$);2848.4929403225806
+A;2021;dias corridos medios;162.7741935483871
+A;2021;pregoes medios;110.74193548387096
+A;2021;valorizacao (R$);6324.942722000003
+A;2021;valorizacao (%);3.5813746893820855
+A;2021;rendimentos recebidos (R$);7017.027799999998
+A;2021;rendimentos (%);3.973254282635452
+A;2021;taxas (R$);107.86142019660001
+A;2021;imposto (R$);2475.5901479416307
+A;2021;resultado total (R$);10758.518953861769
+A;2021;resultado total (%);6.09180022177566
+A;2021;Selic liquida no mesmo dinheiro (R$);5482.606869599267
+A;2021;Selic liquida no mesmo dinheiro (%);3.104418543794546
+A;2021;diferenca para a Selic (R$);5275.9120842625025
+A;2021;diferenca para a Selic (pontos);2.987381677981114
+A;2021;% com resultado > 0;80.64516129032258
+A;2021;% que ganharam da Selic;70.96774193548387
+A;2021;valorizacao media dos com ganho (%);8.25234639065659
+A;2021;n com ganho;50
+A;2021;valorizacao media dos com perda (%);-16.158725843534942
+A;2021;n com perda;12
+A;2021;% que ficaram abaixo da entrada;100.0
+A;2021;queda media (%);-11.372115142666077
+A;2021;queda maxima (%);-46.5041095890411
+A;2021;fundo da queda maxima;HCRI11 (entrada 04/11/2021)
+A;2021;queda media, >= 10 pts (%);-30.193962988805893
+A;2021;n >= 10 pts;10
+A;2021;queda media, >= 20 pts (%);-43.023857302118174
+A;2021;n >= 20 pts;3
+A;2021;media dos 10% piores (%);-35.67066271390156
+A;2021;pregoes entrada ate o fundo;55.306451612903224
+A;2021;% que voltou ao preco de entrada;77.41935483870968
+A;2021;pregoes fundo ate voltar;7.791666666666667
+A;2021;pregoes fundo ate a saida;55.435483870967744
+A;2021;saida: volta à média;58
+A;2021;saida: prazo;2
+A;2021;saida: fundo saiu da bolsa;1
+A;2021;saida: dado suspeito;1
+A;2021;saida: em aberto;0
+A;2022;ordens;18
+A;2022;fechadas;18
+A;2022;em aberto;0
+A;2022;sinais nao aceitos (< R$ 1.000);0
+A;2022;total aplicado (R$);45892.63250000001
+A;2022;valor medio da ordem (R$);2549.590694444445
+A;2022;dias corridos medios;177.44444444444446
+A;2022;pregoes medios;121.94444444444444
+A;2022;valorizacao (R$);-2005.6354244999998
+A;2022;valorizacao (%);-4.370277570152463
+A;2022;rendimentos recebidos (R$);2015.9457999999986
+A;2022;rendimentos (%);4.392743867983599
+A;2022;taxas (R$);26.93388887265
+A;2022;imposto (R$);369.37433649047
+A;2022;resultado total (R$);-385.99784986312125
+A;2022;resultado total (%);-0.8410889261214666
+A;2022;Selic liquida no mesmo dinheiro (R$);2231.643266401309
+A;2022;Selic liquida no mesmo dinheiro (%);4.862748430047696
+A;2022;diferenca para a Selic (R$);-2617.6411162644304
+A;2022;diferenca para a Selic (pontos);-5.703837356169163
+A;2022;% com resultado > 0;77.77777777777779
+A;2022;% que ganharam da Selic;61.111111111111114
+A;2022;valorizacao media dos com ganho (%);4.911962259025953
+A;2022;n com ganho;14
+A;2022;valorizacao media dos com perda (%);-32.8814249639417
+A;2022;n com perda;4
+A;2022;% que ficaram abaixo da entrada;100.0
+A;2022;queda media (%);-15.655566414302557
+A;2022;queda maxima (%);-71.74818661115643
+A;2022;fundo da queda maxima;TORD11 (entrada 15/12/2022)
+A;2022;queda media, >= 10 pts (%);-44.45982163672998
+A;2022;n >= 10 pts;4
+A;2022;queda media, >= 20 pts (%);-57.04849658570708
+A;2022;n >= 20 pts;2
+A;2022;media dos 10% piores (%);-57.04849658570708
+A;2022;pregoes entrada ate o fundo;73.22222222222223
+A;2022;% que voltou ao preco de entrada;66.66666666666667
+A;2022;pregoes fundo ate voltar;9.916666666666666
+A;2022;pregoes fundo ate a saida;48.72222222222222
+A;2022;saida: volta à média;16
+A;2022;saida: prazo;2
+A;2022;saida: fundo saiu da bolsa;0
+A;2022;saida: dado suspeito;0
+A;2022;saida: em aberto;0
+A;2023;ordens;21
+A;2023;fechadas;21
+A;2023;em aberto;0
+A;2023;sinais nao aceitos (< R$ 1.000);1
+A;2023;total aplicado (R$);57998.0142
+A;2023;valor medio da ordem (R$);2761.8102
+A;2023;dias corridos medios;128.61904761904762
+A;2023;pregoes medios;86.66666666666667
+A;2023;valorizacao (R$);4505.503125000001
+A;2023;valorizacao (%);7.768374809287869
+A;2023;rendimentos recebidos (R$);1866.1073999999999
+A;2023;rendimentos (%);3.2175367135242365
+A;2023;taxas (R$);36.15045945749999
+A;2023;imposto (R$);1155.5765945925002
+A;2023;resultado total (R$);5179.883470950001
+A;2023;resultado total (%);8.931139354336723
+A;2023;Selic liquida no mesmo dinheiro (R$);1879.383063168815
+A;2023;Selic liquida no mesmo dinheiro (%);3.240426571654612
+A;2023;diferenca para a Selic (R$);3300.5004077811877
+A;2023;diferenca para a Selic (pontos);5.690712782682112
+A;2023;% com resultado > 0;85.71428571428571
+A;2023;% que ganharam da Selic;80.95238095238095
+A;2023;valorizacao media dos com ganho (%);11.730659112194822
+A;2023;n com ganho;18
+A;2023;valorizacao media dos com perda (%);-19.18063336278697
+A;2023;n com perda;3
+A;2023;% que ficaram abaixo da entrada;100.0
+A;2023;queda media (%);-8.68492040618475
+A;2023;queda maxima (%);-40.23429610179762
+A;2023;fundo da queda maxima;CBOP11 (entrada 03/01/2023)
+A;2023;queda media, >= 10 pts (%);-32.88310549770733
+A;2023;n >= 10 pts;2
+A;2023;queda media, >= 20 pts (%);-40.23429610179762
+A;2023;n >= 20 pts;1
+A;2023;media dos 10% piores (%);-32.88310549770733
+A;2023;pregoes entrada ate o fundo;38.857142857142854
+A;2023;% que voltou ao preco de entrada;85.71428571428571
+A;2023;pregoes fundo ate voltar;13.722222222222221
+A;2023;pregoes fundo ate a saida;47.80952380952381
+A;2023;saida: volta à média;20
+A;2023;saida: prazo;1
+A;2023;saida: fundo saiu da bolsa;0
+A;2023;saida: dado suspeito;0
+A;2023;saida: em aberto;0
+A;2024;ordens;85
+A;2024;fechadas;85
+A;2024;em aberto;0
+A;2024;sinais nao aceitos (< R$ 1.000);2
+A;2024;total aplicado (R$);241080.46639999998
+A;2024;valor medio da ordem (R$);2836.24078117647
+A;2024;dias corridos medios;141.5529411764706
+A;2024;pregoes medios;93.94117647058823
+A;2024;valorizacao (R$);12666.794699999999
+A;2024;valorizacao (%);5.254177117354374
+A;2024;rendimentos recebidos (R$);11003.165800000004
+A;2024;rendimentos (%);4.564105074254995
+A;2024;taxas (R$);148.44831824999994
+A;2024;imposto (R$);3663.700419093001
+A;2024;resultado total (R$);19857.811762657002
+A;2024;resultado total (%);8.237005701535761
+A;2024;Selic liquida no mesmo dinheiro (R$);8776.351215821633
+A;2024;Selic liquida no mesmo dinheiro (%);3.6404240239273213
+A;2024;diferenca para a Selic (R$);11081.460546835366
+A;2024;diferenca para a Selic (pontos);4.596581677608439
+A;2024;% com resultado > 0;92.94117647058823
+A;2024;% que ganharam da Selic;85.88235294117646
+A;2024;valorizacao media dos com ganho (%);7.8510585068218095
+A;2024;n com ganho;79
+A;2024;valorizacao media dos com perda (%);-31.080080382595064
+A;2024;n com perda;6
+A;2024;% que ficaram abaixo da entrada;98.82352941176471
+A;2024;queda media (%);-11.749121594521698
+A;2024;queda maxima (%);-72.72727272727273
+A;2024;fundo da queda maxima;MGHT11 (entrada 29/04/2024)
+A;2024;queda media, >= 10 pts (%);-37.23884679194474
+A;2024;n >= 10 pts;9
+A;2024;queda media, >= 20 pts (%);-48.150506196213456
+A;2024;n >= 20 pts;5
+A;2024;media dos 10% piores (%);-39.08362512155797
+A;2024;pregoes entrada ate o fundo;33.30952380952381
+A;2024;% que voltou ao preco de entrada;89.28571428571429
+A;2024;pregoes fundo ate voltar;10.973333333333333
+A;2024;pregoes fundo ate a saida;61.654761904761905
+A;2024;saida: volta à média;81
+A;2024;saida: prazo;2
+A;2024;saida: fundo saiu da bolsa;2
+A;2024;saida: dado suspeito;0
+A;2024;saida: em aberto;0
+A;2025;ordens;25
+A;2025;fechadas;25
+A;2025;em aberto;0
+A;2025;sinais nao aceitos (< R$ 1.000);0
+A;2025;total aplicado (R$);70077.2669
+A;2025;valor medio da ordem (R$);2803.0906760000003
+A;2025;dias corridos medios;109.04
+A;2025;pregoes medios;74.24
+A;2025;valorizacao (R$);5896.36354
+A;2025;valorizacao (%);8.414088906198481
+A;2025;rendimentos recebidos (R$);2294.3008999999993
+A;2025;rendimentos (%);3.2739588763842034
+A;2025;taxas (R$);43.815269201999996
+A;2025;imposto (R$);1705.2988949434798
+A;2025;resultado total (R$);6441.55027585452
+A;2025;resultado total (%);9.192068356556467
+A;2025;Selic liquida no mesmo dinheiro (R$);2137.80681404385
+A;2025;Selic liquida no mesmo dinheiro (%);3.050642396049053
+A;2025;diferenca para a Selic (R$);4303.743461810669
+A;2025;diferenca para a Selic (pontos);6.141425960507414
+A;2025;% com resultado > 0;92.0
+A;2025;% que ganharam da Selic;88.0
+A;2025;valorizacao media dos com ganho (%);12.920498028057509
+A;2025;n com ganho;23
+A;2025;valorizacao media dos com perda (%);-56.43700728619206
+A;2025;n com perda;2
+A;2025;% que ficaram abaixo da entrada;100.0
+A;2025;queda media (%);-11.886495865078171
+A;2025;queda maxima (%);-78.85416666666667
+A;2025;fundo da queda maxima;BRIM11 (entrada 03/01/2025)
+A;2025;queda media, >= 10 pts (%);-50.99502512257311
+A;2025;n >= 10 pts;3
+A;2025;queda media, >= 20 pts (%);-61.11843545946807
+A;2025;n >= 20 pts;2
+A;2025;media dos 10% piores (%);-61.11843545946807
+A;2025;pregoes entrada ate o fundo;26.52
+A;2025;% que voltou ao preco de entrada;92.0
+A;2025;pregoes fundo ate voltar;8.956521739130435
+A;2025;pregoes fundo ate a saida;47.72
+A;2025;saida: volta à média;22
+A;2025;saida: prazo;1
+A;2025;saida: fundo saiu da bolsa;2
+A;2025;saida: dado suspeito;0
+A;2025;saida: em aberto;0
+A;2026;ordens;45
+A;2026;fechadas;15
+A;2026;em aberto;30
+A;2026;sinais nao aceitos (< R$ 1.000);0
+A;2026;total aplicado (R$);129127.36999999998
+A;2026;valor medio da ordem (R$);2869.497111111111
+A;2026;dias corridos medios;45.333333333333336
+A;2026;pregoes medios;31.4
+A;2026;valorizacao (R$);3731.3394500000027
+A;2026;valorizacao (%);8.886686948666492
+A;2026;rendimentos recebidos (R$);721.9299999999988
+A;2026;rendimentos (%);1.7193734300562729
+A;2026;taxas (R$);26.312183834999995
+A;2026;imposto (R$);972.0182940330005
+A;2026;resultado total (R$);3454.938972132001
+A;2026;resultado total (%);8.228402021178926
+A;2026;Selic liquida no mesmo dinheiro (R$);567.3398680024106
+A;2026;Selic liquida no mesmo dinheiro (%);1.3511962307356384
+A;2026;diferenca para a Selic (R$);2887.59910412959
+A;2026;diferenca para a Selic (pontos);6.877205790443288
+A;2026;% com resultado > 0;86.66666666666667
+A;2026;% que ganharam da Selic;80.0
+A;2026;valorizacao media dos com ganho (%);12.553236998560587
+A;2026;n com ganho;13
+A;2026;valorizacao media dos com perda (%);-25.224792969513388
+A;2026;n com perda;2
+A;2026;% que ficaram abaixo da entrada;93.33333333333333
+A;2026;queda media (%);-6.815596526949701
+A;2026;queda maxima (%);-55.05178815712332
+A;2026;fundo da queda maxima;MCEM11 (entrada 12/05/2026)
+A;2026;queda media, >= 10 pts (%);-55.05178815712332
+A;2026;n >= 10 pts;1
+A;2026;queda media, >= 20 pts (%);-55.05178815712332
+A;2026;n >= 20 pts;1
+A;2026;media dos 10% piores (%);-32.37237210384763
+A;2026;pregoes entrada ate o fundo;15.071428571428571
+A;2026;% que voltou ao preco de entrada;78.57142857142857
+A;2026;pregoes fundo ate voltar;4.181818181818182
+A;2026;pregoes fundo ate a saida;18.357142857142858
+A;2026;saida: volta à média;11
+A;2026;saida: prazo;0
+A;2026;saida: fundo saiu da bolsa;4
+A;2026;saida: dado suspeito;0
+A;2026;saida: em aberto;30
+A;TOTAL;ordens;341
+A;TOTAL;fechadas;311
+A;TOTAL;em aberto;30
+A;TOTAL;sinais nao aceitos (< R$ 1.000);3
+A;TOTAL;total aplicado (R$);962859.1702
+A;TOTAL;valor medio da ordem (R$);2823.633930205279
+A;TOTAL;dias corridos medios;140.2540192926045
+A;TOTAL;pregoes medios;94.73954983922829
+A;TOTAL;valorizacao (R$);65710.634987
+A;TOTAL;valorizacao (%);7.5036144235949775
+A;TOTAL;rendimentos recebidos (R$);30774.483399999997
+A;TOTAL;rendimentos (%);3.514193061208566
+A;TOTAL;taxas (R$);545.1450526161
+A;TOTAL;imposto (R$);17887.62002708761
+A;TOTAL;resultado total (R$);78052.35330729629
+A;TOTAL;resultado total (%);8.912937216145115
+A;TOTAL;Selic liquida no mesmo dinheiro (R$);23592.09390532929
+A;TOTAL;Selic liquida no mesmo dinheiro (%);2.6940232147483942
+A;TOTAL;diferenca para a Selic (R$);54460.25940196701
+A;TOTAL;diferenca para a Selic (pontos);6.218914001396721
+A;TOTAL;% com resultado > 0;87.78135048231512
+A;TOTAL;% que ganharam da Selic;81.02893890675242
+A;TOTAL;valorizacao media dos com ganho (%);11.224893730575774
+A;TOTAL;n com ganho;273
+A;TOTAL;valorizacao media dos com perda (%);-22.51843047199483
+A;TOTAL;n com perda;38
+A;TOTAL;% que ficaram abaixo da entrada;99.03536977491962
+A;TOTAL;queda media (%);-12.547401540468572
+A;TOTAL;queda maxima (%);-78.85416666666667
+A;TOTAL;fundo da queda maxima;BRIM11 (entrada 03/01/2025)
+A;TOTAL;queda media, >= 10 pts (%);-35.75124209578519
+A;TOTAL;n >= 10 pts;48
+A;TOTAL;queda media, >= 20 pts (%);-45.89627426595777
+A;TOTAL;n >= 20 pts;22
+A;TOTAL;media dos 10% piores (%);-41.601543731368636
+A;TOTAL;pregoes entrada ate o fundo;34.896103896103895
+A;TOTAL;% que voltou ao preco de entrada;85.71428571428571
+A;TOTAL;pregoes fundo ate voltar;8.765151515151516
+A;TOTAL;pregoes fundo ate a saida;60.72077922077922
+A;TOTAL;saida: volta à média;284
+A;TOTAL;saida: prazo;15
+A;TOTAL;saida: fundo saiu da bolsa;10
+A;TOTAL;saida: dado suspeito;2
+A;TOTAL;saida: em aberto;30
+B;2018;ordens;5
+B;2018;fechadas;5
+B;2018;em aberto;0
+B;2018;sinais nao aceitos (< R$ 1.000);0
+B;2018;total aplicado (R$);11640.1644
+B;2018;valor medio da ordem (R$);2328.0328799999997
+B;2018;dias corridos medios;173.8
+B;2018;pregoes medios;115.6
+B;2018;valorizacao (R$);1231.6110260000007
+B;2018;valorizacao (%);10.580701300060683
+B;2018;rendimentos recebidos (R$);548.5408000000002
+B;2018;rendimentos (%);4.712483270425289
+B;2018;taxas (R$);7.3535819478
+B;2018;imposto (R$);297.8096120104401
+B;2018;resultado total (R$);1474.9886320417609
+B;2018;resultado total (%);12.671544673731248
+B;2018;Selic liquida no mesmo dinheiro (R$);283.95326553295075
+B;2018;Selic liquida no mesmo dinheiro (%);2.4394265903405175
+B;2018;diferenca para a Selic (R$);1191.03536650881
+B;2018;diferenca para a Selic (pontos);10.23211808339073
+B;2018;% com resultado > 0;80.0
+B;2018;% que ganharam da Selic;80.0
+B;2018;valorizacao media dos com ganho (%);13.22103640231349
+B;2018;n com ganho;4
+B;2018;valorizacao media dos com perda (%);-4.7175526315789424
+B;2018;n com perda;1
+B;2018;% que ficaram abaixo da entrada;100.0
+B;2018;queda media (%);-13.29520596709546
+B;2018;queda maxima (%);-24.342105263157897
+B;2018;fundo da queda maxima;ALMI11 (entrada 28/05/2018)
+B;2018;queda media, >= 10 pts (%);-24.342105263157897
+B;2018;n >= 10 pts;1
+B;2018;queda media, >= 20 pts (%);
+B;2018;n >= 20 pts;0
+B;2018;media dos 10% piores (%);-24.342105263157897
+B;2018;pregoes entrada ate o fundo;52.6
+B;2018;% que voltou ao preco de entrada;60.0
+B;2018;pregoes fundo ate voltar;11.333333333333334
+B;2018;pregoes fundo ate a saida;63.0
+B;2018;saida: volta à média;5
+B;2018;saida: prazo;0
+B;2018;saida: fundo saiu da bolsa;0
+B;2018;saida: dado suspeito;0
+B;2018;saida: em aberto;0
+B;2019;ordens;2
+B;2019;fechadas;2
+B;2019;em aberto;0
+B;2019;sinais nao aceitos (< R$ 1.000);0
+B;2019;total aplicado (R$);5841.5599999999995
+B;2019;valor medio da ordem (R$);2920.7799999999997
+B;2019;dias corridos medios;208.5
+B;2019;pregoes medios;144.0
+B;2019;valorizacao (R$);539.3748500000006
+B;2019;valorizacao (%);9.233404261875263
+B;2019;rendimentos recebidos (R$);304.36249999999984
+B;2019;rendimentos (%);5.210294852744813
+B;2019;taxas (R$);3.6667484549999996
+B;2019;imposto (R$);128.42733900400006
+B;2019;resultado total (R$);711.6432625410005
+B;2019;resultado total (%);12.18241809621061
+B;2019;Selic liquida no mesmo dinheiro (R$);158.87375619816626
+B;2019;Selic liquida no mesmo dinheiro (%);2.7197145317032825
+B;2019;diferenca para a Selic (R$);552.7695063428341
+B;2019;diferenca para a Selic (pontos);9.462703564507327
+B;2019;% com resultado > 0;100.0
+B;2019;% que ganharam da Selic;50.0
+B;2019;valorizacao media dos com ganho (%);9.130076882742829
+B;2019;n com ganho;2
+B;2019;valorizacao media dos com perda (%);
+B;2019;n com perda;0
+B;2019;% que ficaram abaixo da entrada;100.0
+B;2019;queda media (%);-16.5621421700752
+B;2019;queda maxima (%);-22.184033744727394
+B;2019;fundo da queda maxima;XPCM11 (entrada 11/07/2019)
+B;2019;queda media, >= 10 pts (%);
+B;2019;n >= 10 pts;0
+B;2019;queda media, >= 20 pts (%);
+B;2019;n >= 20 pts;0
+B;2019;media dos 10% piores (%);-22.184033744727394
+B;2019;pregoes entrada ate o fundo;51.5
+B;2019;% que voltou ao preco de entrada;50.0
+B;2019;pregoes fundo ate voltar;84.0
+B;2019;pregoes fundo ate a saida;92.5
+B;2019;saida: volta à média;2
+B;2019;saida: prazo;0
+B;2019;saida: fundo saiu da bolsa;0
+B;2019;saida: dado suspeito;0
+B;2019;saida: em aberto;0
+B;2020;ordens;58
+B;2020;fechadas;58
+B;2020;em aberto;0
+B;2020;sinais nao aceitos (< R$ 1.000);0
+B;2020;total aplicado (R$);168277.5854
+B;2020;valor medio da ordem (R$);2901.337679310345
+B;2020;dias corridos medios;158.17241379310346
+B;2020;pregoes medios;107.34482758620689
+B;2020;valorizacao (R$);32865.522479
+B;2020;valorizacao (%);19.530540803089036
+B;2020;rendimentos recebidos (R$);4187.6576
+B;2020;rendimentos (%);2.488541530974451
+B;2020;taxas (R$);110.8262079837
+B;2020;imposto (R$);7024.77953051526
+B;2020;resultado total (R$);29917.57434050104
+B;2020;resultado total (%);17.778704317266154
+B;2020;Selic liquida no mesmo dinheiro (R$);1517.3631116228764
+B;2020;Selic liquida no mesmo dinheiro (%);0.9017024507548443
+B;2020;diferenca para a Selic (R$);28400.21122887816
+B;2020;diferenca para a Selic (pontos);16.87700186651131
+B;2020;% com resultado > 0;91.37931034482759
+B;2020;% que ganharam da Selic;89.65517241379311
+B;2020;valorizacao media dos com ganho (%);22.61124780467448
+B;2020;n com ganho;53
+B;2020;valorizacao media dos com perda (%);-17.184775141225213
+B;2020;n com perda;5
+B;2020;% que ficaram abaixo da entrada;98.27586206896551
+B;2020;queda media (%);-15.338709322031521
+B;2020;queda maxima (%);-44.77300613496933
+B;2020;fundo da queda maxima;RBRD11 (entrada 04/03/2020)
+B;2020;queda media, >= 10 pts (%);-37.26480728595151
+B;2020;n >= 10 pts;7
+B;2020;queda media, >= 20 pts (%);-39.8525027581955
+B;2020;n >= 20 pts;4
+B;2020;media dos 10% piores (%);-38.197830722498985
+B;2020;pregoes entrada ate o fundo;13.543859649122806
+B;2020;% que voltou ao preco de entrada;94.73684210526316
+B;2020;pregoes fundo ate voltar;4.0
+B;2020;pregoes fundo ate a saida;93.47368421052632
+B;2020;saida: volta à média;49
+B;2020;saida: prazo;7
+B;2020;saida: fundo saiu da bolsa;1
+B;2020;saida: dado suspeito;1
+B;2020;saida: em aberto;0
+B;2021;ordens;25
+B;2021;fechadas;25
+B;2021;em aberto;0
+B;2021;sinais nao aceitos (< R$ 1.000);0
+B;2021;total aplicado (R$);72183.5812
+B;2021;valor medio da ordem (R$);2887.343248
+B;2021;dias corridos medios;179.92
+B;2021;pregoes medios;122.8
+B;2021;valorizacao (R$);4085.0807780000014
+B;2021;valorizacao (%);5.659293581848502
+B;2021;rendimentos recebidos (R$);3000.2801999999997
+B;2021;rendimentos (%);4.156457950856003
+B;2021;taxas (R$);44.535672953399995
+B;2021;imposto (R$);1486.31528645232
+B;2021;resultado total (R$);5554.51001859428
+B;2021;resultado total (%);7.694977065773899
+B;2021;Selic liquida no mesmo dinheiro (R$);2652.084922778749
+B;2021;Selic liquida no mesmo dinheiro (%);3.6740833284934733
+B;2021;diferenca para a Selic (R$);2902.4250958155317
+B;2021;diferenca para a Selic (pontos);4.020893737280426
+B;2021;% com resultado > 0;80.0
+B;2021;% que ganharam da Selic;72.0
+B;2021;valorizacao media dos com ganho (%);12.034191018245407
+B;2021;n com ganho;20
+B;2021;valorizacao media dos com perda (%);-22.17886091163403
+B;2021;n com perda;5
+B;2021;% que ficaram abaixo da entrada;100.0
+B;2021;queda media (%);-11.699849090476809
+B;2021;queda maxima (%);-42.57058823529412
+B;2021;fundo da queda maxima;HCRI11 (entrada 19/11/2021)
+B;2021;queda media, >= 10 pts (%);-34.1967923479965
+B;2021;n >= 10 pts;5
+B;2021;queda media, >= 20 pts (%);-40.42484931804699
+B;2021;n >= 20 pts;3
+B;2021;media dos 10% piores (%);-42.455455795252306
+B;2021;pregoes entrada ate o fundo;61.12
+B;2021;% que voltou ao preco de entrada;76.0
+B;2021;pregoes fundo ate voltar;5.0
+B;2021;pregoes fundo ate a saida;61.68
+B;2021;saida: volta à média;22
+B;2021;saida: prazo;3
+B;2021;saida: fundo saiu da bolsa;0
+B;2021;saida: dado suspeito;0
+B;2021;saida: em aberto;0
+B;2022;ordens;7
+B;2022;fechadas;7
+B;2022;em aberto;0
+B;2022;sinais nao aceitos (< R$ 1.000);0
+B;2022;total aplicado (R$);19205.03
+B;2022;valor medio da ordem (R$);2743.575714285714
+B;2022;dias corridos medios;155.28571428571428
+B;2022;pregoes medios;106.71428571428571
+B;2022;valorizacao (R$);1637.5142500000015
+B;2022;valorizacao (%);8.526486290310412
+B;2022;rendimentos recebidos (R$);627.7199999999996
+B;2022;rendimentos (%);3.268518716190496
+B;2022;taxas (R$);12.014272274999998
+B;2022;imposto (R$);377.3850853350003
+B;2022;resultado total (R$);1875.8348923900005
+B;2022;resultado total (%);9.767414538743239
+B;2022;Selic liquida no mesmo dinheiro (R$);835.2166597008768
+B;2022;Selic liquida no mesmo dinheiro (%);4.348947435650332
+B;2022;diferenca para a Selic (R$);1040.618232689124
+B;2022;diferenca para a Selic (pontos);5.418467103092907
+B;2022;% com resultado > 0;100.0
+B;2022;% que ganharam da Selic;57.14285714285714
+B;2022;valorizacao media dos com ganho (%);8.819644054472207
+B;2022;n com ganho;7
+B;2022;valorizacao media dos com perda (%);
+B;2022;n com perda;0
+B;2022;% que ficaram abaixo da entrada;100.0
+B;2022;queda media (%);-11.358511179126795
+B;2022;queda maxima (%);-25.021695111368235
+B;2022;fundo da queda maxima;MGHT11 (entrada 27/05/2022)
+B;2022;queda media, >= 10 pts (%);-25.021695111368235
+B;2022;n >= 10 pts;1
+B;2022;queda media, >= 20 pts (%);
+B;2022;n >= 20 pts;0
+B;2022;media dos 10% piores (%);-25.021695111368235
+B;2022;pregoes entrada ate o fundo;51.285714285714285
+B;2022;% que voltou ao preco de entrada;85.71428571428571
+B;2022;pregoes fundo ate voltar;6.833333333333333
+B;2022;pregoes fundo ate a saida;55.42857142857143
+B;2022;saida: volta à média;6
+B;2022;saida: prazo;0
+B;2022;saida: fundo saiu da bolsa;1
+B;2022;saida: dado suspeito;0
+B;2022;saida: em aberto;0
+B;2023;ordens;6
+B;2023;fechadas;6
+B;2023;em aberto;0
+B;2023;sinais nao aceitos (< R$ 1.000);0
+B;2023;total aplicado (R$);14886.349999999999
+B;2023;valor medio da ordem (R$);2481.058333333333
+B;2023;dias corridos medios;225.0
+B;2023;pregoes medios;151.83333333333334
+B;2023;valorizacao (R$);-1191.9100999999991
+B;2023;valorizacao (%);-8.006731670288548
+B;2023;rendimentos recebidos (R$);882.9451999999993
+B;2023;rendimentos (%);5.931240364494986
+B;2023;taxas (R$);8.57423697
+B;2023;imposto (R$);241.91953453000005
+B;2023;resultado total (R$);-559.4586714999998
+B;2023;resultado total (%);-3.75819909850299
+B;2023;Selic liquida no mesmo dinheiro (R$);940.6112027881946
+B;2023;Selic liquida no mesmo dinheiro (%);6.318615394560753
+B;2023;diferenca para a Selic (R$);-1500.0698742881946
+B;2023;diferenca para a Selic (pontos);-10.076814493063743
+B;2023;% com resultado > 0;50.0
+B;2023;% que ganharam da Selic;50.0
+B;2023;valorizacao media dos com ganho (%);16.36062752964982
+B;2023;n com ganho;3
+B;2023;valorizacao media dos com perda (%);-31.625899393686097
+B;2023;n com perda;3
+B;2023;% que ficaram abaixo da entrada;100.0
+B;2023;queda media (%);-21.54697566450364
+B;2023;queda maxima (%);-38.68221941992434
+B;2023;fundo da queda maxima;DEVA11 (entrada 18/05/2023)
+B;2023;queda media, >= 10 pts (%);-37.88922382604351
+B;2023;n >= 10 pts;3
+B;2023;queda media, >= 20 pts (%);
+B;2023;n >= 20 pts;0
+B;2023;media dos 10% piores (%);-38.68221941992434
+B;2023;pregoes entrada ate o fundo;102.33333333333333
+B;2023;% que voltou ao preco de entrada;50.0
+B;2023;pregoes fundo ate voltar;4.0
+B;2023;pregoes fundo ate a saida;49.5
+B;2023;saida: volta à média;4
+B;2023;saida: prazo;2
+B;2023;saida: fundo saiu da bolsa;0
+B;2023;saida: dado suspeito;0
+B;2023;saida: em aberto;0
+B;2024;ordens;44
+B;2024;fechadas;44
+B;2024;em aberto;0
+B;2024;sinais nao aceitos (< R$ 1.000);1
+B;2024;total aplicado (R$);127508.43959999998
+B;2024;valor medio da ordem (R$);2897.9190818181814
+B;2024;dias corridos medios;135.9090909090909
+B;2024;pregoes medios;89.56818181818181
+B;2024;valorizacao (R$);14639.611262999997
+B;2024;valorizacao (%);11.48128806918597
+B;2024;rendimentos recebidos (R$);6096.216200000002
+B;2024;rendimentos (%);4.781029568806677
+B;2024;taxas (R$);80.89694713889998
+B;2024;imposto (R$);3210.073118414219
+B;2024;resultado total (R$);17444.857397446885
+B;2024;resultado total (%);13.681335488201588
+B;2024;Selic liquida no mesmo dinheiro (R$);4412.763199083657
+B;2024;Selic liquida no mesmo dinheiro (%);3.4607616663859306
+B;2024;diferenca para a Selic (R$);13032.094198363224
+B;2024;diferenca para a Selic (pontos);10.220573821815657
+B;2024;% com resultado > 0;90.9090909090909
+B;2024;% que ganharam da Selic;90.9090909090909
+B;2024;valorizacao media dos com ganho (%);13.773982604443876
+B;2024;n com ganho;40
+B;2024;valorizacao media dos com perda (%);-15.578383398227446
+B;2024;n com perda;4
+B;2024;% que ficaram abaixo da entrada;100.0
+B;2024;queda media (%);-9.276945493724574
+B;2024;queda maxima (%);-53.09310344827587
+B;2024;fundo da queda maxima;RBOP11 (entrada 16/12/2024)
+B;2024;queda media, >= 10 pts (%);-29.429606808330984
+B;2024;n >= 10 pts;5
+B;2024;queda media, >= 20 pts (%);-53.09310344827587
+B;2024;n >= 20 pts;1
+B;2024;media dos 10% piores (%);-31.911593228021694
+B;2024;pregoes entrada ate o fundo;22.704545454545453
+B;2024;% que voltou ao preco de entrada;90.9090909090909
+B;2024;pregoes fundo ate voltar;7.55
+B;2024;pregoes fundo ate a saida;66.86363636363636
+B;2024;saida: volta à média;43
+B;2024;saida: prazo;0
+B;2024;saida: fundo saiu da bolsa;1
+B;2024;saida: dado suspeito;0
+B;2024;saida: em aberto;0
+B;2025;ordens;15
+B;2025;fechadas;15
+B;2025;em aberto;0
+B;2025;sinais nao aceitos (< R$ 1.000);2
+B;2025;total aplicado (R$);42990.4627
+B;2025;valor medio da ordem (R$);2866.0308466666665
+B;2025;dias corridos medios;108.33333333333333
+B;2025;pregoes medios;73.53333333333333
+B;2025;valorizacao (R$);4706.4507159999985
+B;2025;valorizacao (%);10.94766238931408
+B;2025;rendimentos recebidos (R$);1743.3087999999996
+B;2025;rendimentos (%);4.0551059246915235
+B;2025;taxas (R$);27.206212834799995
+B;2025;imposto (R$);1136.0488106330395
+B;2025;resultado total (R$);5286.504492532158
+B;2025;resultado total (%);12.296923923389544
+B;2025;Selic liquida no mesmo dinheiro (R$);1324.2251171227826
+B;2025;Selic liquida no mesmo dinheiro (%);3.0802764937972693
+B;2025;diferenca para a Selic (R$);3962.2793754093755
+B;2025;diferenca para a Selic (pontos);9.216647429592275
+B;2025;% com resultado > 0;93.33333333333333
+B;2025;% que ganharam da Selic;93.33333333333333
+B;2025;valorizacao media dos com ganho (%);14.268287211644578
+B;2025;n com ganho;14
+B;2025;valorizacao media dos com perda (%);-33.32777592530844
+B;2025;n com perda;1
+B;2025;% que ficaram abaixo da entrada;93.33333333333333
+B;2025;queda media (%);-9.184098625050986
+B;2025;queda maxima (%);-40.73024341447149
+B;2025;fundo da queda maxima;RMAI11 (entrada 29/09/2025)
+B;2025;queda media, >= 10 pts (%);-39.1150430423983
+B;2025;n >= 10 pts;2
+B;2025;queda media, >= 20 pts (%);-39.1150430423983
+B;2025;n >= 20 pts;2
+B;2025;media dos 10% piores (%);-39.1150430423983
+B;2025;pregoes entrada ate o fundo;13.071428571428571
+B;2025;% que voltou ao preco de entrada;92.85714285714286
+B;2025;pregoes fundo ate voltar;4.076923076923077
+B;2025;pregoes fundo ate a saida;62.92857142857143
+B;2025;saida: volta à média;14
+B;2025;saida: prazo;0
+B;2025;saida: fundo saiu da bolsa;1
+B;2025;saida: dado suspeito;0
+B;2025;saida: em aberto;0
+B;2026;ordens;13
+B;2026;fechadas;2
+B;2026;em aberto;11
+B;2026;sinais nao aceitos (< R$ 1.000);0
+B;2026;total aplicado (R$);35040.83
+B;2026;valor medio da ordem (R$);2695.4484615384617
+B;2026;dias corridos medios;33.0
+B;2026;pregoes medios;22.5
+B;2026;valorizacao (R$);-253.64999999999964
+B;2026;valorizacao (%);-6.975324428897881
+B;2026;rendimentos recebidos (R$);1.3500000000000512
+B;2026;rendimentos (%);0.03712473084570278
+B;2026;taxas (R$);2.105739
+B;2026;imposto (R$);152.32576500000005
+B;2026;resultado total (R$);-406.73150399999963
+B;2026;resultado total (%);-11.185035268494294
+B;2026;Selic liquida no mesmo dinheiro (R$);36.88679651559642
+B;2026;Selic liquida no mesmo dinheiro (%);1.0143795499271648
+B;2026;diferenca para a Selic (R$);-443.61830051559605
+B;2026;diferenca para a Selic (pontos);-12.19941481842146
+B;2026;% com resultado > 0;50.0
+B;2026;% que ganharam da Selic;50.0
+B;2026;valorizacao media dos com ganho (%);51.28593040847203
+B;2026;n com ganho;1
+B;2026;valorizacao media dos com perda (%);-47.29333593902677
+B;2026;n com perda;1
+B;2026;% que ficaram abaixo da entrada;100.0
+B;2026;queda media (%);-27.541022671602498
+B;2026;queda maxima (%);-55.05178815712332
+B;2026;fundo da queda maxima;MCEM11 (entrada 12/05/2026)
+B;2026;queda media, >= 10 pts (%);-55.05178815712332
+B;2026;n >= 10 pts;1
+B;2026;queda media, >= 20 pts (%);-55.05178815712332
+B;2026;n >= 20 pts;1
+B;2026;media dos 10% piores (%);-55.05178815712332
+B;2026;pregoes entrada ate o fundo;13.0
+B;2026;% que voltou ao preco de entrada;50.0
+B;2026;pregoes fundo ate voltar;1.0
+B;2026;pregoes fundo ate a saida;9.5
+B;2026;saida: volta à média;1
+B;2026;saida: prazo;0
+B;2026;saida: fundo saiu da bolsa;1
+B;2026;saida: dado suspeito;0
+B;2026;saida: em aberto;11
+B;TOTAL;ordens;175
+B;TOTAL;fechadas;164
+B;TOTAL;em aberto;11
+B;TOTAL;sinais nao aceitos (< R$ 1.000);3
+B;TOTAL;total aplicado (R$);497574.00330000004
+B;TOTAL;valor medio da ordem (R$);2843.280018857143
+B;TOTAL;dias corridos medios;152.84146341463415
+B;TOTAL;pregoes medios;103.10365853658537
+B;TOTAL;valorizacao (R$);58259.605262
+B;TOTAL;valorizacao (%);12.497513747912251
+B;TOTAL;rendimentos recebidos (R$);17392.3813
+B;TOTAL;rendimentos (%);3.7309130988475245
+B;TOTAL;taxas (R$);297.17961955859994
+B;TOTAL;imposto (R$);14055.084081894282
+B;TOTAL;resultado total (R$);61299.72286054712
+B;TOTAL;resultado total (%);13.149662201583533
+B;TOTAL;Selic liquida no mesmo dinheiro (R$);12161.978031343846
+B;TOTAL;Selic liquida no mesmo dinheiro (%);2.608917224292718
+B;TOTAL;diferenca para a Selic (R$);49137.74482920327
+B;TOTAL;diferenca para a Selic (pontos);10.540744977290815
+B;TOTAL;% com resultado > 0;87.8048780487805
+B;TOTAL;% que ganharam da Selic;83.53658536585365
+B;TOTAL;valorizacao media dos com ganho (%);16.826700693797925
+B;TOTAL;n com ganho;144
+B;TOTAL;valorizacao media dos com perda (%);-21.967403826708924
+B;TOTAL;n com perda;20
+B;TOTAL;% que ficaram abaixo da entrada;98.78048780487805
+B;TOTAL;queda media (%);-12.753428297555711
+B;TOTAL;queda maxima (%);-55.05178815712332
+B;TOTAL;fundo da queda maxima;MCEM11 (entrada 12/05/2026)
+B;TOTAL;queda media, >= 10 pts (%);-35.19778422708031
+B;TOTAL;n >= 10 pts;25
+B;TOTAL;queda media, >= 20 pts (%);-40.65651134109133
+B;TOTAL;n >= 20 pts;16
+B;TOTAL;media dos 10% piores (%);-40.65651134109133
+B;TOTAL;pregoes entrada ate o fundo;29.919753086419753
+B;TOTAL;% que voltou ao preco de entrada;86.41975308641975
+B;TOTAL;pregoes fundo ate voltar;5.985714285714286
+B;TOTAL;pregoes fundo ate a saida;73.43827160493827
+B;TOTAL;saida: volta à média;146
+B;TOTAL;saida: prazo;12
+B;TOTAL;saida: fundo saiu da bolsa;5
+B;TOTAL;saida: dado suspeito;1
+B;TOTAL;saida: em aberto;11
+C;2018;ordens;12
+C;2018;fechadas;12
+C;2018;em aberto;0
+C;2018;sinais nao aceitos (< R$ 1.000);0
+C;2018;total aplicado (R$);33573.3525
+C;2018;valor medio da ordem (R$);2797.779375
+C;2018;dias corridos medios;146.08333333333334
+C;2018;pregoes medios;99.0
+C;2018;valorizacao (R$);3358.771099500002
+C;2018;valorizacao (%);10.004276753416274
+C;2018;rendimentos recebidos (R$);1065.7035
+C;2018;rendimentos (%);3.174254045675063
+C;2018;taxas (R$);21.15164282985
+C;2018;imposto (R$);667.5238913340304
+C;2018;resultado total (R$);3735.799065336121
+C;2018;resultado total (%);11.127274421987263
+C;2018;Selic liquida no mesmo dinheiro (R$);658.1852424081428
+C;2018;Selic liquida no mesmo dinheiro (%);1.9604394360323198
+C;2018;diferenca para a Selic (R$);3077.6138229279786
+C;2018;diferenca para a Selic (pontos);9.166834985954942
+C;2018;% com resultado > 0;100.0
+C;2018;% que ganharam da Selic;100.0
+C;2018;valorizacao media dos com ganho (%);9.982682702881739
+C;2018;n com ganho;12
+C;2018;valorizacao media dos com perda (%);
+C;2018;n com perda;0
+C;2018;% que ficaram abaixo da entrada;100.0
+C;2018;queda media (%);-6.845756022901278
+C;2018;queda maxima (%);-15.373490490997177
+C;2018;fundo da queda maxima;AEFI11 (entrada 24/08/2018)
+C;2018;queda media, >= 10 pts (%);
+C;2018;n >= 10 pts;0
+C;2018;queda media, >= 20 pts (%);
+C;2018;n >= 20 pts;0
+C;2018;media dos 10% piores (%);-15.373490490997177
+C;2018;pregoes entrada ate o fundo;34.5
+C;2018;% que voltou ao preco de entrada;100.0
+C;2018;pregoes fundo ate voltar;13.25
+C;2018;pregoes fundo ate a saida;64.5
+C;2018;saida: volta à média;12
+C;2018;saida: prazo;0
+C;2018;saida: fundo saiu da bolsa;0
+C;2018;saida: dado suspeito;0
+C;2018;saida: em aberto;0
+C;2020;ordens;67
+C;2020;fechadas;67
+C;2020;em aberto;0
+C;2020;sinais nao aceitos (< R$ 1.000);0
+C;2020;total aplicado (R$);192070.94540000003
+C;2020;valor medio da ordem (R$);2866.7305283582095
+C;2020;dias corridos medios;142.43283582089552
+C;2020;pregoes medios;96.70149253731343
+C;2020;valorizacao (R$);29723.707375500002
+C;2020;valorizacao (%);15.47537932590402
+C;2020;rendimentos recebidos (R$);4041.6012
+C;2020;rendimentos (%);2.104223099221544
+C;2020;taxas (R$);124.15967945265
+C;2020;imposto (R$);6463.091440533471
+C;2020;resultado total (R$);27178.057455513877
+C;2020;resultado total (%);14.150009726309117
+C;2020;Selic liquida no mesmo dinheiro (R$);1583.2809125709543
+C;2020;Selic liquida no mesmo dinheiro (%);0.8243208827205335
+C;2020;diferenca para a Selic (R$);25594.776542942924
+C;2020;diferenca para a Selic (pontos);13.325688843588583
+C;2020;% com resultado > 0;89.55223880597015
+C;2020;% que ganharam da Selic;86.56716417910447
+C;2020;valorizacao media dos com ganho (%);18.390958505320356
+C;2020;n com ganho;60
+C;2020;valorizacao media dos com perda (%);-14.403618413262384
+C;2020;n com perda;7
+C;2020;% que ficaram abaixo da entrada;98.50746268656717
+C;2020;queda media (%);-16.784803062853687
+C;2020;queda maxima (%);-42.72334293948127
+C;2020;fundo da queda maxima;HTMX11 (entrada 13/03/2020)
+C;2020;queda media, >= 10 pts (%);-34.50221669700817
+C;2020;n >= 10 pts;13
+C;2020;queda media, >= 20 pts (%);-39.0210521179029
+C;2020;n >= 20 pts;5
+C;2020;media dos 10% piores (%);-37.58410005469675
+C;2020;pregoes entrada ate o fundo;11.924242424242424
+C;2020;% que voltou ao preco de entrada;93.93939393939394
+C;2020;pregoes fundo ate voltar;4.096774193548387
+C;2020;pregoes fundo ate a saida;86.1969696969697
+C;2020;saida: volta à média;58
+C;2020;saida: prazo;7
+C;2020;saida: fundo saiu da bolsa;1
+C;2020;saida: dado suspeito;1
+C;2020;saida: em aberto;0
+C;2021;ordens;59
+C;2021;fechadas;59
+C;2021;em aberto;0
+C;2021;sinais nao aceitos (< R$ 1.000);0
+C;2021;total aplicado (R$);169076.34230000002
+C;2021;valor medio da ordem (R$);2865.700716949153
+C;2021;dias corridos medios;166.6271186440678
+C;2021;pregoes medios;113.32203389830508
+C;2021;valorizacao (R$);5577.927472000001
+C;2021;valorizacao (%);3.2990585176622904
+C;2021;rendimentos recebidos (R$);6993.0174
+C;2021;rendimentos (%);4.136011759464233
+C;2021;taxas (R$);103.11918362159999
+C;2021;imposto (R$);2327.1355452566304
+C;2021;resultado total (R$);10140.690143121768
+C;2021;resultado total (%);5.99769903061226
+C;2021;Selic liquida no mesmo dinheiro (R$);5451.858118257307
+C;2021;Selic liquida no mesmo dinheiro (%);3.224494949496732
+C;2021;diferenca para a Selic (R$);4688.832024864462
+C;2021;diferenca para a Selic (pontos);2.7732040811155283
+C;2021;% com resultado > 0;79.66101694915254
+C;2021;% que ganharam da Selic;69.49152542372882
+C;2021;valorizacao media dos com ganho (%);8.170266404129498
+C;2021;n com ganho;47
+C;2021;valorizacao media dos com perda (%);-16.158725843534942
+C;2021;n com perda;12
+C;2021;% que ficaram abaixo da entrada;100.0
+C;2021;queda media (%);-11.667293057894017
+C;2021;queda maxima (%);-46.5041095890411
+C;2021;fundo da queda maxima;HCRI11 (entrada 04/11/2021)
+C;2021;queda media, >= 10 pts (%);-30.193962988805893
+C;2021;n >= 10 pts;10
+C;2021;queda media, >= 20 pts (%);-43.023857302118174
+C;2021;n >= 20 pts;3
+C;2021;media dos 10% piores (%);-35.67066271390156
+C;2021;pregoes entrada ate o fundo;57.271186440677965
+C;2021;% que voltou ao preco de entrada;76.27118644067797
+C;2021;pregoes fundo ate voltar;7.733333333333333
+C;2021;pregoes fundo ate a saida;56.05084745762712
+C;2021;saida: volta à média;55
+C;2021;saida: prazo;2
+C;2021;saida: fundo saiu da bolsa;1
+C;2021;saida: dado suspeito;1
+C;2021;saida: em aberto;0
+C;2022;ordens;12
+C;2022;fechadas;12
+C;2022;em aberto;0
+C;2022;sinais nao aceitos (< R$ 1.000);0
+C;2022;total aplicado (R$);32107.148500000003
+C;2022;valor medio da ordem (R$);2675.5957083333337
+C;2022;dias corridos medios;197.83333333333334
+C;2022;pregoes medios;135.58333333333334
+C;2022;valorizacao (R$);-2626.933424
+C;2022;valorizacao (%);-8.181771184071359
+C;2022;rendimentos recebidos (R$);1454.6590999999996
+C;2022;rendimentos (%);4.530639337218002
+C;2022;taxas (R$);18.476209072799996
+C;2022;imposto (R$);154.12054257444015
+C;2022;resultado total (R$);-1344.8710756472406
+C;2022;resultado total (%);-4.188696718574184
+C;2022;Selic liquida no mesmo dinheiro (R$);1786.7428482027133
+C;2022;Selic liquida no mesmo dinheiro (%);5.564937815024941
+C;2022;diferenca para a Selic (R$);-3131.613923849954
+C;2022;diferenca para a Selic (pontos);-9.753634533599126
+C;2022;% com resultado > 0;83.33333333333334
+C;2022;% que ganharam da Selic;66.66666666666666
+C;2022;valorizacao media dos com ganho (%);3.0451774276687935
+C;2022;n com ganho;10
+C;2022;valorizacao media dos com perda (%);-56.399486354131426
+C;2022;n com perda;2
+C;2022;% que ficaram abaixo da entrada;100.0
+C;2022;queda media (%);-18.47116132839065
+C;2022;queda maxima (%);-71.74818661115643
+C;2022;fundo da queda maxima;TORD11 (entrada 15/12/2022)
+C;2022;queda media, >= 10 pts (%);-49.620904804583674
+C;2022;n >= 10 pts;3
+C;2022;queda media, >= 20 pts (%);-57.04849658570708
+C;2022;n >= 20 pts;2
+C;2022;media dos 10% piores (%);-71.74818661115643
+C;2022;pregoes entrada ate o fundo;86.83333333333333
+C;2022;% que voltou ao preco de entrada;75.0
+C;2022;pregoes fundo ate voltar;12.666666666666666
+C;2022;pregoes fundo ate a saida;48.75
+C;2022;saida: volta à média;10
+C;2022;saida: prazo;2
+C;2022;saida: fundo saiu da bolsa;0
+C;2022;saida: dado suspeito;0
+C;2022;saida: em aberto;0
+C;2023;ordens;13
+C;2023;fechadas;13
+C;2023;em aberto;0
+C;2023;sinais nao aceitos (< R$ 1.000);1
+C;2023;total aplicado (R$);36897.544200000004
+C;2023;valor medio da ordem (R$);2838.272630769231
+C;2023;dias corridos medios;76.0
+C;2023;pregoes medios;50.61538461538461
+C;2023;valorizacao (R$);5104.353581000002
+C;2023;valorizacao (%);13.83385721643773
+C;2023;rendimentos recebidos (R$);864.6414000000004
+C;2023;rendimentos (%);2.343357583131509
+C;2023;taxas (R$);23.6698325943
+C;2023;imposto (R$);1016.1367496811404
+C;2023;resultado total (R$);4929.188398724562
+C;2023;resultado total (%);13.359123230549748
+C;2023;Selic liquida no mesmo dinheiro (R$);745.6971777748287
+C;2023;Selic liquida no mesmo dinheiro (%);2.0209940632710963
+C;2023;diferenca para a Selic (R$);4183.491220949733
+C;2023;diferenca para a Selic (pontos);11.338129167278652
+C;2023;% com resultado > 0;100.0
+C;2023;% que ganharam da Selic;100.0
+C;2023;valorizacao media dos com ganho (%);13.795710243564255
+C;2023;n com ganho;13
+C;2023;valorizacao media dos com perda (%);
+C;2023;n com perda;0
+C;2023;% que ficaram abaixo da entrada;100.0
+C;2023;queda media (%);-5.477213477602646
+C;2023;queda maxima (%);-16.764072593048297
+C;2023;fundo da queda maxima;MAXR11 (entrada 17/01/2023)
+C;2023;queda media, >= 10 pts (%);-16.764072593048297
+C;2023;n >= 10 pts;1
+C;2023;queda media, >= 20 pts (%);
+C;2023;n >= 20 pts;0
+C;2023;media dos 10% piores (%);-16.764072593048297
+C;2023;pregoes entrada ate o fundo;13.307692307692308
+C;2023;% que voltou ao preco de entrada;100.0
+C;2023;pregoes fundo ate voltar;7.6923076923076925
+C;2023;pregoes fundo ate a saida;37.30769230769231
+C;2023;saida: volta à média;13
+C;2023;saida: prazo;0
+C;2023;saida: fundo saiu da bolsa;0
+C;2023;saida: dado suspeito;0
+C;2023;saida: em aberto;0
+C;2024;ordens;76
+C;2024;fechadas;76
+C;2024;em aberto;0
+C;2024;sinais nao aceitos (< R$ 1.000);2
+C;2024;total aplicado (R$);218138.60539999997
+C;2024;valor medio da ordem (R$);2870.2448078947364
+C;2024;dias corridos medios;138.35526315789474
+C;2024;pregoes medios;91.26315789473684
+C;2024;valorizacao (R$);14678.038265
+C;2024;valorizacao (%);6.7287668948304376
+C;2024;rendimentos recebidos (R$);10400.062800000003
+C;2024;rendimentos (%);4.7676397219691795
+C;2024;taxas (R$);135.28657471949998
+C;2024;imposto (R$);3432.9877635671005
+C;2024;resultado total (R$);21509.826726713403
+C;2024;resultado total (%);9.86062356421089
+C;2024;Selic liquida no mesmo dinheiro (R$);7802.034510475268
+C;2024;Selic liquida no mesmo dinheiro (%);3.5766408683913173
+C;2024;diferenca para a Selic (R$);13707.792216238133
+C;2024;diferenca para a Selic (pontos);6.283982695819573
+C;2024;% com resultado > 0;96.05263157894737
+C;2024;% que ganharam da Selic;89.47368421052632
+C;2024;valorizacao media dos com ganho (%);7.820914783735438
+C;2024;n com ganho;73
+C;2024;valorizacao media dos com perda (%);-23.671491085493297
+C;2024;n com perda;3
+C;2024;% que ficaram abaixo da entrada;98.68421052631578
+C;2024;queda media (%);-10.40035177523784
+C;2024;queda maxima (%);-55.253289473684205
+C;2024;fundo da queda maxima;RBOP11 (entrada 04/12/2024)
+C;2024;queda media, >= 10 pts (%);-31.84261746601863
+C;2024;n >= 10 pts;5
+C;2024;queda media, >= 20 pts (%);-45.97329501342477
+C;2024;n >= 20 pts;2
+C;2024;media dos 10% piores (%);-27.070245094878864
+C;2024;pregoes entrada ate o fundo;27.253333333333334
+C;2024;% que voltou ao preco de entrada;93.33333333333333
+C;2024;pregoes fundo ate voltar;10.785714285714286
+C;2024;pregoes fundo ate a saida;65.12
+C;2024;saida: volta à média;74
+C;2024;saida: prazo;1
+C;2024;saida: fundo saiu da bolsa;1
+C;2024;saida: dado suspeito;0
+C;2024;saida: em aberto;0
+C;2025;ordens;19
+C;2025;fechadas;19
+C;2025;em aberto;0
+C;2025;sinais nao aceitos (< R$ 1.000);0
+C;2025;total aplicado (R$);52237.808999999994
+C;2025;valor medio da ordem (R$);2749.358368421052
+C;2025;dias corridos medios;104.15789473684211
+C;2025;pregoes medios;70.89473684210526
+C;2025;valorizacao (R$);4339.631341999999
+C;2025;valorizacao (%);8.30745282980762
+C;2025;rendimentos recebidos (R$);1337.0211999999995
+C;2025;rendimentos (%);2.559489430347279
+C;2025;taxas (R$);32.6445748026
+C;2025;imposto (R$);1174.2102823994799
+C;2025;resultado total (R$);4469.797684797918
+C;2025;resultado total (%);8.55663315587742
+C;2025;Selic liquida no mesmo dinheiro (R$);1458.4228939128209
+C;2025;Selic liquida no mesmo dinheiro (%);2.7918913940529575
+C;2025;diferenca para a Selic (R$);3011.3747908850974
+C;2025;diferenca para a Selic (pontos);5.764741761824462
+C;2025;% com resultado > 0;94.73684210526315
+C;2025;% que ganharam da Selic;89.47368421052632
+C;2025;valorizacao media dos com ganho (%);11.592758628468076
+C;2025;n com ganho;18
+C;2025;valorizacao media dos com perda (%);-76.5625
+C;2025;n com perda;1
+C;2025;% que ficaram abaixo da entrada;100.0
+C;2025;queda media (%);-11.055685706925637
+C;2025;queda maxima (%);-78.85416666666667
+C;2025;fundo da queda maxima;BRIM11 (entrada 03/01/2025)
+C;2025;queda media, >= 10 pts (%);-54.80118555772493
+C;2025;n >= 10 pts;2
+C;2025;queda media, >= 20 pts (%);-78.85416666666667
+C;2025;n >= 20 pts;1
+C;2025;media dos 10% piores (%);-54.80118555772493
+C;2025;pregoes entrada ate o fundo;23.68421052631579
+C;2025;% que voltou ao preco de entrada;94.73684210526316
+C;2025;pregoes fundo ate voltar;10.11111111111111
+C;2025;pregoes fundo ate a saida;47.21052631578947
+C;2025;saida: volta à média;17
+C;2025;saida: prazo;1
+C;2025;saida: fundo saiu da bolsa;1
+C;2025;saida: dado suspeito;0
+C;2025;saida: em aberto;0
+C;2026;ordens;34
+C;2026;fechadas;9
+C;2026;em aberto;25
+C;2026;sinais nao aceitos (< R$ 1.000);0
+C;2026;total aplicado (R$);100065.29
+C;2026;valor medio da ordem (R$);2943.0967647058824
+C;2026;dias corridos medios;44.0
+C;2026;pregoes medios;30.22222222222222
+C;2026;valorizacao (R$);3922.029500000002
+C;2026;valorizacao (%);14.651457084292321
+C;2026;rendimentos recebidos (R$);484.9599999999996
+C;2026;rendimentos (%);1.8116565996248613
+C;2026;taxas (R$);17.237930849999998
+C;2026;imposto (R$);790.8163810300002
+C;2026;resultado total (R$);3598.935188120001
+C;2026;resultado total (%);13.444479307942402
+C;2026;Selic liquida no mesmo dinheiro (R$);327.01083242762957
+C;2026;Selic liquida no mesmo dinheiro (%);1.2216086537370818
+C;2026;diferenca para a Selic (R$);3271.9243556923716
+C;2026;diferenca para a Selic (pontos);12.22287065420532
+C;2026;% com resultado > 0;100.0
+C;2026;% que ganharam da Selic;88.88888888888889
+C;2026;valorizacao media dos com ganho (%);14.651973987048988
+C;2026;n com ganho;9
+C;2026;valorizacao media dos com perda (%);
+C;2026;n com perda;0
+C;2026;% que ficaram abaixo da entrada;100.0
+C;2026;queda media (%);-2.5709258989270123
+C;2026;queda maxima (%);-5.718954248366015
+C;2026;fundo da queda maxima;ITIP11 (entrada 06/08/2026)
+C;2026;queda media, >= 10 pts (%);
+C;2026;n >= 10 pts;0
+C;2026;queda media, >= 20 pts (%);
+C;2026;n >= 20 pts;0
+C;2026;media dos 10% piores (%);-5.718954248366015
+C;2026;pregoes entrada ate o fundo;5.111111111111111
+C;2026;% que voltou ao preco de entrada;88.88888888888889
+C;2026;pregoes fundo ate voltar;1.5
+C;2026;pregoes fundo ate a saida;25.11111111111111
+C;2026;saida: volta à média;8
+C;2026;saida: prazo;0
+C;2026;saida: fundo saiu da bolsa;1
+C;2026;saida: dado suspeito;0
+C;2026;saida: em aberto;25
+C;TOTAL;ordens;292
+C;TOTAL;fechadas;267
+C;TOTAL;em aberto;25
+C;TOTAL;sinais nao aceitos (< R$ 1.000);3
+C;TOTAL;total aplicado (R$);834167.0373
+C;TOTAL;valor medio da ordem (R$);2856.736429109589
+C;TOTAL;dias corridos medios;139.99625468164794
+C;TOTAL;pregoes medios;94.35580524344569
+C;TOTAL;valorizacao (R$);64077.525211
+C;TOTAL;valorizacao (%);8.421605954292643
+C;TOTAL;rendimentos recebidos (R$);26641.6666
+C;TOTAL;rendimentos (%);3.501471340099809
+C;TOTAL;taxas (R$);475.74562794329995
+C;TOTAL;imposto (R$);16026.022596376293
+C;TOTAL;resultado total (R$);74217.42358668041
+C;TOTAL;resultado total (%);9.754276469506191
+C;TOTAL;Selic liquida no mesmo dinheiro (R$);19813.232536029667
+C;TOTAL;Selic liquida no mesmo dinheiro (%);2.6040212469155715
+C;TOTAL;diferenca para a Selic (R$);54404.19105065074
+C;TOTAL;diferenca para a Selic (pontos);7.150255222590619
+C;TOTAL;% com resultado > 0;90.63670411985018
+C;TOTAL;% que ganharam da Selic;84.26966292134831
+C;TOTAL;valorizacao media dos com ganho (%);11.274844758675476
+C;TOTAL;n com ganho;242
+C;TOTAL;valorizacao media dos com perda (%);-22.20423939919995
+C;TOTAL;n com perda;25
+C;TOTAL;% que ficaram abaixo da entrada;99.25093632958801
+C;TOTAL;queda media (%);-12.028396911952388
+C;TOTAL;queda maxima (%);-78.85416666666667
+C;TOTAL;fundo da queda maxima;BRIM11 (entrada 03/01/2025)
+C;TOTAL;queda media, >= 10 pts (%);-34.40911422390099
+C;TOTAL;n >= 10 pts;37
+C;TOTAL;queda media, >= 20 pts (%);-43.76275828370875
+C;TOTAL;n >= 20 pts;17
+C;TOTAL;media dos 10% piores (%);-38.49186103932122
+C;TOTAL;pregoes entrada ate o fundo;31.452830188679247
+C;TOTAL;% que voltou ao preco de entrada;89.43396226415095
+C;TOTAL;pregoes fundo ate voltar;8.118143459915611
+C;TOTAL;pregoes fundo ate a saida;63.573584905660375
+C;TOTAL;saida: volta à média;247
+C;TOTAL;saida: prazo;13
+C;TOTAL;saida: fundo saiu da bolsa;5
+C;TOTAL;saida: dado suspeito;2
+C;TOTAL;saida: em aberto;25
