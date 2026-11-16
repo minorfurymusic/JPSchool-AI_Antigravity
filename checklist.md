@@ -74,6 +74,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-16 — Busca de modelo com período de escolha (até 2022) e de conferência (2023 em diante): nenhum modelo ganhou da Selic líquida na conferência (`docs/BUSCA_MODELO.md`).
 - [x] 2026-11-16 — Índice de Kairi (ideia do dono): primeiro gatilho acima da Selic líquida na escolha e na conferência (média de 200 pregões, 15% a 20% abaixo, rendimento mantido). Ganho concentrado em 2020 e 2024 (`docs/ESTUDO_KAIRI.md`).
 - [x] 2026-11-16 — Kairi: regras expandidas (40 vizinhas, cortes, saídas, entradas, perdas grandes) e carteira de R$ 10.000 com dinheiro limitado, 9 simulações (`docs/ESTUDO_KAIRI.md`, partes 2 e 3).
+- [x] 2026-11-16 — Kairi com carteira infinita, balanço ano a ano em reais, 12 regras de saída (Fibonacci e projeções), imposto com abatimento, preço sobre valor patrimonial na entrada e na saída, análise dos cortes de rendimento (`docs/ESTUDO_KAIRI.md`, parte 4; planilhas `kairi_ordens.csv`, `kairi_ordens_saidas.csv`, `kairi_cortes.csv`).
+- [ ] Dono ler `planilhas/kairi_cortes.csv` e avaliar o motivo de cada corte de rendimento.
+- [ ] Limpar a base de preços: 334 variações de mais de 25% num dia em 128 fundos; conferir TORD11 (último preço R$ 0,97).
 - [ ] Kairi: colocar o sinal diário no app e acompanhar daqui para a frente, sem dinheiro de verdade.
 - [ ] Conferir a série de preços do BRIM11 em outra fonte; MCEM11 sem negócio.
 - [ ] PRSV11 tem buraco de 7 meses nos preços (21/07/2020 a 17/02/2021).

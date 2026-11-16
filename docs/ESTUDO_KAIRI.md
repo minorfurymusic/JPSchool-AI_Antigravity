@@ -274,3 +274,170 @@ Programa: `estudos/kairi_carteira.py` (agente auxiliar). Planilhas: `planilhas/t
 - **O que evitar:** fundo que caiu muito mais que o mercado, fundo pouco negociado, cota acima de 0,90 do valor patrimonial.
 - **O ganho esperado é modesto:** alguns pontos por ano acima da Selic líquida, com anos em que perde e quedas de até um quarto do patrimônio no caminho.
 - **Próximo passo natural:** colocar o sinal no app e acompanhar daqui para a frente, sem dinheiro de verdade, para ver se o resultado se repete em dados que ninguém viu.
+
+
+---
+
+# Parte 4 — Carteira infinita, saídas de Fibonacci, imposto com abatimento e cortes de rendimento (2026-11-16)
+
+Pedido do dono. Programas: `estudos/kairi_ordens.py` e `estudos/kairi_saidas.py` (agentes auxiliares). Planilhas para leitura: `planilhas/kairi_ordens.csv` (uma linha por ordem), `planilhas/kairi_ordens_saidas.csv` (cada ordem em 7 regras de saída) e `planilhas/kairi_cortes.csv` (uma linha por corte de rendimento). Saída completa: `dados/kairi_saidas.txt` (fora do repositório).
+
+## Regras
+
+- **Carteira infinita:** todo sinal vira ordem; 40 sinais no mesmo dia são 40 ordens. Um fundo por vez.
+- **Tamanho da ordem:** o menor entre R$ 3.000 e 5% do negociado por dia; abaixo de R$ 1.000 não entra (3 sinais ficaram de fora).
+- **Sinal:** média de 200 pregões, rendimento mantido. Carteira A: cota 15% abaixo da média. B: 20%. C: 15%, só em queda geral.
+- **Conta de cada ordem:** valorização e rendimentos em reais; taxa de 0,03% na compra e na venda; Selic líquida do mesmo dinheiro, do dia da entrada ao da saída.
+- **Imposto:** 20% sobre o ganho do mês da venda, com prejuízo abatendo os ganhos seguintes.
+- **Período:** entradas de 02/01/2018 a 09/11/2026. Escolha = entradas até 2022; conferência = 2023 em diante.
+
+## Balanço ano a ano, carteira A (15%), saída na volta à média com prazo de 252
+
+Pelo ano da entrada. Resultado antes do imposto, já com taxas.
+
+| Ano | Ordens | Aplicado | Dias por ordem | Valorização | Rendimentos | Resultado | Resultado (%) | Selic líquida | Diferença (pontos) | Com resultado positivo | Queda média | Pior queda | Voltou ao preço de entrada | Pregões do fundo até voltar |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2018 | 14 | R$ 38.113 | 166 | R$ 2.844 | R$ 1.413 | R$ 4.234 | 11,1% | R$ 848 | +8,9 | 86% | −9,8% | −29,0% ALMI11 | 86% | 13 |
+| 2019 | 1 | R$ 2.944 | 139 | R$ 644 | R$ 153 | R$ 795 | 27,0% | R$ 50 | +25,3 | 100% | −22,2% | −22,2% XPCM11 | 100% | 84 |
+| 2020 | 70 | R$ 201.019 | 139 | R$ 31.103 | R$ 4.290 | R$ 35.263 | 17,5% | R$ 1.619 | +16,7 | 90% | −16,8% | −42,7% HTMX11 | 93% | 4 |
+| 2021 | 62 | R$ 176.607 | 163 | R$ 6.325 | R$ 7.017 | R$ 13.234 | 7,5% | R$ 5.483 | +4,4 | 81% | −11,4% | −46,5% HCRI11 | 77% | 8 |
+| 2022 | 18 | R$ 45.893 | 177 | −R$ 2.006 | R$ 2.016 | −R$ 17 | 0,0% | R$ 2.232 | −4,9 | 78% | −15,7% | −71,7% TORD11 | 67% | 10 |
+| 2023 | 21 | R$ 57.998 | 129 | R$ 4.506 | R$ 1.866 | R$ 6.335 | 10,9% | R$ 1.879 | +7,7 | 86% | −8,7% | −40,2% CBOP11 | 86% | 14 |
+| 2024 | 85 | R$ 241.080 | 142 | R$ 12.667 | R$ 11.003 | R$ 23.522 | 9,8% | R$ 8.776 | +6,1 | 93% | −11,7% | −72,7% MGHT11 | 89% | 11 |
+| 2025 | 25 | R$ 70.077 | 109 | R$ 5.896 | R$ 2.294 | R$ 8.147 | 11,6% | R$ 2.138 | +8,6 | 92% | −11,9% | −78,9% BRIM11 | 92% | 9 |
+| 2026 | 45 (30 em aberto) | R$ 129.127 | 45 | — | — | R$ 3.021 | 2,3% | R$ 1.777 | +1,0 | 87% | −6,8% | −55,1% MCEM11 | 79% | 4 |
+| **Total** | 341 | R$ 962.859 | 140 | R$ 65.711 | R$ 30.774 | R$ 94.534 | 9,8% | R$ 24.801 | +7,2 | 88% | −12,5% | −78,9% BRIM11 | 86% | 9 |
+
+Valorização e rendimentos de 2018 a 2025 são das ordens fechadas; a linha de 2026 e o total do resultado incluem as 30 em aberto pelo preço de hoje. Imposto com abatimento, no total: R$ 13.033. **Resultado líquido: R$ 81.501, contra R$ 24.801 da Selic.**
+
+Média das 10% piores quedas: −41,6%. Quando a ordem sai com ganho (273), a cota valorizou 11,2% em média; quando sai com perda (38), caiu 22,5%.
+
+## Carteira B (20%), mesmo formato, resumido
+
+| Ano | Ordens | Aplicado | Resultado antes do imposto | Resultado (%) | Selic líquida | Diferença (pontos) | Com resultado positivo |
+|---|---|---|---|---|---|---|---|
+| 2018 | 5 | R$ 11.640 | R$ 1.773 | 15,2% | R$ 284 | +12,8 | 80% |
+| 2019 | 2 | R$ 5.842 | R$ 840 | 14,4% | R$ 159 | +11,7 | 100% |
+| 2020 | 58 | R$ 168.278 | R$ 36.942 | 22,0% | R$ 1.517 | +21,1 | 91% |
+| 2021 | 25 | R$ 72.184 | R$ 7.041 | 9,8% | R$ 2.652 | +6,1 | 80% |
+| 2022 | 7 | R$ 19.205 | R$ 2.253 | 11,7% | R$ 835 | +7,4 | 100% |
+| 2023 | 6 | R$ 14.886 | −R$ 318 | −2,1% | R$ 941 | −8,5 | 50% |
+| 2024 | 44 | R$ 127.508 | R$ 20.655 | 16,2% | R$ 4.413 | +12,7 | 91% |
+| 2025 | 15 | R$ 42.990 | R$ 6.423 | 14,9% | R$ 1.324 | +11,9 | 93% |
+| 2026 | 13 (11 em aberto) | R$ 35.041 | −R$ 1.656 | −4,7% | R$ 517 | −6,2 | 50% |
+| **Total** | 175 | R$ 497.574 | R$ 73.953 | 14,9% | R$ 12.642 | +12,3 | 88% |
+
+Imposto com abatimento: R$ 11.796. **Resultado líquido: R$ 62.157, contra R$ 12.642 da Selic.**
+
+## Dinheiro necessário
+
+| | A (15%) | B (20%) | C (15%, queda geral) |
+|---|---|---|---|
+| Maior valor aplicado ao mesmo tempo | R$ 262.698 (10/02/2025) | R$ 151.506 (24/03/2020) | R$ 255.116 (10/02/2025) |
+| Ordens abertas nesse dia | 92 | 52 | 89 |
+| Valor médio aplicado por dia | R$ 38.936 | R$ 22.282 | R$ 33.216 |
+
+Para aceitar todos os sinais é preciso ter o valor do pico disponível. Na maior parte do tempo, a maior parte dele fica parada.
+
+## Qual saída rende mais
+
+As saídas têm durações diferentes, então a comparação justa é o **retorno ao ano do dinheiro enquanto ele está aplicado**: resultado líquido dividido por (reais x dias aplicados / 365). A Selic está na mesma conta. Todas as ordens entram, as em aberto pelo preço de hoje.
+
+Carteira A (341 ordens):
+
+| Saída | Em aberto | Resultado líquido | Selic do mesmo dinheiro | Diferença | Retorno ao ano | Selic ao ano | Com resultado positivo | Pico de dinheiro |
+|---|---|---|---|---|---|---|---|---|
+| Volta à média, prazo de 252 (atual) | 30 | R$ 81.501 | R$ 24.801 | +R$ 56.699 | 23,5% | 7,1% | 88% | R$ 262.698 |
+| Volta à média, sem prazo | 31 | R$ 80.545 | R$ 27.412 | +R$ 53.133 | 21,5% | 7,3% | 88% | R$ 267.572 |
+| Volta à média, nunca abaixo da entrada, sem prazo | 44 | R$ 86.116 | R$ 50.229 | +R$ 35.887 | 15,9% | 9,3% | 96% | R$ 295.006 |
+| Média do dia do sinal (congelada), sem prazo | 130 | R$ 146.090 | R$ 190.566 | −R$ 44.476 | 9,0% | 11,7% | 93% | R$ 459.260 |
+| Fibonacci 38,2% da queda, sem prazo | 81 | R$ 104.263 | R$ 121.193 | −R$ 16.930 | 9,9% | 11,5% | 95% | R$ 352.794 |
+| Fibonacci 50%, sem prazo | 116 | R$ 119.891 | R$ 180.299 | −R$ 60.408 | 7,8% | 11,7% | 93% | R$ 445.806 |
+| Fibonacci 61,8%, sem prazo | 146 | R$ 144.623 | R$ 228.642 | −R$ 84.019 | 7,5% | 11,9% | 92% | R$ 517.424 |
+| Fibonacci 100% (volta ao pico), sem prazo | 211 | R$ 182.962 | R$ 310.091 | −R$ 127.129 | 7,1% | 12,0% | 85% | R$ 620.942 |
+| 127,2% da distância até a média, sem prazo | 164 | R$ 163.030 | R$ 240.784 | −R$ 77.754 | 8,0% | 11,8% | 90% | R$ 527.993 |
+| 161,8% da distância até a média, sem prazo | 201 | R$ 171.822 | R$ 289.297 | −R$ 117.475 | 7,1% | 12,0% | 87% | R$ 592.618 |
+| Fibonacci 50%, prazo de 252 | 31 | R$ 84.907 | R$ 47.105 | +R$ 37.802 | 14,7% | 8,1% | 79% | R$ 261.594 |
+| 127,2% da distância, prazo de 252 | 37 | R$ 105.891 | R$ 59.447 | +R$ 46.444 | 14,8% | 8,3% | 79% | R$ 279.484 |
+
+Nas três carteiras, e nos dois períodos, a ordem é a mesma. Retorno ao ano da saída atual: A 22,9% na escolha e 24,3% na conferência; B 32,5% e 29,1%; C 22,4% e 32,6%.
+
+- **A volta à média foi a melhor saída em todas as carteiras e nos dois períodos.**
+- **Os alvos de Fibonacci e as projeções acima da média dão mais reais no total, mas perdem da Selic.** O dinheiro fica preso muito mais tempo: de 81 a 211 das 341 ordens nunca chegam ao alvo e seguem abertas.
+- **Tirar o prazo quase não muda nada** (21,5% contra 23,5% ao ano). O prazo de 252 pregões só atua em 15 das 341 ordens.
+- **A média congelada foi ruim:** 95 ordens abertas há mais de 252 pregões, com a cota 27% abaixo da entrada em média.
+- **"Nunca vender abaixo da entrada" aumenta os acertos (96%) e reduz o retorno** (15,9% ao ano), porque a espera custa tempo.
+
+**Atenção:** o retorno ao ano acima vale para o dinheiro enquanto está aplicado. Não é o retorno de uma carteira, porque o dinheiro fica parado a maior parte do tempo. Para a carteira com dinheiro limitado, ver a Parte 3.
+
+## A média cai abaixo do preço de entrada? (pergunta do dono)
+
+| | A | B | C |
+|---|---|---|---|
+| Saídas pela volta à média | 284 | 146 | 247 |
+| Com preço de saída abaixo da entrada | 37 | 13 | 26 |
+| Dessas, a cota chegou a ficar acima da entrada antes | 31 | 9 | 22 |
+| Maior alta média delas | +4,2% | +5,5% | +4,4% |
+| Resultado médio delas | −3,0% | −5,9% | −3,5% |
+
+**Sim, acontece em 1 de cada 8 saídas**, e em quase todas a cota tinha passado da entrada antes. Mas esperar para não vender abaixo da entrada rendeu menos no conjunto (tabela anterior).
+
+## Preço sobre valor patrimonial na entrada e na saída
+
+| Carteira | Regra de saída | Cota sobre valor patrimonial na entrada (média) | Na saída (média) |
+|---|---|---|---|
+| A | Extensão 127,2% da média do sinal (sem prazo) | 0,77 | 0,94 |
+| A | Fibonacci 50% do pico (sem prazo) | 0,77 | 0,92 |
+| A | Fibonacci 61,8% do pico (sem prazo) | 0,78 | 0,94 |
+| A | Média dos 200 pregões do sinal (sem prazo) | 0,77 | 0,91 |
+| A | Volta à média (prazo de 252 pregões) | 0,77 | 0,84 |
+| A | Volta à média (sem prazo) | 0,77 | 0,85 |
+| A | Volta à média, nunca abaixo da entrada (sem prazo) | 0,77 | 0,87 |
+| B | Extensão 127,2% da média do sinal (sem prazo) | 0,72 | 0,88 |
+| B | Fibonacci 50% do pico (sem prazo) | 0,73 | 0,87 |
+| B | Fibonacci 61,8% do pico (sem prazo) | 0,73 | 0,90 |
+| B | Média dos 200 pregões do sinal (sem prazo) | 0,72 | 0,87 |
+| B | Volta à média (prazo de 252 pregões) | 0,73 | 0,83 |
+| B | Volta à média (sem prazo) | 0,73 | 0,83 |
+| B | Volta à média, nunca abaixo da entrada (sem prazo) | 0,73 | 0,85 |
+
+Cada ordem tem os dois valores em `planilhas/kairi_ordens_saidas.csv`.
+
+## Cortes de rendimento
+
+Não é regra de saída; é análise. Corte = primeiro aviso, depois da entrada, 15% ou mais abaixo do rendimento da entrada. Medido na saída pela volta à média sem prazo.
+
+| | A (15%) | B (20%) |
+|---|---|---|
+| Ordens | 341 | 175 |
+| Tiveram corte enquanto abertas | 80 | 60 |
+| Dessas, entradas de 2020 | 32 | 30 |
+| O rendimento voltou (95% do da entrada em até 6 avisos) | 24 (30%) | 20 (33%) |
+| Voltou: resultado de quem segurou / de quem sairia no corte | +9,7% / 0,0% | +16,2% / +5,2% |
+| Não voltou: resultado de quem segurou / de quem sairia no corte | +2,5% / +3,2% | +7,3% / +7,2% |
+| Cortes sem fato relevante do fundo por perto | 56 de 80 | 39 de 60 |
+
+- **Sair no corte não ajuda.** Quando o rendimento volta, quem sai perde quase 10 pontos; quando não volta, tanto faz.
+- **O corte foi passageiro em 1 de cada 3 casos**, não na maioria.
+- **Sete em cada dez cortes não têm fato relevante do fundo por perto**; os que têm são, na maioria, saída de inquilino.
+- A lista para ler caso a caso está em `planilhas/kairi_cortes.csv` (140 linhas), com o rendimento antes, o do corte, os seis avisos seguintes e o fato relevante mais próximo. Há 6 cortes de 90% ou mais (BBVJ11, CNES11, FVPQ11, RBGS11 em março de 2020) que podem ser erro de dados.
+
+## Dados suspeitos
+
+Ordens que têm, entre 200 pregões antes do sinal e a saída, alguma variação de mais de 25% num dia: 13 de 341 na carteira A, 4 de 175 na B, 7 de 292 na C. Sem elas, o retorno ao ano muda pouco: A de 23,5% para 24,8%; B de 31,2% para 30,5%; C de 26,3% para 27,1%.
+
+Nas planilhas de preços há 334 variações de mais de 25% num dia, em 128 fundos. A maioria não entra nas ordens, mas a base precisa dessa limpeza.
+
+## Conferência
+
+- O programa novo reproduziu as 808 ordens do anterior, uma a uma (data, motivo, preço, cotas e resultado).
+- Os agentes refizeram ordens à mão (BBVJ11, FIGS11) e as contas bateram; o abatimento do imposto foi mostrado mês a mês.
+- Testes dentro do programa confirmaram que os alvos usam só informação até o dia do sinal.
+- Eu calculei a tabela de preço sobre valor patrimonial direto da planilha de ordens. Não revisei os programas linha a linha.
+- TORD11 aparece com último preço de R$ 0,97 (−97,5%); a conferir.
+
+## Conclusão da Parte 4
+
+- **Não achei saída melhor que a volta à média.** A ideia de alvo por Fibonacci aumenta o lucro por ordem e o acerto, mas prende o dinheiro e perde da Selic no conjunto.
+- **Sair por corte de rendimento não vale a pena.**
+- **Com carteira infinita, todas as ordens somadas ganharam da Selic em 8 dos 9 anos (carteira A) e em 7 dos 9 (carteira B).**
