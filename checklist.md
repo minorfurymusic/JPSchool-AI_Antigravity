@@ -73,7 +73,10 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-16 — Caminho da cota dia a dia depois da entrada (subiu ou caiu primeiro, picos, fundos, alvo fixo): `docs/ESTUDO_AGRESSIVO.md`, Pergunta 5; `estudos/caminho_agressivo.py`.
 - [x] 2026-11-16 — Busca de modelo com período de escolha (até 2022) e de conferência (2023 em diante): nenhum modelo ganhou da Selic líquida na conferência (`docs/BUSCA_MODELO.md`).
 - [x] 2026-11-16 — Índice de Kairi (ideia do dono): primeiro gatilho acima da Selic líquida na escolha e na conferência (média de 200 pregões, 15% a 20% abaixo, rendimento mantido). Ganho concentrado em 2020 e 2024 (`docs/ESTUDO_KAIRI.md`).
-- [ ] Kairi: separar queda geral de queda isolada; simular com dinheiro limitado; conferir CACR11, MGHT11, MCEM11; cruzar com os perfis.
+- [x] 2026-11-16 — Kairi: regras expandidas (40 vizinhas, cortes, saídas, entradas, perdas grandes) e carteira de R$ 10.000 com dinheiro limitado, 9 simulações (`docs/ESTUDO_KAIRI.md`, partes 2 e 3).
+- [ ] Kairi: colocar o sinal diário no app e acompanhar daqui para a frente, sem dinheiro de verdade.
+- [ ] Conferir a série de preços do BRIM11 em outra fonte; MCEM11 sem negócio.
+- [ ] PRSV11 tem buraco de 7 meses nos preços (21/07/2020 a 17/02/2021).
 - [ ] ERRO DE DADOS: CARE11 salta de R$ 3,53 (17/08/2021) para R$ 12,63 (14/03/2022) sem ajuste, com buraco no meio; corrigir nas planilhas e procurar outros saltos (CACR11 em 04/05/2026 a conferir).
 - [ ] Decisão do dono sobre os 4 caminhos de `docs/BUSCA_MODELO.md`.
 - [ ] Testar saída por alvo fixo com rendimento, imposto, Selic e regra para as que não executam.
