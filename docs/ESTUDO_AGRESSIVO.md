@@ -156,6 +156,71 @@ Resposta:
 
 Resposta: **nestes dados não é relevante.** Não incluí regra de espera.
 
+## Pergunta 5 — O caminho da cota, dia a dia, depois da entrada
+
+Programa: `estudos/caminho_agressivo.py` (lê só das planilhas). Janela fixa de 120 pregões a partir da entrada, sem olhar a regra de saída. Das 37 operações, 34 têm os 120 pregões completos. Altas e quedas medidas pela máxima e pela mínima de cada dia, sobre o preço de entrada. Só a cota, sem rendimento, custos ou imposto.
+
+**Quando ficaram positivas e até onde foram**
+
+| | Agressivo (34) | Comparação: cota de 0,30 a 0,90 (168) |
+|---|---|---|
+| Fecharam acima da entrada em algum dia | 91% | 94% |
+| Fecharam acima já no dia da entrada ou no seguinte | 74% | 67% |
+| Nunca fecharam acima da entrada | 9% | 6% |
+| Dias fechando acima da entrada, em média | 50% | 50% |
+| Maior alta sobre a entrada (média / mediana) | +16,3% / +13,6% | +12,4% / +9,5% |
+| Pregão da maior alta (média / mediana) | 48 / 41 | 48 / 42 |
+| Maior queda sob a entrada (média / mediana) | −14,7% / −11,9% | −11,9% / −9,5% |
+| Pregão da maior queda (média / mediana) | 55 / 54 | 55 / 53 |
+| Tocaram +5% | 79% | 71% |
+| Tocaram −5% | 79% | 67% |
+| Tocaram +10% | 65% | 48% |
+| Tocaram −10% | 59% | 49% |
+| Fechamento médio no 20º, 60º e 120º pregão | −0,3%, −1,0%, −1,5% | +0,6%, +0,1%, −1,5% |
+
+**Subiu primeiro ou caiu primeiro?** Cada operação foi classificada pelo que aconteceu antes: tocar +5% ou tocar −5%.
+
+| | Subiu 5% primeiro | Caiu 5% primeiro |
+|---|---|---|
+| Operações | 19 (56%) | 15 (44%) |
+| Em que pregão tocou os 5% (média / mediana) | 10 / 5 | 13 / 11 |
+| Ponto extremo | pico de +18,8% (mediana +15,3%) | fundo de −15,8% (mediana −13,4%) |
+| Pregão do ponto extremo (média / mediana) | 48 / 52 | 56 / 50 |
+| Depois do extremo, voltou ao preço de entrada | 63% | 60% |
+| Quantos pregões levou para voltar | 15 depois do pico | 18 depois do fundo |
+| Depois do extremo, foi 5% para o outro lado | 53% caíram a −5% | 40% subiram a +5% |
+| Fechamento médio no 20º, 60º e 120º pregão | +1,4%, −0,3%, +0,4% | −2,4%, −1,9%, −3,8% |
+
+Na comparação (168 operações) a divisão é parecida: 53% subiram 5% primeiro, 46% caíram 5% primeiro, 1% ficou entre −5% e +5%.
+
+**Por tipo de anúncio (agressivo)**
+
+| Tipo do anúncio | Operações | Subiu 5% primeiro | Caiu 5% primeiro |
+|---|---|---|---|
+| Fundo declarou aumento (1C) | 13 | 11 | 2 |
+| Locação nova (1B) | 13 | 3 | 10 |
+| Venda de imóvel com lucro (1A) | 7 | 4 | 3 |
+| Multa ou indenização (1A) | 1 | 1 | 0 |
+
+**E se a saída fosse uma ordem de venda com alvo fixo?** Conta simples: se a máxima tocou o alvo em até 120 pregões, vende no alvo; se não tocou, fica com a cota no 120º pregão.
+
+| Ordem de venda em | Executada em até 120 pregões | Resultado médio das que NÃO executaram (cota no 120º pregão) | Resultado médio de todas, só a cota |
+|---|---|---|---|
+| +3% | 85% (29 de 34) | −10,4% | +1,0% |
+| +5% | 79% (27 de 34) | −10,1% | +1,9% |
+| +7% | 71% (24 de 34) | −12,5% | +1,3% |
+| +10% | 65% (22 de 34) | −15,6% | +1,0% |
+| +15% | 44% (15 de 34) | −10,5% | +0,7% |
+
+Resposta:
+- **Não há um caminho único.** Pouco mais da metade sobe 5% primeiro; pouco menos da metade cai 5% primeiro. O exemplo do dono (60% caem primeiro) não se confirmou nestes dados.
+- **A cota balança muito para os dois lados.** Em 120 pregões, a operação mediana chegou a +13,6% acima da entrada e a −11,9% abaixo. O fechamento médio fica perto de zero porque uma coisa anula a outra.
+- **A alta vem cedo.** Quem sobe primeiro toca +5% no 5º pregão (mediana) e faz o pico perto do 50º.
+- **Depois do pico, 6 de cada 10 devolvem tudo** e voltam ao preço de entrada em cerca de 15 pregões.
+- **Quem cai primeiro vai fundo:** −13,4% (mediana) perto do 50º pregão. Seis de cada 10 voltam ao preço de entrada, mas só 4 de cada 10 chegam a +5%.
+- **O tipo do anúncio separa os dois grupos.** Quando o fundo declara o aumento, 11 de 13 subiram primeiro. Em locação nova, 10 de 13 caíram primeiro.
+- **O alvo fixo captura a alta** (a tabela acima), mas a conta é só da cota, sem limite de perda e sem custos. Falta testar com rendimento, imposto, Selic e uma regra para as que não executam.
+
 ## Pontos suspeitos
 
 - **Três operações ficaram 252 pregões sem receber nada:** ALMI11 (duas, 2021 e 2022) e TRNT11 (2024). Fundo que não paga não deveria ter passado como anúncio de aumento. É erro da leitura dos anúncios por palavras.

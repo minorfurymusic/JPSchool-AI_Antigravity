@@ -70,6 +70,8 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-14 — Corrigido: piso fixo de R$ 200 mil por dia trocado pela regra do dono (ordem até 2% do negociado por dia); estudo por faixa de ordem de R$ 200 em R$ 200 (`docs/ESTRATEGIAS.md`, Estudo 1.1e).
 - [x] 2026-11-14 — Banco em planilhas, 2017 a 2026, na pasta `planilhas/` (preços por ano, mercado, rendimentos, anúncios, LEIA-ME); gerado por `estudos/planilhas.py`. Pedido do dono, para analisar ano a ano sem reler os dados brutos.
 - [x] 2026-11-16 — Estudo Agressivo: por faixa e tipo de fundo, mercado e Selic, análise gráfica, data do dividendo; planilha de operações no final (`docs/ESTUDO_AGRESSIVO.md`, `planilhas/estudo_agressivo.csv`, `planilhas/fundos.csv`). XPPR11 fora por decisão do dono.
+- [x] 2026-11-16 — Caminho da cota dia a dia depois da entrada (subiu ou caiu primeiro, picos, fundos, alvo fixo): `docs/ESTUDO_AGRESSIVO.md`, Pergunta 5; `estudos/caminho_agressivo.py`.
+- [ ] Testar saída por alvo fixo com rendimento, imposto, Selic e regra para as que não executam.
 - [ ] Decisão do dono sobre os 6 testes propostos em `docs/ESTUDO_AGRESSIVO.md`.
 - [ ] Investigar: 3 operações sem rendimento em 252 pregões (ALMI11, TRNT11) e 5 com sinal diferente entre as duas medidas de valorização.
 - [ ] Passar os estudos a ler de `planilhas/` em vez de `dados/`.
