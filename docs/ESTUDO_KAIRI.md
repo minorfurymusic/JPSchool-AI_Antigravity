@@ -441,3 +441,104 @@ Nas planilhas de preços há 334 variações de mais de 25% num dia, em 128 fund
 - **Não achei saída melhor que a volta à média.** A ideia de alvo por Fibonacci aumenta o lucro por ordem e o acerto, mas prende o dinheiro e perde da Selic no conjunto.
 - **Sair por corte de rendimento não vale a pena.**
 - **Com carteira infinita, todas as ordens somadas ganharam da Selic em 8 dos 9 anos (carteira A) e em 7 dos 9 (carteira B).**
+
+---
+
+# Parte 5 — Saída em escada (2026-11-16)
+
+Ideia do dono: mirar o alvo de Fibonacci mais alto e, se a cota não chegar nele e recuar, sair no alvo de baixo ou na média. Programa: `estudos/kairi_escada.py` (agente auxiliar). Planilhas: `planilhas/kairi_escada.csv` (cada ordem das carteiras A e B em 4 regras) e `planilhas/tecnico/kairi_escada_comparacao.csv`. Saída completa: `dados/kairi_escada.txt` (fora do repositório).
+
+Mesmas ordens da Parte 4 (carteira infinita; A = afastamento de 15%, B = 20%, C = 15% em queda geral). O programa reproduziu os números da saída atual antes de seguir.
+
+## As ordens que não chegaram ao alvo de Fibonacci tocaram a média?
+
+Sim, a maioria. Carteira A:
+
+| Alvo (sem prazo) | Ordens que nunca chegaram ao alvo | Dessas, tocaram a média | Maior alta média sobre a entrada |
+|---|---|---|---|
+| Fibonacci 38,2% | 81 | 52 | +8,5% |
+| Fibonacci 50% | 116 | 86 | +12,4% |
+| Fibonacci 61,8% | 146 | 115 | +14,0% |
+| Fibonacci 100% | 211 | 180 | +18,7% |
+
+No ponto mais alto, essas ordens percorreram em média metade do caminho entre a entrada e o alvo.
+
+E o inverso: das 284 ordens da carteira A que tocaram a média, quantas depois chegaram a cada nível.
+
+| Nível | Chegaram depois | Pregões depois do toque na média (mediana) |
+|---|---|---|
+| Fibonacci 38,2% | 215 (76%) | 2 |
+| Fibonacci 50% | 185 (65%) | 21 |
+| Fibonacci 61,8% | 150 (53%) | 56 |
+| Fibonacci 100% | 65 (23%) | 186 |
+
+## A regra da escada
+
+- A ordem mira o **teto**. Quando a cota toca o **piso**, ela não vende: fica armada.
+- Armada, vende no teto se a cota chegar lá, ou no piso se a cota recuar até ele.
+- Se piso e teto são tocados no mesmo dia, vale o piso. Se a cota abre abaixo do piso, vende na abertura.
+- Se nunca arma, vale a reserva da regra atual: prazo de 252 pregões.
+
+| Escada | Piso | Teto |
+|---|---|---|
+| 1 | média de 200 pregões | Fibonacci 61,8% |
+| 2 | média | Fibonacci 50% |
+| 3 | média | Fibonacci 100% |
+| 4 | média | 127,2% da distância até a média |
+| 5 | Fibonacci 38,2% | Fibonacci 61,8% |
+| 6 | Fibonacci 38,2% | Fibonacci 100% |
+| 7 | Fibonacci 50% | Fibonacci 100% |
+| 8 | vários degraus: a cada nível tocado, o piso sobe para o anterior | Fibonacci 100% |
+| 9 e 10 | arma na média; vende se o fechamento cair 5% ou 8% do maior desde então | sem teto |
+
+## Resultado
+
+Retorno ao ano do dinheiro enquanto aplicado, com imposto abatido e ordens em aberto pelo preço de hoje. Escolha = entradas até 2022; conferência = 2023 em diante.
+
+| Regra | A: total | A: escolha | A: conferência | B: total | B: escolha | B: conferência | C: total | C: escolha | C: conferência |
+|---|---|---|---|---|---|---|---|---|---|
+| **Volta à média (atual)** | **23,5%** | **22,9%** | **24,3%** | **31,2%** | **32,5%** | **29,1%** | **26,3%** | **22,4%** | **32,6%** |
+| Escada 1 | 21,5% | 20,5% | 22,9% | 29,5% | 30,5% | 27,7% | 24,3% | 20,2% | 31,2% |
+| Escada 2 | 22,1% | 20,9% | 23,5% | 30,1% | 31,2% | 28,3% | 24,9% | 20,6% | 32,0% |
+| Escada 3 | 20,6% | 19,6% | 21,9% | 28,2% | 29,1% | 26,7% | 23,3% | 19,3% | 30,1% |
+| Escada 4 | 21,3% | 20,5% | 22,4% | 29,2% | 30,2% | 27,4% | 24,0% | 20,2% | 30,3% |
+| Escada 5 | 16,7% | 14,5% | 19,6% | 27,6% | 29,4% | 25,6% | 20,1% | 15,4% | 27,4% |
+| Escada 6 | 16,2% | 14,0% | 19,0% | 26,6% | 28,2% | 24,8% | 19,5% | 14,8% | 26,8% |
+| Escada 7 | 13,6% | 10,5% | 17,9% | 20,1% | 19,2% | 21,4% | 17,6% | 12,6% | 25,9% |
+| Escada 8 | 20,4% | 18,4% | 23,1% | 33,1% | 36,4% | 28,5% | 23,3% | 18,3% | 31,8% |
+| Escada 9 (recuo de 5%) | 17,6% | 17,4% | 17,9% | 24,0% | 25,4% | 21,8% | 20,1% | 17,6% | 23,6% |
+| Escada 10 (recuo de 8%) | 16,0% | 14,9% | 17,1% | 21,1% | 22,0% | 20,1% | 17,9% | 15,2% | 20,8% |
+
+**Nenhuma das dez escadas ficou acima da volta à média nos dois períodos, em nenhuma das três carteiras.** A que chegou mais perto foi a escada 8 na carteira B: 36,4% contra 32,5% na escolha, mas 28,5% contra 29,1% na conferência.
+
+Em reais, carteira A: a volta à média deu R$ 81.501 líquidos; a escada 1, R$ 76.448; a escada 8, R$ 65.831. A escada 10 deu mais reais (R$ 104.334), mas ficou com o dinheiro aplicado quase o dobro do tempo (265 dias contra 140) e a diferença para a Selic foi menor (R$ 50.621 contra R$ 56.699).
+
+## Por que a escada não ajudou
+
+Escada 1 na carteira A, pelo motivo da saída:
+
+| Como saiu | Ordens | Dias | Resultado médio |
+|---|---|---|---|
+| Chegou ao teto | 10 | 75 | +28,8% |
+| Saída simples (o teto estava abaixo da média; vendeu na média) | 89 | 134 | +16,4% |
+| Recuou ao piso | 185 | 137 | +9,4% |
+| Prazo | 15 | 371 | −25,0% |
+| Fundo saiu da bolsa | 10 | 92 | −12,4% |
+
+- **Depois de tocar a média, a cota recua muito mais vezes do que segue até o teto:** 185 recuos contra 10 chegadas.
+- **O recuo custa.** A venda no recuo saiu em média 1,65% abaixo do piso, porque a cota abre abaixo dele, e 42 das 185 venderam abaixo do preço de entrada.
+- **Ordem a ordem, contra a regra atual:** a escada 1 rendeu mais em 32 ordens (+2,8 pontos em média), menos em 162 (−2,2 pontos) e igual em 147.
+
+## Conclusão
+
+- **A volta à média continua sendo a melhor saída testada**, agora contra 22 alternativas (12 da Parte 4 e 10 escadas), nos dois períodos e nas três carteiras.
+- **Vender logo ao tocar a média e liberar o dinheiro rende mais do que esperar o alvo de cima.** O ganho extra de quem chega ao teto não paga os recuos.
+- **A escada de vários degraus (8) é a única que merece ser lembrada:** gira o dinheiro mais rápido (130 dias) e empata com a regra atual na carteira de 20%. Não há base para trocar.
+
+## Conferência
+
+- O programa reproduziu a saída atual: carteira A com R$ 81.501 e 23,5% ao ano; B com R$ 62.157 e 31,2%.
+- O agente refez duas ordens à mão (GRLV11, que chegou ao teto, e ALMI11, que recuou ao piso) e os números bateram.
+- Testes dentro do programa confirmaram, segundo o agente, que a ordem só arma com informação do próprio dia, que o piso usa a média até a véspera, e que no empate vale o piso.
+- A soma por motivo de saída é igual ao número de ordens em todas as escadas.
+- Eu não revisei o programa linha a linha.

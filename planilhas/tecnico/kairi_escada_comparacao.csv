@@ -1,0 +1,127 @@
+﻿Carteira;Período;Saída;Regra de saída;ordens;fechadas;em aberto;dias corridos médios;resultado líquido (R$);Selic líquida no mesmo dinheiro (R$);diferença para a Selic (R$);retorno ao ano sobre o dinheiro aplicado (%);Selic ao ano na mesma conta (%);resultado médio por ordem fechada (%);% fechadas com resultado > 0;% fechadas que ganharam da Selic;pior ordem (%);pico de dinheiro aplicado ao mesmo tempo (R$)
+A;TOTAL;S1;Volta à média (prazo de 252 pregões);341;311;30;140,25;81500,58;24801,29;56699,29;23,5;7,1;10,5;87,8;81,4;-76,6;262698,2
+A;TOTAL;F50L;Fibonacci 50% do pico (sem prazo);341;225;116;283,02;119891,38;180299,43;-60408,05;7,8;11,7;19,4;92,9;88,4;-95,7;445805,81
+A;TOTAL;F62L;Fibonacci 61,8% do pico (sem prazo);341;195;146;356,26;144623,26;228641,88;-84018,62;7,5;11,9;23,5;91,8;85,1;-95,7;517424,45
+A;TOTAL;S2L;Volta à média, nunca abaixo da entrada (sem prazo);341;297;44;163,36;86115,81;50229,08;35886,73;15,9;9,3;13,0;95,6;89,2;-95,7;295005,88
+A;TOTAL;E1;Escada: piso média móvel, teto Fibonacci 61,8%;341;311;30;143,59;76447,82;25380,79;51067,03;21,5;7,1;9,6;85,5;78,5;-76,6;262698,2
+A;TOTAL;E2;Escada: piso média móvel, teto Fibonacci 50%;341;311;30;142,26;77673,0;25117,68;52555,32;22,1;7,1;9,8;85,9;78,8;-76,6;262698,2
+A;TOTAL;E3;Escada: piso média móvel, teto Fibonacci 100%;341;311;30;147,19;75035,94;25986,75;49049,18;20,6;7,1;9,4;85,5;78,8;-76,6;262698,2
+A;TOTAL;E4;Escada: piso média móvel, teto 127,2% da média do sinal;341;311;30;146,03;77029,5;25857,59;51171,91;21,3;7,2;9,7;85,5;78,8;-76,6;262698,2
+A;TOTAL;E5;Escada: piso Fibonacci 38,2%, teto Fibonacci 61,8%;341;313;28;177,89;72885,87;34857,23;38028,64;16,7;8,0;8,8;82,7;72,8;-76,6;228714,14
+A;TOTAL;E6;Escada: piso Fibonacci 38,2%, teto Fibonacci 100%;341;313;28;179,29;71016,06;34935,73;36080,32;16,2;8,0;8,5;82,4;72,5;-76,6;228714,14
+A;TOTAL;E7;Escada: piso Fibonacci 50%, teto Fibonacci 100%;341;310;31;239,18;79657,0;47414,48;32242,52;13,6;8,1;9,4;79,0;67,1;-76,6;261594,23
+A;TOTAL;E8;Escada de degraus (MM do dia do armar, F38, F50, F61,8, F100);341;313;28;130,35;65831,11;24431,64;41399,47;20,4;7,6;8,2;86,9;80,5;-76,6;220790,84
+A;TOTAL;E9;"Armada na média móvel; sai com fechamento 5% abaixo do maior";341;311;30;191,56;83235,34;35345,88;47889,46;17,6;7,5;10,2;84,2;76,8;-76,6;265672,7
+A;TOTAL;E10;"Armada na média móvel; sai com fechamento 8% abaixo do maior";341;311;30;264,47;104334,42;53713,13;50621,29;16,0;8,2;12,4;83,0;72,7;-76,6;265672,7
+A;ESCOLHA;S1;Volta à média (prazo de 252 pregões);165;nd;0;nd;44760,28;nd;34529,07;22,9;5,2;nd;84,8;nd;nd;nd
+A;ESCOLHA;F50L;Fibonacci 50% do pico (sem prazo);165;nd;53;nd;74160,86;nd;-64080,61;6,3;11,7;nd;92,9;nd;nd;nd
+A;ESCOLHA;F62L;Fibonacci 61,8% do pico (sem prazo);165;nd;70;nd;85276,31;nd;-88048,63;5,9;11,9;nd;91,6;nd;nd;nd
+A;ESCOLHA;S2L;Volta à média, nunca abaixo da entrada (sem prazo);165;nd;8;nd;51029,69;nd;20024,0;14,3;8,7;nd;95,5;nd;nd;nd
+A;ESCOLHA;E1;Escada: piso média móvel, teto Fibonacci 61,8%;165;nd;0;nd;41342,26;nd;30715,05;20,5;5,3;nd;82,4;nd;nd;nd
+A;ESCOLHA;E2;Escada: piso média móvel, teto Fibonacci 50%;165;nd;0;nd;41706,43;nd;31265,52;20,9;5,2;nd;83,0;nd;nd;nd
+A;ESCOLHA;E3;Escada: piso média móvel, teto Fibonacci 100%;165;nd;0;nd;40638,03;nd;29788,32;19,6;5,2;nd;82,4;nd;nd;nd
+A;ESCOLHA;E4;Escada: piso média móvel, teto 127,2% da média do sinal;165;nd;0;nd;42027,0;nd;31237,1;20,5;5,3;nd;82,4;nd;nd;nd
+A;ESCOLHA;E5;Escada: piso Fibonacci 38,2%, teto Fibonacci 61,8%;165;nd;0;nd;35319,11;nd;20306,04;14,5;6,2;nd;78,2;nd;nd;nd
+A;ESCOLHA;E6;Escada: piso Fibonacci 38,2%, teto Fibonacci 100%;165;nd;0;nd;34541,37;nd;19477,51;14,0;6,1;nd;78,2;nd;nd;nd
+A;ESCOLHA;E7;Escada: piso Fibonacci 50%, teto Fibonacci 100%;165;nd;0;nd;35666,21;nd;14325,16;10,5;6,3;nd;73,9;nd;nd;nd
+A;ESCOLHA;E8;Escada de degraus (MM do dia do armar, F38, F50, F61,8, F100);165;nd;0;nd;33907,52;nd;22966,87;18,4;5,9;nd;84,2;nd;nd;nd
+A;ESCOLHA;E9;"Armada na média móvel; sai com fechamento 5% abaixo do maior";165;nd;0;nd;44950,74;nd;31469,9;17,4;5,2;nd;80,6;nd;nd;nd
+A;ESCOLHA;E10;"Armada na média móvel; sai com fechamento 8% abaixo do maior";165;nd;0;nd;48343,12;nd;30925,8;14,9;5,4;nd;78,2;nd;nd;nd
+A;CONFERÊNCIA;S1;Volta à média (prazo de 252 pregões);176;nd;30;nd;36740,3;nd;22170,22;24,3;9,6;nd;91,1;nd;nd;nd
+A;CONFERÊNCIA;F50L;Fibonacci 50% do pico (sem prazo);176;nd;63;nd;45730,52;nd;3672,56;12,7;11,6;nd;92,9;nd;nd;nd
+A;CONFERÊNCIA;F62L;Fibonacci 61,8% do pico (sem prazo);176;nd;76;nd;59346,95;nd;4030,01;12,7;11,9;nd;92,0;nd;nd;nd
+A;CONFERÊNCIA;S2L;Volta à média, nunca abaixo da entrada (sem prazo);176;nd;36;nd;35086,12;nd;15862,73;18,9;10,4;nd;95,7;nd;nd;nd
+A;CONFERÊNCIA;E1;Escada: piso média móvel, teto Fibonacci 61,8%;176;nd;30;nd;35105,56;nd;20351,98;22,9;9,6;nd;89,0;nd;nd;nd
+A;CONFERÊNCIA;E2;Escada: piso média móvel, teto Fibonacci 50%;176;nd;30;nd;35966,57;nd;21289,8;23,5;9,6;nd;89,0;nd;nd;nd
+A;CONFERÊNCIA;E3;Escada: piso média móvel, teto Fibonacci 100%;176;nd;30;nd;34397,9;nd;19260,87;21,9;9,6;nd;89,0;nd;nd;nd
+A;CONFERÊNCIA;E4;Escada: piso média móvel, teto 127,2% da média do sinal;176;nd;30;nd;35002,51;nd;19934,81;22,4;9,6;nd;89,0;nd;nd;nd
+A;CONFERÊNCIA;E5;Escada: piso Fibonacci 38,2%, teto Fibonacci 61,8%;176;nd;28;nd;37566,75;nd;17722,6;19,6;10,4;nd;87,8;nd;nd;nd
+A;CONFERÊNCIA;E6;Escada: piso Fibonacci 38,2%, teto Fibonacci 100%;176;nd;28;nd;36474,68;nd;16602,82;19,0;10,4;nd;87,2;nd;nd;nd
+A;CONFERÊNCIA;E7;Escada: piso Fibonacci 50%, teto Fibonacci 100%;176;nd;31;nd;43990,78;nd;17917,36;17,9;10,6;nd;84,8;nd;nd;nd
+A;CONFERÊNCIA;E8;Escada de degraus (MM do dia do armar, F38, F50, F61,8, F100);176;nd;28;nd;31923,59;nd;18432,59;23,1;9,8;nd;89,9;nd;nd;nd
+A;CONFERÊNCIA;E9;"Armada na média móvel; sai com fechamento 5% abaixo do maior";176;nd;30;nd;38284,6;nd;16419,55;17,9;10,2;nd;88,4;nd;nd;nd
+A;CONFERÊNCIA;E10;"Armada na média móvel; sai com fechamento 8% abaixo do maior";176;nd;30;nd;55991,3;nd;19695,49;17,1;11,1;nd;88,4;nd;nd;nd
+B;TOTAL;S1;Volta à média (prazo de 252 pregões);175;164;11;152,84;62156,87;12642,43;49514,43;31,2;6,4;15,7;87,8;84,8;-47,3;151505,91
+B;TOTAL;F50L;Fibonacci 50% do pico (sem prazo);175;124;51;309,3;76308,36;96712,86;-20404,5;9,1;11,5;24,4;93,5;86,3;-65,2;242773,48
+B;TOTAL;F62L;Fibonacci 61,8% do pico (sem prazo);175;100;75;391,81;88378,06;130296,6;-41918,54;7,9;11,6;28,2;92,0;83,0;-82,1;281558,82
+B;TOTAL;S2L;Volta à média, nunca abaixo da entrada (sem prazo);175;154;21;171,5;63234,97;30404,68;32830,29;19,0;9,1;18,4;95,5;92,2;-62,8;171935,15
+B;TOTAL;E1;Escada: piso média móvel, teto Fibonacci 61,8%;175;164;11;156,66;60150,87;12921,49;47229,38;29,5;6,3;15,0;86,6;84,1;-47,3;151505,91
+B;TOTAL;E2;Escada: piso média móvel, teto Fibonacci 50%;175;164;11;153,55;60232,19;12683,87;47548,32;30,1;6,3;15,1;87,2;84,1;-47,3;151505,91
+B;TOTAL;E3;Escada: piso média móvel, teto Fibonacci 100%;175;164;11;160,27;58740,87;13119,71;45621,16;28,2;6,3;14,6;86,6;84,1;-47,3;151505,91
+B;TOTAL;E4;Escada: piso média móvel, teto 127,2% da média do sinal;175;164;11;158,35;60111,63;13039,83;47071,8;29,2;6,3;15,0;86,6;84,1;-47,3;151505,91
+B;TOTAL;E5;Escada: piso Fibonacci 38,2%, teto Fibonacci 61,8%;175;166;9;161,23;57352,72;16411,0;40941,73;27,6;7,9;14,2;83,1;80,1;-47,3;140842,87
+B;TOTAL;E6;Escada: piso Fibonacci 38,2%, teto Fibonacci 100%;175;166;9;163,85;56081,87;16595,37;39486,5;26,6;7,9;13,7;83,1;80,1;-47,3;140842,87
+B;TOTAL;E7;Escada: piso Fibonacci 50%, teto Fibonacci 100%;175;164;11;231,07;60134,15;23151,72;36982,43;20,1;7,8;14,6;78,7;75,6;-59,1;152667,35
+B;TOTAL;E8;Escada de degraus (MM do dia do armar, F38, F50, F61,8, F100);175;166;9;118,6;50782,77;11187,77;39595,0;33,1;7,3;12,8;88,6;86,7;-47,3;139889,15
+B;TOTAL;E9;"Armada na média móvel; sai com fechamento 5% abaixo do maior";175;164;11;199,69;62495,41;16895,73;45599,68;24,0;6,5;15,2;86,0;84,1;-47,3;153431,05
+B;TOTAL;E10;"Armada na média móvel; sai com fechamento 8% abaixo do maior";175;164;11;262,2;72350,17;25140,21;47209,97;21,1;7,3;17,0;86,0;81,7;-47,3;154476,36
+B;ESCOLHA;S1;Volta à média (prazo de 252 pregões);97;nd;0;nd;40580,23;nd;35132,73;32,5;4,4;nd;88,7;nd;nd;nd
+B;ESCOLHA;F50L;Fibonacci 50% do pico (sem prazo);97;nd;26;nd;46185,25;nd;-29682,91;6,9;11,4;nd;93,0;nd;nd;nd
+B;ESCOLHA;F62L;Fibonacci 61,8% do pico (sem prazo);97;nd;38;nd;55093,76;nd;-48420,26;6,1;11,5;nd;91,5;nd;nd;nd
+B;ESCOLHA;S2L;Volta à média, nunca abaixo da entrada (sem prazo);97;nd;5;nd;42296,68;nd;22948,91;18,3;8,4;nd;95,7;nd;nd;nd
+B;ESCOLHA;E1;Escada: piso média móvel, teto Fibonacci 61,8%;97;nd;0;nd;39394,39;nd;33729,35;30,5;4,4;nd;86,6;nd;nd;nd
+B;ESCOLHA;E2;Escada: piso média móvel, teto Fibonacci 50%;97;nd;0;nd;39188,23;nd;33721,44;31,2;4,4;nd;87,6;nd;nd;nd
+B;ESCOLHA;E3;Escada: piso média móvel, teto Fibonacci 100%;97;nd;0;nd;38594,13;nd;32809,2;29,1;4,4;nd;86,6;nd;nd;nd
+B;ESCOLHA;E4;Escada: piso média móvel, teto 127,2% da média do sinal;97;nd;0;nd;39466,07;nd;33727,62;30,2;4,4;nd;86,6;nd;nd;nd
+B;ESCOLHA;E5;Escada: piso Fibonacci 38,2%, teto Fibonacci 61,8%;97;nd;0;nd;32742,22;nd;26628,6;29,4;5,5;nd;80,4;nd;nd;nd
+B;ESCOLHA;E6;Escada: piso Fibonacci 38,2%, teto Fibonacci 100%;97;nd;0;nd;31918,62;nd;25772,67;28,2;5,4;nd;80,4;nd;nd;nd
+B;ESCOLHA;E7;Escada: piso Fibonacci 50%, teto Fibonacci 100%;97;nd;0;nd;32973,39;nd;23765,77;19,2;5,4;nd;75,3;nd;nd;nd
+B;ESCOLHA;E8;Escada de degraus (MM do dia do armar, F38, F50, F61,8, F100);97;nd;0;nd;32097,73;nd;27325,06;36,4;5,4;nd;88,7;nd;nd;nd
+B;ESCOLHA;E9;"Armada na média móvel; sai com fechamento 5% abaixo do maior";97;nd;0;nd;41271,8;nd;34296,1;25,4;4,3;nd;85,6;nd;nd;nd
+B;ESCOLHA;E10;"Armada na média móvel; sai com fechamento 8% abaixo do maior";97;nd;0;nd;41803,4;nd;33551,22;22,0;4,3;nd;84,5;nd;nd;nd
+B;CONFERÊNCIA;S1;Volta à média (prazo de 252 pregões);78;nd;11;nd;21576,64;nd;14381,7;29,1;9,7;nd;86,6;nd;nd;nd
+B;CONFERÊNCIA;F50L;Fibonacci 50% do pico (sem prazo);78;nd;25;nd;30123,11;nd;9278,41;17,0;11,8;nd;94,3;nd;nd;nd
+B;CONFERÊNCIA;F62L;Fibonacci 61,8% do pico (sem prazo);78;nd;37;nd;33284,3;nd;6501,73;14,9;12,0;nd;92,7;nd;nd;nd
+B;CONFERÊNCIA;S2L;Volta à média, nunca abaixo da entrada (sem prazo);78;nd;16;nd;20938,29;nd;9881,39;20,6;10,9;nd;95,2;nd;nd;nd
+B;CONFERÊNCIA;E1;Escada: piso média móvel, teto Fibonacci 61,8%;78;nd;11;nd;20756,48;nd;13500,03;27,7;9,7;nd;86,6;nd;nd;nd
+B;CONFERÊNCIA;E2;Escada: piso média móvel, teto Fibonacci 50%;78;nd;11;nd;21043,96;nd;13826,88;28,3;9,7;nd;86,6;nd;nd;nd
+B;CONFERÊNCIA;E3;Escada: piso média móvel, teto Fibonacci 100%;78;nd;11;nd;20146,74;nd;12811,96;26,7;9,7;nd;86,6;nd;nd;nd
+B;CONFERÊNCIA;E4;Escada: piso média móvel, teto 127,2% da média do sinal;78;nd;11;nd;20645,56;nd;13344,18;27,4;9,7;nd;86,6;nd;nd;nd
+B;CONFERÊNCIA;E5;Escada: piso Fibonacci 38,2%, teto Fibonacci 61,8%;78;nd;9;nd;24610,5;nd;14313,12;25,6;10,7;nd;87,0;nd;nd;nd
+B;CONFERÊNCIA;E6;Escada: piso Fibonacci 38,2%, teto Fibonacci 100%;78;nd;9;nd;24163,25;nd;13713,84;24,8;10,7;nd;87,0;nd;nd;nd
+B;CONFERÊNCIA;E7;Escada: piso Fibonacci 50%, teto Fibonacci 100%;78;nd;11;nd;27160,76;nd;13216,66;21,4;11,0;nd;83,6;nd;nd;nd
+B;CONFERÊNCIA;E8;Escada de degraus (MM do dia do armar, F38, F50, F61,8, F100);78;nd;9;nd;18685,04;nd;12269,94;28,5;9,8;nd;88,4;nd;nd;nd
+B;CONFERÊNCIA;E9;"Armada na média móvel; sai com fechamento 5% abaixo do maior";78;nd;11;nd;21223,61;nd;11303,57;21,8;10,2;nd;86,6;nd;nd;nd
+B;CONFERÊNCIA;E10;"Armada na média móvel; sai com fechamento 8% abaixo do maior";78;nd;11;nd;30546,77;nd;13658,75;20,1;11,1;nd;88,1;nd;nd;nd
+C;TOTAL;S1;Volta à média (prazo de 252 pregões);292;267;25;140,0;78129,04;20413,34;57715,7;26,3;6,9;11,5;90,6;84,6;-76,6;255115,97
+C;TOTAL;F50L;Fibonacci 50% do pico (sem prazo);292;205;87;278,05;128604,0;144425,78;-15821,78;10,3;11,5;20,1;94,6;89,8;-95,7;381240,07
+C;TOTAL;F62L;Fibonacci 61,8% do pico (sem prazo);292;175;117;358,14;151658,28;191796,71;-40138,42;9,4;11,8;24,4;93,7;86,3;-95,7;449863,19
+C;TOTAL;S2L;Volta à média, nunca abaixo da entrada (sem prazo);292;258;34;166,54;84625,37;41367,28;43258,08;18,5;9,0;13,6;96,9;91,5;-95,7;280645,46
+C;TOTAL;E1;Escada: piso média móvel, teto Fibonacci 61,8%;292;267;25;143,39;74068,24;20921,58;53146,66;24,3;6,9;10,7;88,8;82,0;-76,6;255115,97
+C;TOTAL;E2;Escada: piso média móvel, teto Fibonacci 50%;292;267;25;141,89;75048,82;20667,14;54381,68;24,9;6,9;10,9;89,1;82,4;-76,6;255115,97
+C;TOTAL;E3;Escada: piso média móvel, teto Fibonacci 100%;292;267;25;147,29;72939,41;21458,25;51481,16;23,3;6,9;10,5;88,8;82,0;-76,6;255115,97
+C;TOTAL;E4;Escada: piso média móvel, teto 127,2% da média do sinal;292;267;25;145,79;74384,85;21340,55;53044,3;24,0;6,9;10,8;88,8;82,0;-76,6;255115,97
+C;TOTAL;E5;Escada: piso Fibonacci 38,2%, teto Fibonacci 61,8%;292;268;24;167,74;71110,18;27779,9;43330,28;20,1;7,8;10,0;86,2;77,6;-76,6;215168,61
+C;TOTAL;E6;Escada: piso Fibonacci 38,2%, teto Fibonacci 100%;292;268;24;169,35;69524,67;27853,5;41671,18;19,5;7,8;9,7;86,2;77,6;-76,6;215168,61
+C;TOTAL;E7;Escada: piso Fibonacci 50%, teto Fibonacci 100%;292;267;25;230,8;85548,54;38885,17;46663,38;17,6;8,0;11,9;84,3;73,4;-76,6;245067,5
+C;TOTAL;E8;Escada de degraus (MM do dia do armar, F38, F50, F61,8, F100);292;268;24;124,09;61544,9;19354,3;42190,6;23,3;7,3;8,8;89,6;84,3;-76,6;213208,61
+C;TOTAL;E9;"Armada na média móvel; sai com fechamento 5% abaixo do maior";292;267;25;194,94;82996,35;30066,15;52930,2;20,1;7,3;11,8;86,5;78,7;-76,6;255115,97
+C;TOTAL;E10;"Armada na média móvel; sai com fechamento 8% abaixo do maior";292;267;25;276,11;104811,45;47667,89;57143,56;17,9;8,1;14,5;85,4;74,9;-76,6;255115,97
+C;ESCOLHA;S1;Volta à média (prazo de 252 pregões);150;nd;0;nd;41053,06;nd;31572,99;22,4;5,2;nd;86,0;nd;nd;nd
+C;ESCOLHA;F50L;Fibonacci 50% do pico (sem prazo);150;nd;43;nd;79200,45;nd;-37843,11;7,8;11,6;nd;93,5;nd;nd;nd
+C;ESCOLHA;F62L;Fibonacci 61,8% do pico (sem prazo);150;nd;60;nd;89470,84;nd;-62634,92;7,0;11,9;nd;92,2;nd;nd;nd
+C;ESCOLHA;S2L;Volta à média, nunca abaixo da entrada (sem prazo);150;nd;7;nd;47788,16;nd;18789,07;14,4;8,7;nd;95,8;nd;nd;nd
+C;ESCOLHA;E1;Escada: piso média móvel, teto Fibonacci 61,8%;150;nd;0;nd;38194,94;nd;28327,31;20,2;5,2;nd;84,0;nd;nd;nd
+C;ESCOLHA;E2;Escada: piso média móvel, teto Fibonacci 50%;150;nd;0;nd;38426,67;nd;28743,89;20,6;5,2;nd;84,7;nd;nd;nd
+C;ESCOLHA;E3;Escada: piso média móvel, teto Fibonacci 100%;150;nd;0;nd;37542,27;nd;27453,54;19,3;5,2;nd;84,0;nd;nd;nd
+C;ESCOLHA;E4;Escada: piso média móvel, teto 127,2% da média do sinal;150;nd;0;nd;38759,86;nd;28785,47;20,2;5,2;nd;84,0;nd;nd;nd
+C;ESCOLHA;E5;Escada: piso Fibonacci 38,2%, teto Fibonacci 61,8%;150;nd;0;nd;33243,83;nd;20050,78;15,4;6,1;nd;79,3;nd;nd;nd
+C;ESCOLHA;E6;Escada: piso Fibonacci 38,2%, teto Fibonacci 100%;150;nd;0;nd;32466,09;nd;19222,25;14,8;6,1;nd;79,3;nd;nd;nd
+C;ESCOLHA;E7;Escada: piso Fibonacci 50%, teto Fibonacci 100%;150;nd;0;nd;37932,95;nd;18952,01;12,6;6,3;nd;76,7;nd;nd;nd
+C;ESCOLHA;E8;Escada de degraus (MM do dia do armar, F38, F50, F61,8, F100);150;nd;0;nd;30146,03;nd;20393,4;18,3;5,9;nd;84,7;nd;nd;nd
+C;ESCOLHA;E9;"Armada na média móvel; sai com fechamento 5% abaixo do maior";150;nd;0;nd;42880,29;nd;30334,02;17,6;5,1;nd;80,0;nd;nd;nd
+C;ESCOLHA;E10;"Armada na média móvel; sai com fechamento 8% abaixo do maior";150;nd;0;nd;46872,41;nd;30575,89;15,2;5,3;nd;78,0;nd;nd;nd
+C;CONFERÊNCIA;S1;Volta à média (prazo de 252 pregões);142;nd;25;nd;37075,98;nd;26142,71;32,6;9,6;nd;96,6;nd;nd;nd
+C;CONFERÊNCIA;F50L;Fibonacci 50% do pico (sem prazo);142;nd;44;nd;49403,55;nd;22021,33;20,6;11,4;nd;95,9;nd;nd;nd
+C;CONFERÊNCIA;F62L;Fibonacci 61,8% do pico (sem prazo);142;nd;57;nd;62187,44;nd;22496,5;18,5;11,8;nd;95,3;nd;nd;nd
+C;CONFERÊNCIA;S2L;Volta à média, nunca abaixo da entrada (sem prazo);142;nd;27;nd;36837,21;nd;24469,01;29,6;9,9;nd;98,3;nd;nd;nd
+C;CONFERÊNCIA;E1;Escada: piso média móvel, teto Fibonacci 61,8%;142;nd;25;nd;35873,3;nd;24819,35;31,2;9,6;nd;94,9;nd;nd;nd
+C;CONFERÊNCIA;E2;Escada: piso média móvel, teto Fibonacci 50%;142;nd;25;nd;36622,15;nd;25637,79;32,0;9,6;nd;94,9;nd;nd;nd
+C;CONFERÊNCIA;E3;Escada: piso média móvel, teto Fibonacci 100%;142;nd;25;nd;35397,14;nd;24027,62;30,1;9,7;nd;94,9;nd;nd;nd
+C;CONFERÊNCIA;E4;Escada: piso média móvel, teto 127,2% da média do sinal;142;nd;25;nd;35624,99;nd;24258,83;30,3;9,7;nd;94,9;nd;nd;nd
+C;CONFERÊNCIA;E5;Escada: piso Fibonacci 38,2%, teto Fibonacci 61,8%;142;nd;24;nd;37866,35;nd;23279,49;27,4;10,6;nd;94,9;nd;nd;nd
+C;CONFERÊNCIA;E6;Escada: piso Fibonacci 38,2%, teto Fibonacci 100%;142;nd;24;nd;37058,58;nd;22448,92;26,8;10,6;nd;94,9;nd;nd;nd
+C;CONFERÊNCIA;E7;Escada: piso Fibonacci 50%, teto Fibonacci 100%;142;nd;25;nd;47615,59;nd;27711,37;25,9;10,8;nd;94,0;nd;nd;nd
+C;CONFERÊNCIA;E8;Escada de degraus (MM do dia do armar, F38, F50, F61,8, F100);142;nd;24;nd;31398,86;nd;21797,2;31,8;9,7;nd;95,8;nd;nd;nd
+C;CONFERÊNCIA;E9;"Armada na média móvel; sai com fechamento 5% abaixo do maior";142;nd;25;nd;40116,06;nd;22596,18;23,6;10,3;nd;94,9;nd;nd;nd
+C;CONFERÊNCIA;E10;"Armada na média móvel; sai com fechamento 8% abaixo do maior";142;nd;25;nd;57939,04;nd;26567,67;20,8;11,3;nd;94,9;nd;nd;nd
