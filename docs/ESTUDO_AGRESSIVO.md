@@ -1,6 +1,6 @@
 # Estudo Agressivo
 
-Data: 2026-11-16. Programa: `estudos/agressivo.py` (escrito e rodado por agente auxiliar). Planilha: `planilhas/estudo_agressivo.csv` (37 linhas, 57 colunas). Tipos dos fundos: `planilhas/fundos.csv`.
+Data: 2026-11-16. Programa: `estudos/agressivo.py` (escrito e rodado por agente auxiliar). Planilha para leitura: `planilhas/estudo_agressivo.csv` (37 linhas, 33 colunas com nomes por extenso). Versão do programa: `planilhas/tecnico/estudo_agressivo_completo.csv`. Tipos dos fundos: `planilhas/fundos.csv`.
 
 ## Regras do estudo
 
@@ -175,7 +175,7 @@ Cada um desses filtros reduz ainda mais os casos. O teste tem de ser feito no co
 
 ## Planilha das operações
 
-Uma linha por operação, ordenada por faixa de ordem, tipo e data de entrada. A planilha completa, com 57 colunas, está em `planilhas/estudo_agressivo.csv`.
+Uma linha por operação, ordenada por faixa de ordem, tipo e data de entrada. A mesma lista, com mais colunas, está em `planilhas/estudo_agressivo.csv`.
 
 | Faixa de ordem | Tipo do fundo | Fundo | Entrada | Preço de entrada | Saída | Preço de saída | Pregões | Motivo da saída | Cota sobre valor patrimonial | Valorização | Valorização depois de imposto | Rendimento | Total depois de custos e imposto | Selic líquida | Diferença para a Selic | Valorização do mercado | Selic na entrada e na saída |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|

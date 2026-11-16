@@ -100,3 +100,16 @@ Uma linha por fato relevante (comunicado importante) publicado por um fundo, com
 | patrimonio (R$) | Patrimônio líquido do fundo no dia de entrada |
 | frase_do_efeito | Trecho do comunicado que diz qual é o efeito |
 | inicio_do_texto | Começo do texto do comunicado |
+
+### estudo_agressivo.csv
+
+As 37 operações do Estudo Agressivo (`docs/ESTUDO_AGRESSIVO.md`), uma por linha. Todas são do perfil agressivo: cota entre 0,30 e 0,60 do valor patrimonial na entrada.
+
+- Colunas com (%) já estão em porcentagem: 5,3 quer dizer 5,3%.
+- "Pontos" é diferença entre duas porcentagens: 2,0 quer dizer 2 pontos percentuais.
+- Nas operações em aberto, a data e o preço de saída são os do último pregão da base, e os resultados são parciais.
+- "Valorização do mercado" é a do fundo imobiliário do meio, nas mesmas datas.
+
+### tecnico/estudo_agressivo_completo.csv
+
+A mesma lista com 57 colunas e nomes abreviados, usada pelo programa. Não é para leitura; a coluna "perfil" desse arquivo é uma classificação antiga, pelo patrimônio, e deve ser ignorada.

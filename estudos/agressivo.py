@@ -3,7 +3,7 @@
 Acrescenta tipo do fundo, mercado (preço contra preço), Selic, gráfico e dividendos
 às operações, e imprime os resumos R1 a R14 e as conferências.
 
-Saídas: planilhas/fundos.csv, planilhas/estudo_agressivo.csv e a impressão no terminal.
+Saídas: planilhas/fundos.csv, planilhas/tecnico/estudo_agressivo_completo.csv e a impressão no terminal.
 Rodar com: PYTHONPATH=. .venv/bin/python estudos/agressivo.py 2>&1 | tee dados/agressivo_resumo.txt
 """
 import warnings
@@ -420,7 +420,7 @@ def main():
     out = ops.copy()
     for c in out.select_dtypes("float").columns:
         out[c] = out[c].round(4)
-    out.to_csv(PLAN / "estudo_agressivo.csv", **OPCOES)
+    out.to_csv(PLAN / "tecnico/estudo_agressivo_completo.csv", **OPCOES)
     print(f"\nestudo_agressivo.csv: {len(out)} linhas, {out.shape[1]} colunas")
 
     resumos(ops)
