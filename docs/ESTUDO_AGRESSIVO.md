@@ -219,7 +219,7 @@ Resposta:
 - **Depois do pico, 6 de cada 10 devolvem tudo** e voltam ao preço de entrada em cerca de 15 pregões.
 - **Quem cai primeiro vai fundo:** −13,4% (mediana) perto do 50º pregão. Seis de cada 10 voltam ao preço de entrada, mas só 4 de cada 10 chegam a +5%.
 - **O tipo do anúncio separa os dois grupos.** Quando o fundo declara o aumento, 11 de 13 subiram primeiro. Em locação nova, 10 de 13 caíram primeiro.
-- **O alvo fixo captura a alta** (a tabela acima), mas a conta é só da cota, sem limite de perda e sem custos. Falta testar com rendimento, imposto, Selic e uma regra para as que não executam.
+- **O alvo fixo sozinho rende pouco: entre +0,7% e +1,9% na cota.** A ordem executa na maioria das vezes (79% com alvo de +5%), mas as que não executam perdem de 10% a 16% e comem quase todo o ganho. Sem uma regra para essas, o alvo fixo não resolve. A conta é só da cota, sem rendimento, custos, imposto nem Selic.
 
 ## Pontos suspeitos
 
