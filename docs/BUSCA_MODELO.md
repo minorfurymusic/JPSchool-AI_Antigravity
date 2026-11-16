@@ -43,7 +43,7 @@ Contra o sorteio, na conferência: modelo 1, −8,6% contra −2,5% do sorteio; 
 
 ## Por que os números da escolha eram tão altos
 
-**Um erro de dados no CARE11.** A cota salta de cerca de R$ 2,6 para cerca de R$ 9,2 em 14/03/2022 sem ajuste (provável grupamento de cotas). Operações que atravessam essa data aparecem com +300% a +480%, falsos. Tirando o CARE11:
+**Um erro de dados no CARE11.** Na planilha, o último preço de 2021 é R$ 3,53 (em 17/08/2021) e o seguinte é R$ 12,63 (em 14/03/2022), com um buraco no meio. É um salto de preço sem ajuste (provável grupamento de cotas) que a base marcou como não explicado e cortou, sem corrigir. Operações que atravessam esse buraco aparecem com +300% a +480%, falsos. Tirando o CARE11:
 
 | Modelo | Escolha, com o CARE11 | Escolha, sem o CARE11 |
 |---|---|---|
@@ -78,7 +78,7 @@ Anúncios bons, segurando 120 pregões, acima da Selic líquida, por ano de entr
 ## Limites
 
 - A conferência (2023 a 2026) é um período de Selic alta. Um modelo pode ser ruim nele e bom em outro.
-- O programa do agente não foi revisado linha a linha. O agente refez 3 operações à mão e os números bateram. Eu confirmei o salto do CARE11 na planilha.
+- O programa do agente não foi revisado linha a linha. O agente refez 3 operações à mão e os números bateram. Eu conferi na planilha o buraco e o salto de preço do CARE11.
 - CACR11 caiu 42% num dia (04/05/2026); não se sabe se é real ou erro de dados.
 - 179 operações em aberto ficaram fora das contas.
 
