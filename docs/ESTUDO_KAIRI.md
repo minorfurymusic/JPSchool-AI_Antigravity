@@ -542,3 +542,65 @@ Escada 1 na carteira A, pelo motivo da saída:
 - Testes dentro do programa confirmaram, segundo o agente, que a ordem só arma com informação do próprio dia, que o piso usa a média até a véspera, e que no empate vale o piso.
 - A soma por motivo de saída é igual ao número de ordens em todas as escadas.
 - Eu não revisei o programa linha a linha.
+
+---
+
+# Parte 6 — Saída pelo cruzamento das médias de 7 e 21 pregões (2026-11-16)
+
+Ideia do dono: ao cruzar a média de 200 pregões, não vender; guardar o preço do cruzamento e deixar correr. Sair quando a média de 7 pregões cruzar para baixo a de 21, ou quando a cota voltar ao preço do cruzamento. Programa: `estudos/kairi_cruzamento.py` (agente auxiliar). Planilhas: `planilhas/kairi_cruzamento.csv` e `planilhas/tecnico/kairi_cruzamento_comparacao.csv`. Saída completa: `dados/kairi_cruzamento.txt` (fora do repositório).
+
+Mesmas ordens das Partes 4 e 5. O programa reproduziu a saída atual antes de seguir (carteira A: R$ 81.501 e 23,5% ao ano; B: R$ 62.157 e 31,2%).
+
+## Regra
+
+- **Armar:** no primeiro pregão em que a máxima toca a média de 200, a ordem fica armada e guarda o preço do cruzamento.
+- **Sair, o que vier primeiro:** a mínima volta ao preço do cruzamento (com ou sem folga); ou a média curta fecha abaixo da longa, tendo fechado acima na véspera, e a venda é na abertura do pregão seguinte.
+- **Se nunca arma:** prazo de 252 pregões, como na regra atual.
+
+## Resultado
+
+Retorno ao ano do dinheiro enquanto aplicado. Escolha = entradas até 2022; conferência = 2023 em diante.
+
+| Regra | A: escolha | A: conferência | A: resultado líquido | B: escolha | B: conferência | B: resultado líquido | Dias por ordem (A) |
+|---|---|---|---|---|---|---|---|
+| **Volta à média (atual)** | **22,9%** | **24,3%** | **R$ 81.501** | **32,5%** | **29,1%** | **R$ 62.157** | 140 |
+| Médias 7 e 21, volta ao preço do cruzamento (a regra do dono) | 19,9% | 21,6% | R$ 73.242 | 29,9% | 26,6% | R$ 58.117 | 143 |
+| Médias 7 e 21, com folga de 3% | 18,7% | 19,5% | R$ 72.564 | 27,5% | 24,3% | R$ 56.884 | 154 |
+| Médias 7 e 21, com folga de 5% | 18,2% | 18,6% | R$ 72.736 | 26,7% | 23,2% | R$ 56.613 | 160 |
+| Médias 7 e 21, só pelo cruzamento | 18,3% | 18,8% | R$ 77.354 | 27,0% | 24,2% | R$ 60.623 | 169 |
+| Médias 5 e 20, folga de 3% | 18,7% | 19,5% | R$ 72.422 | 27,6% | 24,2% | R$ 56.737 | 154 |
+| Médias 10 e 30, folga de 3% | 18,0% | 19,7% | R$ 73.632 | 26,8% | 24,1% | R$ 57.044 | 159 |
+| Médias 10 e 30, só pelo cruzamento | 16,5% | 18,0% | R$ 77.417 | 25,0% | 23,0% | R$ 60.322 | 182 |
+| Médias 21 e 50, folga de 3% | 17,4% | 19,2% | R$ 74.226 | 25,8% | 23,7% | R$ 57.677 | 165 |
+
+**Nenhuma das nove variações ficou acima da regra atual**, nem em retorno ao ano, nem em reais, nem em diferença para a Selic, em nenhum período e em nenhuma das três carteiras.
+
+## Por que não aumentou o ganho
+
+Carteira A:
+
+| Regra | Como saiu | Ordens | Pregões depois de armar | Preço de venda contra o preço do cruzamento |
+|---|---|---|---|---|
+| A do dono (sem folga) | voltou ao preço do cruzamento | 277 | 1 (mediana) | −1,6% |
+| | média de 7 cruzou a de 21 | 7 | 22 (mediana) | +5,6% |
+| Com folga de 3% | voltou ao preço do cruzamento | 202 | 2 (mediana) | −3,9% |
+| | média de 7 cruzou a de 21 | 82 | 22 (mediana) | +2,7% |
+| Só pelo cruzamento | média de 7 cruzou a de 21 | 284 | 18 (mediana) | −1,7% |
+
+- **Na regra exata, a ordem quase sempre sai no dia seguinte.** No dia em que cruza a média, a cota está em cima do preço do cruzamento, e qualquer oscilação a derruba de volta: 277 de 284 saíram assim, 1 pregão depois, 1,6% abaixo do preço do cruzamento. Dessas, 48 venderam abaixo do preço de entrada.
+- **Com folga, a ordem respira mais, mas quando recua perde a folga inteira.**
+- **Sem o piso, o cruzamento das médias vende em média 1,7% abaixo do preço do cruzamento,** 18 pregões depois. As médias demoram a virar; quando avisam, a cota já devolveu a alta.
+- **Ordem a ordem contra a regra atual (regra do dono, carteira A):** rendeu mais em 30, menos em 179, igual em 132.
+
+## O que as Partes 4, 5 e 6 mostram juntas
+
+Foram 31 saídas alternativas testadas contra a volta à média: alvos de Fibonacci, projeções acima da média, média congelada, nunca vender abaixo da entrada, sem prazo, dez escadas e nove cruzamentos de médias. **Nenhuma foi melhor nos dois períodos.**
+
+O motivo é o mesmo em todas: depois de tocar a média de 200 pregões, a cota recua muito mais vezes do que continua subindo. O ganho deste método está na volta até a média, não no que vem depois dela. Vender ali e liberar o dinheiro para o próximo sinal é o que mais rende.
+
+## Conferência
+
+- Reprodução da saída atual: confere nas carteiras A e B.
+- O agente refez duas ordens à mão (FIGS11, que voltou ao preço do cruzamento, e BBVJ11, que saiu pelo cruzamento das médias) e as contas bateram.
+- Testes dentro do programa confirmaram, segundo o agente, que as médias usadas na venda são as dos fechamentos anteriores e que não há venda no dia em que a ordem arma.
+- Eu não revisei o programa linha a linha.

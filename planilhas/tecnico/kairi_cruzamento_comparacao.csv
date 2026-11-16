@@ -1,0 +1,31 @@
+﻿Carteira;Regra de saída;ordens;fechadas;em aberto;dias corridos médios das fechadas;resultado líquido (R$);Selic do mesmo dinheiro (R$);diferença (R$);retorno ao ano TOTAL (%);retorno ao ano ESCOLHA (%);retorno ao ano CONFERÊNCIA (%);resultado médio por ordem fechada (%);% das fechadas com resultado > 0;% que ganharam da Selic;pico de dinheiro aplicado (R$)
+A;Volta à média (prazo de 252 pregões no fechamento);341;311;30;140,25;81500,58;24801,29;56699,29;23,5;22,9;24,3;10,5;87,8;81,4;262698,2
+A;"Armada na MM200; piso no preço do cruzamento (folga 0%); cruzamento MM7/MM21";341;311;30;143,36;73242,22;25349,33;47892,9;20,6;19,9;21,6;9,2;85,5;78,8;262698,2
+A;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM7/MM21";341;311;30;154,32;72564,48;27538,14;45026,34;19,0;18,7;19,5;9,0;84,9;77,5;262698,2
+A;"Armada na MM200; piso no preço do cruzamento (folga 5%); cruzamento MM7/MM21";341;311;30;160,15;72736,33;28634,58;44101,75;18,4;18,2;18,6;9,0;84,2;76,2;262698,2
+A;"Armada na MM200; sem piso; cruzamento MM7/MM21";341;311;30;169,22;77353,87;30388,65;46965,22;18,5;18,3;18,8;9,6;82,6;74,9;262698,2
+A;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM5/MM20";341;311;30;153,7;72422,29;27381,18;45041,11;19,1;18,7;19,5;9,0;84,6;77,5;262698,2
+A;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM10/MM30";341;311;30;158,95;73631,51;28555,31;45076,2;18,7;18,0;19,7;9,1;84,6;77,8;262698,2
+A;"Armada na MM200; sem piso; cruzamento MM10/MM30";341;310;31;182,45;77417,06;33282,28;44134,78;17,2;16,5;18,0;9,5;81,0;74,5;264658,2
+A;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM21/MM50";341;311;30;165,4;74226,1;29743,76;44482,34;18,2;17,4;19,2;9,1;84,2;77,5;262698,2
+A;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM7/MM21; teto Fibonacci 100%";341;311;30;154,07;72565,75;27492,8;45072,95;19,1;18,7;19,5;9,0;84,9;77,5;262698,2
+B;Volta à média (prazo de 252 pregões no fechamento);175;164;11;152,84;62156,87;12642,43;49514,43;31,2;32,5;29,1;15,7;87,8;84,8;151505,91
+B;"Armada na MM200; piso no preço do cruzamento (folga 0%); cruzamento MM7/MM21";175;164;11;155,74;58117,16;12858,8;45258,36;28,7;29,9;26,6;14,5;86,6;84,1;151505,91
+B;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM7/MM21";175;164;11;166,18;56883,6;13810,22;43073,38;26,3;27,5;24,3;14,0;86,0;82,9;151505,91
+B;"Armada na MM200; piso no preço do cruzamento (folga 5%); cruzamento MM7/MM21";175;164;11;171,21;56612,93;14330,75;42282,18;25,4;26,7;23,2;13,9;86,0;82,9;151505,91
+B;"Armada na MM200; sem piso; cruzamento MM7/MM21";175;164;11;180,04;60622,88;15223,1;45399,79;25,9;27,0;24,2;14,9;85,4;83,5;154476,36
+B;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM5/MM20";175;164;11;165,43;56737,46;13702,01;43035,45;26,3;27,6;24,2;14,0;86,0;82,9;151505,91
+B;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM10/MM30";175;164;11;170,1;57044,09;14126,56;42917,53;25,8;26,8;24,1;14,0;86,0;81,7;151505,91
+B;"Armada na MM200; sem piso; cruzamento MM10/MM30";175;164;11;191,69;60322,41;16371,37;43951,04;24,2;25,0;23,0;14,7;84,8;81,7;154487,49
+B;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM21/MM50";175;164;11;176,82;57676,95;14638,48;43038,47;25,0;25,8;23,7;14,1;86,0;82,3;151505,91
+B;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM7/MM21; teto Fibonacci 100%";175;164;11;166,18;56883,6;13810,22;43073,38;26,3;27,5;24,3;14,0;86,0;82,9;151505,91
+C;Volta à média (prazo de 252 pregões no fechamento);292;267;25;140,0;78129,04;20413,34;57715,7;26,3;22,4;32,6;11,5;90,6;84,6;255115,97
+C;"Armada na MM200; piso no preço do cruzamento (folga 0%); cruzamento MM7/MM21";292;267;25;143,24;71247,05;20907,86;50339,19;23,4;19,6;29,7;10,3;88,8;82,0;255115,97
+C;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM7/MM21";292;267;25;155,23;71528,29;22973,83;48554,46;21,7;18,6;26,7;10,3;88,0;80,9;255115,97
+C;"Armada na MM200; piso no preço do cruzamento (folga 5%); cruzamento MM7/MM21";292;267;25;161,46;72699,07;23994,55;48704,52;21,2;18,2;26,0;10,4;87,6;79,0;255115,97
+C;"Armada na MM200; sem piso; cruzamento MM7/MM21";292;267;25;170,33;78062,25;25438,9;52623,35;21,6;18,7;26,2;11,2;85,8;78,3;255115,97
+C;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM5/MM20";292;267;25;154,54;71343,44;22821,5;48521,94;21,8;18,6;26,8;10,2;87,6;80,9;255115,97
+C;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM10/MM30";292;267;25;160,52;72652,22;23974,29;48677,93;21,3;17,9;26,8;10,4;87,6;80,9;255115,97
+C;"Armada na MM200; sem piso; cruzamento MM10/MM30";292;266;26;184,22;79481,88;27954,75;51527,13;20,5;17,1;25,4;11,3;85,0;77,8;257075,97
+C;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM21/MM50";292;267;25;167,68;73319,72;25096,44;48223,28;20,6;17,3;25,9;10,4;87,3;80,5;255115,97
+C;"Armada na MM200; piso no preço do cruzamento (folga 3%); cruzamento MM7/MM21; teto Fibonacci 100%";292;267;25;154,95;71529,56;22928,49;48601,08;21,8;18,6;26,8;10,3;88,0;80,9;255115,97
