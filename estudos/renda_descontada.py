@@ -16,10 +16,13 @@ Comparações: 105% do CDI líquido (IR regressivo) e índice de mercado (só pr
 
     PYTHONPATH=. python3 estudos/renda_descontada.py
 """
+import re
+
 import numpy as np
 import pandas as pd
 
-from estudos.saude_fundo import saude
+from estudos.cobertura_rendimento import LIMITE as LIM_COB, cobertura as _cob
+from estudos.saude_fundo import NEGATIVOS, _sem_acento, saude
 
 OP = dict(sep=";", decimal=",", encoding="utf-8-sig")
 P = pd.concat([pd.read_csv(f"planilhas/precos_{a}.csv", **OP) for a in range(2016 + 1, 2027)])
@@ -69,10 +72,40 @@ def constancia(f, d):
     return dict(tend=v[-3:].mean() / v[:3].mean() - 1, cortes=int((var < -0.05).sum()), osc=v.std() / v.mean())
 
 
+_FNET17 = None
+
+
+def negativos_fnet(f, d):
+    """Fatos relevantes e comunicados do FNET 2017-2026 (planilhas/tecnico/fnet_2017_documentos.csv.gz, só os fundos
+    baixados) dos 12 meses anteriores com as mesmas palavras de saude_fundo.NEGATIVOS."""
+    global _FNET17
+    if _FNET17 is None:
+        try:
+            X = pd.read_csv("planilhas/tecnico/fnet_2017_documentos.csv.gz", sep=";", encoding="utf-8-sig")
+            X["dia"] = pd.to_datetime(X["data de entrega"].astype(str).str[:10], dayfirst=True, errors="coerce")
+            X["t"] = X["texto (primeiros 5.000 caracteres)"].fillna("").map(_sem_acento)
+            _FNET17 = {k: v for k, v in X.groupby("fundo")}
+        except FileNotFoundError:
+            _FNET17 = {}
+    x = _FNET17.get(f)
+    if x is None:
+        return []
+    x = x[(x["dia"] <= d) & (x["dia"] > d - pd.DateOffset(months=12))]
+    out = []
+    for r in x.itertuples():
+        for nome, pad in NEGATIVOS:
+            if re.search(pad, r.t):
+                out.append(f"{r.dia:%d/%m/%Y} FNET {r.categoria}: {nome}")
+                break
+    return out
+
+
 SAUDE = {}
+BARRADOS = []      # (dia, fundo, motivo) barrados pelos filtros novos de 17/11/2026
+VISTOS = set()     # fundos que passaram nos filtros da versão D em algum fim de mês
 
 
-def candidatos(d, relativo=False):
+def candidatos(d, relativo=False, filtro_cob=False, filtro_docs=False):
     x = P[P["data"] == d]
     cdi = float(CDI_ANO.loc[:d].iloc[-1])
     x = x[(x["patrimonio (R$)"] >= 100e6) & (x["mediana60"] >= 250e3) & (x["rendimento_ano_sobre_preco (%)"] > 0)]
@@ -94,6 +127,17 @@ def candidatos(d, relativo=False):
             SAUDE[k] = saude(r.fundo, d)["veredito"]
         if SAUDE[k] == "NÃO COMPRAR":
             continue
+        VISTOS.add(r.fundo)
+        if filtro_cob:
+            cb = _cob(r.fundo, d)
+            if cb is not None and cb["cobertura"] < LIM_COB:
+                BARRADOS.append((d, r.fundo, f"cobertura {cb['cobertura']:.2f}"))
+                continue
+        if filtro_docs:
+            neg = saude(r.fundo, d)["docs_negativos"] + negativos_fnet(r.fundo, d)
+            if neg:
+                BARRADOS.append((d, r.fundo, "documento negativo: " + neg[-1][:120]))
+                continue
         L.append(dict(fundo=r.fundo, dy=r.dyp / 100,
                       pvp=r.preco_sobre_valor_patrimonial, vp12=r.vp12, osc=c["osc"], tend=c["tend"], preco=r.fechamento))
     C = pd.DataFrame(L)
@@ -130,7 +174,7 @@ def doente(f, d):
     return "avaliação de saúde: não comprar" if SAUDE[k] == "NÃO COMPRAR" else None
 
 
-def rodar(preco_justo=False, n=5, segurar=False, v2=False, selic=False, relativo=False):
+def rodar(preco_justo=False, n=5, segurar=False, v2=False, selic=False, relativo=False, filtro_cob=False, filtro_docs=False):
     """v2: doença só vende se confirmada em 2 revisões seguidas; preço justo só por preço >= 0,95 do patrimônio.
     selic: não compra quando a Selic está subindo. relativo: rendimento comparado com o próprio tipo de fundo."""
     alerta = {}
@@ -184,7 +228,7 @@ def rodar(preco_justo=False, n=5, segurar=False, v2=False, selic=False, relativo
                     caixa -= IR_FII * (g - usa)
                 else:
                     pool += -g
-            C = candidatos(d, relativo)
+            C = candidatos(d, relativo, filtro_cob, filtro_docs)
             top15 = set(C["fundo"].head(15)) if len(C) else set()
             vendas = []
             for f in pos:
@@ -236,60 +280,66 @@ def cdi_liq(ini, fim, valor=10000.0):
     return valor * (1 + (I105.loc[:fim].iloc[-1] / I105.loc[:ini].iloc[-1] - 1) * (1 - ir))
 
 
-pd.set_option("display.width", 250)
-pd.set_option("display.max_columns", 30)
-VAR = [("A. Segurar; adoecer ou preço justo (anterior)", dict(preco_justo=True, segurar=True)),
-       ("B. A + saídas corrigidas", dict(preco_justo=True, segurar=True, v2=True)),
-       ("C. B + não compra com Selic subindo", dict(preco_justo=True, segurar=True, v2=True, selic=True)),
-       ("D. B + rendimento comparado ao tipo de fundo", dict(preco_justo=True, segurar=True, v2=True, relativo=True)),
-       ("E. C + rendimento comparado ao tipo de fundo", dict(preco_justo=True, segurar=True, v2=True, selic=True, relativo=True))]
-SAI, RES, FASE = {}, [], []
-for nome, kw in VAR:
-    S, O, A = rodar(**kw)
-    anos = {}
-    for a in range(2018, 2027):
-        s_ = S[S.index.year == a]
-        ini = S[S.index.year < a].iloc[-1] if a > 2018 else 10000.0
-        i0 = S[S.index.year < a].index[-1] if a > 2018 else S.index[0]
-        anos[a] = dict(carteira=s_.iloc[-1] / ini - 1, cdi_liq=cdi_liq(i0, s_.index[-1], 1.0) - 1)
-    T = pd.DataFrame(anos).T
-    # retorno mês a mês por fase da Selic no início do mês
-    m = S.groupby(S.index.to_period("M")).last()
-    ret = m.pct_change().dropna()
-    cdi_m = I105.groupby(I105.index.to_period("M")).last().pct_change().reindex(ret.index) * (1 - IR_CX)
-    fases = pd.Series({p: fase_selic(p.start_time - pd.Timedelta(days=1)) for p in ret.index})
-    for f_ in ("subindo", "parada", "caindo"):
-        k = fases == f_
-        FASE.append({"Versão": nome, "Fase da Selic": f_, "Meses": int(k.sum()),
-                     "Carteira ao mês": float(ret[k].mean()), "CDI líquido ao mês": float(cdi_m[k].mean()),
-                     "Meses acima do CDI": float((ret[k] > cdi_m[k]).mean())})
-    RES.append({"Versão": nome, "Valor final (R$)": S.iloc[-1], "Maior queda": (S / S.cummax() - 1).min(),
-                "Operações fechadas": len(O), "Com lucro": (O["resultado"] > 0).mean() if len(O) else np.nan,
-                "Resultado médio": O["resultado_pct"].mean() if len(O) else np.nan,
-                "Dias médios": (O["saida"] - O["entrada"]).dt.days.mean() if len(O) else np.nan,
-                "Anos acima do CDI (de 9)": int((T["carteira"] > T["cdi_liq"]).sum())})
-    SAI[nome] = (S, O, A, T)
-    print(f"{nome}: R$ {S.iloc[-1]:,.2f}", flush=True)
-R_ = pd.DataFrame(RES)
-F_ = pd.DataFrame(FASE)
-print(f"\n105% CDI líquido no período: R$ {cdi_liq(DIAS[0], DIAS[-1]):,.2f}")
-print(R_.to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
-print("\nPOR ANO (carteira / CDI líquido)")
-print(pd.DataFrame({n_: SAI[n_][3]["carteira"] for n_ in SAI}).assign(CDI=SAI[VAR[0][0]][3]["cdi_liq"]).to_string(float_format=lambda v: f"{v:+.1%}"))
-print("\nPOR FASE DA SELIC (média ao mês)")
-print(F_.to_string(index=False, float_format=lambda v: f"{v:+.2%}"))
-hoje = DIAS[-1]
-print(f"\nFase da Selic em {hoje:%d/%m/%Y}: {fase_selic(hoje)} ({float(SELIC.loc[:hoje].iloc[-1]):.2%})")
-C = candidatos(hoje, relativo=True)
-print(f"Elegíveis hoje com rendimento comparado ao tipo: {len(C)}")
-if len(C):
-    print(C.head(15).to_string(index=False, float_format=lambda v: f"{v:.3f}"))
-with pd.ExcelWriter("planilhas/renda_descontada.xlsx") as w:
-    R_.to_excel(w, sheet_name="Resumo", index=False)
-    F_.to_excel(w, sheet_name="Por fase da Selic", index=False)
-    for i, (n_, (S, O, A, T)) in enumerate(SAI.items(), 1):
-        T.to_excel(w, sheet_name=f"Por ano {n_[0]}")
-        O.to_excel(w, sheet_name=f"Operações {n_[0]}", index=False)
-        A.to_excel(w, sheet_name=f"Em aberto {n_[0]}", index=False)
-    C.to_excel(w, sheet_name="Elegíveis hoje (tipo)", index=False)
-print("gravado: planilhas/renda_descontada.xlsx")
+if __name__ == "__main__":
+    pd.set_option("display.width", 250)
+    pd.set_option("display.max_columns", 30)
+    VAR = [("A. Segurar; adoecer ou preço justo (anterior)", dict(preco_justo=True, segurar=True)),
+           ("B. A + saídas corrigidas", dict(preco_justo=True, segurar=True, v2=True)),
+           ("C. B + não compra com Selic subindo", dict(preco_justo=True, segurar=True, v2=True, selic=True)),
+           ("D. B + rendimento comparado ao tipo de fundo", dict(preco_justo=True, segurar=True, v2=True, relativo=True)),
+           ("E. C + rendimento comparado ao tipo de fundo", dict(preco_justo=True, segurar=True, v2=True, selic=True, relativo=True)),
+           # filtros novos de 17/11/2026, regras fixadas antes de rodar (estudos/cobertura_rendimento.py e saude_fundo.NEGATIVOS)
+           ("F. D + cobertura do rendimento >= 0,90", dict(preco_justo=True, segurar=True, v2=True, relativo=True, filtro_cob=True)),
+           ("G. D + sem documento negativo em 12 meses", dict(preco_justo=True, segurar=True, v2=True, relativo=True, filtro_docs=True)),
+           ("H. D + cobertura + sem documento negativo", dict(preco_justo=True, segurar=True, v2=True, relativo=True, filtro_cob=True,
+                                                             filtro_docs=True))]
+    SAI, RES, FASE = {}, [], []
+    for nome, kw in VAR:
+        S, O, A = rodar(**kw)
+        anos = {}
+        for a in range(2018, 2027):
+            s_ = S[S.index.year == a]
+            ini = S[S.index.year < a].iloc[-1] if a > 2018 else 10000.0
+            i0 = S[S.index.year < a].index[-1] if a > 2018 else S.index[0]
+            anos[a] = dict(carteira=s_.iloc[-1] / ini - 1, cdi_liq=cdi_liq(i0, s_.index[-1], 1.0) - 1)
+        T = pd.DataFrame(anos).T
+        # retorno mês a mês por fase da Selic no início do mês
+        m = S.groupby(S.index.to_period("M")).last()
+        ret = m.pct_change().dropna()
+        cdi_m = I105.groupby(I105.index.to_period("M")).last().pct_change().reindex(ret.index) * (1 - IR_CX)
+        fases = pd.Series({p: fase_selic(p.start_time - pd.Timedelta(days=1)) for p in ret.index})
+        for f_ in ("subindo", "parada", "caindo"):
+            k = fases == f_
+            FASE.append({"Versão": nome, "Fase da Selic": f_, "Meses": int(k.sum()),
+                         "Carteira ao mês": float(ret[k].mean()), "CDI líquido ao mês": float(cdi_m[k].mean()),
+                         "Meses acima do CDI": float((ret[k] > cdi_m[k]).mean())})
+        RES.append({"Versão": nome, "Valor final (R$)": S.iloc[-1], "Maior queda": (S / S.cummax() - 1).min(),
+                    "Operações fechadas": len(O), "Com lucro": (O["resultado"] > 0).mean() if len(O) else np.nan,
+                    "Resultado médio": O["resultado_pct"].mean() if len(O) else np.nan,
+                    "Dias médios": (O["saida"] - O["entrada"]).dt.days.mean() if len(O) else np.nan,
+                    "Anos acima do CDI (de 9)": int((T["carteira"] > T["cdi_liq"]).sum())})
+        SAI[nome] = (S, O, A, T)
+        print(f"{nome}: R$ {S.iloc[-1]:,.2f}", flush=True)
+    R_ = pd.DataFrame(RES)
+    F_ = pd.DataFrame(FASE)
+    print(f"\n105% CDI líquido no período: R$ {cdi_liq(DIAS[0], DIAS[-1]):,.2f}")
+    print(R_.to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
+    print("\nPOR ANO (carteira / CDI líquido)")
+    print(pd.DataFrame({n_: SAI[n_][3]["carteira"] for n_ in SAI}).assign(CDI=SAI[VAR[0][0]][3]["cdi_liq"]).to_string(float_format=lambda v: f"{v:+.1%}"))
+    print("\nPOR FASE DA SELIC (média ao mês)")
+    print(F_.to_string(index=False, float_format=lambda v: f"{v:+.2%}"))
+    hoje = DIAS[-1]
+    print(f"\nFase da Selic em {hoje:%d/%m/%Y}: {fase_selic(hoje)} ({float(SELIC.loc[:hoje].iloc[-1]):.2%})")
+    C = candidatos(hoje, relativo=True)
+    print(f"Elegíveis hoje com rendimento comparado ao tipo: {len(C)}")
+    if len(C):
+        print(C.head(15).to_string(index=False, float_format=lambda v: f"{v:.3f}"))
+    with pd.ExcelWriter("planilhas/renda_descontada.xlsx") as w:
+        R_.to_excel(w, sheet_name="Resumo", index=False)
+        F_.to_excel(w, sheet_name="Por fase da Selic", index=False)
+        for i, (n_, (S, O, A, T)) in enumerate(SAI.items(), 1):
+            T.to_excel(w, sheet_name=f"Por ano {n_[0]}")
+            O.to_excel(w, sheet_name=f"Operações {n_[0]}", index=False)
+            A.to_excel(w, sheet_name=f"Em aberto {n_[0]}", index=False)
+        C.to_excel(w, sheet_name="Elegíveis hoje (tipo)", index=False)
+    print("gravado: planilhas/renda_descontada.xlsx")
