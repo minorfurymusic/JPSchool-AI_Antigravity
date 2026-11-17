@@ -54,6 +54,18 @@ R$ 2,70 mi e despesas de R$ 0,34 mi no mês, contra R$ 4,57 mi distribuídos; re
 R$ 2,64 mi.
 Se a base não tiver os comunicados do período, baixar do FNET (estudos/kairi_fnet_2026.py mostra como).
 
+Cobertura pela CVM (todos os fundos, 2017 em diante, só informes já entregues no dia):
+
+```bash
+PYTHONPATH=. python3 -c "from estudos.cobertura_rendimento import cobertura; print(cobertura('CODIGO11', 'aaaa-mm-dd'))"
+```
+
+Abaixo de 0,90 = paga mais do que ganha: ler o relatório gerencial. No passado (11.582 casos), abaixo de 0,90 cortaram o
+rendimento em 6 meses 27% das vezes, contra 20%; abaixo de 0,70, 32%. Limite: a medida usa o último semestre fechado e
+pode demorar até ~2 meses para mostrar um trimestre ruim (LIFE11 em ago/2026 aparecia com 1,03). Usar como alerta, não
+como bloqueio automático: como bloqueio, piorou a carteira de renda descontada (R$ 20.810 → R$ 19.731).
+Dados lidos dos relatórios ficam em tabela (`planilhas/renda_descontada_relatorios_set2026.csv`).
+
 ## Passo 5 — Veredito (sempre com o motivo)
 
 - SAUDÁVEL: queda geral, ou queda só do fundo sem nenhum sinal de doença e com explicação conhecida. Compra.

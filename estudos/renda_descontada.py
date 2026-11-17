@@ -293,9 +293,11 @@ if __name__ == "__main__":
            ("G. D + sem documento negativo em 12 meses", dict(preco_justo=True, segurar=True, v2=True, relativo=True, filtro_docs=True)),
            ("H. D + cobertura + sem documento negativo", dict(preco_justo=True, segurar=True, v2=True, relativo=True, filtro_cob=True,
                                                              filtro_docs=True))]
-    SAI, RES, FASE = {}, [], []
+    SAI, RES, FASE, BAR = {}, [], [], {}
     for nome, kw in VAR:
+        BARRADOS.clear()
         S, O, A = rodar(**kw)
+        BAR[nome] = pd.DataFrame(BARRADOS, columns=["dia", "fundo", "motivo"])
         anos = {}
         for a in range(2018, 2027):
             s_ = S[S.index.year == a]
@@ -342,4 +344,26 @@ if __name__ == "__main__":
             O.to_excel(w, sheet_name=f"Operações {n_[0]}", index=False)
             A.to_excel(w, sheet_name=f"Em aberto {n_[0]}", index=False)
         C.to_excel(w, sheet_name="Elegíveis hoje (tipo)", index=False)
+        for n_, b in BAR.items():
+            if len(b):
+                b.to_excel(w, sheet_name=f"Barrados {n_[0]}", index=False)
+        # as 7 operações da versão D que ficaram abaixo do CDI: aparecem nas versões F, G, H?
+        OD = SAI[VAR[3][0]][1]
+        RUINS = OD[OD["fundo"].isin(["FIGS11", "XPCM11", "BLMR11", "KORE11", "TOPP11", "VRTM11", "LIFE11"])]
+        AB = SAI[VAR[3][0]][2]
+        linhas = []
+        for r in pd.concat([RUINS[["fundo", "entrada", "resultado_pct"]], AB[AB["fundo"].isin(["VRTM11", "LIFE11"])].assign(
+                resultado_pct=lambda x: (x["valor"] + x["rendimentos"]) / x["custo"] - 1)[["fundo", "entrada", "resultado_pct"]]]).itertuples():
+            lin = {"fundo": r.fundo, "entrada na D": r.entrada, "resultado na D": r.resultado_pct}
+            for n_ in SAI:
+                if n_[0] in "FGH":
+                    E2 = pd.concat([SAI[n_][1][["fundo", "entrada"]], SAI[n_][2][["fundo", "entrada"]]])
+                    E2 = E2[(E2["fundo"] == r.fundo) & ((E2["entrada"] - r.entrada).abs() <= pd.Timedelta(days=183))]
+                    lin[f"comprou em {n_[0]} (até 6 meses de diferença)"] = (", ".join(f"{e:%d/%m/%Y}" for e in E2["entrada"])
+                                                                         if len(E2) else "não")
+            linhas.append(lin)
+        SETE = pd.DataFrame(linhas)
+        SETE.to_excel(w, sheet_name="7 operações ruins", index=False)
+        print("\nAS OPERAÇÕES RUINS DA VERSÃO D NAS VERSÕES NOVAS")
+        print(SETE.to_string(index=False))
     print("gravado: planilhas/renda_descontada.xlsx")
