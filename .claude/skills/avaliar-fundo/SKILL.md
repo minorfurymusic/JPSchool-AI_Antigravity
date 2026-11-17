@@ -43,7 +43,15 @@ Não confiar só na busca por palavras do programa (ela erra). Procurar:
 - ofício da B3 ou da CVM pedindo explicação de oscilação (o mercado sabe de algo);
 - comunicado de "não haverá distribuição de rendimentos";
 - liquidação, incorporação, venda de todos os ativos, ida para o balcão (a regra 1 já barra);
-- troca de gestor ou administrador, briga entre cotistas e gestão, emissão de cotas muito abaixo do patrimônio.
+- troca de gestor ou administrador, briga entre cotistas e gestão, emissão de cotas muito abaixo do patrimônio;
+- salto grande e sem explicação no patrimônio (ex.: ativo que sobe 280% num dia), ativo entregue por laudo de avaliação.
+
+No relatório gerencial mais recente (FNET), conferir se o rendimento pago é coberto pelo resultado em dinheiro
+(receitas − despesas, sem "correção monetária" nem "apreciação de ativo"). Se o fundo distribui bem mais do que ganha
+e a reserva de lucros está caindo, o corte de rendimento é provável: refazer a conta do preço justo com o rendimento
+que o resultado sustenta. Exemplo: LIFE11, relatório de setembro/2026 (publicado em 12/11/2026): receitas de
+R$ 2,70 mi e despesas de R$ 0,34 mi no mês, contra R$ 4,57 mi distribuídos; reserva de lucros de R$ 5,26 mi para
+R$ 2,64 mi.
 Se a base não tiver os comunicados do período, baixar do FNET (estudos/kairi_fnet_2026.py mostra como).
 
 ## Passo 5 — Veredito (sempre com o motivo)
