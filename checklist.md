@@ -93,6 +93,8 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-17 — Skill "kairi-padrao" com o molde fechado (`.claude/skills/kairi-padrao/SKILL.md`) e programa dos sinais recentes (`estudos/kairi_sinais_hoje.py`).
 - [ ] Kairi Padrão: acompanhar daqui para a frente, sinal a sinal, anotando o veredito antes do resultado.
 - [x] 2026-11-17 — Estratégia "renda descontada saudável" (rendimento >= CDI + 1, preço 0,60–0,85 do patrimônio, rendimento constante, avaliação de saúde, 5 fundos): três variantes, todas abaixo do CDI (R$ 13,8 mil a R$ 16,0 mil contra R$ 20,8 mil) (`estudos/renda_descontada.py`, `planilhas/renda_descontada.xlsx`).
+- [x] 2026-11-17 — Renda descontada: fase da Selic, saídas corrigidas e rendimento comparado ao tipo de fundo. Melhor versão (D: saídas corrigidas + rendimento acima da mediana do tipo) empatou com o CDI (R$ 20.810 contra R$ 20.779), queda máxima −10,9%. Não comprar com a Selic subindo não ajudou (`estudos/renda_descontada.py`).
+- [ ] PRÓXIMA SEMANA (créditos): baixar do FNET relatórios gerenciais e informes mensais 2018–2026 dos fundos candidatos da renda descontada e medir cobertura do rendimento pelo resultado em dinheiro; conferir a queda geral de 26/10/2026 em outra fonte.
 - [ ] Regra de saída da bolsa: decidir se bloqueia só saída aprovada ou também proposta (5 de 18 bloqueios de 2026 foram propostas que não viraram saída até 09/11).
 - [ ] Conferir em outra fonte a queda geral de 26/10/2026 a 03/11/2026 nos preços (153 de 221 fundos caíram mais de 3% em 26/10).
 - [ ] Melhorar a classificação dos fatos relevantes (amostra lida: 10 de 20 negativos e 7 de 20 positivos errados).
