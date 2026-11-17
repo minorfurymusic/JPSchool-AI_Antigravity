@@ -7,6 +7,7 @@ aquele arquivo. Regua: 105% do CDI (planilhas/cdi.csv), liquido de IR regressivo
 Rodar com:
     cd /home/user/JPSchool-AI_Antigravity && PYTHONPATH=. python3 estudos/auditoria_bloco2.py
 """
+import sys
 import time
 from pathlib import Path
 
@@ -20,7 +21,6 @@ pd.set_option("display.max_columns", 80)
 T0 = time.time()
 RAIZ = Path(__file__).resolve().parents[1]
 PL = RAIZ / "planilhas"
-SCRATCH = Path("/tmp/claude-0/-home-user-JPSchool-AI-Antigravity/fd72a53f-617a-5c36-a0e6-2a1ebd0f529f/scratchpad")
 OPC = dict(sep=";", decimal=",", encoding="utf-8-sig", index=False, date_format="%d/%m/%Y")
 
 INICIO_D = np.datetime64("2018-01-01", "D")
@@ -818,6 +818,7 @@ print("  ASSERT PASSOU (regra E2 conferida à mão para esse sinal)")
 
 print(f"\nTempo total: {time.time() - T0:.1f} s")
 
-with open(SCRATCH / "bloco2_tabelas.md", "w", encoding="utf-8") as fh:
-    for k_, v_ in TAB.items():
-        fh.write(f"<!--{k_}-->\n{v_}\n<!--/{k_}-->\n\n")
+if len(sys.argv) > 1:                    # opcional: grava as tabelas em markdown nesse arquivo
+    with open(sys.argv[1], "w", encoding="utf-8") as fh:
+        for k_, v_ in TAB.items():
+            fh.write(f"<!--{k_}-->\n{v_}\n<!--/{k_}-->\n\n")

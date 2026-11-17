@@ -79,7 +79,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-16 — Kairi: saída pelo cruzamento das médias de 7 e 21 pregões (9 variações, ideia do dono). Nenhuma superou a volta à média (`docs/ESTUDO_KAIRI.md`, parte 6). Total de 31 saídas alternativas testadas, nenhuma melhor nos dois períodos.
 - [x] 2026-11-17 — Decidido pelo dono: régua passa a ser 105% do CDI em liquidez diária, com os impostos.
 - [x] 2026-11-17 — Preparação da auditoria: CDI diário, datas de pagamento dos rendimentos, amortizações e textos dos fatos relevantes exportados para `planilhas/` (`docs/AUDITORIA_PEDIDO.md`).
-- [ ] Rodar a auditoria do Kairi em conversa nova, em três blocos (`docs/AUDITORIA_PEDIDO.md`).
+- [x] 2026-11-17 — Auditoria do Kairi rodada em três blocos por agentes auxiliares, contra 105% do CDI com impostos: tabela mestra e lacunas em `docs/AUDITORIA_KAIRI.md`; programas `estudos/auditoria_bloco1.py`, `auditoria_bloco2.py`, `auditoria_bloco3.py`; planilhas `planilhas/auditoria_bloco*_*.csv`. Resultado: ganha do CDI (carteira do pico 10,2% a 11,1% ao ano contra 8,6%), mas sem prova contra sorte (IC inclui zero; 24 episódios na A; conferência 2023–2026 quase igual ao CDI). Gatilho maior, virada e duas partes pioram; fato negativo antes da queda não fez diferença.
+- [ ] Decisão do dono sobre o resultado da auditoria (`docs/AUDITORIA_KAIRI.md`).
+- [ ] Melhorar a classificação dos fatos relevantes (amostra lida: 10 de 20 negativos e 7 de 20 positivos errados).
 - [ ] Dono ler `planilhas/kairi_cortes.csv` e avaliar o motivo de cada corte de rendimento.
 - [ ] Limpar a base de preços: 334 variações de mais de 25% num dia em 128 fundos; conferir TORD11 (último preço R$ 0,97).
 - [ ] Kairi: colocar o sinal diário no app e acompanhar daqui para a frente, sem dinheiro de verdade.

@@ -1,0 +1,271 @@
+﻿carteira;medida;periodo;indicador;valor
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);n;165,000000
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);média (%);11,139905
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);mediana (%);12,611898
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 5% (%);-13,892221
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 10% (%);-3,261969
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 25% (%);4,346716
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 75% (%);18,880653
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 90% (%);26,909763
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 95% (%);32,003665
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);assimetria;-1,388609
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);curtose (excesso);5,825720
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);desvio padrão (pp);14,794019
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);semidesvio das perdas (pp);7,913731
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);ganhos ÷ perdas (R$);7,275457
+A;Resultado antes do imposto;Escolha (entradas 2018-2022);ordens positivas (%);84,848485
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);n;146,000000
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);média (%);9,731021
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);mediana (%);13,174275
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 5% (%);-17,052134
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 10% (%);0,785360
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 25% (%);8,200652
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 75% (%);16,755281
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 90% (%);19,364499
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 95% (%);20,320704
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);assimetria;-3,313105
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);curtose (excesso);14,142248
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);desvio padrão (pp);14,950506
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);semidesvio das perdas (pp);10,952123
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);ganhos ÷ perdas (R$);5,861718
+A;Resultado antes do imposto;Conferência (entradas 2023-2026);ordens positivas (%);91,095890
+A;Resultado antes do imposto;Total;n;311,000000
+A;Resultado antes do imposto;Total;média (%);10,478500
+A;Resultado antes do imposto;Total;mediana (%);12,774846
+A;Resultado antes do imposto;Total;quantil 5% (%);-15,614179
+A;Resultado antes do imposto;Total;quantil 10% (%);-3,120569
+A;Resultado antes do imposto;Total;quantil 25% (%);6,645243
+A;Resultado antes do imposto;Total;quantil 75% (%);17,347048
+A;Resultado antes do imposto;Total;quantil 90% (%);23,528606
+A;Resultado antes do imposto;Total;quantil 95% (%);27,196839
+A;Resultado antes do imposto;Total;assimetria;-2,288638
+A;Resultado antes do imposto;Total;curtose (excesso);9,775211
+A;Resultado antes do imposto;Total;desvio padrão (pp);14,860354
+A;Resultado antes do imposto;Total;semidesvio das perdas (pp);9,462404
+A;Resultado antes do imposto;Total;ganhos ÷ perdas (R$);6,560361
+A;Resultado antes do imposto;Total;ordens positivas (%);87,781350
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);n;165,000000
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);média (%);8,198841
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);mediana (%);10,170135
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 5% (%);-17,649939
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 10% (%);-10,102297
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 25% (%);0,015191
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 75% (%);17,603663
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 90% (%);25,901056
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 95% (%);31,399284
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);assimetria;-1,438636
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);curtose (excesso);5,594710
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);desvio padrão (pp);16,902302
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);semidesvio das perdas (pp);10,314185
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);ganhos ÷ perdas (R$);3,783573
+A;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);ordens positivas (%);75,151515
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);n;146,000000
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);média (%);5,330604
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);mediana (%);9,323432
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 5% (%);-26,663250
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 10% (%);-5,594924
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 25% (%);3,013550
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 75% (%);12,500188
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 90% (%);16,996497
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 95% (%);18,642572
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);assimetria;-3,154197
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);curtose (excesso);13,252603
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);desvio padrão (pp);16,753346
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);semidesvio das perdas (pp);13,449512
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);ganhos ÷ perdas (R$);2,906588
+A;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);ordens positivas (%);82,191781
+A;Excesso sobre 105% do CDI (antes do imposto);Total;n;311,000000
+A;Excesso sobre 105% do CDI (antes do imposto);Total;média (%);6,852338
+A;Excesso sobre 105% do CDI (antes do imposto);Total;mediana (%);9,759770
+A;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 5% (%);-19,809063
+A;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 10% (%);-8,612390
+A;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 25% (%);1,552918
+A;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 75% (%);15,617670
+A;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 90% (%);21,757163
+A;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 95% (%);26,424777
+A;Excesso sobre 105% do CDI (antes do imposto);Total;assimetria;-2,194584
+A;Excesso sobre 105% do CDI (antes do imposto);Total;curtose (excesso);9,096419
+A;Excesso sobre 105% do CDI (antes do imposto);Total;desvio padrão (pp);16,866445
+A;Excesso sobre 105% do CDI (antes do imposto);Total;semidesvio das perdas (pp);11,889489
+A;Excesso sobre 105% do CDI (antes do imposto);Total;ganhos ÷ perdas (R$);3,370216
+A;Excesso sobre 105% do CDI (antes do imposto);Total;ordens positivas (%);78,456592
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);n;97,000000
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);média (%);17,124848
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);mediana (%);19,875393
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 5% (%);-12,894555
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 10% (%);-2,888632
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 25% (%);8,004171
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 75% (%);26,995106
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 90% (%);34,559882
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 95% (%);41,307491
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);assimetria;-0,845369
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);curtose (excesso);1,423894
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);desvio padrão (pp);16,477433
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);semidesvio das perdas (pp);6,537580
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);ganhos ÷ perdas (R$);11,744279
+B;Resultado antes do imposto;Escolha (entradas 2018-2022);ordens positivas (%);88,659794
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);n;67,000000
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);média (%);13,526848
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);mediana (%);18,056334
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 5% (%);-23,451606
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 10% (%);-8,436336
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 25% (%);13,120319
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 75% (%);20,737908
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 90% (%);22,974743
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 95% (%);24,960123
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);assimetria;-1,944268
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);curtose (excesso);4,746192
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);desvio padrão (pp);15,658091
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);semidesvio das perdas (pp);9,200143
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);ganhos ÷ perdas (R$);6,808418
+B;Resultado antes do imposto;Conferência (entradas 2023-2026);ordens positivas (%);86,567164
+B;Resultado antes do imposto;Total;n;164,000000
+B;Resultado antes do imposto;Total;média (%);15,654933
+B;Resultado antes do imposto;Total;mediana (%);18,443442
+B;Resultado antes do imposto;Total;quantil 5% (%);-18,620411
+B;Resultado antes do imposto;Total;quantil 10% (%);-4,589164
+B;Resultado antes do imposto;Total;quantil 25% (%);11,201963
+B;Resultado antes do imposto;Total;quantil 75% (%);23,565529
+B;Resultado antes do imposto;Total;quantil 90% (%);30,306205
+B;Resultado antes do imposto;Total;quantil 95% (%);37,505997
+B;Resultado antes do imposto;Total;assimetria;-1,201878
+B;Resultado antes do imposto;Total;curtose (excesso);2,621096
+B;Resultado antes do imposto;Total;desvio padrão (pp);16,196487
+B;Resultado antes do imposto;Total;semidesvio das perdas (pp);7,736842
+B;Resultado antes do imposto;Total;ganhos ÷ perdas (R$);9,271809
+B;Resultado antes do imposto;Total;ordens positivas (%);87,804878
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);n;97,000000
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);média (%);14,517654
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);mediana (%);19,002507
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 5% (%);-15,553264
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 10% (%);-8,785442
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 25% (%);4,723302
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 75% (%);25,721474
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 90% (%);33,594920
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 95% (%);40,683429
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);assimetria;-0,868271
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);curtose (excesso);1,296731
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);desvio padrão (pp);18,146455
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);semidesvio das perdas (pp);8,347265
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);ganhos ÷ perdas (R$);7,066468
+B;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);ordens positivas (%);79,381443
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);n;67,000000
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);média (%);8,701545
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);mediana (%);13,296595
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 5% (%);-35,001490
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 10% (%);-16,220956
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 25% (%);8,376596
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 75% (%);17,411688
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 90% (%);19,500754
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 95% (%);21,512218
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);assimetria;-1,774864
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);curtose (excesso);3,671367
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);desvio padrão (pp);17,204630
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);semidesvio das perdas (pp);11,906001
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);ganhos ÷ perdas (R$);3,662268
+B;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);ordens positivas (%);86,567164
+B;Excesso sobre 105% do CDI (antes do imposto);Total;n;164,000000
+B;Excesso sobre 105% do CDI (antes do imposto);Total;média (%);12,141561
+B;Excesso sobre 105% do CDI (antes do imposto);Total;mediana (%);14,677322
+B;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 5% (%);-29,315749
+B;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 10% (%);-9,834162
+B;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 25% (%);6,988272
+B;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 75% (%);21,851973
+B;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 90% (%);29,918582
+B;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 95% (%);35,957054
+B;Excesso sobre 105% do CDI (antes do imposto);Total;assimetria;-1,122353
+B;Excesso sobre 105% do CDI (antes do imposto);Total;curtose (excesso);2,144655
+B;Excesso sobre 105% do CDI (antes do imposto);Total;desvio padrão (pp);17,944814
+B;Excesso sobre 105% do CDI (antes do imposto);Total;semidesvio das perdas (pp);9,956030
+B;Excesso sobre 105% do CDI (antes do imposto);Total;ganhos ÷ perdas (R$);5,406102
+B;Excesso sobre 105% do CDI (antes do imposto);Total;ordens positivas (%);82,317073
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);n;150,000000
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);média (%);11,276778
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);mediana (%);12,721612
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 5% (%);-14,796892
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 10% (%);-3,412994
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 25% (%);5,170616
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 75% (%);18,927510
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 90% (%);26,809691
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);quantil 95% (%);32,887139
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);assimetria;-1,454213
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);curtose (excesso);5,951227
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);desvio padrão (pp);15,103870
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);semidesvio das perdas (pp);8,250457
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);ganhos ÷ perdas (R$);6,962181
+C;Resultado antes do imposto;Escolha (entradas 2018-2022);ordens positivas (%);86,000000
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);n;117,000000
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);média (%);11,844787
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);mediana (%);14,078913
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 5% (%);1,849170
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 10% (%);5,771487
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 25% (%);10,022238
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 75% (%);16,631450
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 90% (%);19,096177
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);quantil 95% (%);19,802502
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);assimetria;-5,224457
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);curtose (excesso);37,526792
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);desvio padrão (pp);10,988150
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);semidesvio das perdas (pp);7,841491
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);ganhos ÷ perdas (R$);15,242938
+C;Resultado antes do imposto;Conferência (entradas 2023-2026);ordens positivas (%);96,581197
+C;Resultado antes do imposto;Total;n;267,000000
+C;Resultado antes do imposto;Total;média (%);11,525681
+C;Resultado antes do imposto;Total;mediana (%);13,277098
+C;Resultado antes do imposto;Total;quantil 5% (%);-11,512912
+C;Resultado antes do imposto;Total;quantil 10% (%);0,318926
+C;Resultado antes do imposto;Total;quantil 25% (%);7,501616
+C;Resultado antes do imposto;Total;quantil 75% (%);17,312507
+C;Resultado antes do imposto;Total;quantil 90% (%);23,507402
+C;Resultado antes do imposto;Total;quantil 95% (%);27,250039
+C;Resultado antes do imposto;Total;assimetria;-2,403305
+C;Resultado antes do imposto;Total;curtose (excesso);12,550731
+C;Resultado antes do imposto;Total;desvio padrão (pp);13,435713
+C;Resultado antes do imposto;Total;semidesvio das perdas (pp);8,073798
+C;Resultado antes do imposto;Total;ganhos ÷ perdas (R$);9,096823
+C;Resultado antes do imposto;Total;ordens positivas (%);90,636704
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);n;150,000000
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);média (%);8,344068
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);mediana (%);10,201496
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 5% (%);-18,968053
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 10% (%);-8,915230
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 25% (%);0,399475
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 75% (%);18,013599
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 90% (%);25,953941
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);quantil 95% (%);32,069259
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);assimetria;-1,506224
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);curtose (excesso);5,788287
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);desvio padrão (pp);17,216375
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);semidesvio das perdas (pp);10,652285
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);ganhos ÷ perdas (R$);3,761387
+C;Excesso sobre 105% do CDI (antes do imposto);Escolha (entradas 2018-2022);ordens positivas (%);76,666667
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);n;117,000000
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);média (%);7,605421
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);mediana (%);9,984773
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 5% (%);-6,154046
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 10% (%);-1,028922
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 25% (%);5,546305
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 75% (%);12,630819
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 90% (%);16,795022
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);quantil 95% (%);17,881948
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);assimetria;-4,755632
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);curtose (excesso);32,426469
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);desvio padrão (pp);12,805410
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);semidesvio das perdas (pp);9,867290
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);ganhos ÷ perdas (R$);6,475138
+C;Excesso sobre 105% do CDI (antes do imposto);Conferência (entradas 2023-2026);ordens positivas (%);88,888889
+C;Excesso sobre 105% do CDI (antes do imposto);Total;n;267,000000
+C;Excesso sobre 105% do CDI (antes do imposto);Total;média (%);8,020391
+C;Excesso sobre 105% do CDI (antes do imposto);Total;mediana (%);10,070318
+C;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 5% (%);-14,162138
+C;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 10% (%);-6,320377
+C;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 25% (%);3,412419
+C;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 75% (%);15,617670
+C;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 90% (%);22,069669
+C;Excesso sobre 105% do CDI (antes do imposto);Total;quantil 95% (%);26,426612
+C;Excesso sobre 105% do CDI (antes do imposto);Total;assimetria;-2,325228
+C;Excesso sobre 105% do CDI (antes do imposto);Total;curtose (excesso);11,730720
+C;Excesso sobre 105% do CDI (antes do imposto);Total;desvio padrão (pp);15,416706
+C;Excesso sobre 105% do CDI (antes do imposto);Total;semidesvio das perdas (pp);10,315654
+C;Excesso sobre 105% do CDI (antes do imposto);Total;ganhos ÷ perdas (R$);4,492529
+C;Excesso sobre 105% do CDI (antes do imposto);Total;ordens positivas (%);82,022472

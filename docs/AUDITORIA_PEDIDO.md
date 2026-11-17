@@ -1,6 +1,6 @@
 # Auditoria do Estudo do Kairi — pedido e preparação
 
-Data: 2026-11-17. Pedido do dono, a partir de um roteiro montado com outra IA. **A auditoria ainda não foi rodada.** Este arquivo guarda o que foi decidido e o que já está pronto, para ela poder ser feita em qualquer conversa.
+Data: 2026-11-17. Pedido do dono, a partir de um roteiro montado com outra IA. **Auditoria rodada em 2026-11-17: resultado em `docs/AUDITORIA_KAIRI.md`.** Este arquivo guarda o que foi decidido e o que já está pronto, para ela poder ser feita em qualquer conversa.
 
 ## Decisões do dono
 

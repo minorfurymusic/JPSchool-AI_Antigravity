@@ -1,0 +1,16 @@
+﻿dado;situacao;efeito
+Data de pagamento dos rendimentos;"3 avisos (R$ 82,08) nas ordens sem data de pagamento; usada data-base + 11 dias";pequeno: desloca poucos dias o recebimento na TIR e no saldo
+Rendimentos pagos depois de 09/11/2026;"20 avisos (R$ 690,98) de ordens da base; entram na TIR na data de pagamento e na carteira do pico como 'a receber' (valor declarado)";valor final inclui dinheiro ainda não recebido
+Ordens em aberto;66 ordens avaliadas ao preço de 09/11/2026, sem imposto e com taxa de venda;"TIR das ordens um pouco favorecida (sem imposto); versão só com fechadas mostrada"
+Imposto por ordem;o imposto do FII é mensal com abatimento: não se divide por ordem;comparações por ordem são antes do imposto dos dois lados
+Dias úteis depois de 13/11/2026;"o cdi.csv termina em 13/11/2026; DARF de vendas de novembro/2026 usa o último dia de semana de dezembro (sem feriados)";no máximo 1 dia de diferença em um imposto
+Amortizações;não entram como dinheiro recebido nas ordens (lacuna herdada do estudo anterior);ordens de fundos que devolveram patrimônio aparecem com perda maior que a real
+Saltos de preço sem ajuste;"334 variações de mais de 25% em um dia, em 128 fundos (README das planilhas); 13 das 341 ordens da A têm um salto";"afeta o resultado dessas ordens; não removidas"
+Preços da planilha de ordens;valor e valorização arredondados ao centavo em kairi_ordens.csv;erro de até 1 centavo por ordem
+Índice da bolsa de ações;"não existe na base; 'mercado' do estudo é o FII do meio";sem comparação com ações
+Fundo com último preço antes de 09/11/2026;1 ordem(ns) em aberto cujo último preço é anterior a 09/11/2026 (avaliada nesse preço);efeito desprezível
+Ordens em aberto fora das estatísticas por ordem;as 66 ordens em aberto não entram nos indicadores, no teste ingênuo nem no resultado por episódio (só nos fluxos de TIR, no saldo do pico e na contagem de episódios);estatísticas por ordem usam só ordens fechadas, como o estudo anterior
+kairi_ordens_saidas.csv sem a carteira C;"a conferência cruzada do resultado antes do imposto com esse arquivo só vale para A e B; para C a conferência é a dos rendimentos e das taxas";nenhum efeito nos números
+Imposto a pagar no patrimônio mensal;"o imposto do mês só entra como dívida no último dia do mês da venda; antes disso o patrimônio não o desconta";"pequena oscilação no patrimônio dentro do mês; afeta pouco Sharpe, Sortino e Calmar"
+Falta de caixa na carteira do pico;"o programa prevê dívida a 105% do CDI se o saldo acabar; não ocorreu nenhuma vez (ver coluna da tabela)";sem efeito
+Estimativa do imposto das ordens em aberto;não calculado (venda hipotética);TIR das ordens e valor final do pico levemente favorecidos

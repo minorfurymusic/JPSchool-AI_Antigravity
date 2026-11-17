@@ -1,0 +1,73 @@
+﻿carteira;periodo;metodo;n;media;t;p;ic_lo;ic_hi;unidade;rep_nao_positivas
+A;Escolha (entradas 2018-2022);por ordem, ingênuo;165;8,198841;6,230869;0,000000;5,600665;10,797017;pp por ordem;
+A;Escolha (entradas 2018-2022);por episódio (W=10);23;4,993241;1,429515;0,166904;-2,250720;12,237203;pp por episódio;
+A;Escolha (entradas 2018-2022);por episódio (W=20);14;7,618488;2,037718;0,062464;-0,458559;15,695535;pp por episódio;
+A;Escolha (entradas 2018-2022);por episódio (W=40);7;5,091560;0,951292;0,378187;-8,004941;18,188062;pp por episódio;
+A;Conferência (entradas 2023-2026);por ordem, ingênuo;146;5,330604;3,844601;0,000180;2,590210;8,070998;pp por ordem;
+A;Conferência (entradas 2023-2026);por episódio (W=10);23;2,290595;0,605253;0,551204;-5,558028;10,139218;pp por episódio;
+A;Conferência (entradas 2023-2026);por episódio (W=20);11;4,857519;1,314738;0,217950;-3,374715;13,089754;pp por episódio;
+A;Conferência (entradas 2023-2026);por episódio (W=40);6;8,543954;1,758719;0,138953;-3,944077;21,031984;pp por episódio;
+A;Total;por ordem, ingênuo;311;6,852338;7,164657;0,000000;4,970465;8,734211;pp por ordem;
+A;Total;por episódio (W=10);45;3,956625;1,539434;0,130860;-1,223234;9,136484;pp por episódio;
+A;Total;por episódio (W=20);24;7,190765;2,898996;0,008091;2,059599;12,321930;pp por episódio;
+A;Total;por episódio (W=40);12;8,282622;2,716773;0,020047;1,572481;14,992762;pp por episódio;
+B;Escolha (entradas 2018-2022);por ordem, ingênuo;97;14,517654;7,879352;0,000000;10,860334;18,174975;pp por ordem;
+B;Escolha (entradas 2018-2022);por episódio (W=10);20;4,893440;1,125606;0,274350;-4,205740;13,992619;pp por episódio;
+B;Escolha (entradas 2018-2022);por episódio (W=20);16;4,948922;1,127737;0,277148;-4,404660;14,302503;pp por episódio;
+B;Escolha (entradas 2018-2022);por episódio (W=40);11;7,585059;1,611525;0,138142;-2,902254;18,072371;pp por episódio;
+B;Conferência (entradas 2023-2026);por ordem, ingênuo;67;8,701545;4,139886;0,000101;4,505006;12,898084;pp por ordem;
+B;Conferência (entradas 2023-2026);por episódio (W=10);14;-0,328864;-0,043800;0,965729;-16,549395;15,891668;pp por episódio;
+B;Conferência (entradas 2023-2026);por episódio (W=20);11;0,031328;0,003564;0,997226;-19,553492;19,616149;pp por episódio;
+B;Conferência (entradas 2023-2026);por episódio (W=40);8;4,520197;0,435220;0,676506;-20,038789;29,079183;pp por episódio;
+B;Total;por ordem, ingênuo;164;12,141561;8,664779;0,000000;9,374609;14,908513;pp por ordem;
+B;Total;por episódio (W=10);34;2,743080;0,691290;0,494218;-5,330002;10,816161;pp por episódio;
+B;Total;por episódio (W=20);27;2,945458;0,677257;0,504225;-5,994245;11,885160;pp por episódio;
+B;Total;por episódio (W=40);19;6,294591;1,261054;0,223390;-4,192228;16,781410;pp por episódio;
+C;Escolha (entradas 2018-2022);por ordem, ingênuo;150;8,344068;5,935834;0,000000;5,566364;11,121772;pp por ordem;
+C;Escolha (entradas 2018-2022);por episódio (W=10);15;-0,202014;-0,044449;0,965175;-9,949845;9,545817;pp por episódio;
+C;Escolha (entradas 2018-2022);por episódio (W=20);10;1,956345;0,408832;0,692220;-8,868539;12,781229;pp por episódio;
+C;Escolha (entradas 2018-2022);por episódio (W=40);5;0,318470;0,041949;0,968550;-20,760037;21,396977;pp por episódio;
+C;Conferência (entradas 2023-2026);por ordem, ingênuo;117;7,605421;6,424254;0,000000;5,260636;9,950206;pp por ordem;
+C;Conferência (entradas 2023-2026);por episódio (W=10);7;10,477413;7,198880;0,000364;6,916122;14,038703;pp por episódio;
+C;Conferência (entradas 2023-2026);por episódio (W=20);3;11,424944;4,273604;0,050631;-0,077659;22,927546;pp por episódio;
+C;Conferência (entradas 2023-2026);por episódio (W=40);3;11,424944;4,273604;0,050631;-0,077659;22,927546;pp por episódio;
+C;Total;por ordem, ingênuo;267;8,020391;8,500796;0,000000;6,162738;9,878044;pp por ordem;
+C;Total;por episódio (W=10);22;3,195985;0,974318;0,340989;-3,625623;10,017593;pp por episódio;
+C;Total;por episódio (W=20);12;5,967035;1,984244;0,072740;-0,651787;12,585857;pp por episódio;
+C;Total;por episódio (W=40);7;7,661902;3,054957;0,022369;1,524992;13,798813;pp por episódio;
+A;Escolha (entradas 2018-2022);mensal do pico, Newey-West (defasagens=3);60;2,286074;1,446936;0,153207;-0,875380;5,447528;pp ao ano (média mensal x 12);
+A;Escolha (entradas 2018-2022);mensal do pico, Newey-West (defasagens=6);60;2,286074;1,465031;0,148221;-0,836333;5,408480;pp ao ano (média mensal x 12);
+A;Escolha (entradas 2018-2022);mensal do pico, Newey-West (defasagens=12);60;2,286074;1,593852;0,116313;-0,583968;5,156116;pp ao ano (média mensal x 12);
+A;Escolha (entradas 2018-2022);mensal do pico, bootstrap em blocos de 6 meses;60;2,286074;;;-0,153793;6,045033;pp ao ano (média mensal x 12);3,730000
+A;Conferência (entradas 2023-2026);mensal do pico, Newey-West (defasagens=3);47;0,431397;0,486447;0,628960;-1,353705;2,216498;pp ao ano (média mensal x 12);
+A;Conferência (entradas 2023-2026);mensal do pico, Newey-West (defasagens=6);47;0,431397;0,527600;0,600313;-1,214465;2,077258;pp ao ano (média mensal x 12);
+A;Conferência (entradas 2023-2026);mensal do pico, Newey-West (defasagens=12);47;0,431397;0,624536;0,535361;-0,959006;1,821800;pp ao ano (média mensal x 12);
+A;Conferência (entradas 2023-2026);mensal do pico, bootstrap em blocos de 6 meses;47;0,431397;;;-0,824795;2,502865;pp ao ano (média mensal x 12);30,240000
+A;Total;mensal do pico, Newey-West (defasagens=3);107;1,471402;1,494874;0,137918;-0,480065;3,422870;pp ao ano (média mensal x 12);
+A;Total;mensal do pico, Newey-West (defasagens=6);107;1,471402;1,509928;0,134037;-0,460609;3,403414;pp ao ano (média mensal x 12);
+A;Total;mensal do pico, Newey-West (defasagens=12);107;1,471402;1,596115;0,113440;-0,356284;3,299089;pp ao ano (média mensal x 12);
+A;Total;mensal do pico, bootstrap em blocos de 6 meses;107;1,471402;;;-0,132513;3,797360;pp ao ano (média mensal x 12);4,100000
+B;Escolha (entradas 2018-2022);mensal do pico, Newey-West (defasagens=3);60;3,678184;1,245743;0,217783;-2,229960;9,586328;pp ao ano (média mensal x 12);
+B;Escolha (entradas 2018-2022);mensal do pico, Newey-West (defasagens=6);60;3,678184;1,224991;0,225447;-2,330047;9,686416;pp ao ano (média mensal x 12);
+B;Escolha (entradas 2018-2022);mensal do pico, Newey-West (defasagens=12);60;3,678184;1,313764;0,194011;-1,924064;9,280432;pp ao ano (média mensal x 12);
+B;Escolha (entradas 2018-2022);mensal do pico, bootstrap em blocos de 6 meses;60;3,678184;;;-0,421539;11,019150;pp ao ano (média mensal x 12);6,270000
+B;Conferência (entradas 2023-2026);mensal do pico, Newey-West (defasagens=3);47;0,788291;0,700319;0,487255;-1,477460;3,054043;pp ao ano (média mensal x 12);
+B;Conferência (entradas 2023-2026);mensal do pico, Newey-West (defasagens=6);47;0,788291;0,667065;0,508063;-1,590411;3,166994;pp ao ano (média mensal x 12);
+B;Conferência (entradas 2023-2026);mensal do pico, Newey-West (defasagens=12);47;0,788291;0,689024;0,494269;-1,514600;3,091183;pp ao ano (média mensal x 12);
+B;Conferência (entradas 2023-2026);mensal do pico, bootstrap em blocos de 6 meses;47;0,788291;;;-0,875372;3,708445;pp ao ano (média mensal x 12);23,940000
+B;Total;mensal do pico, Newey-West (defasagens=3);107;2,408792;1,375611;0,171842;-1,062875;5,880459;pp ao ano (média mensal x 12);
+B;Total;mensal do pico, Newey-West (defasagens=6);107;2,408792;1,336845;0,184135;-1,163549;5,981133;pp ao ano (média mensal x 12);
+B;Total;mensal do pico, Newey-West (defasagens=12);107;2,408792;1,391824;0,166889;-1,022436;5,840021;pp ao ano (média mensal x 12);
+B;Total;mensal do pico, bootstrap em blocos de 6 meses;107;2,408792;;;-0,184838;6,787108;pp ao ano (média mensal x 12);4,350000
+C;Escolha (entradas 2018-2022);mensal do pico, Newey-West (defasagens=3);60;2,211191;1,342667;0,184523;-1,084177;5,506558;pp ao ano (média mensal x 12);
+C;Escolha (entradas 2018-2022);mensal do pico, Newey-West (defasagens=6);60;2,211191;1,365225;0,177366;-1,029728;5,452110;pp ao ano (média mensal x 12);
+C;Escolha (entradas 2018-2022);mensal do pico, Newey-West (defasagens=12);60;2,211191;1,519960;0,133862;-0,699796;5,122178;pp ao ano (média mensal x 12);
+C;Escolha (entradas 2018-2022);mensal do pico, bootstrap em blocos de 6 meses;60;2,211191;;;-0,346465;6,137192;pp ao ano (média mensal x 12);5,720000
+C;Conferência (entradas 2023-2026);mensal do pico, Newey-West (defasagens=3);47;0,678870;0,776124;0,441648;-1,081795;2,439535;pp ao ano (média mensal x 12);
+C;Conferência (entradas 2023-2026);mensal do pico, Newey-West (defasagens=6);47;0,678870;0,835493;0,407759;-0,956685;2,314425;pp ao ano (média mensal x 12);
+C;Conferência (entradas 2023-2026);mensal do pico, Newey-West (defasagens=12);47;0,678870;0,992007;0,326384;-0,698634;2,056374;pp ao ano (média mensal x 12);
+C;Conferência (entradas 2023-2026);mensal do pico, bootstrap em blocos de 6 meses;47;0,678870;;;-0,633579;2,672751;pp ao ano (média mensal x 12);22,500000
+C;Total;mensal do pico, Newey-West (defasagens=3);107;1,538115;1,520860;0,131272;-0,466976;3,543206;pp ao ano (média mensal x 12);
+C;Total;mensal do pico, Newey-West (defasagens=6);107;1,538115;1,545010;0,125324;-0,435634;3,511865;pp ao ano (média mensal x 12);
+C;Total;mensal do pico, Newey-West (defasagens=12);107;1,538115;1,680546;0,095796;-0,276451;3,352682;pp ao ano (média mensal x 12);
+C;Total;mensal do pico, bootstrap em blocos de 6 meses;107;1,538115;;;-0,128332;3,880649;pp ao ano (média mensal x 12);3,960000
