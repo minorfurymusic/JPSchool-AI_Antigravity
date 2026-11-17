@@ -25,6 +25,14 @@ import runpy
 import numpy as np
 import pandas as pd
 
+from functools import lru_cache
+from estudos.saude_fundo import saude as _saude
+
+
+@lru_cache(maxsize=None)
+def SAUDE(fundo, dia):
+    return _saude(fundo, pd.Timestamp(dia))
+
 with contextlib.redirect_stdout(io.StringIO()):
     g = runpy.run_path("estudos/kairi_carteira_anos.py", run_name="__main__")
 G = g["simular"].__globals__
@@ -71,7 +79,12 @@ def ultimo_idx(F, mi):
     return int(np.searchsorted(F["dates"], MD[mi], "right")) - 1
 
 
-def rodar(X2, modo, L=None, Fg=None):
+def rodar(X2, modo, L=None, Fg=None, filtro=False):
+    """filtro=True: antes de cada compra, a avaliação de saúde (estudos/saude_fundo.py) no dia do sinal; NÃO COMPRAR barra a compra."""
+    barrados = []
+    caixa_dia = {}
+    fluxo = {}
+    com_pos = {}
     cx = Caixa()
     cx.add(JA, CAP)
     pos = None                 # dict do fundo em carteira
@@ -85,6 +98,12 @@ def rodar(X2, modo, L=None, Fg=None):
     def comprar(c, mi, como):
         nonlocal pos
         F = c["F"]
+        if filtro:
+            sv = SAUDE(F["nome"], MD[c["md"]])
+            if sv["veredito"] == "NÃO COMPRAR":
+                barrados.append(dict(fundo=F["nome"], sinal=TS[c["md"]], como=como, motivo="; ".join(sv["problemas"]),
+                                     individual_6m=sv["individual_6m"]))
+                return False
         r = idx_fundo(F, mi)
         if r < 0 or F["NEG"][r] != 1 or not np.isfinite(F["A"][r]) or F["A"][r] <= 0:
             return False
@@ -131,8 +150,9 @@ def rodar(X2, modo, L=None, Fg=None):
             mp = int(np.searchsorted(MD, pg, "left"))
             if mp > FIM:
                 a_receber += val
-            else:
-                pend_rend.append((max(mp, mi), val))
+            elif mp > mi:                         # pago depois da venda (quem tinha a cota na data-base recebe)
+                pend_rend.append((mp, val))
+            # pago até o dia da venda: já entrou no caixa no dia do pagamento (passo 1 do laço)
         ops.append(dict(carteira=pos["cart"], fundo=pos["nome"], como_entrou=pos["como"], sinal=pos["sinal"],
                         entrada=TS[pos["mi_e"]], preco_entrada=pos["px"], cotas=pos["cot"], valor_entrada=pos["custo"],
                         saida=TS[mi], preco_saida=preco, valor_saida=liquido, motivo=motivo, rendimentos=rend,
@@ -164,7 +184,13 @@ def rodar(X2, modo, L=None, Fg=None):
     seg_amanha = None
     for mi in range(JA, NM):
         dia = pd.Timestamp(TS[mi])
-        # 1) rendimentos pagos hoje
+        # 1) rendimentos pagos hoje: da posição atual (data-base desde a compra) e de posições já vendidas
+        if pos is not None:
+            for db, v, pg in direitos(pos["nome"], MD[pos["mi_e"]], MD[mi], False):
+                if pd.isna(pg):
+                    pg = db + np.timedelta64(11, "D")
+                if int(np.searchsorted(MD, pg, "left")) == mi:
+                    cx.add(mi, v * pos["cot"])
         for p in [p for p in pend_rend if p[0] == mi]:
             cx.add(mi, p[1])
             pend_rend.remove(p)
@@ -215,11 +241,18 @@ def rodar(X2, modo, L=None, Fg=None):
                     seg_amanha = sorted(vivos, key=lambda c: -c["vol"])[0]
         perdidos = [c for c in perdidos if mi - c["md"] <= 252]
         # 5) patrimônio do dia
-        v = cx.saldo(mi, MD[mi]) + (valor_pos(mi) if pos is not None else 0.0)
+        caixa_dia[mi] = cx.saldo(mi, MD[mi])
+        com_pos[mi] = pos is not None
+        v = caixa_dia[mi] + (valor_pos(mi) if pos is not None else 0.0)
         diario.append((dia, v))
     # fim: posição aberta a preço do último fechamento, imposto devido descontado
     aberto = None
     if pos is not None:
+        for db, v, pg in direitos(pos["nome"], MD[pos["mi_e"]], MD[FIM], True):
+            if pd.isna(pg):
+                pg = db + np.timedelta64(11, "D")
+            if int(np.searchsorted(MD, pg, "left")) > FIM:
+                a_receber += v * pos["cot"]
         aberto = dict(fundo=pos["nome"], entrada=TS[pos["mi_e"]], preco_entrada=pos["px"], valor=valor_pos(FIM))
     devido = 0.0
     for m in sorted(ganhos):
@@ -228,7 +261,9 @@ def rodar(X2, modo, L=None, Fg=None):
     serie = pd.Series(dict(diario))
     final = serie.iloc[-1] - devido + a_receber + sum(p[1] for p in pend_rend)
     O = pd.DataFrame(ops)
-    return dict(serie=serie, final=final, ops=O, aberto=aberto, n_troca=n_troca, n_seg=n_seg,
+    return dict(serie=serie, final=final, ops=O, aberto=aberto, n_troca=n_troca, n_seg=n_seg, barrados=pd.DataFrame(barrados),
+                caixa=pd.Series({pd.Timestamp(TS[k]): v for k, v in caixa_dia.items()}), fluxo=fluxo,
+                com_pos=pd.Series({pd.Timestamp(TS[k]): v for k, v in com_pos.items()}),
                 imposto=sum(darf) + devido, a_receber=a_receber)
 
 
@@ -255,45 +290,46 @@ def resumo(nome, r):
                                    "Anos que ganhou do CDI": sum(anos[a] > cdi_a[a] for a in anos)}), anos, cdi_a
 
 
-RUNS = {}
-for X2, rot in ((0.20, "C2 20%"), (0.15, "C2 15%")):
-    RUNS[f"{rot} | segurar + segunda entrada"] = rodar(X2, "segurar")
-    RUNS[f"{rot} | troca: lucro ≥15% e a ≤5% da média"] = rodar(X2, "troca", 0.15, 0.05)
-    RUNS[f"{rot} | troca: lucro ≥20%"] = rodar(X2, "troca", 0.20, None)
-    RUNS[f"{rot} | troca: lucro ≥10% e a ≤10% da média"] = rodar(X2, "troca", 0.10, 0.10)
+if __name__ in ("__main__", "kairi_um_fundo"):
+  RUNS = {}
+  for X2, rot in ((0.20, "C2 20%"), (0.15, "C2 15%")):
+      RUNS[f"{rot} | segurar + segunda entrada"] = rodar(X2, "segurar")
+      RUNS[f"{rot} | troca: lucro ≥15% e a ≤5% da média"] = rodar(X2, "troca", 0.15, 0.05)
+      RUNS[f"{rot} | troca: lucro ≥20%"] = rodar(X2, "troca", 0.20, None)
+      RUNS[f"{rot} | troca: lucro ≥10% e a ≤10% da média"] = rodar(X2, "troca", 0.10, 0.10)
 
-LIN, ANO = [], []
-for nome, r in RUNS.items():
-    l, anos, cdi_a = resumo(nome, r)
-    LIN.append(l)
-    ANO.append(dict(Simulação=nome, **{str(a): anos[a] for a in anos}))
-ANO.append(dict(Simulação="105% do CDI (R$ 10 mil)", **{str(a): cdi_a[a] for a in cdi_a}))
-T = pd.DataFrame(LIN)
-A = pd.DataFrame(ANO)
-pd.set_option("display.width", 260)
-pd.set_option("display.max_columns", 30)
-print(T.to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
-print(A.to_string(index=False, float_format=lambda v: f"{v:.3f}"))
+  LIN, ANO = [], []
+  for nome, r in RUNS.items():
+      l, anos, cdi_a = resumo(nome, r)
+      LIN.append(l)
+      ANO.append(dict(Simulação=nome, **{str(a): anos[a] for a in anos}))
+  ANO.append(dict(Simulação="105% do CDI (R$ 10 mil)", **{str(a): cdi_a[a] for a in cdi_a}))
+  T = pd.DataFrame(LIN)
+  A = pd.DataFrame(ANO)
+  pd.set_option("display.width", 260)
+  pd.set_option("display.max_columns", 30)
+  print(T.to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
+  print(A.to_string(index=False, float_format=lambda v: f"{v:.3f}"))
 
-# conferências
-for nome, r in RUNS.items():
-    s = r["serie"]
-    assert s.min() > 0, nome
-    o = r["ops"]
-    if len(o):
-        assert (pd.to_datetime(o["entrada"]) > pd.to_datetime(o["sinal"])).all(), "compra no dia do sinal"
-print("conferências: patrimônio sempre positivo; nenhuma compra no dia do sinal: PASSOU")
+  # conferências
+  for nome, r in RUNS.items():
+      s = r["serie"]
+      assert s.min() > 0, nome
+      o = r["ops"]
+      if len(o):
+          assert (pd.to_datetime(o["entrada"]) > pd.to_datetime(o["sinal"])).all(), "compra no dia do sinal"
+  print("conferências: patrimônio sempre positivo; nenhuma compra no dia do sinal: PASSOU")
 
-with pd.ExcelWriter("planilhas/kairi_um_fundo.xlsx") as w:
-    T.to_excel(w, sheet_name="Resumo", index=False)
-    A.to_excel(w, sheet_name="Ano a ano", index=False)
-    for i, (nome, r) in enumerate(RUNS.items(), 1):
-        o = r["ops"].copy()
-        if r["aberto"]:
-            o = pd.concat([o, pd.DataFrame([dict(fundo=r["aberto"]["fundo"], entrada=r["aberto"]["entrada"],
-                                                 preco_entrada=r["aberto"]["preco_entrada"], motivo="em aberto em 09/11/2026",
-                                                 valor_saida=r["aberto"]["valor"])])], ignore_index=True)
-        o.insert(0, "Simulação", nome)
-        o.to_excel(w, sheet_name=f"Operações {i}", index=False)
-    pd.DataFrame({n: r["serie"] for n, r in RUNS.items()}).assign(**{"105% CDI": CDI}).to_excel(w, sheet_name="Patrimônio dia a dia")
-print("gravado: planilhas/kairi_um_fundo.xlsx")
+  with pd.ExcelWriter("planilhas/kairi_um_fundo.xlsx") as w:
+      T.to_excel(w, sheet_name="Resumo", index=False)
+      A.to_excel(w, sheet_name="Ano a ano", index=False)
+      for i, (nome, r) in enumerate(RUNS.items(), 1):
+          o = r["ops"].copy()
+          if r["aberto"]:
+              o = pd.concat([o, pd.DataFrame([dict(fundo=r["aberto"]["fundo"], entrada=r["aberto"]["entrada"],
+                                                   preco_entrada=r["aberto"]["preco_entrada"], motivo="em aberto em 09/11/2026",
+                                                   valor_saida=r["aberto"]["valor"])])], ignore_index=True)
+          o.insert(0, "Simulação", nome)
+          o.to_excel(w, sheet_name=f"Operações {i}", index=False)
+      pd.DataFrame({n: r["serie"] for n, r in RUNS.items()}).assign(**{"105% CDI": CDI}).to_excel(w, sheet_name="Patrimônio dia a dia")
+  print("gravado: planilhas/kairi_um_fundo.xlsx")
