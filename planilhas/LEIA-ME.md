@@ -113,3 +113,19 @@ As 37 operações do Estudo Agressivo (`docs/ESTUDO_AGRESSIVO.md`), uma por linh
 ### tecnico/estudo_agressivo_completo.csv
 
 A mesma lista com 57 colunas e nomes abreviados, usada pelo programa. Não é para leitura; a coluna "perfil" desse arquivo é uma classificação antiga, pelo patrimônio, e deve ser ignorada.
+
+### cdi.csv
+
+Taxa do CDI de cada dia útil, de 02/01/2017 a 13/11/2026, do Banco Central. Traz a taxa do dia, a taxa equivalente ao ano e dois índices acumulados: um para 100% do CDI e outro para 105%. Para saber quanto 105% do CDI rendeu entre duas datas, divida o índice da data final pelo da data inicial. Os índices são antes do imposto.
+
+### rendimentos_pagamentos.csv
+
+Os mesmos avisos de `rendimentos.csv`, com a data em que o dinheiro foi pago. Em 58 dos 23.800 a data de pagamento não foi encontrada e a célula fica vazia.
+
+### amortizacoes.csv
+
+Devoluções de patrimônio aos cotistas (não são rendimento). Os valores estão como o fundo informou, sem ajuste por desdobramento.
+
+### tecnico/fatos_textos.csv.gz
+
+Os primeiros 3.000 caracteres de cada fato relevante da planilha de anúncios. Arquivo compactado, para uso dos programas.

@@ -77,6 +77,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-16 — Kairi com carteira infinita, balanço ano a ano em reais, 12 regras de saída (Fibonacci e projeções), imposto com abatimento, preço sobre valor patrimonial na entrada e na saída, análise dos cortes de rendimento (`docs/ESTUDO_KAIRI.md`, parte 4; planilhas `kairi_ordens.csv`, `kairi_ordens_saidas.csv`, `kairi_cortes.csv`).
 - [x] 2026-11-16 — Kairi: saída em escada (10 variações, ideia do dono). Nenhuma superou a volta à média nos dois períodos (`docs/ESTUDO_KAIRI.md`, parte 5; `planilhas/kairi_escada.csv`).
 - [x] 2026-11-16 — Kairi: saída pelo cruzamento das médias de 7 e 21 pregões (9 variações, ideia do dono). Nenhuma superou a volta à média (`docs/ESTUDO_KAIRI.md`, parte 6). Total de 31 saídas alternativas testadas, nenhuma melhor nos dois períodos.
+- [x] 2026-11-17 — Decidido pelo dono: régua passa a ser 105% do CDI em liquidez diária, com os impostos.
+- [x] 2026-11-17 — Preparação da auditoria: CDI diário, datas de pagamento dos rendimentos, amortizações e textos dos fatos relevantes exportados para `planilhas/` (`docs/AUDITORIA_PEDIDO.md`).
+- [ ] Rodar a auditoria do Kairi em conversa nova, em três blocos (`docs/AUDITORIA_PEDIDO.md`).
 - [ ] Dono ler `planilhas/kairi_cortes.csv` e avaliar o motivo de cada corte de rendimento.
 - [ ] Limpar a base de preços: 334 variações de mais de 25% num dia em 128 fundos; conferir TORD11 (último preço R$ 0,97).
 - [ ] Kairi: colocar o sinal diário no app e acompanhar daqui para a frente, sem dinheiro de verdade.
