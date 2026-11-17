@@ -1276,6 +1276,7 @@ graf_barras(ws, "Retorno líquido por ano: total (R$ 40 mil) e 105% do CDI", [6,
 graf_barras(ws, "Retorno líquido por ano: as 4 sub-carteiras", [2, 3, 4, 5], [COR[n] for n in NOMES], "A37")
 ws.freeze_panes = "B4"
 ajusta_pagina(ws)
+ws.page_setup.fitToHeight = 1
 
 # ------------------------------------------------ Contínua
 wd = wb.create_sheet("Contínua")
