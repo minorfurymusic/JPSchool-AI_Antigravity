@@ -1,0 +1,11 @@
+﻿grupo de fatos;fatos
+todos os fatos da planilha anuncios.csv;7962
+ignorados por serem repetidos (repetido = 1);1265
+ignorados por serem continuação (continuacao = 1);933
+ignorados que são os dois ao mesmo tempo;188
+total ignorado (repetido ou continuação);2010
+fatos contados;5952
+  dos contados: sentido queda;763
+  dos contados: sentido alta;1805
+  dos contados: tipo rendimento_reducao, saida_inquilino ou venda_com_perda;875
+  dos contados: tipo saida_inquilino;367

@@ -1,0 +1,7 @@
+﻿medida;valor
+fatos com texto menor que 600 caracteres;8
+fatos com menos de 60% de letras nos primeiros 3.000 caracteres (provável imagem/slide mal lido);3
+fatos cujo texto guardado tem exatamente 3.000 caracteres (cortados);3466
+fatos cujos primeiros 3.000 caracteres não trazem a expressão 'FATO RELEVANTE';158
+ordens de fundos sem nenhum fato na planilha;44
+fundos das ordens sem nenhum fato na planilha;15

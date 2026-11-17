@@ -1,0 +1,41 @@
+﻿sentido sorteado;id;fundo;data;tipo (palavras);veredito da leitura;motivo
+queda;105619;HLOG11;10/07/2020;saida_inquilino;ok;fundo recebeu notificações de rescisão de módulos de galpão
+queda;740634;RINV11;17/09/2024;rendimento_reducao;mal classificado;"é a aprovação de nova emissão de cotas; nada sobre redução de rendimento"
+queda;84199;RBRD11;04/03/2020;saida_inquilino;ok;recuperação judicial do grupo que é inquilino (Leader)
+queda;709629;HGCR11;31/07/2024;rendimento_reducao;mal classificado;aprovação da 10ª emissão de cotas
+queda;433490;XPPR11;23/03/2023;rendimento_reducao;mal classificado;"venda de parte de um portfólio de imóveis; o texto lido não fala em redução de rendimento"
+queda;611047;GLOG11;28/02/2024;saida_inquilino;ok;inadimplência do aluguel de um galpão
+queda;13748;KNRE11;02/06/2017;saida_inquilino;duvidoso;"fundo esclarece sua relação com grupo em recuperação judicial (comprou unidades); efeito no rendimento não aparece"
+queda;705148;XPIN11;26/07/2024;rendimento_reducao;mal classificado;"escritura de venda de um módulo (preço R$ 6,6 mi); não é redução de rendimento"
+queda;36595;VLOL11;30/11/2018;saida_inquilino;ok;inadimplemento do aluguel por um inquilino
+queda;690753;CPUR11;01/07/2024;rendimento_reducao;mal classificado;oferta de novas cotas (a palavra 'diminuída' é da regra da distribuição parcial)
+queda;332456;RZTR11;01/08/2022;saida_inquilino;ok;inquilino pediu rescisão do contrato
+queda;161443;VXXV11;07/04/2021;rendimento_reducao;mal classificado;oferta de novas cotas (mesma palavra 'diminuída' da distribuição parcial)
+queda;250032;JASC11;23/12/2021;rendimento_reducao;mal classificado;aprovação da 2ª emissão de cotas
+queda;549130;VISC11;09/11/2023;rendimento_reducao;mal classificado;aprovação da 10ª emissão de cotas
+queda;55240;EDFO11B;01/08/2019;saida_inquilino;ok;rescisão antecipada de locação (com multa a favor do fundo, mas o inquilino sai)
+queda;113269;EDFO11B;20/08/2020;saida_inquilino;ok;notificação de rescisão antecipada do contrato de locação
+queda;92276;PRSV11;23/04/2020;rendimento_reducao;ok;"devolução de andares reduz a área locada; fundo diz que impacta rendimentos em cerca de 15%"
+queda;353068;NEWL11;16/09/2022;saida_inquilino;duvidoso;"troca de cartas sobre rescisão/devolução parcial de área; não fica claro se o inquilino sairá"
+queda;124446;HREC11;30/10/2020;rendimento_reducao;mal classificado;aprovação da 2ª emissão de cotas
+queda;467813;TSER11;22/05/2023;rendimento_reducao;mal classificado;aprovação da 2ª emissão de cotas
+alta;783410;SPXS11;18/11/2024;venda;mal classificado;"negócio entre sócios da gestora (compra de participação); não muda o fundo"
+alta;84073;XPIN11;03/03/2020;recebimento;duvidoso;"fundo 'ainda está recebendo a multa'; texto lido é só um trecho, efeito incerto"
+alta;383342;TRNT11;29/11/2022;locacao_nova;ok;novo contrato de locação
+alta;34946;ALMI11;06/11/2018;rendimento_aumento;mal classificado;"troca de escriturador; o texto diz que não há acréscimo de custos"
+alta;14339;LATR11B;22/06/2017;rendimento_aumento;ok;distribuição extraordinária de rendimentos
+alta;501362;HGBS11;04/08/2023;venda;mal classificado;tabela da carteira de CRI do fundo ('alienação fiduciária' é garantia, não venda)
+alta;373778;BMLC11;09/11/2022;locacao_nova;ok;novo contrato de locação com petroleira
+alta;1221531;KONG11;15/06/2026;venda;duvidoso;"venda de participação em parcelas; não diz se há ganho nem efeito no rendimento"
+alta;80009;RZAT11;10/02/2020;rendimento_aumento;mal classificado;aprovação da 2ª emissão de cotas
+alta;226179;RBVA11;15/10/2021;venda_com_ganho;ok;venda de dois imóveis, uma delas 45,9% acima do valor patrimonial
+alta;1035450;RZTR11;12/11/2025;rendimento_aumento;mal classificado;aquisição de fazenda (compra, não venda nem aumento de rendimento)
+alta;332807;HLOG11;02/08/2022;locacao_nova;ok;novo contrato de locação de vários módulos
+alta;322042;XPLG11;04/07/2022;venda_com_ganho;duvidoso;"venda de módulos; o texto lido não mostra o ganho"
+alta;32747;NEWU11;21/09/2018;venda;duvidoso;"só recebeu proposta vinculante de compra de imóvel; negócio ainda não fechado"
+alta;355168;RBRL11;23/09/2022;venda;mal classificado;escritura de compra (aquisição de 50% de condomínio), não venda
+alta;791138;XPLG11;29/11/2024;venda_com_ganho;ok;"venda concluída e preço recebido; gestão fala em geração de valor ao investidor"
+alta;47068;SDIL11;23/04/2019;locacao_nova;mal classificado;aprovação da 4ª emissão de cotas
+alta;741826;XPPR11;19/09/2024;venda;duvidoso;"venda de 75% de uma empresa que tem parte de um edifício; efeito no rendimento incerto"
+alta;188347;HGRE11;24/06/2021;venda_com_ganho;duvidoso;"venda de conjuntos por R$ 22 mi; texto lido não mostra ganho nem efeito no rendimento"
+alta;1363359;CCME11;30/10/2026;venda_com_ganho;ok;venda com ganho estimado de R$ 23,5 mi (R$ 0,35 por cota)
