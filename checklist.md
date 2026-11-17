@@ -84,6 +84,7 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-17 — Planilha com gráficos dos gatilhos 10/15/20/30% (`planilhas/kairi_gatilhos.xlsx`, `estudos/kairi_gatilhos_planilha.py`).
 - [x] 2026-11-17 — Simulação de R$ 20 mil em 2026 (R$ 10 mil no gatilho de 20% e R$ 10 mil no de 15%, ordens de R$ 1.000): 2,7% líquido contra 10,0% do 105% do CDI (`docs/SIMULACAO_KAIRI_2026.md`, `planilhas/kairi_carteira_2026.xlsx`).
 - [x] 2026-11-17 — Simulação 2026, versão 2: regra de não comprar fundo que vai sair da bolsa (fatos relevantes de 12 meses), conservadora só com volume ≥ R$ 500 mil/dia, aba de posições abertas. Total 3,7% líquido contra 10,0% do CDI (`docs/SIMULACAO_KAIRI_2026.md`).
+- [x] 2026-11-17 — Simulação 2026, versão 3: 4 carteiras de R$ 10 mil por faixa de negociação típica (mediana de 60 dias), venda pelo fechamento, documentos do FNET (rendimento zero barra compra; aviso de saída vende). Total 8,7% líquido contra 10,0% do CDI; 94% do dinheiro ficou parado (`docs/SIMULACAO_KAIRI_2026.md`).
 - [ ] Regra de saída da bolsa: decidir se bloqueia só saída aprovada ou também proposta (5 de 18 bloqueios de 2026 foram propostas que não viraram saída até 09/11).
 - [ ] Conferir em outra fonte a queda geral de 26/10/2026 a 03/11/2026 nos preços (153 de 221 fundos caíram mais de 3% em 26/10).
 - [ ] Melhorar a classificação dos fatos relevantes (amostra lida: 10 de 20 negativos e 7 de 20 positivos errados).

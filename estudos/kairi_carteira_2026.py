@@ -77,6 +77,8 @@ def isnan(x):
 def br(x, d=2):
     if isnan(x):
         return "nd"
+    if abs(x) < 0.5 * 10 ** (-d):
+        x = 0.0                                   # evita "-0,00"
     return f"{x:,.{d}f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
@@ -386,6 +388,7 @@ LIDO_NAO_SAIDA = {
     916966: "lista de competências da assembleia (texto do regulamento), não é proposta",
     929012: "lista de competências da assembleia (texto do regulamento), não é proposta",
     1221870: "texto do regulamento (administrador/liquidação), não é proposta",
+    1336594: "o RBRX11 é o COMPRADOR dos ativos do PSEC11 (quem é liquidado é o PSEC11); o RBRX11 segue como está",
     1343936: "reorganização com cisão PARCIAL do portfólio: o fundo continua negociando (os ativos de desinvestimento ficam no próprio fundo)",
 }
 DOCS = pd.DataFrame(DOCS_BRUTOS)
@@ -1129,6 +1132,11 @@ for r_ in OPS[OPS["status"] == "Fechada"].sort_values(["carteira", "entrada"]).i
 print("\nPOSICOES ABERTAS EM 09/11/2026:")
 for r_ in OPS[OPS["status"] != "Fechada"].sort_values(["carteira", "entrada"]).itertuples():
     print(f"  {r_.carteira:15s} {r_.fundo:7s} {dt(r_.entrada)} R$ {br(r_.preco_entrada)} x {int(r_.cotas)} | {br(r_.valor_compra)} -> {br(r_.valor_saida)} | rend pago {br(r_.rend)} a receber {br(r_.rend_a_receber)} | res {br(r_.resultado)} ({pct(r_.resultado_pct)}) | queda {pct(r_.queda_max)} alta {pct(r_.alta_max)}")
+print("\nAVISOS DO FNET (saida/rendimento zero) PUBLICADOS DEPOIS DO SINAL, PARA CADA FUNDO COMPRADO (conferencia da saida antecipada):")
+for R in RES.values():
+    for o in R["ops_raw"]:
+        docs_ = [x for x in EXD.get(o["fundo"], []) if x["dia"] > np.datetime64(o["sinal"], "D")]
+        print(f"  {o['carteira']:15s} {o['fundo']:7s} entrada {dt(o['entrada'])}: {len(docs_)} aviso(s) depois do sinal" + (": " + "; ".join(f"{dt(pd.Timestamp(x['dia']))} {x['padrao']}" for x in docs_) if docs_ else "") + f" | docs do fundo no FNET: {int((DOCS['fundo'] == o['fundo']).sum())}")
 fech_pend = OPS[(OPS["status"] == "Fechada") & ((OPS["rend_a_receber"] > 0) | (OPS["rend_sem_data"] > 0))]
 print(f"\nfechadas com rendimento declarado mas ainda nao pago/sem data de pagamento: {len(fech_pend)}")
 
@@ -1443,7 +1451,7 @@ n_saiu = int((OPS["motivo"] == SAIU).sum())
 LAC = []
 LAC.append(["Documentos do FNET antes de 01/05/2025", "a coleta vai de 01/05/2025 a 13/11/2026; só os 43 fundos que deram sinal em 2026",
             "a regra 1 olha 365 dias para trás: para sinais antes de 01/05/2026 a janela só tem os fatos relevantes da planilha (fatos_textos.csv.gz); um aviso que só existisse como comunicado/assembleia antes de 05/2025 não seria visto"])
-LAC.append(["Leitura dos documentos", f"{len(DOCS)} documentos lidos por expressões no texto completo (sem leitura humana de todos); {n_sem_texto} sem texto legível; {n_canc} cancelados no FNET foram ignorados",
+LAC.append(["Leitura dos documentos", f"{len(DOCS)} documentos lidos por expressões no texto completo (sem leitura humana de todos); {n_sem_texto} sem texto legível (PDF escaneado, em geral atas: ver a coluna 'leitura' do arquivo); {n_canc} cancelados no FNET foram ignorados",
             "pode haver aviso de liquidação/rendimento zero escrito de forma que as expressões não pegam (não barrado/vendido), e trecho que casa sem tratar do fundo. Todos os documentos que casaram foram lidos (trechos nas tabelas)"])
 LAC.append(["Documentos publicados depois de 09/11/2026", "o FNET foi consultado até 13/11/2026, mas os preços acabam em 09/11/2026",
             (f"{len(ALERTAS)} aviso(s) de posição aberta ficaram sem venda por cair depois do fim dos preços" if len(ALERTAS) else "nenhum aviso de posição aberta cai depois do fim dos preços; posições abertas seguem a preço de 09/11/2026")])
@@ -1488,6 +1496,11 @@ for i, (a_, b_, c_) in enumerate(LAC, r0 + 2):
     wl.cell(row=i, column=1, value=a_).alignment = Alignment(wrap_text=True, vertical="top")
     cc = wl.cell(row=i, column=2, value=f"{b_}. Efeito: {c_}.")
     cc.alignment = Alignment(wrap_text=True, vertical="top")
+for ws_ in wb.worksheets:                      # impressao/PDF: uma pagina de largura, paisagem (so para conferir os graficos)
+    ws_.page_setup.orientation = "landscape"
+    ws_.sheet_properties.pageSetUpPr.fitToPage = True
+    ws_.page_setup.fitToWidth = 1
+    ws_.page_setup.fitToHeight = 0
 wb.save(SAIDA_XLSX)
 print(f"\nPlanilha salva em {SAIDA_XLSX}")
 
@@ -1519,7 +1532,7 @@ for rot, fn, fmt, tf in LIN:
             cels.append("—")
         else:
             cels.append(cel(fn, tf, M[c]))
-    lin1.append([rot.replace("(descontado o imposto do FII a vencer e o que seria devido se vendesse tudo)", "(líquido do imposto)")] + cels)
+    lin1.append([rot.replace("(descontado o imposto do FII a vencer e o que seria devido se vendesse tudo)", "(após imposto a vencer)")] + cels)
 T1 = md_tab(["Indicador"] + [TIT_R[c] for c in COLS_R], lin1)
 
 # --- tabela 2: operacoes fechadas
@@ -1549,10 +1562,78 @@ for r_ in EE.itertuples():
     rows4.append(["Saída antecipada", r_.carteira, r_.fundo, f"{dt(pd.Timestamp(r_.doc['dia']))} (id {r_.doc['id']}): {r_.doc['doc']}", f"{r_.doc['tipo']}: {r_.doc['padrao']}",
                   f"vendeu em {dt(r_.saida)} a R$ {br(r_.preco_saida)}; resultado {pct(r_.resultado_pct)}", "“…" + curto(r_.doc["trecho"]) + "…”"])
 for r_ in BLQ_FNET.itertuples() if len(BLQ_FNET) else []:
-    rows4.append(["Sinal barrado" + (" (rendimento zero)" if r_.resultado.startswith("rend") else " (regra 1)"), r_.subs, r_.fundo, f"{dt(pd.Timestamp(r_.doc_dia))} (id {r_.doc_id})", r_.padrao,
+    rows4.append(["Sinal barrado" + (" (rendimento zero)" if r_.resultado.startswith("rend") else " (regra 1)"), r_.subs, r_.fundo, f"{dt(pd.Timestamp(r_.doc_dia))} (id {int(r_.doc_id)})", r_.padrao,
                   f"{int(r_.n)} sinal(is): {r_.sinais}", "“…" + curto(r_.trecho) + "…”"])
 T4 = md_tab(["Tipo", "Sub-carteira(s)", "Fundo", "Documento do FNET (data de entrega)", "Expressão", "Efeito", "Trecho"], rows4) if rows4 else "Nenhuma saída antecipada nem bloqueio por documento do FNET."
 T5 = md_tab(["Dado", "Situação", "Efeito"], LAC)
 
-print("\n(DOC ainda nao escrito)")
+
+# ---------------------------------------------------------------- textos de leitura (numeros vindos da rodada)
+pts = 100 * (mt["ret_liq"] - mcdi["ret_liq"])
+n_fe, n_ab = int(len(FE)), int(len(AB))
+res_fe_tot, res_ab_tot = float(FE["resultado"].sum()) if n_fe else 0.0, float(AB["resultado"].sum()) if n_ab else 0.0
+n_ab_pos = int((AB["resultado"] > 0).sum()) if n_ab else 0
+piores = ", ".join(f"{r_.fundo} ({pct(r_.resultado_pct)})" for r_ in AB.sort_values("resultado_pct").head(3).itertuples()) if n_ab else "—"
+melhores_sub = max(NOMES, key=lambda n_: M[n_]["ret_liq"])
+piores_sub = min(NOMES, key=lambda n_: M[n_]["ret_liq"])
+LP1 = (f"Os R$ 40 mil terminaram em {brl(mt['p_fim'])} (retorno líquido {pct(mt['ret_liq'])}), {br(abs(pts), 1)} ponto(s) {'abaixo' if pts < 0 else 'acima'} do CDI ({pct(mcdi['ret_liq'])}). "
+       f"O dinheiro ficou parado em média {pct(mt['parado_pct'], 0)} do tempo e rendeu {brl(mt['parado_rs'])}, {pct(mt['parado_rs'] / mt['ganho'], 0)} do ganho total de {brl(mt['ganho'])}; "
+       f"as operações (fechadas e abertas, já com taxas e imposto) contribuíram com {brl(mt['ganho'] - mt['parado_rs'])}. Melhor sub-carteira: {melhores_sub} ({pct(M[melhores_sub]['ret_liq'])}); pior: {piores_sub} ({pct(M[piores_sub]['ret_liq'])}).")
+LP2 = (f"{n_fe} operações fechadas ({int((FE['resultado'] > 0).sum())} com lucro), resultado somado de {brl(res_fe_tot)}; " if n_fe else "Nenhuma operação fechada. ") + \
+      (f"duração média de {br(FE['dias'].mean(), 0)} dias. As saídas pelo fechamento acontecem no dia em que o preço volta à média, então o preço de saída é o fechamento daquele dia." if n_fe else "")
+LP3 = (f"{n_ab} posições abertas somam resultado de {brl(res_ab_tot)} ({n_ab_pos} positivas e {n_ab - n_ab_pos} negativas); as piores são {piores}. "
+       f"Muitas entraram em 03-05/11/2026, na queda geral do fim de outubro, e ainda não tiveram tempo de voltar à média.") if n_ab else "Nenhuma posição aberta."
+LP4 = (f"{len(EE)} saída(s) antecipada(s) e {int(BLQ_FNET['n'].sum()) if len(BLQ_FNET) else 0} sinal(is) barrado(s) por documento do FNET. {MCEM_TXT} {VV_TXT}")
+
+DOC = f"""# Simulação do Kairi em 2026, versão 3 (17/11/2026)
+
+Programa: `estudos/kairi_carteira_2026.py`; planilha: `planilhas/kairi_carteira_2026.xlsx`; documentos do FNET: `planilhas/tecnico/fnet_2026_documentos.csv.gz`.
+
+**Regras.** Quatro sub-carteiras de R$ 10.000 cada (o dono escreveu "100 mil" para a Agressiva 2; tratamos como R$ 10 mil, igual às outras), de 02/01/2026 a 09/11/2026, ordem de R$ 1.000.
+Gatilho: a cota fecha 15% (Agressivas) ou 20% (Conservadoras) abaixo da média de 200 pregões, com rendimento mantido. Filtro de negociação: **mediana** do volume diário dos 60 pregões até o dia do sinal, inclusive: Agressiva 1 de R$ 100 a 200 mil; Agressiva 2 de R$ 200 a 500 mil; Conservadora 1 de R$ 500 mil a 1 milhão; Conservadora 2 acima de R$ 1 milhão.
+Venda no **fechamento** do dia em que o fechamento fica igual ou acima da média de 200 pregões (média até o dia anterior), ou no prazo de 252 pregões. Um fundo por vez em cada sub-carteira; maior mediana de volume primeiro.
+**Avisos do FNET:** comunicado de "não haverá distribuição de rendimentos" nos 126 pregões até o sinal corta o rendimento (sem compra); edital, carta consulta, ata, fato ou comunicado sobre liquidação, incorporação, fusão, cisão, venda de todos os ativos ou tombamento para o balcão bloqueia a entrada (regra 1, com os fatos relevantes) e, com a posição aberta, manda vender na abertura do pregão seguinte; comunicado de rendimento zero com posição aberta também.
+Caixa parado em 105% do CDI com IR/IOF por lote; imposto do FII (20% sobre o ganho do mês, DARF no mês seguinte); taxa de 0,03% na compra e na venda.
+
+### Tabela 1. Resumo
+
+{T1}
+
+**Legenda.** *Retorno líquido* = (patrimônio final − imposto do FII a vencer − imposto que seria devido se vendesse tudo) ÷ capital − 1. *Contra o CDI* = retorno líquido menos o do 105% do CDI, em pontos percentuais. *Maior queda* = maior distância, em %, de um pico do patrimônio ao ponto mais baixo seguinte. *Fechadas com lucro* = resultado (venda − compra + rendimentos − taxas) maior que zero. *Dinheiro parado* = caixa sem fundo, no 105% do CDI: % médio = média diária de caixa ÷ patrimônio; dias-equivalentes = esse % × 311 dias corridos; rendeu = rendimento líquido de IR/IOF (resgatado + ainda aplicado em 09/11). *De onde veio* (R$) = fechadas (valorização + rendimentos recebidos) + abertas a preço de 09/11 (valorização + rendimentos pagos) + dinheiro parado − imposto do FII pago ou vencido − taxas = patrimônio final − capital (conferido por assert no programa).
+
+**Leitura prática.** {LP1}
+
+### Tabela 2. Operações fechadas
+
+{T2}
+
+**Legenda.** Valores em R$. *Maior queda* e *maior alta* = menor e maior fechamento da operação em % do preço de entrada, com a data (0% e sem data se o fundo nunca passou do preço de entrada). *Resultado* = valor de saída − valor de entrada + rendimentos recebidos − taxas (% do valor de entrada).
+
+**Leitura prática.** {LP2}
+
+### Tabela 3. Posições abertas em 09/11/2026
+
+{T3}
+
+**Legenda.** Valor atual = cotas × último fechamento. *Rendimentos pagos* já entraram no caixa; *a receber* foram declarados e não entram no resultado. *Resultado* = valor atual − valor de entrada + rendimentos pagos − taxa de compra.
+
+**Leitura prática.** {LP3}
+
+### Tabela 4. Saídas antecipadas e sinais barrados por documento do FNET
+
+{T4}
+
+**Legenda.** Só documentos do FNET (data de entrega até o dia do sinal para barrar; posterior à entrada para vender). Venda sempre na abertura do primeiro pregão depois da publicação. O trecho é o pedaço do documento onde a expressão foi achada.
+
+**Leitura prática.** {LP4}
+
+### Tabela 5. Lacunas
+
+{T5}
+
+**Histórico.** Versão 1: total 2,7% líquido; versão 2: 3,7%; CDI 10,0%.
+A versão 3 muda as regras (quatro sub-carteiras de R$ 10 mil, filtro pela mediana do volume, venda no fechamento, avisos do FNET), então não é comparável diretamente com as versões 1 e 2.
+"""
+Path(RAIZ / "docs" / "SIMULACAO_KAIRI_2026.md").write_text(DOC, encoding="utf-8")
+print(f"Texto salvo em {RAIZ / 'docs' / 'SIMULACAO_KAIRI_2026.md'}")
 print(f"\nTempo total: {time.time() - T0:.1f} s")
