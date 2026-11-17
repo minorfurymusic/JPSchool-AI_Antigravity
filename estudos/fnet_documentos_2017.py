@@ -1,5 +1,6 @@
-"""FNET de 2017 a 2026 para uma lista de fundos: fatos relevantes e comunicados ao mercado (texto completo numa pasta de
-trabalho fora do repositório; os primeiros 5.000 caracteres vão para planilhas/tecnico/fnet_2017_documentos.csv.gz).
+"""FNET de 2017 a 2026 para uma lista de fundos: fatos relevantes e comunicados ao mercado. Tabela com o texto COMPLETO de
+cada documento (uma linha por documento): planilhas/tecnico/fnet_2017_documentos.csv.gz (pedido do dono, 17/11/2026: guardar
+os documentos no repositório, em tabela).
 
 Usa as funções de estudos/kairi_fnet_2026.py (pausa de 0,3 s, nova tentativa quando o FNET recusa). CNPJ de cada fundo vem
 do informe trimestral da CVM (planilhas/tecnico/cobertura_trimestral.csv, pelo ISIN).
@@ -44,7 +45,7 @@ def coletar(mapa, log=print):
             f, s, t = KF.baixar_texto(r["id"])
             out.append({"id": int(r["id"]), "fundo": fundo, "cnpj": cnpj, "data de entrega": r["dataEntrega"],
                         "categoria": r["categoriaDocumento"].strip(), "tipo": (r.get("tipoDocumento") or "").strip(),
-                        "formato": f, "leitura": s, "texto (primeiros 5.000 caracteres)": t[:5000]})
+                        "formato": f, "leitura": s, "texto completo": t})
         log(f"  {k}/{len(mapa)} {fundo}: {len(rows)} documentos (pedidos: {KF.LOG['pedidos']}, recusas: {KF.LOG['recusas']})", flush=True)
     return pd.DataFrame(out)
 

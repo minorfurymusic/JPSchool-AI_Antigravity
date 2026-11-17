@@ -83,7 +83,7 @@ def negativos_fnet(f, d):
         try:
             X = pd.read_csv("planilhas/tecnico/fnet_2017_documentos.csv.gz", sep=";", encoding="utf-8-sig")
             X["dia"] = pd.to_datetime(X["data de entrega"].astype(str).str[:10], dayfirst=True, errors="coerce")
-            X["t"] = X["texto (primeiros 5.000 caracteres)"].fillna("").map(_sem_acento)
+            X["t"] = X["texto completo"].fillna("").map(_sem_acento)
             _FNET17 = {k: v for k, v in X.groupby("fundo")}
         except FileNotFoundError:
             _FNET17 = {}
