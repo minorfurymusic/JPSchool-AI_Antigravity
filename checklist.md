@@ -81,6 +81,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-17 — Preparação da auditoria: CDI diário, datas de pagamento dos rendimentos, amortizações e textos dos fatos relevantes exportados para `planilhas/` (`docs/AUDITORIA_PEDIDO.md`).
 - [x] 2026-11-17 — Auditoria do Kairi rodada em três blocos por agentes auxiliares, contra 105% do CDI com impostos: tabela mestra e lacunas em `docs/AUDITORIA_KAIRI.md`; programas `estudos/auditoria_bloco1.py`, `auditoria_bloco2.py`, `auditoria_bloco3.py`; planilhas `planilhas/auditoria_bloco*_*.csv`. Resultado: ganha do CDI (carteira do pico 10,2% a 11,1% ao ano contra 8,6%), mas sem prova contra sorte (IC inclui zero; 24 episódios na A; conferência 2023–2026 quase igual ao CDI). Gatilho maior, virada e duas partes pioram; fato negativo antes da queda não fez diferença.
 - [ ] Decisão do dono sobre o resultado da auditoria (`docs/AUDITORIA_KAIRI.md`).
+- [x] 2026-11-17 — Planilha com gráficos dos gatilhos 10/15/20/30% (`planilhas/kairi_gatilhos.xlsx`, `estudos/kairi_gatilhos_planilha.py`).
+- [x] 2026-11-17 — Simulação de R$ 20 mil em 2026 (R$ 10 mil no gatilho de 20% e R$ 10 mil no de 15%, ordens de R$ 1.000): 2,7% líquido contra 10,0% do 105% do CDI (`docs/SIMULACAO_KAIRI_2026.md`, `planilhas/kairi_carteira_2026.xlsx`).
+- [ ] Conferir em outra fonte a queda geral de 26/10/2026 a 03/11/2026 nos preços (153 de 221 fundos caíram mais de 3% em 26/10).
 - [ ] Melhorar a classificação dos fatos relevantes (amostra lida: 10 de 20 negativos e 7 de 20 positivos errados).
 - [ ] Dono ler `planilhas/kairi_cortes.csv` e avaliar o motivo de cada corte de rendimento.
 - [ ] Limpar a base de preços: 334 variações de mais de 25% num dia em 128 fundos; conferir TORD11 (último preço R$ 0,97).
