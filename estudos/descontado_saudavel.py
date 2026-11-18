@@ -9,7 +9,8 @@ Entrada (revisão no último pregão de cada mês, só com dado publicado até o
   4  cota caiu de 10% a 25% em 6 meses (queda maior é terreno do Kairi)
   5  preço entre 0,60 e 0,90 do patrimônio
   6  patrimônio por cota não caiu mais de 5% em 12 meses
-  7  rendimento do ano sobre o preço >= mediana do próprio tipo de fundo + 2 pontos
+  7  rendimento do ano sobre o preço >= mediana do próprio tipo de fundo + 2 pontos (tipo = classe pela carteira, informe
+     mensal da CVM: Papel, Tijolo, Desenvolvimento, Fundo de fundos, Híbrido; estudos/classificacao_carteira.py)
   7b rendimento do ano sobre o preço >= Selic esperada para o fim do ano seguinte (Focus, mediana) × 0,825 (líquida de IR)
   8  constância em 12 meses: pagou em pelo menos 11 meses; no máximo 1 mês com queda de mais de 2%; oscilação
      (desvio ÷ média) <= 0,03; média dos 3 últimos meses >= média dos 3 primeiros
@@ -22,6 +23,7 @@ Saída (decidida na revisão, executada na abertura seguinte):
   b  corte de rendimento: rendimento do último mês mais de 5% abaixo do mês anterior
   c  preço >= 0,95 do patrimônio
 Custos: 0,03% por operação; imposto de 20% sobre ganho de venda do mês, prejuízo abatendo; rendimento isento.
+Dados: valor patrimonial corrigido por estudos/vp_correcoes.py (a avaliação de saúde ainda lê o valor sem correção).
 Medidas: período completo, 2018–2022 e 2023–11/2026 (período de conferência). Cada operação comparada com 105% do CDI
 líquido no mesmo intervalo.
 
@@ -30,22 +32,36 @@ líquido no mesmo intervalo.
 import contextlib
 import io
 import runpy
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 import estudos.renda_descontada as RD
+from estudos.classificacao_carteira import classe as classe_carteira
 from estudos.cobertura_rendimento import cobertura
 from estudos.saude_fundo import saude
+from estudos.vp_correcoes import aplicar as aplicar_vp
 
-with contextlib.redirect_stdout(io.StringIO()):
-    _G = runpy.run_path("estudos/kairi_carteira_anos.py", run_name="biblioteca")["simular"].__globals__
+# o programa do Kairi regrava a própria planilha ao ser carregado: guardar e devolver o arquivo intacto
+_XL = Path("planilhas/kairi_carteira_anos.xlsx")
+_xl_bytes = _XL.read_bytes()
+try:
+    with contextlib.redirect_stdout(io.StringIO()):
+        _G = runpy.run_path("estudos/kairi_carteira_anos.py", run_name="biblioteca")["simular"].__globals__
+finally:
+    _XL.write_bytes(_xl_bytes)
 BLOQUEIO = _G["bloqueio"]
+
+# tabelas corrigidas (18/11/2026): valor patrimonial (estudos/vp_correcoes.py) e classe pela carteira (estudos/classificacao_carteira.py)
+RD.P = aplicar_vp(RD.P)
+RD.P["vp12"] = RD.P.groupby("fundo")["valor_patrimonial_cota"].transform(lambda s: s / s.shift(252) - 1)
+RD.PF = {f: x.set_index("data") for f, x in RD.P.groupby("fundo")}
 
 FOC = pd.read_csv("planilhas/focus_selic_fim_de_ano.csv", sep=";", decimal=",", encoding="utf-8-sig")
 FOC["data_coleta"] = pd.to_datetime(FOC["data_coleta"], dayfirst=True)
 FOC = FOC[FOC["base_calculo"] == 0]
-P, PF, RF, TIPO = RD.P, RD.PF, RD.RF, RD.TIPO
+P, PF, RF = RD.P, RD.PF, RD.RF
 B3, IR_FII, IR_CX, N = 0.0003, 0.20, 0.175, 5
 CORTE_PERIODO = pd.Timestamp("2023-01-01")
 
@@ -85,7 +101,7 @@ FUNIL = []
 
 def candidatos(d, registrar=False):
     x = P[P["data"] == d]
-    x = x.assign(tipo=x["fundo"].map(TIPO).fillna("Outros"))
+    x = x.assign(tipo=[classe_carteira(f, d) for f in x["fundo"]])
     x = x[x["rendimento_ano_sobre_preco (%)"] > 0]
     med = x[(x["patrimonio (R$)"] >= 100e6) & (x["mediana60"] >= 250e3)].groupby("tipo")["rendimento_ano_sobre_preco (%)"].median()
     fs = focus_selic(d) * 0.825
@@ -243,7 +259,7 @@ def resumo(S, O, ini, fim, nome):
 def diagnostico(d):
     """Fundos que passam nas regras 1 a 3 no dia d: valor de cada medida e a primeira regra em que param."""
     x = P[P["data"] == d]
-    x = x.assign(tipo=x["fundo"].map(TIPO).fillna("Outros"))
+    x = x.assign(tipo=[classe_carteira(f, d) for f in x["fundo"]])
     x = x[(x["rendimento_ano_sobre_preco (%)"] > 0) & (x["patrimonio (R$)"] >= 100e6) & (x["mediana60"] >= 250e3)
           & (x["amortizacao_12m (1/0)"] == 0)]
     med = x.groupby("tipo")["rendimento_ano_sobre_preco (%)"].median()

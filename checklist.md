@@ -102,6 +102,12 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-18 — Boletim Focus (expectativa da Selic) 2017–13/11/2026 em tabela, sem buracos: `planilhas/focus_selic_fim_de_ano.csv`, `planilhas/focus_selic_reuniao.csv` (`estudos/focus.py`; liberado olinda.bcb.gov.br no ambiente). Em 13/11/2026 a mediana para o fim de 2027 é 12,75% (mínimo 10,25%); abaixo de 10% só aparece para 2030.
 - [ ] REGRA DO DONO (18/11/2026): o dono lê tabelas; toda informação tem de virar tabela completa e sem falha de extração. Pendente: 28 documentos do FNET em PDF só com imagem, sem texto (precisa de leitura por imagem).
 - [ ] REGRA DO DONO (18/11/2026): o modelo do Kairi Padrão está certo; só acrescentar informações e funções à Skill.
+- [x] 2026-11-18 — Classe de cada fundo pela carteira (informe mensal da CVM, 2017–2026): `planilhas/classificacao_carteira_mensal.csv` (`estudos/classificacao_carteira.py`). Antes, 338 de 524 fundos eram "Outros". Cobertura: 96% a 100% dos fundos negociados por ano.
+- [x] 2026-11-18 — Correções do valor patrimonial (94 saltos em 69 fundos: 9 erros que voltam, 11 desdobramentos não ajustados, 9 valores absurdos, 65 mantidos para conferir): `planilhas/tecnico/valor_patrimonial_correcoes.csv` (`estudos/vp_correcoes.py`). NÃO aplicado às tabelas de preços.
+- [ ] DECISÃO DO DONO: aplicar as correções do valor patrimonial às tabelas `planilhas/precos_AAAA.csv` (muda o Kairi e os outros estudos) ou só usar nos estudos novos.
+- [ ] Conferir os 65 saltos de valor patrimonial mantidos (tipo D em `valor_patrimonial_correcoes.csv`).
+- [x] 2026-11-18 — Tipo 1 (descontado saudável), Skill `descontado-saudavel`: regras fixadas antes; 3 operações em 2018–2026, R$ 18.860 contra R$ 20.779 do CDI; nenhum fundo hoje. NÃO validado: filtro quase não dispara (a constância elimina quase tudo).
+- [ ] DECISÃO DO DONO: Tipo 1 — afrouxar a constância (versão nova, lado a lado) ou manter.
 - [ ] Renda descontada: os filtros novos não ajudaram. Decisão do dono: abandonar a carteira 2, seguir só com o Kairi Padrão, ou testar outra ideia.
 - [ ] Baixar os fatos e comunicados de 2017–2025 dos fundos com sinal do Kairi (209 fundos; ~1 h a cada 30 fundos).
 - [ ] Conferir a queda geral de 26/10/2026 em outra fonte (o dono informou: segundo turno das eleições em 25/10/2026; a base mostra −5,3% no mercado de fundos em 26/10, coerente).
