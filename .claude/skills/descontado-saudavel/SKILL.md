@@ -69,6 +69,21 @@ cota e queda de 10% a 25%. Os 5 de maior nota. Saídas iguais às da versão 1.
 v2: R$ 13.642 contra R$ 20.779 do CDI. Afrouxar fez comprar muito e perder: 46 saídas por corte de rendimento e 39 por
 rendimento caindo, com resultado perto de zero; só as 43 saídas por preço a 0,95 do patrimônio deram lucro (+5,8%).
 
+## Como trade (correção do dono, 18/11/2026) — É ASSIM QUE A ESTRATÉGIA DEVE SER LIDA
+
+Comprar, receber o rendimento e vender quando cota + rendimentos chegam a +10% ou +15%. Não é carteira parada.
+`PYTHONPATH=. python3 estudos/descontado_trade.py` -> `planilhas/descontado_trade.xlsx`. Entradas: os 5 de maior nota
+da v2 em cada fim de mês; prazo de 1 ano; sem stop.
+
+| | Alvo +10% | Alvo +15% |
+|---|---|---|
+| Operações encerradas | 149 | 139 |
+| Chegaram ao alvo | 61% | 53% |
+| Chegaram em até ~3 meses / ~6 meses | 28% / 46% | 12% / 30% |
+| Pregões até o alvo (mediana) | 76 | 114 |
+| Não chegaram: resultado em 1 ano (média) | −8,3% | −7,3% |
+| Pior momento (mediana / 1 em 10) | −6,3% / −22% | −6,9% / −23% |
+
 ## Limites
 
 - Com 3 operações não há o que concluir; a carteira ficou quase toda no CDI.
