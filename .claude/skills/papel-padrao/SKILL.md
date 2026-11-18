@@ -83,6 +83,23 @@ R$ 1.000 em cada sinal, contra R$ 8.604 da regra atual.
 Esperar a virada NÃO melhorou: perde as que sobem logo e pega as que seguem caindo. Duas partes rende um pouco mais
 por mês aplicado, mas ganha menos no total (metade do dinheiro fica no CDI quando não cai 5%). Regra mantida.
 
+## Análise gráfica: confluência para entrar e sair (18/11/2026, `estudos/papel_tecnico.py`, `planilhas/papel_tecnico.xlsx`)
+
+6 confirmações de compra (candle de reversão de alta, suporte, IFR 14 saindo de 35, estocástico cruzando abaixo de 30,
+MACD virando, volume em dia de alta) e 6 de venda (espelho). Indicadores diários em
+`planilhas/tecnico/papel_indicadores_diarios.csv.gz`. Acima do CDI por mês aplicado (pontos):
+
+| Compra / venda | 2018–2022 | 2023–11/2026 | Completo | Operações | Com lucro | Pregões médios |
+|---|---|---|---|---|---|---|
+| **Sinal / alvo +10% (regra atual)** | **+0,46** | **+0,31** | **+0,38** | 117 | 93% | 137 |
+| 4 confirmações / venda gráfica | +0,21 | +0,25 | +0,23 | 69 | 97% | 57 |
+| 3 confirmações / alvo ou venda gráfica | +0,14 | +0,18 | +0,17 | 128 | 98% | 53 |
+| Sinal / venda gráfica | +0,33 | −0,22 | −0,01 | 226 | 97% | 46 |
+| 2 confirmações / alvo | +0,23 | +0,03 | +0,12 | 107 | 89% | 154 |
+
+A venda gráfica faz operações curtas (~2 a 3 meses) com quase sempre lucro, mas pequeno (+1,5% a +2,6%). A compra
+por confluência perde sinais (de 17 a 253) e não melhorou. A regra atual continua a melhor nos dois períodos.
+
 ## Limites (dizer sempre que relevante)
 
 - Resultados do passado, com regras escolhidas depois de muitos testes nos mesmos anos: risco de ajuste ao passado.
