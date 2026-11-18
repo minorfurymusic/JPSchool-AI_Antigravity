@@ -53,6 +53,22 @@ Antes de qualquer compra: Skill `avaliar-fundo`, passo 4 (ler o relatório geren
 Valor final R$ 18.860 contra R$ 20.779 do CDI. O filtro quase não dispara: em média 0,2 fundo por mês passa na
 constância e nenhum chega ao fim. Hoje (09/11/2026) nenhum fundo passa; LIFE11 e HABT11 param só na constância.
 
+## Versão 2 (18/11/2026): corte só no essencial, o resto vira nota
+
+Corte de vez: tamanho, negociação, amortização/bloqueio, saúde, preço 0,50–1,00 do patrimônio, rendimento acima do
+Focus líquido. Nota (média das posições) em desconto, rendimento acima da classe, constância, cobertura, patrimônio por
+cota e queda de 10% a 25%. Os 5 de maior nota. Saídas iguais às da versão 1.
+
+| | v1 completo | v2 2018–2022 | v2 2023–11/2026 | v2 completo |
+|---|---|---|---|---|
+| Operações | 3 | 123 | 29 | 152 |
+| Com lucro | 0% | 59% | 55% | 58% |
+| Carteira ao ano | 7,4% | 2,2% | 5,4% | 3,6% |
+| Maior queda | −4,3% | −37,2% | −19,9% | −37,2% |
+
+v2: R$ 13.642 contra R$ 20.779 do CDI. Afrouxar fez comprar muito e perder: 46 saídas por corte de rendimento e 39 por
+rendimento caindo, com resultado perto de zero; só as 43 saídas por preço a 0,95 do patrimônio deram lucro (+5,8%).
+
 ## Limites
 
 - Com 3 operações não há o que concluir; a carteira ficou quase toda no CDI.

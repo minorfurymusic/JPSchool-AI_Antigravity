@@ -107,7 +107,8 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] DECISÃO DO DONO: aplicar as correções do valor patrimonial às tabelas `planilhas/precos_AAAA.csv` (muda o Kairi e os outros estudos) ou só usar nos estudos novos.
 - [ ] Conferir os 65 saltos de valor patrimonial mantidos (tipo D em `valor_patrimonial_correcoes.csv`).
 - [x] 2026-11-18 — Tipo 1 (descontado saudável), Skill `descontado-saudavel`: regras fixadas antes; 3 operações em 2018–2026, R$ 18.860 contra R$ 20.779 do CDI; nenhum fundo hoje. NÃO validado: filtro quase não dispara (a constância elimina quase tudo).
-- [ ] DECISÃO DO DONO: Tipo 1 — afrouxar a constância (versão nova, lado a lado) ou manter.
+- [x] 2026-11-18 — Tipo 1 versão 2 (corte só no essencial + nota): 152 operações, R$ 13.642 contra R$ 20.779 do CDI, queda máxima −37%. Pior que a v1. Corrigido erro na nota (fundo sem medida levava nota máxima).
+- [ ] DECISÃO DO DONO: Tipo 1 — próximos passos depois da v2.
 - [ ] Renda descontada: os filtros novos não ajudaram. Decisão do dono: abandonar a carteira 2, seguir só com o Kairi Padrão, ou testar outra ideia.
 - [ ] Baixar os fatos e comunicados de 2017–2025 dos fundos com sinal do Kairi (209 fundos; ~1 h a cada 30 fundos).
 - [ ] Conferir a queda geral de 26/10/2026 em outra fonte (o dono informou: segundo turno das eleições em 25/10/2026; a base mostra −5,3% no mercado de fundos em 26/10, coerente).

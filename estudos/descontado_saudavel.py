@@ -153,12 +153,63 @@ def candidatos(d, registrar=False):
     return C.sort_values("nota").reset_index(drop=True)
 
 
+def candidatos_v2(d, registrar=False):
+    """Versão 2 (18/11/2026, fixada antes de rodar): corte de vez só no essencial; o resto vira nota.
+    Corte: regras 1, 2, 3 (amortização e bloqueio), 10 (saúde != NÃO COMPRAR), preço 0,50–1,00 do patrimônio e
+    rendimento >= Focus líquido (7b). Nota = média das posições (0 a 1, 1 = melhor, entre os que passaram no corte) em:
+    desconto (menor preço/patrimônio), rendimento acima da classe, constância (média das posições em oscilação e em
+    quedas de 2%), cobertura (sem medida = pior), patrimônio por cota em 12 meses, e distância da faixa de queda de
+    10% a 25% em 6 meses (dentro = melhor). Entram os 5 de maior nota."""
+    x = P[P["data"] == d]
+    x = x[(x["rendimento_ano_sobre_preco (%)"] > 0) & (x["patrimonio (R$)"] >= 100e6) & (x["mediana60"] >= 250e3)
+          & (x["amortizacao_12m (1/0)"] == 0) & x["preco_sobre_valor_patrimonial"].between(0.50, 1.00)]
+    x = x.assign(tipo=[classe_carteira(f, d) for f in x["fundo"]])
+    todos = P[(P["data"] == d) & (P["rendimento_ano_sobre_preco (%)"] > 0) & (P["patrimonio (R$)"] >= 100e6) & (P["mediana60"] >= 250e3)]
+    med = todos.assign(tipo=[classe_carteira(f, d) for f in todos["fundo"]]).groupby("tipo")["rendimento_ano_sobre_preco (%)"].median()
+    fs = focus_selic(d) * 0.825
+    x = x[x["rendimento_ano_sobre_preco (%)"] / 100 >= fs]
+    L = []
+    for r in x.itertuples():
+        if BLOQUEIO(r.fundo, d):
+            continue
+        sv = saude(r.fundo, d)
+        if sv["veredito"] == "NÃO COMPRAR":
+            continue
+        c = constancia(r.fundo, d) or {}
+        cb = cobertura(r.fundo, d)
+        q6 = queda6(r.fundo, d)
+        dy = float(x.loc[r.Index, "rendimento_ano_sobre_preco (%)"]) / 100
+        L.append(dict(fundo=r.fundo, tipo=r.tipo, preco=r.fechamento, pvp=r.preco_sobre_valor_patrimonial, dy=dy,
+                      acima_tipo=dy - med.get(r.tipo, np.nan) / 100, queda_6m=q6,
+                      dist_queda=0.0 if -0.25 <= q6 <= -0.10 else min(abs(q6 + 0.25), abs(q6 + 0.10)),
+                      vp_12m=r.vp12, oscilacao=c.get("osc", np.nan), quedas_2pct=c.get("quedas2", np.nan),
+                      cobertura=cb["cobertura"] if cb else np.nan, saude=sv["veredito"], focus_liq=fs))
+    if registrar:
+        FUNIL2.append(dict(dia=d, candidatos=len(L)))
+    C = pd.DataFrame(L)
+    if C.empty:
+        return C
+    pr = lambda s, asc: s.rank(ascending=asc, pct=True, na_option="top")   # noqa: E731  1 = melhor; sem medida = pior
+    C["n_desconto"] = pr(-C["pvp"], True)
+    C["n_rendimento"] = pr(C["acima_tipo"], True)
+    C["n_constancia"] = (pr(-C["oscilacao"], True) + pr(-C["quedas_2pct"], True)) / 2
+    C["n_cobertura"] = pr(C["cobertura"], True)
+    C["n_patrimonio"] = pr(C["vp_12m"], True)
+    C["n_queda"] = pr(-C["dist_queda"], True)
+    C["nota"] = C[[c for c in C.columns if c.startswith("n_")]].mean(axis=1)
+    return C.sort_values("nota", ascending=False).reset_index(drop=True)
+
+
+FUNIL2 = []
+
+
 def corte(f, d):
     m = meses_rend(f, d)
     return m is not None and len(m) >= 2 and m.iloc[-1] < 0.95 * m.iloc[-2]
 
 
-def rodar():
+def rodar(selecionar=None):
+    selecionar = selecionar or candidatos
     caixa, pos, ops, ganhos, pool = 10000.0, {}, [], {}, 0.0
     serie, ult, plano, alerta = {}, None, None, {}
     rev = set(RD.FIM_MES)
@@ -206,7 +257,7 @@ def rodar():
                     caixa -= IR_FII * (g - usa)
                 else:
                     pool += -g
-            C = candidatos(d, registrar=True)
+            C = selecionar(d, registrar=True)
             vendas = []
             for f in pos:
                 mot = RD.doente(f, d)
@@ -289,33 +340,45 @@ def diagnostico(d):
 if __name__ == "__main__":
     pd.set_option("display.width", 250)
     pd.set_option("display.max_columns", 40)
-    S, O = rodar()
-    # exposição média: parte do patrimônio aplicada em fundos
-    R = pd.DataFrame([resumo(S, O, pd.Timestamp("2018-01-01"), pd.Timestamp("2022-12-31"), "2018–2022 (escolha)"),
-                      resumo(S, O, CORTE_PERIODO, S.index[-1], "2023–11/2026 (conferência)"),
-                      resumo(S, O, pd.Timestamp("2018-01-01"), S.index[-1], "Completo 2018–11/2026")])
-    print(f"Valor final: R$ {S.iloc[-1]:,.2f}  |  105% CDI líquido: R$ {RD.cdi_liq(RD.DIAS[0], RD.DIAS[-1]):,.2f}")
-    print(R.T.to_string(header=False, float_format=lambda v: f"{v:,.3f}"))
-    print("\nOPERAÇÕES")
-    print(O.to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
+    VERS = {"v1 (corte em todas as regras)": candidatos, "v2 (corte no essencial + nota)": candidatos_v2}
+    RES, OPS, SER = [], {}, {}
+    for nome, fn in VERS.items():
+        S, O = rodar(fn)
+        SER[nome], OPS[nome] = S, O
+        for ini, fim, per in [(pd.Timestamp("2018-01-01"), pd.Timestamp("2022-12-31"), "2018–2022 (escolha)"),
+                              (CORTE_PERIODO, S.index[-1], "2023–11/2026 (conferência)"),
+                              (pd.Timestamp("2018-01-01"), S.index[-1], "Completo 2018–11/2026")]:
+            RES.append(dict({"Versão": nome}, **resumo(S, O, ini, fim, per)))
+        print(f"{nome}: valor final R$ {S.iloc[-1]:,.2f}", flush=True)
+    R = pd.DataFrame(RES)
+    print(f"105% CDI líquido: R$ {RD.cdi_liq(RD.DIAS[0], RD.DIAS[-1]):,.2f}")
+    print(R.set_index(["Versão", "Período"]).T.to_string(float_format=lambda v: f"{v:,.3f}"))
+    for nome, O in OPS.items():
+        print(f"\nOPERAÇÕES {nome}")
+        print(O.to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
     F = pd.DataFrame(FUNIL)
-    print("\nFUNIL (média de fundos por revisão mensal)")
+    F2 = pd.DataFrame(FUNIL2)
+    print("\nFUNIL v1 (média de fundos por revisão mensal)")
     print(F.drop(columns="dia").mean().to_string(float_format=lambda v: f"{v:,.1f}"))
+    print(f"v2: candidatos depois do corte essencial, média por revisão: {F2['candidatos'].mean():.1f} "
+          f"(meses com nenhum: {(F2['candidatos'] == 0).mean():.0%})")
     hoje = RD.DIAS[-1]
-    C = candidatos(hoje)
     print(f"\nFocus (fim de {hoje.year + 1}) em {hoje:%d/%m/%Y}: {focus_selic(hoje):.2%}; régua líquida {focus_selic(hoje) * 0.825:.2%}")
-    print(f"ELEGÍVEIS EM {hoje:%d/%m/%Y}: {len(C)}")
-    if len(C):
-        print(C.to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
+    C = candidatos(hoje)
+    C2 = candidatos_v2(hoje)
+    print(f"v1 ELEGÍVEIS EM {hoje:%d/%m/%Y}: {len(C)}")
+    print(f"v2 CANDIDATOS EM {hoje:%d/%m/%Y} (os 5 primeiros entrariam): {len(C2)}")
+    if len(C2):
+        print(C2.to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
     DG = diagnostico(hoje)
-    print("\nHOJE: ONDE CADA FUNDO PAROU (os 25 mais perto de passar)")
-    print(DG.head(25).to_string(index=False, float_format=lambda v: f"{v:,.3f}"))
-    print(DG["parou_em"].value_counts().to_string())
     with pd.ExcelWriter("planilhas/descontado_saudavel.xlsx") as w:
         R.to_excel(w, sheet_name="Resumo", index=False)
-        O.to_excel(w, sheet_name="Operações", index=False)
-        S.rename("patrimonio").to_frame().to_excel(w, sheet_name="Patrimônio dia a dia")
-        F.to_excel(w, sheet_name="Funil por revisão", index=False)
-        C.to_excel(w, sheet_name="Elegíveis hoje", index=False)
-        DG.to_excel(w, sheet_name="Hoje - onde cada fundo parou", index=False)
+        for i, (nome, O) in enumerate(OPS.items(), 1):
+            O.to_excel(w, sheet_name=f"Operações v{i}", index=False)
+        pd.DataFrame(SER).to_excel(w, sheet_name="Patrimônio dia a dia")
+        F.to_excel(w, sheet_name="Funil v1 por revisão", index=False)
+        F2.to_excel(w, sheet_name="Candidatos v2 por revisão", index=False)
+        C.to_excel(w, sheet_name="v1 elegíveis hoje", index=False)
+        C2.to_excel(w, sheet_name="v2 candidatos hoje (nota)", index=False)
+        DG.to_excel(w, sheet_name="v1 hoje - onde cada um parou", index=False)
     print("gravado: planilhas/descontado_saudavel.xlsx")
