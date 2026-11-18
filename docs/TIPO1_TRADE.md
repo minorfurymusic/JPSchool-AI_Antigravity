@@ -105,7 +105,27 @@ Ganho menos CDI por mês aplicado (pontos), alvo +10%:
 - Cenário em 11/2026: mercado espera Selic 1 ponto menor no fim de 2027 (12,75% contra 13,75%) e essa espera vem
   diminuindo (era −3,0 em 11/2025); dívida bruta subiu 5 pontos do PIB em 12 meses (82,95% em 09/2026).
 
-## 10. Pendências
+## 10. Os 30 primeiros pregões depois do sinal (`estudos/papel_30dias.py`, `planilhas/papel_30dias.xlsx`)
+
+Papel, 397 sinais (5 por mês, 2018–2026), compra na abertura seguinte; ret com rendimento, antes de imposto.
+- Caminho mediano: −0,2% nos 3 primeiros pregões, 0% no 5º, +1,2% no 30º.
+- Em 30 pregões: 86% ficaram abaixo de zero em algum dia, 29% abaixo de −3%, 17% abaixo de −5%, 8% abaixo de −8%.
+  Menor ret mediano −1,6%; o pior dia vem no pregão 8 (mediana).
+- A queda de −5,9% citada antes é a média do PIOR momento da operação inteira (até 1 ano), puxada por poucas quedas grandes.
+- Exceções recentes: em 2024 e 2026, 30% e 36% caíram mais de 5% em 30 pregões (contra 6% a 13% nos outros anos).
+- Relações (queda de mais de 5% em 30 pregões / chegaram ao alvo): mercado de fundos caiu mais de 3% no período: 66% / 63%;
+  mercado subindo: 6% a 7% / 77%. Preço ÷ patrimônio no quarto mais descontado (<= 0,86): 34% / 63%, resultado +4,1%.
+  Dívida subindo: 23% / 51%; estável: 12% / 78%. Queda anterior maior (quarto mais caído): 25% caem, mas 87% chegam ao
+  alvo (+8,4%). Cobertura, rendimento e nota: pouca relação. Os 5 fundos do mesmo mês NÃO costumam cair juntos
+  (em 48 de 75 meses nenhum caiu mais de 5%).
+- Esperar cair depois do sinal (até 60 pregões), comprar e vender no alvo +10%:
+  cair 3%: 232 de 397 sinais compraram (+5,4%; as mesmas compradas no sinal: +4,7%); 165 não caíram (+7,8% perdido).
+  cair 5%: 148 compraram (+5,2%; no sinal: +3,7%); 249 não caíram (+7,3% perdido).
+  cair 8%: 89 compraram (+4,8%; no sinal: +2,6%); 308 não caíram (+6,9% perdido).
+  Esperar melhora as que caem, mas perde as que sobem direto, que são a maioria.
+- Caso real: CACR11 (sinal de 30/04/2026) caiu de R$ 81 para R$ 47 em 04/05/2026 e para ~R$ 21 em junho (evento do fundo).
+
+## 11. Pendências
 
 - Testar formas de compra que esperam a virada (setup 9.1, IFR, médias cruzando para cima, rompimento, reversão,
   recuo à média de 21), principalmente em Papel.
