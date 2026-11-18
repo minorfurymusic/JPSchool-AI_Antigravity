@@ -39,29 +39,29 @@ PYTHONPATH=. python3 estudos/papel_padrao.py posicoes          # acompanha as co
   vencido, abaixo de −5% com 20+ pregões).
 - O programa avisa quando os preços da base estão atrasados. Sinal com dado velho NÃO vale para compra.
 
-## Resultado de referência (02/2018 a 11/2026, contas com data-com e imposto; `estudos/descontado_classes.py`)
+## Resultado de referência (02/2018 a 11/2026, contas com data-com e imposto; `estudos/descontado_classes.py`; refeito em 18/11/2026 com a classe corrigida para ISIN repetido)
 
 | | Papel, alvo +10% |
 |---|---|
-| Operações | 117 |
-| Com lucro | 93% |
-| Bateram o CDI do mesmo período | 79% |
-| Resultado médio por operação (líquido) | +7,4% |
-| Tempo médio | 137 pregões (~6,5 meses) |
-| Acima do CDI por mês aplicado | +0,37 ponto |
-| Perdas de mais de 10% / 1 ano no prejuízo | 2,6% / 6,8% |
+| Operações | 114 |
+| Com lucro | 93,9% |
+| Bateram o CDI do mesmo período | 79,8% |
+| Resultado médio por operação (líquido) | +7,7% |
+| Tempo médio | 138 pregões (~6,5 meses) |
+| Acima do CDI por mês aplicado | +0,42 ponto |
+| Perdas de mais de 10% / 1 ano no prejuízo | 1,8% / 6,1% |
 
 Por cenário do país no mês anterior à compra (`planilhas/descontado_periodos.xlsx`, `planilhas/macro_mensal.csv`):
 
 | Cenário | Com lucro | Bateram o CDI | Acima do CDI por mês |
 |---|---|---|---|
-| Mercado espera Selic estável | 95% | 90% | +1,03 ponto |
-| Mercado espera alta da Selic | 89% | 78% | +0,61 ponto |
-| Mercado espera queda forte (Focus ≤ Selic − 1) | 94% | 75% | +0,14 ponto |
-| Dívida bruta subiu 2+ pontos do PIB em 12 meses | 93% | 67% | +0,18 ponto |
+| Mercado espera Selic estável | 95% | 91% | +1,04 ponto |
+| Mercado espera alta da Selic | 92% | 81% | +0,70 ponto |
+| Mercado espera queda forte (Focus <= Selic − 1) | 94% | 76% | +0,18 ponto |
+| Dívida bruta subiu 2+ pontos do PIB em 12 meses | 95% | 74% | +0,40 ponto |
 
-Alternativa testada com menos tempo parado: venda quando a média de 21 cruza abaixo da de 70 (+0,21 ponto por mês;
-2% ficam 1 ano no prejuízo). Fibonacci e banda superior de Bollinger foram piores.
+Alternativa testada com menos tempo parado: venda quando a média de 21 cruza abaixo da de 70 (+0,10 ponto por mês;
+2,5% ficam 1 ano no prejuízo). Fibonacci e banda superior de Bollinger foram piores.
 
 ## Formas de comprar testadas (18/11/2026, `estudos/papel_entradas.py`, `planilhas/papel_entradas.xlsx`)
 
@@ -99,6 +99,10 @@ MACD virando, volume em dia de alta) e 6 de venda (espelho). Indicadores diário
 
 A venda gráfica faz operações curtas (~2 a 3 meses) com quase sempre lucro, mas pequeno (+1,5% a +2,6%). A compra
 por confluência perde sinais (de 17 a 253) e não melhorou. A regra atual continua a melhor nos dois períodos.
+
+## Análise gráfica de um fundo
+
+Skill `analise-grafica` (motor `estudos/analise_grafica.py`; página "Radar Gráfico de FIIs": https://claude.ai/artifact/Mz1Yee5tDKbspNpt42u8yX).
 
 ## Limites (dizer sempre que relevante)
 

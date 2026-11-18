@@ -112,6 +112,12 @@ def _tab():
     T = pd.read_csv(SAIDA, **OP)
     T = T.dropna(subset=["fundo"])
     T["fundo"] = T["fundo"].str[:4]
+    # o mesmo começo de ISIN pode estar em mais de um CNPJ (ex.: TRXF = TRX Real Estate e Liquidez Projetos GD):
+    # fica um CNPJ principal: o de maior carteira no próprio último informe (corrigido em 18/11/2026)
+    T["ref_ord"] = pd.to_datetime("01/" + T["mes_referencia"], dayfirst=True)
+    ult = T.sort_values("ref_ord").groupby(["fundo", "cnpj"]).tail(1)            # último informe de cada CNPJ
+    principal = ult.sort_values("total_classificado (R$)").groupby("fundo")["cnpj"].last()
+    T = T[T["cnpj"] == T["fundo"].map(principal)]                                # um CNPJ principal por começo de ISIN
     T["entrega"] = pd.to_datetime(T["entrega"], dayfirst=True)
     T["ref"] = pd.to_datetime("01/" + T["mes_referencia"], dayfirst=True)
     return {f: x.sort_values(["ref", "entrega"]) for f, x in T.groupby("fundo")}

@@ -1,0 +1,282 @@
+<title>Radar Gráfico de FIIs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap">
+<style>
+/* Layout: barra de busca fixa; faixa de fundamentos; gráfico principal com painéis sincronizados; leitura item a item ao lado (empilha no celular). */
+:root{
+  --bg:#f4f6f5; --surface:#ffffff; --fg:#1b2422; --muted:#5d6b67; --line:#d9e0dd; --grid:#e9eeec;
+  --accent:#1f6f8b; --up:#23875a; --down:#c2453a; --warn:#b7791f; --info:#6b5bb5;
+  --mm21:#1f6f8b; --mm50:#b7791f; --mm200:#8a4fb0; --band:#9aa8a4;
+  --f-display:"Space Grotesk",system-ui,sans-serif; --f-text:"IBM Plex Sans",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111715; --surface:#18201e; --fg:#e3e9e6; --muted:#97a6a1; --line:#2a3532; --grid:#1f2826;
+  --accent:#5fb3cf; --up:#4cc38a; --down:#ef6f63; --warn:#e0a84a; --info:#a597e8;
+  --mm21:#5fb3cf; --mm50:#e0a84a; --mm200:#c58be3; --band:#5d6b67; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111715; --surface:#18201e; --fg:#e3e9e6; --muted:#97a6a1; --line:#2a3532; --grid:#1f2826;
+  --accent:#5fb3cf; --up:#4cc38a; --down:#ef6f63; --warn:#e0a84a; --info:#a597e8;
+  --mm21:#5fb3cf; --mm50:#e0a84a; --mm200:#c58be3; --band:#5d6b67; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-text);font-size:14px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 32px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;flex-wrap:wrap;gap:12px 20px;
+  align-items:center;padding-block:14px 12px;border-bottom:1px solid var(--line)}
+h1{font-family:var(--f-display);font-weight:600;font-size:20px;margin:0;letter-spacing:-.01em}
+h2{font-family:var(--f-display);font-weight:600;font-size:15px;margin:0 0 8px;text-wrap:balance}
+.busca{display:flex;gap:8px;align-items:center}
+.busca input{font-family:var(--f-mono);font-size:15px;text-transform:uppercase;width:9.5em;padding:7px 10px;border:1px solid var(--line);
+  border-radius:6px;background:var(--surface);color:var(--fg)}
+.busca input:focus-visible,button:focus-visible,label:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+button{font-family:var(--f-text);font-size:13px;padding:7px 12px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);
+  color:var(--surface);cursor:pointer}
+.meta{color:var(--muted);font-size:12px}
+.cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin:16px 0 10px}
+.cab .cod{font-family:var(--f-display);font-size:28px;font-weight:600}
+.cab .preco{font-family:var(--f-mono);font-size:22px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{display:inline-flex;gap:6px;align-items:baseline;padding:4px 9px;border-radius:999px;border:1px solid var(--line);background:var(--surface);
+  font-size:12px;white-space:normal;max-width:100%}
+.chip b{font-family:var(--f-mono);font-weight:500}
+.chip.bom{border-color:var(--up)} .chip.ruim{border-color:var(--down)} .chip.atencao{border-color:var(--warn)}
+.grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,420px);gap:16px;align-items:start}
+@media (max-width:960px){.grade{grid-template-columns:minmax(0,1fr)}}
+.painel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;min-width:0}
+.camadas{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted);margin-bottom:6px}
+.camadas label{display:inline-flex;gap:5px;align-items:center;cursor:pointer}
+.legenda{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11px;color:var(--muted);margin-top:4px}
+.legenda i{display:inline-block;width:14px;height:2px;vertical-align:middle;margin-right:4px}
+#principal{height:420px} .sub{height:110px;border-top:1px solid var(--line);position:relative}
+.sub .rot{position:absolute;left:6px;top:4px;z-index:2;font-size:11px;color:var(--muted);background:var(--surface);padding:0 4px}
+@media (max-width:600px){#principal{height:320px}.sub{height:90px}}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{text-align:left;padding:6px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+td.num,.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.conf{font-size:10.5px;padding:1px 6px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.conf.subjetivo{border-color:var(--warn);color:var(--warn)}
+.lista{display:grid;gap:4px;font-size:12.5px}
+.lista div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding-block:3px}
+.perfil{display:grid;gap:2px}
+.perfil .lin{display:grid;grid-template-columns:7.5em 1fr;gap:6px;align-items:center;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.perfil .bar{height:9px;background:var(--band);border-radius:2px}
+.perfil .lin.poc .bar{background:var(--accent)} .perfil .lin.atual{color:var(--fg);font-weight:500}
+.avisos{border-left:3px solid var(--warn);padding:6px 10px;background:var(--surface);margin-bottom:10px;font-size:12.5px}
+.tabwrap{overflow-x:auto}
+.secao{display:grid;gap:16px}
+.erro{color:var(--down);font-size:13px}
+</style>
+
+<header>
+  <h1>Radar Gráfico de FIIs</h1>
+  <form class="busca" id="form" autocomplete="off">
+    <label for="cod" class="meta">Fundo</label>
+    <input id="cod" list="fundos" value="TRXF11" spellcheck="false" aria-label="Código do fundo">
+    <datalist id="fundos"></datalist>
+    <button type="submit">Analisar</button>
+  </form>
+  <span class="meta" id="gerado">carregando dados…</span>
+  <span class="erro" id="erro" hidden></span>
+</header>
+
+<main>
+  <div class="cab"><span class="cod" id="t-cod">—</span><span class="preco" id="t-preco"></span><span class="meta" id="t-fonte"></span></div>
+  <div class="avisos" id="avisos" hidden></div>
+  <div class="chips" id="chips"></div>
+  <div class="grade">
+    <div class="secao">
+      <div class="painel">
+        <div class="camadas" id="camadas">
+          <label><input type="checkbox" id="c-medias" checked> médias 21/50/200</label>
+          <label><input type="checkbox" id="c-bandas" checked> Bollinger</label>
+          <label><input type="checkbox" id="c-niveis" checked> suportes e resistências</label>
+          <label><input type="checkbox" id="c-fib"> Fibonacci</label>
+          <label><input type="checkbox" id="c-liq"> zonas de liquidez</label>
+          <label><input type="checkbox" id="c-elliott" checked> ondas de Elliott</label>
+          <label><input type="checkbox" id="c-candles" checked> padrões de candle</label>
+        </div>
+        <div id="principal"></div>
+        <div class="sub" id="s-vol"><span class="rot">Volume (R$)</span></div>
+        <div class="sub" id="s-ifr"><span class="rot">IFR 14 (30 / 70)</span></div>
+        <div class="sub" id="s-macd"><span class="rot">MACD 12/26/9</span></div>
+        <div class="sub" id="s-est"><span class="rot">Estocástico 14/3/3 (20 / 80)</span></div>
+        <div class="sub" id="s-rel"><span class="rot">Força relativa contra o mercado de fundos (base 100)</span></div>
+        <div class="legenda">
+          <span><i style="background:var(--mm21)"></i>média 21</span><span><i style="background:var(--mm50)"></i>média 50</span>
+          <span><i style="background:var(--mm200)"></i>média 200</span><span><i style="background:var(--band)"></i>Bollinger</span>
+          <span><i style="background:var(--up)"></i>suporte</span><span><i style="background:var(--down)"></i>resistência</span>
+          <span><i style="background:var(--info)"></i>Fibonacci</span><span><i style="background:var(--warn)"></i>liquidez</span>
+        </div>
+      </div>
+      <div class="painel">
+        <h2>Volume por faixa de preço (12 meses)</h2>
+        <div class="perfil" id="perfil"></div>
+        <p class="meta" id="perfil-nota"></p>
+      </div>
+    </div>
+    <div class="secao">
+      <div class="painel">
+        <h2>Leitura item a item</h2>
+        <div class="tabwrap"><table><thead><tr><th>#</th><th>Item</th><th>Valor e leitura</th></tr></thead><tbody id="leitura"></tbody></table></div>
+      </div>
+      <div class="painel"><h2>Suportes e resistências</h2><div class="lista" id="niveis"></div></div>
+      <div class="painel"><h2>Zonas de liquidez</h2><p class="meta">Deduzidas do desenho do preço; sem livro de ofertas.</p><div class="lista" id="liq"></div></div>
+      <div class="painel"><h2>Ondas de Elliott</h2><p class="meta">Leitura subjetiva: o mesmo gráfico aceita outras contagens.</p><div class="lista" id="elliott"></div></div>
+    </div>
+  </div>
+  <p class="meta" style="margin-top:16px">Motor: <span class="mono">estudos/analise_grafica.py</span> (repositório JPSchool-AI_Antigravity). Os mesmos números saem na conversa com a Skill de análise gráfica. Indicadores descrevem o momento; não são regra testada.</p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<script>
+(function(){
+const LW = window.LightweightCharts;
+const $ = id => document.getElementById(id);
+const nf2 = new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct = v => v==null?'—':(v>0?'+':'')+new Intl.NumberFormat('pt-BR',{style:'percent',minimumFractionDigits:1,maximumFractionDigits:1}).format(v);
+const brl = v => v==null?'—':'R$ '+nf2.format(v);
+const mi = v => v==null?'—':'R$ '+new Intl.NumberFormat('pt-BR',{maximumFractionDigits:1}).format(v/1e6)+' mi';
+const cache = {}; let indice = null, graficos = [], atual = null;
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const dmy2iso = s => { const [d,m,y] = s.split('/'); return `${y}-${m}-${d}`; };
+
+async function carregaIndice(){
+  try{
+    const r = await fetch('dados/indice.json'); indice = await r.json();
+    $('gerado').textContent = `${indice.fundos.length} fundos · dados até ${indice.gerado}`;
+    $('fundos').innerHTML = indice.fundos.map(f=>`<option value="${f.fundo}">${f.classe||''}</option>`).join('');
+  }catch(e){ mostraErro('Não consegui carregar a lista de fundos. Recarregue a página.'); }
+}
+async function pega(cod){
+  const L = cod[0];
+  if(!cache[L]){ const r = await fetch(`dados/${L}.json`); if(!r.ok) throw new Error('arquivo'); cache[L] = await r.json(); }
+  return cache[L][cod];
+}
+function mostraErro(t){ $('erro').textContent = t; $('erro').hidden = !t; }
+
+function opcoesBase(alt){
+  return {autoSize:true, layout:{background:{type:'solid',color:css('--surface')}, textColor:css('--muted'), fontFamily:'IBM Plex Sans, system-ui'},
+    grid:{vertLines:{color:css('--grid')}, horzLines:{color:css('--grid')}},
+    rightPriceScale:{borderColor:css('--line'), minimumWidth:78}, timeScale:{borderColor:css('--line'), visible:!!alt},
+    crosshair:{mode:0}, localization:{locale:'pt-BR', priceFormatter:p=>nf2.format(p)}, handleScroll:true, handleScale:true};
+}
+const serieLinha = (t, arr) => t.map((x,i)=>arr[i]==null?null:{time:x,value:arr[i]}).filter(Boolean);
+
+function desenha(A){
+  graficos.forEach(g=>g.remove()); graficos = [];
+  const S = A.serie, t = S.t;
+  const main = LW.createChart($('principal'), opcoesBase(true)); graficos.push(main);
+  const cand = main.addCandlestickSeries({upColor:css('--up'),downColor:css('--down'),borderVisible:false,wickUpColor:css('--up'),wickDownColor:css('--down'),
+    priceFormat:{type:'price',precision:2,minMove:0.01}});
+  cand.setData(t.map((x,i)=>({time:x,open:S.o[i],high:S.h[i],low:S.l[i],close:S.c[i]})));
+  const lin = (cor, arr, w=1, est=0) => { const s = main.addLineSeries({color:cor,lineWidth:w,lineStyle:est,priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false}); s.setData(serieLinha(t,arr)); return s; };
+  const medias = [lin(css('--mm21'),S.mm21), lin(css('--mm50'),S.mm50), lin(css('--mm200'),S.mm200,2)];
+  const bandas = [lin(css('--band'),S.bb_sup,1,2), lin(css('--band'),S.bb_inf,1,2)];
+  const vis = (arr, on) => arr.forEach(s=>s.applyOptions({visible:on}));
+  // linhas de preço por camada
+  let linhas = {niveis:[], fib:[], liq:[]};
+  const limpa = k => { linhas[k].forEach(p=>cand.removePriceLine(p)); linhas[k] = []; };
+  const pl = (k, price, cor, title, est=2) => linhas[k].push(cand.createPriceLine({price, color:cor, lineWidth:1, lineStyle:est, axisLabelVisible:true, title}));
+  function camadaNiveis(on){ limpa('niveis'); if(on) A.niveis.forEach(n=>pl('niveis', n.preco, n.tipo==='suporte'?css('--up'):css('--down'), `${n.tipo==='suporte'?'S':'R'} ${n.toques}×`, 0)); }
+  function camadaFib(on){ limpa('fib'); if(on) Object.entries(A.fibonacci.niveis).forEach(([k,v])=>pl('fib', v, css('--info'), `Fib ${k}`)); }
+  function camadaLiq(on){ limpa('liq'); if(!on) return; const p = A.preco;
+    const z = [...A.liquidez].sort((a,b)=>Math.abs(a.preco-p)-Math.abs(b.preco-p)).slice(0,8);
+    z.forEach(x=>pl('liq', x.preco, css('--warn'), x.tipo.split(' (')[0], 1)); }
+  function marcadores(){
+    const M = [];
+    if($('c-elliott').checked) (A.elliott.rotulos||[]).forEach(r=>{ const d = dmy2iso(r.data); if(d>=t[0]) M.push({time:d, position:'aboveBar', color:css('--accent'), shape:'circle', text:'Onda '+r.onda}); });
+    if($('c-candles').checked) (A.candles||[]).forEach(c=>{ const d = dmy2iso(c.data); M.push({time:d, position:c.sentido==='alta'?'belowBar':'aboveBar',
+      color:c.sentido==='alta'?css('--up'):c.sentido==='baixa'?css('--down'):css('--muted'), shape:c.sentido==='alta'?'arrowUp':c.sentido==='baixa'?'arrowDown':'square', text:c.padrao}); });
+    M.sort((a,b)=>a.time<b.time?-1:a.time>b.time?1:0); cand.setMarkers(M);
+  }
+  vis(medias,$('c-medias').checked); vis(bandas,$('c-bandas').checked);
+  camadaNiveis($('c-niveis').checked); camadaFib($('c-fib').checked); camadaLiq($('c-liq').checked); marcadores();
+  $('c-medias').onchange = e=>vis(medias,e.target.checked); $('c-bandas').onchange = e=>vis(bandas,e.target.checked);
+  $('c-niveis').onchange = e=>camadaNiveis(e.target.checked); $('c-fib').onchange = e=>camadaFib(e.target.checked);
+  $('c-liq').onchange = e=>camadaLiq(e.target.checked); $('c-elliott').onchange = marcadores; $('c-candles').onchange = marcadores;
+  // painéis
+  const sub = (id, fn, ult, fmt) => { const el = $(id); el.querySelectorAll('.tv-lightweight-charts').forEach(n=>n.remove());
+    const o = opcoesBase(ult); if(fmt) o.localization = {locale:'pt-BR', priceFormatter:fmt};
+    const c = LW.createChart(el, o); graficos.push(c); fn(c); return c; };
+  sub('s-vol', c=>{ const s = c.addHistogramSeries({priceLineVisible:false,lastValueVisible:false});
+    s.setData(t.map((x,i)=>({time:x,value:S.v[i],color:S.c[i]>=S.o[i]?css('--up'):css('--down')}))); }, false,
+    v=>new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0}).format(v/1e6)+' mi');
+  sub('s-ifr', c=>{ const s = c.addLineSeries({color:css('--accent'),lineWidth:1,priceLineVisible:false}); s.setData(serieLinha(t,S.ifr14));
+    [30,70].forEach(v=>s.createPriceLine({price:v,color:css('--band'),lineWidth:1,lineStyle:2,axisLabelVisible:false})); });
+  sub('s-macd', c=>{ const h = c.addHistogramSeries({priceLineVisible:false,lastValueVisible:false});
+    h.setData(t.map((x,i)=>S.macd_hist[i]==null?null:{time:x,value:S.macd_hist[i],color:S.macd_hist[i]>=0?css('--up'):css('--down')}).filter(Boolean));
+    const a = c.addLineSeries({color:css('--accent'),lineWidth:1,priceLineVisible:false,lastValueVisible:false}); a.setData(serieLinha(t,S.macd));
+    const b = c.addLineSeries({color:css('--mm50'),lineWidth:1,priceLineVisible:false,lastValueVisible:false}); b.setData(serieLinha(t,S.macd_sinal)); });
+  sub('s-est', c=>{ const k = c.addLineSeries({color:css('--accent'),lineWidth:1,priceLineVisible:false}); k.setData(serieLinha(t,S.est_k));
+    const d = c.addLineSeries({color:css('--mm50'),lineWidth:1,priceLineVisible:false,lastValueVisible:false}); d.setData(serieLinha(t,S.est_d));
+    [20,80].forEach(v=>k.createPriceLine({price:v,color:css('--band'),lineWidth:1,lineStyle:2,axisLabelVisible:false})); });
+  sub('s-rel', c=>{ const s = c.addLineSeries({color:css('--info'),lineWidth:1,priceLineVisible:false}); s.setData(serieLinha(t,S.rel)); }, true);
+  // sincroniza os eixos de tempo
+  let travado = false;
+  graficos.forEach(g=>g.timeScale().subscribeVisibleLogicalRangeChange(r=>{ if(travado||!r) return; travado = true;
+    graficos.forEach(o=>{ if(o!==g) o.timeScale().setVisibleLogicalRange(r); }); travado = false; }));
+  const n = t.length; main.timeScale().setVisibleLogicalRange({from:Math.max(0,n-260), to:n+3});
+}
+
+function tabelas(A){
+  const F = A.fundamentos;
+  $('t-cod').textContent = A.fundo; $('t-preco').textContent = brl(A.preco);
+  $('t-fonte').textContent = `${A.ultimo_pregao} · ${A.fonte}`;
+  const av = [...(A.avisos||[]), ...(F.aviso?[F.aviso]:[]), ...((F.problemas||[]).map(p=>'Avaliação de saúde: '+p))];
+  $('avisos').hidden = !av.length; $('avisos').innerHTML = av.map(x=>`<div>${x}</div>`).join('');
+  const chip = (rot, val, cls='') => `<span class="chip ${cls}">${rot} <b>${val}</b></span>`;
+  const saudeCls = F.saude==='NÃO COMPRAR'?'ruim':F.saude==='ATENÇÃO'?'atencao':F.saude==='SAUDÁVEL'?'bom':'';
+  $('chips').innerHTML = [
+    chip('Classe', F.classe||'—'),
+    chip('Preço ÷ patrimônio', F.preco_sobre_patrimonio!=null?nf2.format(F.preco_sobre_patrimonio):'—'),
+    chip('Rendimento ao ano', F.rendimento_ano!=null?pct(F.rendimento_ano).replace('+',''):'—'),
+    chip('Rendimento mensal', F.rendimento_mensal!=null?brl(F.rendimento_mensal):'—'),
+    chip('Cobertura', F.cobertura!=null?nf2.format(F.cobertura):'—', F.cobertura!=null?(F.cobertura>=1?'bom':F.cobertura<0.9?'ruim':'atencao'):''),
+    chip('Saúde', F.saude||'—', saudeCls),
+    chip('Distância da média 200', pct(F.distancia_media_200), F.distancia_media_200<=-0.2?'atencao':''),
+    chip('Negociação típica', mi(F.negociacao_tipica)),
+    chip('Kairi', (F.kairi||'—').replace(' (zona de sinal; o sinal é o dia do cruzamento)',' · zona de sinal')),
+    chip('Papel Padrão', F.papel_padrao||'—'),
+  ].join('');
+  $('leitura').innerHTML = A.leitura.map(r=>`<tr><td class="num">${r.item}</td><td>${r.nome}<br><span class="conf ${r.confianca.startsWith('subjetivo')?'subjetivo':''}">${r.confianca}</span></td>
+    <td><span class="mono">${r.valor}</span><br>${r.leitura}</td></tr>`).join('');
+  $('niveis').innerHTML = A.niveis.length ? A.niveis.map(n=>`<div><span>${n.tipo} · ${n.toques} toques · último ${n.ultimo}</span><span class="mono">${nf2.format(n.preco)} (${pct(n.distancia)})</span></div>`).join('')
+    : '<div><span>Nenhum nível com 2 ou mais toques.</span></div>';
+  const lq = [...A.liquidez].sort((a,b)=>b.preco-a.preco);
+  $('liq').innerHTML = lq.length ? lq.map(z=>`<div><span>${z.tipo} · ${z.datas}</span><span class="mono">${nf2.format(z.preco)}${z.ate?'–'+nf2.format(z.ate):''}</span></div>`).join('')
+    : '<div><span>Nenhuma zona encontrada.</span></div>';
+  const E = A.elliott;
+  $('elliott').innerHTML = `<div><span>${E.contagem}</span></div>` + (E.leitura?`<div><span>${E.leitura}</span></div>`:'') +
+    (E.rotulos||[]).map(r=>`<div><span>Onda ${r.onda} · ${r.data}</span><span class="mono">${nf2.format(r.preco)}</span></div>`).join('');
+  const P = A.perfil, mx = Math.max(...P.faixas.map(f=>f.volume));
+  $('perfil').innerHTML = [...P.faixas].reverse().map(f=>{ const poc = f.de===P.maior_volume.de; const at = A.preco>=f.de && A.preco<=f.ate;
+    return `<div class="lin ${poc?'poc':''} ${at?'atual':''}"><span>${nf2.format(f.de)}–${nf2.format(f.ate)}${at?' ◀':''}</span><span class="bar" style="width:${(f.volume/mx*100).toFixed(1)}%"></span></div>`; }).join('');
+  $('perfil-nota').textContent = `Faixa de maior volume ${nf2.format(P.maior_volume.de)}–${nf2.format(P.maior_volume.ate)}; 70% do volume entre ${nf2.format(P.area_70.de)} e ${nf2.format(P.area_70.ate)}. Preço médio pago desde o topo de 12 meses: ${brl(A.vwap.desde_topo)}; desde o fundo: ${brl(A.vwap.desde_fundo)}.`;
+}
+
+async function abre(cod){
+  cod = (cod||'').trim().toUpperCase(); if(!cod) return;
+  mostraErro('');
+  try{
+    const A = await pega(cod);
+    if(!A){ mostraErro(`${cod} não está na lista. Use um código da lista (fundos negociados nos últimos 20 dias com 120+ pregões).`); return; }
+    atual = A; tabelas(A);
+    if(LW) desenha(A); else mostraErro('A biblioteca do gráfico não carregou; a leitura abaixo está completa.');
+    try{ localStorage.setItem('radar-ultimo', cod); }catch(e){}
+    if(location.hash.slice(1)!==cod) history.replaceState(null,'','#'+cod);
+  }catch(e){ mostraErro('Não consegui carregar os dados desse fundo. Tente de novo.'); }
+}
+$('form').addEventListener('submit', e=>{ e.preventDefault(); abre($('cod').value); });
+window.addEventListener('hashchange', ()=>{ const c = location.hash.slice(1); if(c){ $('cod').value = c; abre(c); } });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>{ if(atual && LW) desenha(atual); });
+new MutationObserver(()=>{ if(atual && LW) desenha(atual); }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+(async()=>{
+  await carregaIndice();
+  let ini = location.hash.slice(1);
+  if(!ini){ try{ ini = localStorage.getItem('radar-ultimo'); }catch(e){} }
+  ini = ini || 'TRXF11'; $('cod').value = ini; abre(ini);
+})();
+})();
+</script>
