@@ -81,7 +81,31 @@ Desenvolvimento: só 5 a 7 operações (sem conclusão).
 HABT11, CYCR11, RZAK11, SPXS11, VGIR11, ICRI11, HGCR11, SNCI11, WHGR11, PORD11. Antes de comprar: ler o relatório
 gerencial (Skill `avaliar-fundo`). Leitura de set/2026: HABT11 sem problema; RZAK11 e SPXS11 em atenção.
 
-## 9. Pendências
+## 9. Períodos e o quadro do país (`estudos/descontado_periodos.py`, `planilhas/descontado_periodos.xlsx`)
+
+Quadro mensal do Banco Central em `planilhas/macro_mensal.csv` (`estudos/macro_mensal.py`): Selic, IPCA 12 meses,
+dólar, dívida bruta (% PIB), déficit primário 12 meses, Focus. Cada operação usa o quadro do mês anterior à compra.
+Ganho menos CDI por mês aplicado (pontos), alvo +10%:
+
+| Cenário na compra | Papel | Tijolo | Fundo de fundos | Todos |
+|---|---|---|---|---|
+| Mercado espera Selic estável (Focus − Selic entre −1 e +1) | **+1,03** | −0,21 | +0,23 | +0,05 |
+| Mercado espera alta da Selic (>= +1) | +0,61 | −0,57 | −0,73 | −0,37 |
+| Mercado espera queda forte (<= −1) | +0,14 | −0,56 | −0,03 | −0,32 |
+| Dívida bruta subiu mais de 2 pontos do PIB em 12 meses | +0,18 | −0,70 | −0,68 | −0,37 |
+| Dívida estável ou caindo | +0,53 | −0,37 | +0,01 | −0,23 |
+| Dólar subiu mais de 10% em 6 meses | +0,67 | −0,44 | +0,24 | +0,04 |
+
+- Papel ficou positivo em todos os cenários; Tijolo negativo em todos.
+- Espera de queda forte da Selic foi o PIOR cenário para Papel (o rendimento dos papéis atrelados ao CDI cai) e não
+  ajudou Tijolo nestes anos.
+- Dívida subindo piorou todas as classes.
+- Por semestre, Papel com alvo +10% só ficou abaixo do CDI em 2019-S2 (1 operação), 2022 e 2024 (anos de Selic no
+  topo e de estresse fiscal). Tijolo foi bem em 2018–2019 e no começo de 2023 e de 2025–2026; mal de 2020 a 2022 e em 2024.
+- Cenário em 11/2026: mercado espera Selic 1 ponto menor no fim de 2027 (12,75% contra 13,75%) e essa espera vem
+  diminuindo (era −3,0 em 11/2025); dívida bruta subiu 5 pontos do PIB em 12 meses (82,95% em 09/2026).
+
+## 10. Pendências
 
 - Testar formas de compra que esperam a virada (setup 9.1, IFR, médias cruzando para cima, rompimento, reversão,
   recuo à média de 21), principalmente em Papel.
