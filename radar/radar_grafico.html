@@ -26,7 +26,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var
   align-items:center;padding-block:14px 12px;border-bottom:1px solid var(--line)}
 h1{font-family:var(--f-display);font-weight:600;font-size:20px;margin:0;letter-spacing:-.01em}
 h2{font-family:var(--f-display);font-weight:600;font-size:15px;margin:0 0 8px;text-wrap:balance}
-.busca{display:flex;gap:8px;align-items:center}
+.busca{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-width:0}
 .busca input{font-family:var(--f-mono);font-size:15px;text-transform:uppercase;width:9.5em;padding:7px 10px;border:1px solid var(--line);
   border-radius:6px;background:var(--surface);color:var(--fg)}
 .busca input:focus-visible,button:focus-visible,label:focus-within{outline:2px solid var(--accent);outline-offset:2px}
@@ -75,6 +75,8 @@ td.num,.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
     <label for="cod" class="meta">Fundo</label>
     <input id="cod" list="fundos" value="TRXF11" spellcheck="false" aria-label="Código do fundo">
     <datalist id="fundos"></datalist>
+    <label for="entrada" class="meta">Entrada R$</label>
+    <input id="entrada" inputmode="decimal" placeholder="último preço" style="width:7em;text-transform:none" aria-label="Preço de entrada">
     <button type="submit">Analisar</button>
   </form>
   <span class="meta" id="gerado">carregando dados…</span>
@@ -96,6 +98,7 @@ td.num,.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
           <label><input type="checkbox" id="c-liq"> zonas de liquidez</label>
           <label><input type="checkbox" id="c-elliott" checked> ondas de Elliott</label>
           <label><input type="checkbox" id="c-candles" checked> padrões de candle</label>
+          <label><input type="checkbox" id="c-proj" checked> projeção (alvos e caminhos)</label>
         </div>
         <div id="principal"></div>
         <div class="sub" id="s-vol"><span class="rot">Volume (R$)</span></div>
@@ -108,6 +111,8 @@ td.num,.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
           <span><i style="background:var(--mm200)"></i>média 200</span><span><i style="background:var(--band)"></i>Bollinger</span>
           <span><i style="background:var(--up)"></i>suporte</span><span><i style="background:var(--down)"></i>resistência</span>
           <span><i style="background:var(--info)"></i>Fibonacci</span><span><i style="background:var(--warn)"></i>liquidez</span>
+          <span><i style="background:var(--accent)"></i>alvos da projeção</span><span><i style="background:var(--up);height:0;border-top:2px dashed var(--up)"></i>caminho "onda 5 completa"</span>
+          <span><i style="background:var(--warn);height:0;border-top:2px dashed var(--warn)"></i>caminho "ainda na onda 3"</span>
         </div>
       </div>
       <div class="painel">
@@ -117,6 +122,12 @@ td.num,.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
       </div>
     </div>
     <div class="secao">
+      <div class="painel">
+        <h2>Projeção: alvos do repique</h2>
+        <p class="meta" id="proj-nota"></p>
+        <div class="tabwrap"><table><thead><tr><th>Zona</th><th>Alvo</th><th>Sobre a entrada</th><th>Por quê</th></tr></thead><tbody id="proj"></tbody></table></div>
+        <p class="meta">Os caminhos desenhados no gráfico são ilustrativos: mostram a ordem provável dos movimentos em cada leitura de Elliott, não o prazo. Não há teste no passado que preveja quando o preço chega a cada zona.</p>
+      </div>
       <div class="painel">
         <h2>Leitura item a item</h2>
         <div class="tabwrap"><table><thead><tr><th>#</th><th>Item</th><th>Valor e leitura</th></tr></thead><tbody id="leitura"></tbody></table></div>
@@ -138,7 +149,8 @@ const nf2 = new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFracti
 const pct = v => v==null?'—':(v>0?'+':'')+new Intl.NumberFormat('pt-BR',{style:'percent',minimumFractionDigits:1,maximumFractionDigits:1}).format(v);
 const brl = v => v==null?'—':'R$ '+nf2.format(v);
 const mi = v => v==null?'—':'R$ '+new Intl.NumberFormat('pt-BR',{maximumFractionDigits:1}).format(v/1e6)+' mi';
-const cache = {}; let indice = null, graficos = [], atual = null;
+const cache = {}; let indice = null, graficos = [], atual = null, redesenhaProj = ()=>{};
+function entrada(A){ const v = parseFloat(($('entrada').value||'').replace(',','.')); return v>0 ? v : A.preco; }
 const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
 const dmy2iso = s => { const [d,m,y] = s.split('/'); return `${y}-${m}-${d}`; };
 
@@ -176,7 +188,9 @@ function desenha(A){
   const bandas = [lin(css('--band'),S.bb_sup,1,2), lin(css('--band'),S.bb_inf,1,2)];
   const vis = (arr, on) => arr.forEach(s=>s.applyOptions({visible:on}));
   // linhas de preço por camada
-  let linhas = {niveis:[], fib:[], liq:[]};
+  let linhas = {niveis:[], fib:[], liq:[], proj:[]};
+  const caminhoA = main.addLineSeries({color:css('--up'),lineWidth:2,lineStyle:2,priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false});
+  const caminhoB = main.addLineSeries({color:css('--warn'),lineWidth:2,lineStyle:2,priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false});
   const limpa = k => { linhas[k].forEach(p=>cand.removePriceLine(p)); linhas[k] = []; };
   const pl = (k, price, cor, title, est=2) => linhas[k].push(cand.createPriceLine({price, color:cor, lineWidth:1, lineStyle:est, axisLabelVisible:true, title}));
   function camadaNiveis(on){ limpa('niveis'); if(on) A.niveis.forEach(n=>pl('niveis', n.preco, n.tipo==='suporte'?css('--up'):css('--down'), `${n.tipo==='suporte'?'S':'R'} ${n.toques}×`, 0)); }
@@ -184,6 +198,25 @@ function desenha(A){
   function camadaLiq(on){ limpa('liq'); if(!on) return; const p = A.preco;
     const z = [...A.liquidez].sort((a,b)=>Math.abs(a.preco-p)-Math.abs(b.preco-p)).slice(0,8);
     z.forEach(x=>pl('liq', x.preco, css('--warn'), x.tipo.split(' (')[0], 1)); }
+  function camadaProj(on){
+    limpa('proj'); caminhoA.setData([]); caminhoB.setData([]);
+    const P = A.projecao; if(!on || !P || !P.zonas.length) return;
+    const ent = entrada(A);
+    P.zonas.forEach((z,i)=>pl('proj', z.alvo, css('--accent'), `Zona ${i+1} ${pct(z.alvo/ent-1)}`, 0));
+    pl('proj', P.invalida, css('--down'), P.sentido==='alta'?'abaixo: queda continua':'acima: alta continua', 3);
+    // datas futuras (dias úteis) a partir do último pregão
+    const fut = []; let d = new Date(t[t.length-1]+'T12:00:00Z');
+    while(fut.length < 90){ d = new Date(d.getTime()+86400000); const w = d.getUTCDay(); if(w!==0 && w!==6) fut.push(d.toISOString().slice(0,10)); }
+    const ult = {time:t[t.length-1], value:S.c[S.c.length-1]}, Z = P.zonas.map(z=>z.alvo);
+    const fim = P.sentido==='alta' ? P.invalida*0.95 : P.invalida*1.05;
+    // liga os pontos em linha reta, um valor por dia útil (a escala de tempo só tem os dias que têm ponto)
+    const traça = nos => { const out = [ult]; let v0 = ult.value, k0 = -1;
+      nos.forEach(([k,v])=>{ for(let j=k0+1;j<=k;j++) out.push({time:fut[j], value:+(v0+(v-v0)*(j-k0)/(k-k0)).toFixed(2)}); v0 = v; k0 = k; });
+      for(let j=k0+1;j<fut.length;j++) out.push({time:fut[j]}); return out; };
+    caminhoB.setData(traça([[14,Z[0]],[44,fim]]));
+    const zA = Z.length>1 ? Z[1] : Z[0], zMax = Z[Z.length-1];
+    caminhoA.setData(traça([[24,zA],[39,Z[0]],[74,zMax]]));
+  }
   function marcadores(){
     const M = [];
     if($('c-elliott').checked) (A.elliott.rotulos||[]).forEach(r=>{ const d = dmy2iso(r.data); if(d>=t[0]) M.push({time:d, position:'aboveBar', color:css('--accent'), shape:'circle', text:'Onda '+r.onda}); });
@@ -192,7 +225,9 @@ function desenha(A){
     M.sort((a,b)=>a.time<b.time?-1:a.time>b.time?1:0); cand.setMarkers(M);
   }
   vis(medias,$('c-medias').checked); vis(bandas,$('c-bandas').checked);
-  camadaNiveis($('c-niveis').checked); camadaFib($('c-fib').checked); camadaLiq($('c-liq').checked); marcadores();
+  camadaNiveis($('c-niveis').checked); camadaFib($('c-fib').checked); camadaLiq($('c-liq').checked); camadaProj($('c-proj').checked); marcadores();
+  $('c-proj').onchange = e=>camadaProj(e.target.checked);
+  redesenhaProj = ()=>camadaProj($('c-proj').checked);
   $('c-medias').onchange = e=>vis(medias,e.target.checked); $('c-bandas').onchange = e=>vis(bandas,e.target.checked);
   $('c-niveis').onchange = e=>camadaNiveis(e.target.checked); $('c-fib').onchange = e=>camadaFib(e.target.checked);
   $('c-liq').onchange = e=>camadaLiq(e.target.checked); $('c-elliott').onchange = marcadores; $('c-candles').onchange = marcadores;
@@ -217,7 +252,7 @@ function desenha(A){
   let travado = false;
   graficos.forEach(g=>g.timeScale().subscribeVisibleLogicalRangeChange(r=>{ if(travado||!r) return; travado = true;
     graficos.forEach(o=>{ if(o!==g) o.timeScale().setVisibleLogicalRange(r); }); travado = false; }));
-  const n = t.length; main.timeScale().setVisibleLogicalRange({from:Math.max(0,n-260), to:n+3});
+  const n = t.length; main.timeScale().setVisibleLogicalRange($('c-proj').checked ? {from:Math.max(0,n-130), to:n+78} : {from:Math.max(0,n-200), to:n+3});
 }
 
 function tabelas(A){
@@ -250,18 +285,31 @@ function tabelas(A){
   const E = A.elliott;
   $('elliott').innerHTML = `<div><span>${E.contagem}</span></div>` + (E.leitura?`<div><span>${E.leitura}</span></div>`:'') +
     (E.rotulos||[]).map(r=>`<div><span>Onda ${r.onda} · ${r.data}</span><span class="mono">${nf2.format(r.preco)}</span></div>`).join('');
+  tabelaProj(A);
   const P = A.perfil, mx = Math.max(...P.faixas.map(f=>f.volume));
   $('perfil').innerHTML = [...P.faixas].reverse().map(f=>{ const poc = f.de===P.maior_volume.de; const at = A.preco>=f.de && A.preco<=f.ate;
     return `<div class="lin ${poc?'poc':''} ${at?'atual':''}"><span>${nf2.format(f.de)}–${nf2.format(f.ate)}${at?' ◀':''}</span><span class="bar" style="width:${(f.volume/mx*100).toFixed(1)}%"></span></div>`; }).join('');
   $('perfil-nota').textContent = `Faixa de maior volume ${nf2.format(P.maior_volume.de)}–${nf2.format(P.maior_volume.ate)}; 70% do volume entre ${nf2.format(P.area_70.de)} e ${nf2.format(P.area_70.ate)}. Preço médio pago desde o topo de 12 meses: ${brl(A.vwap.desde_topo)}; desde o fundo: ${brl(A.vwap.desde_fundo)}.`;
 }
 
+function tabelaProj(A){
+  const P = A.projecao, ent = entrada(A);
+  if(!P || !P.zonas.length){ $('proj').innerHTML = '<tr><td colspan="4">Sem zonas calculadas para este fundo.</td></tr>'; $('proj-nota').textContent=''; return; }
+  $('proj-nota').textContent = `Última perna de ${P.sentido==='alta'?'queda':'alta'}: ${nf2.format(P.ultima_perna.de)} → ${nf2.format(P.ultima_perna.ate)}. `
+    + `Entrada usada: ${brl(ent)}${$('entrada').value?'':' (último preço)'}. ${P.leitura.replace(/(\d+)\.(\d+)/g,'$1,$2')}.`;
+  $('proj').innerHTML = P.zonas.map((z,i)=>`<tr><td class="num">${i+1}</td><td class="num">${z.de!==z.ate?nf2.format(z.de)+'–'+nf2.format(z.ate):nf2.format(z.alvo)}</td>
+    <td class="num">${pct(z.alvo/ent-1)}</td><td>${z.motivos.join('; ')}${z.confluencia>1?` <span class="conf">${z.confluencia} medidas juntas</span>`:''}</td></tr>`).join('')
+    + `<tr><td>—</td><td class="num">${nf2.format(P.invalida)}</td><td class="num">${pct(P.invalida/ent-1)}</td><td>${P.sentido==='alta'?'abaixo daqui a queda continua':'acima daqui a alta continua'}</td></tr>`;
+}
 async function abre(cod){
   cod = (cod||'').trim().toUpperCase(); if(!cod) return;
   mostraErro('');
   try{
     const A = await pega(cod);
     if(!A){ mostraErro(`${cod} não está na lista. Use um código da lista (fundos negociados nos últimos 20 dias com 120+ pregões).`); return; }
+    let ent = ''; try{ ent = localStorage.getItem('radar-entrada-'+cod) || ''; }catch(e){}
+    if(!ent && cod==='TRXF11') ent = '53,99';
+    $('entrada').value = ent;
     atual = A; tabelas(A);
     if(LW) desenha(A); else mostraErro('A biblioteca do gráfico não carregou; a leitura abaixo está completa.');
     try{ localStorage.setItem('radar-ultimo', cod); }catch(e){}
@@ -269,6 +317,8 @@ async function abre(cod){
   }catch(e){ mostraErro('Não consegui carregar os dados desse fundo. Tente de novo.'); }
 }
 $('form').addEventListener('submit', e=>{ e.preventDefault(); abre($('cod').value); });
+$('entrada').addEventListener('input', ()=>{ if(!atual) return; tabelaProj(atual); redesenhaProj();
+  try{ localStorage.setItem('radar-entrada-'+atual.fundo, $('entrada').value); }catch(e){} });
 window.addEventListener('hashchange', ()=>{ const c = location.hash.slice(1); if(c){ $('cod').value = c; abre(c); } });
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>{ if(atual && LW) desenha(atual); });
 new MutationObserver(()=>{ if(atual && LW) desenha(atual); }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});

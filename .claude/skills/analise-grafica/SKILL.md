@@ -50,6 +50,15 @@ e republicar a página com o mesmo endereço, passando os arquivos `dados/*.json
 | 12 | Zonas de liquidez | fundos/topos iguais, varridas, vazios de preço não preenchidos, último bloco de alta antes de queda forte; deduzidas do preço, sem livro de ofertas | descritivo |
 | 13 | Ondas de Elliott | pivôs de 8%; regras de impulso e A-B-C; alvos e invalidação | SUBJETIVO |
 
+## Projeção (alvos e caminhos)
+
+`projecao()` no motor: última perna = do penúltimo ao último pivô de 8%; níveis de 23,6/38,2/50/61,8% da última perna e
+23,6/38,2% do movimento desde a onda 0 (se houver contagem); resistências (ou suportes) a até 2% entram na mesma zona;
+até 4 zonas, da mais perto para a mais longe; o último pivô é o preço que invalida (abaixo dele, a perna continua).
+Na página: campo "Entrada R$" (os % das zonas saem sobre ele; guardado por fundo no navegador), camada "projeção" com
+as zonas, o preço que invalida e dois caminhos ILUSTRATIVOS ("onda 5 completa": zona 2 → zona 1 → última zona;
+"ainda na onda 3": zona 1 → fundo novo 5% abaixo do último pivô). O tempo dos caminhos não é previsão.
+
 ## Fontes e limites
 
 - Fundos da base: preços ajustados por desdobramento (`planilhas/precos_AAAA.csv`). Fundos fora da base (63, ex.:

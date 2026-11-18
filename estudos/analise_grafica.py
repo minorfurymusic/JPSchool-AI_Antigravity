@@ -299,6 +299,41 @@ def elliott(pv8):
     return dict(contagem="sem contagem válida pelas regras (movimento lateral ou confuso)", rotulos=[], invalida=None)
 
 
+def projecao(pv8, niveis_, preco):
+    """Zonas de alvo do repique (ou da correção) pelas ondas e Fibonacci, juntadas com as resistências/suportes.
+    Última perna = do penúltimo ao último pivô de 8%; impulso = do início da contagem de Elliott (se houver) ao último
+    pivô. Níveis: 23,6/38,2/50/61,8% da última perna e 23,6/38,2% do impulso; resistências (ou suportes) a até 2%
+    entram na mesma zona. Zonas = níveis a até 2% uns dos outros; ordem pela distância do preço."""
+    if len(pv8) < 3:
+        return None
+    (d1, p1, _), (d2, p2, t2) = pv8[-2], pv8[-1]
+    sobe = t2 == "fundo"                         # último pivô é fundo -> alvos para cima
+    L = [(p2 + f * (p1 - p2), f"{f:.1%} da última perna".replace(".", ",")) for f in (0.236, 0.382, 0.5, 0.618)]
+    el = elliott(pv8)
+    if el.get("rotulos"):
+        p0 = el["rotulos"][0]["preco"]
+        L += [(p2 + f * (p0 - p2), f"{f:.1%} do movimento desde a onda 0".replace(".", ",")) for f in (0.236, 0.382)]
+    tipo = "resistência" if sobe else "suporte"
+    L += [(n["preco"], f"{tipo} {n['toques']} toques") for n in niveis_ if n["tipo"] == tipo]
+    L = sorted([x for x in L if (x[0] > preco) == sobe], key=lambda x: abs(x[0] - preco))
+    Z = []
+    for v, nome in L:
+        if Z and abs(v / Z[-1]["niveis"][0] - 1) <= 0.02:
+            Z[-1]["niveis"].append(v)
+            Z[-1]["motivos"].append(nome)
+        else:
+            Z.append(dict(niveis=[v], motivos=[nome]))
+    out = []
+    for z in Z[:4]:
+        alvo = round(float(np.mean(z["niveis"])), 2)
+        out.append(dict(alvo=alvo, de=round(min(z["niveis"]), 2), ate=round(max(z["niveis"]), 2), motivos=z["motivos"],
+                        confluencia=len(z["motivos"]), variacao=round(alvo / preco - 1, 4)))
+    return dict(sentido="alta" if sobe else "baixa", ultima_perna=dict(de=round(p1, 2), ate=round(p2, 2), data_ini=f"{d1:%Y-%m-%d}",
+                data_fim=f"{d2:%Y-%m-%d}"), invalida=round(p2, 2), zonas=out,
+                leitura=(f"{'novo fundo abaixo' if sobe else 'novo topo acima'} de {p2:.2f} indica que a perna ainda não terminou "
+                         f"(na leitura de Elliott: ainda na onda 3, ou a onda 5 em andamento)"))
+
+
 @lru_cache(maxsize=1)
 def _papel_hoje():
     import estudos.descontado_saudavel as DS
@@ -446,7 +481,7 @@ def analisar(f):
                  obv=[round(float(x)) for x in IJ["obv"]], rel=r2(rel.loc[J.index] / rel.loc[J.index].iloc[0] * 100))
     return dict(fundo=f, ultimo_pregao=f"{d:%d/%m/%Y}", preco=round(preco, 2), fonte=fonte, avisos=avisos, fundamentos=fu, leitura=L,
                 niveis=nv, liquidez=lq, perfil=pf, vwap=dict(desde_topo=vw_t, desde_fundo=vw_f), fibonacci=fb, elliott=el,
-                candles=cd, pivos=[dict(data=f"{d_:%Y-%m-%d}", preco=round(p, 2), tipo=t) for d_, p, t in pv5 if d_ >= J.index[0]], serie=dados)
+                candles=cd, projecao=projecao(pv8, nv, preco), pivos=[dict(data=f"{d_:%Y-%m-%d}", preco=round(p, 2), tipo=t) for d_, p, t in pv5 if d_ >= J.index[0]], serie=dados)
 
 
 def limpo(o):
