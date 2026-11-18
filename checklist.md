@@ -116,6 +116,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-18 — Skill `papel-padrao` (trade em fundos de Papel: sinal no fim do mês, venda com +10%, prazo de 1 ano) e programa `estudos/papel_padrao.py` (sinais, prévia do mês, cenário do país, posições do dono em `planilhas/papel_padrao_posicoes.csv`). Sinal de 30/10/2026: HABT11, SAPI11, RZAK11, SPXS11, CLIN11. Skill `descontado-saudavel` virou registro de pesquisa.
 - [ ] PRIORIDADE: atualização diária da base de preços (B3) — a base vai até 09/11/2026 e a base completa (dados/) não está nesta máquina.
 - [ ] Kairi: medir o resultado por classe de fundo (Papel, Tijolo...) com a classificação nova (só informação, sem mudar regra).
+- [x] 2026-11-18 — Papel Padrão: 5 formas de comprar (`estudos/papel_entradas.py`). A regra atual (abertura seguinte) ganhou mais no total; duas partes rende um pouco mais por mês aplicado; 9.1, IFR 2 e reversão pioraram.
+- [x] 2026-11-18 — ERRO DE DADOS achado: 77 avisos de rendimento maiores que 10% do preço; 25 suspeitos (ex.: VCRI11 R$ 36,85 numa cota de R$ 6), 33 sem preço depois, 19 prováveis reais. `planilhas/tecnico/rendimentos_suspeitos.csv` (`estudos/rendimentos_suspeitos.py`). Ignorados só no estudo de entradas; nos estudos anteriores do Papel com alvo +10% não houve contaminação (maior resultado +11,6%).
+- [ ] Dono conferir os 25 avisos suspeitos e os 33 sem preço depois; decidir se corrige a tabela de rendimentos (afeta todos os estudos e o Kairi).
 - [ ] Tipo 1 trade: testar formas de compra que esperam a virada (setup 9.1, IFR, cruzamento para cima, rompimento) — a maioria cai depois da compra.
 - [ ] Tipo 1 trade: descobrir o que separa as operações que chegam ao alvo das que não chegam (para filtrar melhor) e testar regra para as que travam.
 - [ ] Renda descontada: os filtros novos não ajudaram. Decisão do dono: abandonar a carteira 2, seguir só com o Kairi Padrão, ou testar outra ideia.

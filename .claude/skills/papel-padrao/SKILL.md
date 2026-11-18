@@ -63,6 +63,21 @@ Por cenário do país no mês anterior à compra (`planilhas/descontado_periodos
 Alternativa testada com menos tempo parado: venda quando a média de 21 cruza abaixo da de 70 (+0,21 ponto por mês;
 2% ficam 1 ano no prejuízo). Fibonacci e banda superior de Bollinger foram piores.
 
+## Formas de comprar testadas (18/11/2026, `estudos/papel_entradas.py`, `planilhas/papel_entradas.xlsx`)
+
+Mesmo sinal e mesma venda (alvo +10%). Gatilho procurado até o fim do mês seguinte; sem gatilho, não compra.
+
+| Compra | Operações | Com lucro | Chegaram ao alvo | Acima do CDI por mês | Ganho total por R$ 1.000 em cada sinal |
+|---|---|---|---|---|---|
+| **Abertura seguinte ao sinal (regra atual)** | 117 | 93% | 79% | +0,38 ponto | **R$ 8.604** |
+| Duas partes (metade no sinal, metade se cair 5%) | 118 | 93% | 81% | **+0,41 ponto** | R$ 5.673 |
+| Setup 9.1 (média de 9 virando para cima) | 117 | 90% | 75% | +0,29 ponto | R$ 7.972 |
+| IFR 2 abaixo de 10 | 97 | 92% | 73% | +0,19 ponto | R$ 6.348 |
+| Reversão (fecha acima da máxima de ontem após mínima de 20) | 83 | 84% | 70% | +0,04 ponto | R$ 4.679 |
+
+Esperar a virada NÃO melhorou: perde as que sobem logo e pega as que seguem caindo. Duas partes rende um pouco mais
+por mês aplicado, mas ganha menos no total (metade do dinheiro fica no CDI quando não cai 5%). Regra mantida.
+
 ## Limites (dizer sempre que relevante)
 
 - Resultados do passado, com regras escolhidas depois de muitos testes nos mesmos anos: risco de ajuste ao passado.
