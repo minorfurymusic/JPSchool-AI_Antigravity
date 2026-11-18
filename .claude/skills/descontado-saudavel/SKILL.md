@@ -84,6 +84,23 @@ da v2 em cada fim de mês; prazo de 1 ano; sem stop.
 | Não chegaram: resultado em 1 ano (média) | −8,3% | −7,3% |
 | Pior momento (mediana / 1 em 10) | −6,3% / −22% | −6,9% / −23% |
 
+## Formas de comprar e vender (18/11/2026, `estudos/descontado_saidas.py`, `planilhas/descontado_saidas.xlsx`)
+
+Compra na abertura seguinte ao sinal (A); prazo de 1 ano. Ganho por mês aplicado = soma dos resultados ÷ soma dos
+pregões × 21 (CDI no mesmo dinheiro e tempo: 0,66% a 0,69%).
+
+| Venda | Operações | Com lucro | Resultado médio | Ganho por mês aplicado | Perdas de mais de 10% |
+|---|---|---|---|---|---|
+| Média 21 cruza abaixo da 70 | 203 | 56% | +3,8% | **0,79%** | 6% |
+| Média 21 cruza abaixo da 90 | 200 | 54% | +3,5% | 0,67% | 7% |
+| Alvo +15% | 139 | 65% | +4,9% | 0,57% | 16% |
+| Alvo +10% | 149 | 70% | +3,4% | 0,47% | 13% |
+| Fibonacci 61,8% / 50% / 38,2% | 159–177 | 69%–72% | +1,8% a +3,2% | 0,31% a 0,44% | 13%–14% |
+| Banda superior de Bollinger | 300 | 65% | −0,3% | −0,17% | 10% |
+
+Comprar só quando o fechamento toca a banda inferior de Bollinger (B) piorou todas as vendas (melhor: cruzamento
+21×70, 0,73% por mês).
+
 ## Limites
 
 - Com 3 operações não há o que concluir; a carteira ficou quase toda no CDI.
