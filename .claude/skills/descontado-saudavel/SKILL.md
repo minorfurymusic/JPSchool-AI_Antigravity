@@ -3,7 +3,9 @@ name: descontado-saudavel
 description: Tipo 1 — filtro de fundos imobiliários (FII) descontados, saudáveis e com rendimento constante, para o momento de queda moderada do mercado (sem a crise de desespero do Kairi). Use quando o dono pedir fundos descontados que pagam bem, a lista de hoje do Tipo 1, ou a simulação dessa carteira.
 ---
 
-# Descontado saudável (Tipo 1) — SITUAÇÃO: NÃO VALIDADO
+# Descontado saudável (Tipo 1) — SITUAÇÃO: TRADE EM PAPEL PROMISSOR; RESTO NÃO VALIDADO
+
+Leia primeiro `docs/TIPO1_TRADE.md` (registro de tudo o que foi descoberto, 18/11/2026).
 
 Responder em português simples, sem jargão. Nunca dizer "funciona" sem mostrar a saída real do programa.
 
@@ -100,6 +102,12 @@ pregões × 21 (CDI no mesmo dinheiro e tempo: 0,66% a 0,69%).
 
 Comprar só quando o fechamento toca a banda inferior de Bollinger (B) piorou todas as vendas (melhor: cruzamento
 21×70, 0,73% por mês).
+
+## Por classe de fundo (18/11/2026, contas corrigidas: rendimento pela data-com e 20% de IR sobre ganho na cota)
+
+`PYTHONPATH=. python3 estudos/descontado_classes.py` -> `planilhas/descontado_classes.xlsx`.
+Só **Papel** ganhou do CDI do mesmo período (em 7 das 8 vendas). Papel com alvo +10%: 93% com lucro, +7,4% líquido
+por operação, +0,37 ponto por mês acima do CDI. Tijolo perdeu em todas as vendas.
 
 ## Limites
 
