@@ -3,7 +3,10 @@ name: descontado-saudavel
 description: Tipo 1 — filtro de fundos imobiliários (FII) descontados, saudáveis e com rendimento constante, para o momento de queda moderada do mercado (sem a crise de desespero do Kairi). Use quando o dono pedir fundos descontados que pagam bem, a lista de hoje do Tipo 1, ou a simulação dessa carteira.
 ---
 
-# Descontado saudável (Tipo 1) — SITUAÇÃO: TRADE EM PAPEL PROMISSOR; RESTO NÃO VALIDADO
+# Descontado saudável (Tipo 1) — PESQUISA. Para operar, usar a Skill `papel-padrao`.
+
+Esta Skill guarda os estudos que levaram ao Papel Padrão (versões 1 e 2, vendas, classes, cenários). Para sinais e
+posições, use `papel-padrao`.
 
 Leia primeiro `docs/TIPO1_TRADE.md` (registro de tudo o que foi descoberto, 18/11/2026).
 

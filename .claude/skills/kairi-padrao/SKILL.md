@@ -65,6 +65,17 @@ PYTHONPATH=. python3 estudos/kairi_mapa_operacoes.py          # mapa das oportun
 
 Planilhas: `planilhas/kairi_oportunidades.xlsx`, `planilhas/kairi_mapa_operacoes.xlsx`, `planilhas/kairi_mapa_operacoes.png`.
 
+## Informações novas disponíveis (18/11/2026; regras do Kairi NÃO mudaram)
+
+- Classe de cada fundo pela carteira (Papel, Tijolo, Desenvolvimento, Fundo de fundos, Híbrido), mês a mês:
+  `planilhas/classificacao_carteira_mensal.csv`, função `estudos.classificacao_carteira.classe(fundo, dia)`.
+  Útil para ver se o Kairi funciona igual em todas as classes (ainda não medido).
+- Quadro do país mês a mês (Selic, Focus, IPCA, dólar, dívida bruta, déficit): `planilhas/macro_mensal.csv`.
+- Correções do valor patrimonial (94 saltos em 69 fundos): `planilhas/tecnico/valor_patrimonial_correcoes.csv`. O universo do
+  Kairi usa preço 0,30–3,0 do patrimônio; aplicar as correções pode mudar quais fundos entram (decisão do dono pendente).
+- Cobertura do rendimento (CVM): `estudos.cobertura_rendimento.cobertura(fundo, dia)`, como alerta na avaliação de saúde.
+- Skill irmã para quedas moderadas em fundos de Papel: `papel-padrao`.
+
 ## Limites (dizer sempre que relevante)
 
 - Só 3 de 9 anos tiveram 3 ou mais oportunidades; em 2019 e 2022, nenhuma. A estratégia depende de quedas gerais.

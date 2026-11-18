@@ -1,0 +1,73 @@
+---
+name: papel-padrao
+description: Papel Padrão — trade em fundos imobiliários de Papel (CRI) descontados e saudáveis - comprar no sinal do fim do mês, receber o rendimento e vender com +10% (preço + rendimentos). Use quando o dono pedir o "Papel Padrão", os sinais do mês, o acompanhamento das posições ou o histórico dessa estratégia.
+---
+
+# Papel Padrão (montada em 18/11/2026)
+
+Responder em português simples, sem jargão. Nunca dizer "funciona" sem mostrar a saída real do programa.
+É TRADE (comprar, receber o rendimento, vender com lucro), não carteira parada. Comparar cada operação com 105% do
+CDI líquido no MESMO período em que o dinheiro ficou no fundo. Registro completo dos estudos: `docs/TIPO1_TRADE.md`.
+
+## Regras
+
+1. **Sinal** (último pregão de cada mês, só com dado publicado até o dia), corte essencial:
+   patrimônio ≥ R$ 100 mi; negociação típica (mediana de 60 pregões) ≥ R$ 250 mil/dia; sem amortização relevante nem
+   aviso de saída da bolsa; avaliação de saúde diferente de NÃO COMPRAR; preço de 0,50 a 1,00 do patrimônio;
+   rendimento do ano sobre o preço ≥ Selic esperada pelo Focus (fim do ano seguinte) × 0,825.
+2. **Só classe Papel** (classe pela carteira, informe mensal da CVM: Papel = 2/3 ou mais em CRI, LCI, LIG, debêntures, FIDC).
+3. **Nota** (média das posições entre os candidatos): desconto, rendimento acima da classe, constância do rendimento,
+   cobertura, patrimônio por cota em 12 meses, queda de 10% a 25% em 6 meses. **Os 5 de maior nota = sinal.**
+4. **Antes de comprar:** Skill `avaliar-fundo` (ler o relatório gerencial: o fundo ganha o que distribui? a reserva está
+   caindo? algum título com atraso?). Fundo com problema real nos documentos: não comprar.
+5. **Compra:** abertura do pregão seguinte ao sinal.
+6. **Venda:** fechamento do dia em que (preço + rendimentos com data-com desde a compra) ≥ +10% sobre o custo.
+7. **Prazo:** 1 ano (252 pregões); vende no fechamento do último dia.
+8. Imposto de 20% sobre o ganho na cota; rendimento isento; taxa de 0,03% por operação.
+
+## Como rodar
+
+```bash
+PYTHONPATH=. python3 estudos/papel_padrao.py sinais            # sinal do último mês fechado + prévia do mês em curso
+PYTHONPATH=. python3 estudos/papel_padrao.py sinais 30/11/2026 # sinal de um fim de mês
+PYTHONPATH=. python3 estudos/papel_padrao.py posicoes          # acompanha as compras do dono
+```
+
+- Saída: `planilhas/papel_padrao.xlsx` (Sinais, Prévia do mês, Cenário do país, Cenário - resultado passado, Posições, Regras).
+- Posições do dono: `planilhas/papel_padrao_posicoes.csv` (fundo; data_compra dd/mm/aaaa; preco_compra; cotas). O programa
+  mostra resultado bruto e líquido até o último dia com dado, quanto falta para +10% e avisos (alvo atingido, prazo
+  vencido, abaixo de −5% com 20+ pregões).
+- O programa avisa quando os preços da base estão atrasados. Sinal com dado velho NÃO vale para compra.
+
+## Resultado de referência (02/2018 a 11/2026, contas com data-com e imposto; `estudos/descontado_classes.py`)
+
+| | Papel, alvo +10% |
+|---|---|
+| Operações | 117 |
+| Com lucro | 93% |
+| Bateram o CDI do mesmo período | 79% |
+| Resultado médio por operação (líquido) | +7,4% |
+| Tempo médio | 137 pregões (~6,5 meses) |
+| Acima do CDI por mês aplicado | +0,37 ponto |
+| Perdas de mais de 10% / 1 ano no prejuízo | 2,6% / 6,8% |
+
+Por cenário do país no mês anterior à compra (`planilhas/descontado_periodos.xlsx`, `planilhas/macro_mensal.csv`):
+
+| Cenário | Com lucro | Bateram o CDI | Acima do CDI por mês |
+|---|---|---|---|
+| Mercado espera Selic estável | 95% | 90% | +1,03 ponto |
+| Mercado espera alta da Selic | 89% | 78% | +0,61 ponto |
+| Mercado espera queda forte (Focus ≤ Selic − 1) | 94% | 75% | +0,14 ponto |
+| Dívida bruta subiu 2+ pontos do PIB em 12 meses | 93% | 67% | +0,18 ponto |
+
+Alternativa testada com menos tempo parado: venda quando a média de 21 cruza abaixo da de 70 (+0,21 ponto por mês;
+2% ficam 1 ano no prejuízo). Fibonacci e banda superior de Bollinger foram piores.
+
+## Limites (dizer sempre que relevante)
+
+- Resultados do passado, com regras escolhidas depois de muitos testes nos mesmos anos: risco de ajuste ao passado.
+  O teste de verdade é acompanhar daqui para a frente, sinal a sinal.
+- Histórico por fundo é pequeno (2 a 7 operações).
+- Só Papel: Tijolo, Fundo de fundos e Híbrido perderam do CDI neste modelo (para eles, usar o Kairi Padrão nas quedas fortes).
+- Base de preços até 09/11/2026; a atualização diária ainda não está montada (pendência no checklist).
+- Valor patrimonial corrigido só nos estudos novos (`estudos/vp_correcoes.py`); a avaliação de saúde lê o valor sem correção.
