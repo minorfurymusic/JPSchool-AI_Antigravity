@@ -1,0 +1,8 @@
+﻿item;cenario;variacao;preco;rendimento_ano;base
+Fundo do poço depois do corte para R$ 0,85;central (mediana);-0,096;48,75;0,2092;"menor preço em 60 pregões após cortes de 5–15% em fundos com preço < 0,75 do patrimônio (14 casos); pior dia ~37º pregão"
+Fundo do poço depois do corte para R$ 0,85;pessimista (1 em 4 pior);-0,165;45,03;0,2265;"menor preço em 60 pregões após cortes de 5–15% em fundos com preço < 0,75 do patrimônio (14 casos); pior dia ~37º pregão"
+Fundo do poço depois do corte para R$ 0,85;otimista (1 em 4 melhor);-0,043;51,61;0,1976;"menor preço em 60 pregões após cortes de 5–15% em fundos com preço < 0,75 do patrimônio (14 casos); pior dia ~37º pregão"
+Preço em 6 meses (rendimento de volta a 0,88–0,90);pessimista: mercado exige 19%;0,0306;55,58;0,19;"rendimento de R$ 0.88 por mês ÷ rendimento exigido; hoje o mercado exige 20,7%"
+Preço em 6 meses (rendimento de volta a 0,88–0,90);central: exige 18%;0,1002;59,33;0,18;"rendimento de R$ 0.89 por mês ÷ rendimento exigido; hoje o mercado exige 20,7%"
+Preço em 6 meses (rendimento de volta a 0,88–0,90);otimista: exige 17%;0,178;63,53;0,17;"rendimento de R$ 0.90 por mês ÷ rendimento exigido; hoje o mercado exige 20,7%"
+Preço em 6 meses pelo histórico;cortes em fundos descontados que recuperaram o rendimento (5 casos);-0,01;53,39;;"mediana de 126 pregões; amostra muito pequena"
