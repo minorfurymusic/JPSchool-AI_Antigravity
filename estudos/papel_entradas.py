@@ -10,6 +10,10 @@ pregão do mês seguinte; sem gatilho = não compra, dinheiro fica no CDI):
   9.1        média exponencial de 9 fechamentos sobe hoje e tinha caído ontem (virada para cima)
   IFR2       IFR de 2 períodos (Wilder) < 10
   reversao   fechamento > máxima do dia anterior, com a mínima de 20 pregões feita nos últimos 5 pregões
+  Dois passos (18/11/2026; atenção = fundo no sinal do mês; referência = fechamento do dia do sinal; gatilho procurado
+  em até 60 pregões depois do sinal):
+  q3 / q5    compra quando o fechamento cair 3% / 5% abaixo da referência
+  q3r / q5r  depois de cair 3% / 5%, compra quando o fechamento subir 1% acima da menor mínima desde o sinal (repique)
   duas       metade na abertura seguinte ao sinal; a outra metade na abertura seguinte ao 1º fechamento 5% abaixo do
              preço da 1ª compra, em até 60 pregões (se não cair, fica só a metade e a outra metade no CDI)
 
@@ -38,6 +42,27 @@ for f, s in SER.items():
     s["maxima"] = P["maxima"].reindex(s.index)
     s["minima"] = P["minima"].reindex(s.index)
     s["min20"] = s["minima"].rolling(20).min()
+
+
+def gatilho_queda(s, d_sinal, tipo):
+    ref = float(s.loc[:d_sinal, "fechamento"].iloc[-1])
+    z = s.loc[d_sinal + pd.Timedelta(days=1):].iloc[:60]
+    if z.empty:
+        return None
+    x = 0.03 if tipo.startswith("q3") else 0.05
+    caiu = np.flatnonzero(z["fechamento"].to_numpy(float) <= ref * (1 - x))
+    if not len(caiu):
+        return None
+    k = caiu[0]
+    if tipo.endswith("r"):
+        mn = np.minimum.accumulate(z["minima"].to_numpy(float))
+        c = z["fechamento"].to_numpy(float)
+        rep = np.flatnonzero((np.arange(len(z)) > k) & (c >= mn * 1.01))
+        if not len(rep):
+            return None
+        k = rep[0]
+    j = s.index.get_loc(z.index[k])
+    return s.index[j + 1] if j + 1 < len(s) else None
 
 
 def gatilho(s, ini, fim, tipo):
@@ -119,7 +144,7 @@ if __name__ == "__main__":
         SIN.append((d, prox, list(C[C["tipo"] == "Papel"]["fundo"].head(5))))
     print("sinais prontos", flush=True)
     RES, OPS = [], []
-    for tipo in ("A", "9.1", "IFR2", "reversao", "duas"):
+    for tipo in ("A", "9.1", "IFR2", "reversao", "duas", "q3", "q5", "q3r", "q5r"):
         livre, ops, sem = {}, [], 0
         for d, prox, fundos in SIN:
             for f in fundos:
@@ -139,6 +164,12 @@ if __name__ == "__main__":
                         k = s.index.get_loc(t[0])
                         if k + 1 < len(s):
                             compras.append((s.index[k + 1], 0.5))
+                elif tipo.startswith("q"):
+                    e1 = gatilho_queda(s, d, tipo)
+                    if e1 is None:
+                        sem += 1
+                        continue
+                    compras = [(e1, 1.0)]
                 else:
                     e1 = gatilho(s, ini, prox, tipo)
                     if e1 is None:

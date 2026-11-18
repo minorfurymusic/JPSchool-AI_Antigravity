@@ -75,6 +75,11 @@ Mesmo sinal e mesma venda (alvo +10%). Gatilho procurado até o fim do mês segu
 | IFR 2 abaixo de 10 | 97 | 92% | 73% | +0,19 ponto | R$ 6.348 |
 | Reversão (fecha acima da máxima de ontem após mínima de 20) | 83 | 84% | 70% | +0,04 ponto | R$ 4.679 |
 
+Gatilho em dois passos (atenção = fundo no sinal; compra só depois de cair 3% ou 5% desde o fechamento do sinal, com ou
+sem repique de 1%; até 60 pregões): 57 a 77 operações, 91%–92% com lucro, +0,25 a +0,30 ponto por mês; mesmo depois de
+cair 5%, a cota caiu em média mais 8%; e 100 a 170 sinais ficaram sem compra. Ganho total de R$ 3.716 a R$ 5.114 por
+R$ 1.000 em cada sinal, contra R$ 8.604 da regra atual.
+
 Esperar a virada NÃO melhorou: perde as que sobem logo e pega as que seguem caindo. Duas partes rende um pouco mais
 por mês aplicado, mas ganha menos no total (metade do dinheiro fica no CDI quando não cai 5%). Regra mantida.
 
@@ -84,5 +89,9 @@ por mês aplicado, mas ganha menos no total (metade do dinheiro fica no CDI quan
   O teste de verdade é acompanhar daqui para a frente, sinal a sinal.
 - Histórico por fundo é pequeno (2 a 7 operações).
 - Só Papel: Tijolo, Fundo de fundos e Híbrido perderam do CDI neste modelo (para eles, usar o Kairi Padrão nas quedas fortes).
-- Base de preços até 09/11/2026; a atualização diária ainda não está montada (pendência no checklist).
+- Atualizar a base antes de usar: baixar o COTAHIST da B3 (`curl --http1.1`, diário COTAHIST_DddmmAAAA.ZIP ou anual
+  COTAHIST_AAAA.ZIP) e rodar `PYTHONPATH=. python3 estudos/atualizar_precos.py ARQUIVO.ZIP` e depois
+  `PYTHONPATH=. python3 estudos/atualizar_mercado_cdi.py`. Rendimentos anunciados depois de 06/11/2026 ainda não entram
+  (a tabela de avisos do FNET não é atualizada por esse caminho).
+- 63 fundos negociados na B3 nunca entraram na base (ex.: XPML11, TRXF11, BTCI11, PSEC11, HCTR11): não aparecem nos sinais.
 - Valor patrimonial corrigido só nos estudos novos (`estudos/vp_correcoes.py`); a avaliação de saúde lê o valor sem correção.

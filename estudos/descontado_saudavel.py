@@ -43,15 +43,8 @@ from estudos.cobertura_rendimento import cobertura
 from estudos.saude_fundo import saude
 from estudos.vp_correcoes import aplicar as aplicar_vp
 
-# o programa do Kairi regrava a própria planilha ao ser carregado: guardar e devolver o arquivo intacto
-_XL = Path("planilhas/kairi_carteira_anos.xlsx")
-_xl_bytes = _XL.read_bytes()
-try:
-    with contextlib.redirect_stdout(io.StringIO()):
-        _G = runpy.run_path("estudos/kairi_carteira_anos.py", run_name="biblioteca")["simular"].__globals__
-finally:
-    _XL.write_bytes(_xl_bytes)
-BLOQUEIO = _G["bloqueio"]
+# regra de saída da bolsa do Kairi, copiada sem mudança (estudos/bloqueio_saida.py)
+from estudos.bloqueio_saida import bloqueio as BLOQUEIO  # noqa: E402
 
 # tabelas corrigidas (18/11/2026): valor patrimonial (estudos/vp_correcoes.py) e classe pela carteira (estudos/classificacao_carteira.py)
 RD.P = aplicar_vp(RD.P)
