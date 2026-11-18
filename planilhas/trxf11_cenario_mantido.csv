@@ -1,0 +1,9 @@
+﻿item;cenario;preco;variacao;rendimento_ano;resultado_6m
+Fundo do poço com rendimento mantido em R$ 0,93;pessimista (vendedores seguem no ritmo de novembro por mais 1 mês);48,54;-0,1;0,2299;
+Fundo do poço com rendimento mantido em R$ 0,93;central (histórico sem corte: mediana);51,61;-0,043;0,2162;
+Fundo do poço com rendimento mantido em R$ 0,93;otimista;52,85;-0,02;0,2112;
+Preço em 6 meses com rendimento mantido em R$ 0,93;histórico sem corte: 1 em 4 pior (+0,8%);54,36;0,008;0,2053;0,1115
+Preço em 6 meses com rendimento mantido em R$ 0,93;histórico sem corte: mediana (+6,0%);57,17;0,06;0,1952;0,1635
+Preço em 6 meses com rendimento mantido em R$ 0,93;pelo rendimento: mercado exige 19%;58,74;0,0891;0,19;0,1926
+Preço em 6 meses com rendimento mantido em R$ 0,93;pelo rendimento: exige 18%;62,0;0,1496;0,18;0,2531
+Preço em 6 meses com rendimento mantido em R$ 0,93;pelo rendimento: exige 17%;65,65;0,2173;0,17;0,3207
