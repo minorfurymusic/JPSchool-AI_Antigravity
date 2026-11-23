@@ -173,6 +173,9 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] Rotina: o FNET é relido com 3 dias de folga a cada rodada (~600 documentos, ~3 min); funciona, mas baixa de novo o que já tem.
 - [ ] `radar/radar_grafico.html` está mais velho que a página publicada (mudanças de 21 e 22/11: atalhos da carteira, botões do gráfico, painel do Kairi, fundamentos embaixo).
 
+- [x] 2026-11-23 — Ferramenta `estudos/fnet_fundo.py` + `.github/workflows/fnet-fundo.yml`: todos os documentos de UM fundo no FNET, com texto, pedidos por `docs/pedido_fnet.txt` (roda no GitHub, o único lugar que alcança o FNET). Primeiro uso: RBRX11 (PATRIA PLUS) desde 01/09/2026, 12 documentos (`planilhas/tecnico/fnet_fundo_PATRIA_PLUS.csv.gz`, commit `cde778d`). Relatório gerencial de outubro ainda não publicado em 23/11 (o de setembro saiu em 21/10).
+- [ ] RBRX11: ler o relatório gerencial de outubro quando sair (pedir de novo pelo `docs/pedido_fnet.txt`) e a AGE de 06/01/2027 (troca de administrador, taxa 1,30% → 0,925%, compra de CRIs ligados ao gestor até 75% do PL, capital autorizado de R$ 30 bilhões).
+
 ## Pendente: decisões do dono
 
 - [x] Onde usar: computador de casa (Windows 11 Pro), rodando às 20h.
