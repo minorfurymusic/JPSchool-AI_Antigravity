@@ -295,9 +295,9 @@ def etapa_juros() -> str:
             url = (f"https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-taxas-referenciais-bmf-ptBR.asp?"
                    f"Data={d:%d/%m/%Y}&Data1={d:%Y%m%d}&slcTaxa={codigo}")
             html, erro = None, ""
-            for _ in range(2):
+            for _ in range(1):  # 23/11/2026: o site respondeu 1 vez em 4 a partir do GitHub; esperar mais só atrasava a rotina
                 try:
-                    html = get(url, timeout=120).content.decode("latin-1")
+                    html = get(url, timeout=45).content.decode("latin-1")
                     break
                 except Exception as e:  # noqa: BLE001
                     erro = f"{type(e).__name__}: {str(e)[:120]}"
