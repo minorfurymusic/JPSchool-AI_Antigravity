@@ -16,6 +16,7 @@ Regras (iguais às da tabela existente, conferidas em 18/11/2026):
   - amortizacao_12m = a da linha anterior.
 Avisos impressos: código novo na B3 que não está na tabela; variação de mais de 25% no fechamento.
 """
+import os
 import sys
 import zipfile
 from pathlib import Path
@@ -27,7 +28,7 @@ from fii.b3_cotacoes import ler_arquivo
 
 RAIZ = Path(__file__).resolve().parents[1]
 OP = dict(sep=";", decimal=",", encoding="utf-8-sig")
-CVM = Path("/tmp/claude-0/cvm_men")
+CVM = Path(os.environ.get("CVM_MEN", "/tmp/claude-0/cvm_men"))  # a rotina diária passa a pasta pelo ambiente
 
 
 def vp_cvm():

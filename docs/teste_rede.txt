@@ -1,0 +1,5 @@
+Rodado em 23/11/2026 10:38 UTC
+ERRO |  12.3s | Tesouro Transparente (página inicial) | ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+ERRO |  90.2s | B3 taxas referenciais DI x IPCA (19/11/2026) | ReadTimeout: HTTPSConnectionPool(host='www2.bmf.com.br', port=443): Read timed out. (read timeout=90)
+200 |   0.9s | B3 taxas referenciais DI x pré (19/11/2026) | text/html | ? bytes | início: b'\r\n<!doctype html>\r\n<html class="no-js" lang="pt-br">\r\n<head>\r\n<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">\r\n<meta name="viewport" co'
+200 |   0.1s | Yahoo dólar (BRL=X) | application/json;charset=utf-8 | 1669 bytes | início: b'{"chart":{"result":[{"meta":{"currency":"BRL","symbol":"BRL=X","exchangeName":"CCY","fullExchangeName":"CCY","instrumentType":"CURRENCY","firstTradeDate":107023'

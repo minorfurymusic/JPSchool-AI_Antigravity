@@ -1,0 +1,39 @@
+name: Rotina diaria (FIIs, B3, Banco Central)
+# Roda de segunda a sexta as 23h de Brasilia (02h UTC do dia seguinte). O GitHub so agenda pelo branch padrao do
+# repositorio, por isso este arquivo tambem fica nele; o trabalho e sempre feito no branch claude/happy-bell-a81nvp.
+on:
+  schedule:
+    - cron: "0 2 * * 2-6"
+  workflow_dispatch:
+  push:
+    branches: [claude/happy-bell-a81nvp]
+    paths: [".github/workflows/rotina-diaria.yml", "estudos/rotina_diaria.py"]
+permissions:
+  contents: write
+concurrency:
+  group: rotina-diaria
+  cancel-in-progress: false
+jobs:
+  rotina:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/happy-bell-a81nvp
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Rotina
+        run: PYTHONPATH=. python3 estudos/rotina_diaria.py
+      - name: Grava as tabelas no repositorio
+        if: always()
+        run: |
+          git config user.name "rotina-github"
+          git config user.email "actions@users.noreply.github.com"
+          git add planilhas docs
+          git commit -m "Rotina diaria: $(TZ=America/Sao_Paulo date '+%d/%m/%Y %H:%M')" || echo "nada a gravar"
+          git pull --rebase origin claude/happy-bell-a81nvp
+          git push origin HEAD:claude/happy-bell-a81nvp
