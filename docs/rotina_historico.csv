@@ -27,3 +27,10 @@ rodada;etapa;status;segundos;resumo
 23/11/2026 08:07;5 IPCA e IGP-M;OK;2;indicadores_mensais.csv: 118 meses, último 10/2026
 23/11/2026 08:07;6 Boletim Focus;OK;0;focus.csv: 14719 -> 14719 linhas (desde 03/11/2026)
 23/11/2026 08:07;7 juros futuros da B3;ERRO;2;Traceback (most recent call last):
+23/11/2026 08:23;1 preços dos FIIs (B3);OK;1;"tabela ia até 19/11/2026; arquivos da B3 baixados: 0; sem arquivo (feriado ou ainda não publicado): 20/11 (404), 23/11 (404)"
+23/11/2026 08:23;2 mercado de fundos e CDI;OK;0;nada novo: mercado.csv já vai até 19/11/2026 (preços até 19/11/2026)
+23/11/2026 08:23;3 documentos dos FIIs (FNET);OK;186;"período 16/11/2026 a 23/11/2026: 590 documentos listados, 590 novos; resultado: {'lido': 63, 'texto': 171}"
+23/11/2026 08:23;4 dólar, IFIX e Ibovespa;OK;6;"indicadores_diarios.csv: 2480 -> 2480 linhas (dólar: Banco Central; IFIX e Ibovespa: B3, desde 2017); dias sem valor: {'dolar_ptax_venda (R$)': 0, 'ifix (pontos)': 25, 'ibovespa (pontos)': 25}"
+23/11/2026 08:23;5 IPCA e IGP-M;OK;1;indicadores_mensais.csv: 118 meses, último 10/2026
+23/11/2026 08:23;6 Boletim Focus;OK;1;focus.csv: 14719 -> 14719 linhas (desde 03/11/2026)
+23/11/2026 08:23;7 juros dos títulos públicos (ANBIMA);OK;1;titulos_publicos_anbima.csv: 0 -> 250 linhas
