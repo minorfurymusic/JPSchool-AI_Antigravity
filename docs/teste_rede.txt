@@ -1,0 +1,11 @@
+Rodado em 23/11/2026 10:35 UTC
+200 |   0.9s | FNET lista (19/11/2026) | application/json; charset=UTF-8 | ? bytes | início: b'{"data":[{"altaPrioridade":false,"analisado":"N","arquivoEstruturado":" ","assuntos":null,"categoriaDocumento":"Assembleia","cnpjAdministrador":null,"cnpjFundo"'
+200 |   0.4s | B3 COTAHIST diário 19/11/2026 | application/x-zip-compressed | 491063 bytes | início: b"PK\x03\x04\x14\x00\x08\x08\x08\x00\x19\xa8s]\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x16\x00\x00\x00COTAHIST_D19112026.TXT\xdc\xbd\xc9v\xe3J\xb2-8\xaf\xb5\xea\x1f8\xa8i\xde\x07o\xd0\rA\n\xa2\x10\x87\xdda\xa3\x13'\xfe\xffC\xca\x0c\x04B{\x9b\x13\x80\x10yW\rJ\xeb\xde\xcc48\xa4\xe0\xa6w\xd6n\xcb\xb2\xdd\xf9\xde|t\xb7\xfb\xff\xf8\xcc\x17\xdb\xf3g{\xbb4\x1b\xfd\xdf\xce\xb9z\xf3\xff\xcb\x9f\xff\xfb\xff\xca\xdc\x880\xf3?\x9a\xc3!\x0c#\x99\xcbTlo\xc7f"
+200 |   0.9s | Banco Central dólar (série 1) | application/json; charset=utf-8 | 118 bytes | início: b'[{"data":"17/11/2026","valor":"5.7851"},{"data":"18/11/2026","valor":"5.8102"},{"data":"19/11/2026","valor":"5.8889"}]'
+200 |   0.7s | Banco Central IPCA (série 433) | application/json; charset=utf-8 | 113 bytes | início: b'[{"data":"01/08/2026","valor":"-0.32"},{"data":"01/09/2026","valor":"0.82"},{"data":"01/10/2026","valor":"0.14"}]'
+200 |   0.7s | Banco Central IGP-M (série 189) | application/json; charset=utf-8 | 113 bytes | início: b'[{"data":"01/08/2026","valor":"-0.22"},{"data":"01/09/2026","valor":"1.57"},{"data":"01/10/2026","valor":"1.47"}]'
+200 |   1.0s | Banco Central Focus | application/json;charset=UTF-8;odata.metadata=minimal | ? bytes | início: b'{"@odata.context":"https://was-p.bcnet.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata$metadata#ExpectativasMercadoAnuais","value":[{"Indicador":"Selic",'
+ERRO |  12.4s | Tesouro Direto taxas | ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+404 |   0.4s | B3 IFIX histórico do ano |  | ? bytes | início: b''
+404 |   0.4s | B3 Ibovespa histórico do ano |  | ? bytes | início: b''
+200 |   0.7s | CVM informe mensal FII | text/html | ? bytes | início: b'<!DOCTYPE html>\n<html lang="en">\n    <head>\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1">\n        '
