@@ -3,16 +3,17 @@
 Cada etapa roda separada: erro numa não para as outras. A saída literal de cada rodada fica em
 docs/rotina_ultima_execucao.md e o resumo de todas as rodadas em docs/rotina_historico.csv.
 
-Etapas e tabelas:
-  1 preços dos FIIs (arquivo diário COTAHIST da B3)  -> planilhas/precos_AAAA.csv      (estudos/atualizar_precos.py)
-  2 mercado de fundos e CDI                           -> planilhas/mercado.csv, cdi.csv (estudos/atualizar_mercado_cdi.py)
-  3 documentos dos FIIs (FNET)                        -> planilhas/rotina/fnet_documentos_AAAA-MM.csv
+Etapas e tabelas (nesta ordem: o rendimento novo entra na base antes dos preços do dia):
+  1 documentos dos FIIs (FNET)                        -> planilhas/rotina/fnet_documentos_AAAA-MM.csv
                                                          planilhas/rotina/fnet_rendimentos_AAAA.csv
                                                          planilhas/rotina/fnet_textos/AAAA-MM-DD.csv.gz (texto dos PDFs do dia)
-  4 dólar, IFIX e Ibovespa (diário)                   -> planilhas/rotina/indicadores_diarios.csv
-  5 IPCA e IGP-M (mensal)                             -> planilhas/rotina/indicadores_mensais.csv
-  6 Boletim Focus (Selic, IPCA, câmbio)               -> planilhas/rotina/focus.csv
-  7 juros dos títulos públicos (NTN-B = IPCA+)      -> planilhas/rotina/titulos_publicos_anbima.csv
+  2 rendimentos novos na base de preços               -> planilhas/rendimentos.csv (acrescenta) e precos_AAAA.csv (corrige)
+  3 preços dos FIIs (arquivo diário COTAHIST da B3)  -> planilhas/precos_AAAA.csv      (estudos/atualizar_precos.py)
+  4 mercado de fundos e CDI                           -> planilhas/mercado.csv, cdi.csv (estudos/atualizar_mercado_cdi.py)
+  5 dólar, IFIX e Ibovespa (diário)                   -> planilhas/rotina/indicadores_diarios.csv
+  6 IPCA e IGP-M (mensal)                             -> planilhas/rotina/indicadores_mensais.csv
+  7 Boletim Focus (Selic, IPCA, câmbio)               -> planilhas/rotina/focus.csv
+  8 juros dos títulos públicos (NTN-B = IPCA+)        -> planilhas/rotina/titulos_publicos_anbima.csv, juro_real_10_anos.csv
 
 Fontes, todas oficiais: B3 (COTAHIST e estatísticas históricas dos índices), FNET, CVM, Banco Central (SGS e Focus), ANBIMA.
 Os PDFs do FNET não são guardados no repositório (ficam no FNET; a tabela traz o link). O texto extraído é guardado.
@@ -44,7 +45,7 @@ INICIO_HIST = dt.date(2017, 1, 1)
 
 
 def hoje_brasil() -> dt.date:
-    return (dt.datetime.utcnow() - dt.timedelta(hours=3)).date()
+    return (dt.datetime.now(dt.timezone.utc).replace(tzinfo=None) - dt.timedelta(hours=3)).date()
 
 
 def get(url: str, timeout: int = 90, **kw) -> requests.Response:
@@ -91,7 +92,77 @@ def ultima_data_precos() -> dt.date:
     raise RuntimeError("não achei planilhas/precos_AAAA.csv")
 
 
-# ---------------------------------------------------------------- 1 preços
+# ---------------------------------------------------------------- rendimentos do FNET na base de preços
+FECHAMENTO = dt.time(18, 0)
+INT_COLS = ("volume_dia (R$)", "volume_medio_60 (R$)", "patrimonio (R$)", "negociou (1/0)", "amortizacao_12m (1/0)")
+
+
+def data_conhecido(entrega: pd.Timestamp) -> pd.Timestamp:
+    """Regra do dono (23/11/2026): o rendimento novo vale a partir do dia em que o aviso sai no FNET, para ver o preço
+    reagir já nesse momento. Aviso entregue depois do fechamento da B3 (18h) só pode mexer no preço do pregão seguinte."""
+    d = entrega.normalize()
+    return d + pd.offsets.BDay(1) if entrega.time() >= FECHAMENTO else d
+
+
+def etapa_rendimentos() -> str:
+    arqs = sorted(ROT.glob("fnet_rendimentos_*.csv"))
+    if not arqs:
+        return "nada novo: ainda não há avisos do FNET guardados"
+    F = pd.concat([ler(a) for a in arqs], ignore_index=True)
+    F = F[(F["tipo"] == "Rendimento") & F["cod_negociacao"].astype(str).str.fullmatch(r"[A-Z]{4}\d{2}")].copy()
+    F["ent"] = pd.to_datetime(F["entrega"], dayfirst=True)
+    F = F.sort_values(["ent", "versao"]).drop_duplicates(["cod_negociacao", "data_base"], keep="last")  # vale a última versão
+    arq_r = RAIZ / "planilhas/rendimentos.csv"
+    R = pd.read_csv(arq_r, **OP)
+    ja = set(zip(R["fundo"], R["data_base"]))
+    N = F[[(f, b) not in ja for f, b in zip(F["cod_negociacao"], F["data_base"])]]
+    if N.empty:
+        return f"nada novo: os {len(F)} avisos do FNET já estão em planilhas/rendimentos.csv"
+    N = pd.DataFrame({"fundo": N["cod_negociacao"].values,
+                      "data_conhecido": [data_conhecido(e) for e in N["ent"]],
+                      "data_base": N["data_base"].values, "valor (R$/cota)": N["valor (R$/cota)"].round(4).values})
+    N = N.sort_values(["data_conhecido", "fundo"])
+    N["data_conhecido"] = N["data_conhecido"].dt.strftime("%d/%m/%Y")
+    # acrescenta no fim, sem reescrever o que já existe
+    N.to_csv(arq_r, mode="a", header=False, index=False, sep=";", decimal=",", encoding="utf-8")
+    linhas = [f"planilhas/rendimentos.csv: +{len(N)} avisos novos do FNET (data conhecida = dia da entrega; depois das 18h, "
+              f"pregão seguinte)"]
+    # refaz o rendimento das linhas de preço já gravadas a partir do dia em que o aviso ficou conhecido
+    R = pd.concat([R, N], ignore_index=True)
+    R["dc"] = pd.to_datetime(R["data_conhecido"], dayfirst=True)
+    ano = hoje_brasil().year
+    arq_p = RAIZ / f"planilhas/precos_{ano}.csv"
+    P = pd.read_csv(arq_p, **OP)
+    for c in INT_COLS:
+        P[c] = P[c].astype("Int64")
+    dp = pd.to_datetime(P["data"], dayfirst=True)
+    mudou = []
+    for f, x in N.groupby("fundo"):
+        ini = pd.to_datetime(x["data_conhecido"], dayfirst=True).min()
+        sel = (P["fundo"] == f) & (dp >= ini)
+        if not sel.any():
+            continue
+        rf = R[R["fundo"] == f].sort_values("dc")
+        for i in P.index[sel]:
+            r = rf[rf["dc"] <= dp[i]]
+            if not len(r):
+                continue
+            v = float(r["valor (R$/cota)"].iloc[-1])
+            antes = P.at[i, "rendimento_mensal (R$/cota)"]
+            if pd.isna(antes) or abs(antes - v) > 1e-9:
+                P.at[i, "rendimento_mensal (R$/cota)"] = v
+                fe = P.at[i, "fechamento"]
+                P.at[i, "rendimento_ano_sobre_preco (%)"] = round(v * 12 / fe * 100, 2) if fe else float("nan")
+                mudou.append((f, P.at[i, "data"], antes, v))
+    if mudou:
+        P.to_csv(arq_p, sep=";", decimal=",", encoding="utf-8-sig", index=False)
+        M = pd.DataFrame(mudou, columns=["fundo", "data", "rendimento antes", "rendimento novo"])
+        linhas.append(f"{arq_p.relative_to(RAIZ)}: rendimento corrigido em {len(M)} linhas já gravadas:\n"
+                      + M.drop_duplicates("fundo", keep="last").to_string(index=False))
+    return "\n".join(linhas)
+
+
+# ---------------------------------------------------------------- preços
 def etapa_precos() -> str:
     ult = ultima_data_precos()
     zips, faltam = [], []
@@ -287,6 +358,16 @@ def etapa_focus() -> str:
 
 
 # ---------------------------------------------------------------- 7 juros da B3
+def juro_real_10_anos(ntnb: pd.DataFrame, fonte: str) -> pd.DataFrame:
+    """Um número por dia: a NTN-B (IPCA+ com juros semestrais) que vence mais perto de 10 anos depois do dia.
+    Colunas de entrada: data, vencimento (dd/mm/aaaa), taxa."""
+    x = ntnb.assign(d=pd.to_datetime(ntnb["data"], dayfirst=True), v=pd.to_datetime(ntnb["vencimento"], dayfirst=True))
+    x["dist"] = (x["v"] - (x["d"] + pd.DateOffset(years=10))).abs()
+    x = x.sort_values(["d", "dist"]).drop_duplicates("d")
+    return pd.DataFrame({"data": x["d"].dt.strftime("%d/%m/%Y"), "vencimento": x["vencimento"],
+                         "juro_real (% ao ano + IPCA)": x["taxa"].round(4), "fonte": fonte})
+
+
 def etapa_juros() -> str:
     """Taxas dos títulos públicos do dia (ANBIMA, arquivo diário público): NTN-B = juro real (IPCA+), LTN e NTN-F =
     prefixado, LFT = Selic. A ANBIMA só deixa os arquivos recentes no ar (o de 19/11/2021 deu 404 em 23/11/2026):
@@ -317,30 +398,34 @@ def etapa_juros() -> str:
     N = pd.concat(L, ignore_index=True)
     a, b = juntar(arq, N, ["data", "titulo", "vencimento"], ["data", "titulo", "vencimento"])
     linhas.insert(0, f"titulos_publicos_anbima.csv: {a} -> {b} linhas")
+    J = juro_real_10_anos(N.rename(columns={"taxa_indicativa (% ao ano)": "taxa"}).query("titulo == 'NTN-B'"), "ANBIMA (taxa indicativa)")
+    a2, b2 = juntar(ROT / "juro_real_10_anos.csv", J, ["data"], ["data"])
+    linhas.append(f"juro_real_10_anos.csv: {a2} -> {b2} linhas")
     u = N[N["data"] == N["data"].iloc[-1]]
     linhas.append(f"NTN-B (juro real, IPCA+) em {u['data'].iloc[0]}:\n" + u[u["titulo"] == "NTN-B"].to_string(index=False))
     return "\n".join(linhas)
 
 
-ETAPAS = [("1 preços dos FIIs (B3)", etapa_precos), ("2 mercado de fundos e CDI", etapa_mercado),
-          ("3 documentos dos FIIs (FNET)", etapa_fnet), ("4 dólar, IFIX e Ibovespa", etapa_diarios),
-          ("5 IPCA e IGP-M", etapa_mensais), ("6 Boletim Focus", etapa_focus), ("7 juros dos títulos públicos (ANBIMA)", etapa_juros)]
+ETAPAS = [("1 documentos dos FIIs (FNET)", etapa_fnet), ("2 rendimentos novos na base de preços", etapa_rendimentos),
+          ("3 preços dos FIIs (B3)", etapa_precos), ("4 mercado de fundos e CDI", etapa_mercado),
+          ("5 dólar, IFIX e Ibovespa", etapa_diarios), ("6 IPCA e IGP-M", etapa_mensais), ("7 Boletim Focus", etapa_focus),
+          ("8 juros dos títulos públicos (ANBIMA)", etapa_juros)]
 
 
 def main() -> int:
-    inicio = dt.datetime.utcnow() - dt.timedelta(hours=3)
+    inicio = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None) - dt.timedelta(hours=3)
     so = set(sys.argv[1:])
     blocos, hist, falhas = [], [], 0
     for nome, f in ETAPAS:
         if so and nome[0] not in so:
             continue
-        t = dt.datetime.utcnow()
+        t = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
         try:
             saida, status = f(), "OK"
         except Exception:  # noqa: BLE001
             saida, status = traceback.format_exc()[-3000:], "ERRO"
             falhas += 1
-        seg = (dt.datetime.utcnow() - t).total_seconds()
+        seg = (dt.datetime.now(dt.timezone.utc).replace(tzinfo=None) - t).total_seconds()
         print(f"== {nome}: {status} ({seg:.0f}s)\n{saida}\n", flush=True)
         blocos.append(f"## {nome} — {status} ({seg:.0f}s)\n\n```\n{saida}\n```\n")
         hist.append({"rodada": f"{inicio:%d/%m/%Y %H:%M}", "etapa": nome, "status": status, "segundos": round(seg),

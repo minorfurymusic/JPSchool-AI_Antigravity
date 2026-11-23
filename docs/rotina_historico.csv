@@ -34,3 +34,4 @@ rodada;etapa;status;segundos;resumo
 23/11/2026 08:23;5 IPCA e IGP-M;OK;1;indicadores_mensais.csv: 118 meses, último 10/2026
 23/11/2026 08:23;6 Boletim Focus;OK;1;focus.csv: 14719 -> 14719 linhas (desde 03/11/2026)
 23/11/2026 08:23;7 juros dos títulos públicos (ANBIMA);OK;1;titulos_publicos_anbima.csv: 0 -> 250 linhas
+23/11/2026 08:37;2 rendimentos novos na base de preços;OK;1;"planilhas/rendimentos.csv: +54 avisos novos do FNET (data conhecida = dia da entrega; depois das 18h, pregão seguinte)"
