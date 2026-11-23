@@ -1,41 +1,6 @@
-# FNET — PATRIA PLUS desde 01/09/2026 (rodado em 23/11/2026)
+# FNET — PATRIA PLUS desde 01/11/2026 (rodado em 23/11/2026)
 
-12 documentos.
-
-## 1319282 — Informes Periódicos / Informe Mensal Estruturado — ref. 08/2026 — entregue 14/09/2026 21:20
-https://fnet.bmfbovespa.com.br/fnet/publico/downloadDocumento?id=1319282 — xml, 1926 caracteres 
-
-PATRIA PLUS MULT FII 41088458000121 2021-06-28 Investidores em Geral BRRBRXCTF006 146354302 false false Multiestratégia Não possui subclassificação Ativa Multicategoria Indeterminado 31/12 false false true false false BTG PACTUAL SERVICOS FINANCEIROS S.A. DISTRIBUIDOR 59281253000123 Praia de Botafogo 501 6º Andar Botafogo Rio de Janeiro RJ 22.250-040 55 11 3383-3102 www.btgpactual.com ri.fundoslistados@btgpactual.com 2026-08-31 127840 272 0 0 0 14 4 4 0 0 2 15 33 0 1 1353918662.63 1352681336.75 146354302.0000 9.242512 0.000859 0.0000 0.0000 0.0000 0.0000 0.00 33371457.77 0.00 1302389.86 0.00 10572706.35 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 751425107.18 0.00 0.00 0.00 0.00 2377800.00 0.00 0.00 542421601.47 0.00 0.00 0.00 0.00 0.00 0.00 12447600.00 0.00 1162401.61 0.00 0.00 0.00 0.00 0.00 0.00 0.00 74924.27 0.00 1237325.88 0.00 0.00 0.00
-
-## 1320639 — Aviso aos Cotistas - Estruturado / Rendimentos e Amortizações — ref. 15/09/2026 — entregue 15/09/2026 17:07
-https://fnet.bmfbovespa.com.br/fnet/publico/downloadDocumento?id=1320639 — xml, 344 caracteres 
-
-RBR PLUS MULTI FII 41088458000121 BTG Pactual Serviços Financeiros S.A. DTVM 59281253000123 Caroline Losinno (11) 3383-3102 2026-09-15 2026 BRRBRXCTF006 RBRX11 2026-09-15 0.09 2026-09-23 Agosto-2026 Sim
-
-## 1325591 — Relatórios / Relatório Gerencial — ref. 31/08/2026 — entregue 22/09/2026 09:39
-https://fnet.bmfbovespa.com.br/fnet/publico/downloadDocumento?id=1325591 — pdf, 36454 caracteres 
-
-Real Estate Relatório Gerencial RBRX 11 Patria Plus Multiestratégia FII Agosto 2026 2 1 O Fundo tem como objetivo aplicar, primordialmente, em: (i) quaisquer direitos reais sobre bens imóveis, (ii) ações ou cotas de sociedades cujo único propósito se enquadre entre as atividades permitidas aos FII (“SPE”) (iii) cotas de fundos de investimento em participações que tenham como política de investimento, exclusivamente, atividades permitidas aos FII; (iv) cotas de outros FII, (v) certificados de recebíveis imobiliários; (vi) letras hipotecárias, letras de crédito Imobiliário e letras imobiliárias garantidas, e; (vii) outros ativos, títulos e valores mobiliários admitidos nos termos da Resolução CVM 175. Informações Gerais RBRX 11 Objetivo do Fundo realestate.patria.com realestate .patria.com *Termos e definições no glossário (clique aqui). Início das Atividades Junho 2021 Código de Negociação RBRX11 CNPJ 41.088.458/0001-21 Cotas Emitidas 146.354.302 Prazo Indeterminado Tipo Anbima Multiestratégia Gestão Ativa Gestor* Patria Gestão de Recursos Ltda Administrador e Escriturador * BTG Pactual Serviços Financeiros S/A DTVM Taxa de Administração Total* 1,20% a.a. do valor de mercado. Taxa de Performance* 20% dos rendimentos que superarem a variação positiva do IPCA + Yield IMA-B 5 Público Alvo Investidores em geral Para mais informações, clique aqui e acesse o Regulamento do Fundo Cadastre-se no mailing Cadastre - se no mailing Fale com o time de Relaçõescom Investidores de RE Fale co
-
-## 1336594 — Comunicado ao Mercado / Outros Comunicados Não Considerados Fatos Relevantes — ref. 30/09/2026 — entregue 30/09/2026 19:53
-https://fnet.bmfbovespa.com.br/fnet/publico/downloadDocumento?id=1336594 — pdf, 2520 caracteres 
-
-GESTOR Internal Use Only RBRX11 | PATRIA PLUS MULTIESTRATÉGIA REAL ESTATE FII CARTA DO GESTOR O PATRIA INVESTIMENTOS LTDA., inscrito no CNPJ/MF sob o nº 12.461.756/0001 -17 (“Gestor”), na qualidade de Gestor do PATRIA PLUS MULTIESTRATÉGIA REAL ESTATE DO FUNDO DE INVESTIMENTO IMOBILIÁRIO RESPONDABILIDADE LIMITADA , fundo de investimento imobiliário inscrito no CNPJ /MF sob o nº 41.088.458/0001-21 (“Fundo” ou “ RBRX11”), vem informar aos cotistas do Fundo que o Gestor propôs uma reorganização envolvendo o Fundo e o PATRIA SECURITIES FUNDO DE INVESTIMENTO IMOBILIÁRIO - RESPONSABILIDADE LIMITADA, inscrito no CNPJ/MF sob o nº 35.507.457/0001-71 (“PSEC11”), que pode resultar na aquisição, pelo RBRX11, da totalidade dos ativos integrantes da carteira do PSEC11, por seu valor patrimonial, seguida da liquidação do PSEC11 (“Reorganização”). Para viabilizar a Reorganização, o PSEC11 convocou nesta data Assembleia Geral Extraordinária para deliberar sobre a venda da totalidade de seus ativos ao RBRX11 e sua posterior liquidação. A conclusão da Reorganização depende da aprovação da matéria pelos cotistas do PSEC11. Na perspectiva do RBRX 11, está prevista a realização de uma oferta pública de emissão de cotas, pelo valor patrimonial, com o objetivo de captar os recursos necessários para a aquisição da totalidade dos ativos integrantes da carteira do PSEC11, a qual será oportunamente divulgada ao mercado. A implementação da Reorganização permanece sujeita, entre outras condições, à aprovaç
-
-## 1348615 — Informes Periódicos / Informe Mensal Estruturado — ref. 09/2026 — entregue 14/10/2026 12:01
-https://fnet.bmfbovespa.com.br/fnet/publico/downloadDocumento?id=1348615 — xml, 1926 caracteres 
-
-PATRIA PLUS MULT FII 41088458000121 2021-06-28 Investidores em Geral BRRBRXCTF006 146354302 false false Multiestratégia Não possui subclassificação Ativa Multicategoria Indeterminado 31/12 false false true false false BTG PACTUAL SERVICOS FINANCEIROS S.A. DISTRIBUIDOR 59281253000123 Praia de Botafogo 501 6º Andar Botafogo Rio de Janeiro RJ 22.250-040 55 11 3383-3102 www.btgpactual.com ri.fundoslistados@btgpactual.com 2026-09-30 127203 265 0 0 0 10 4 4 0 0 2 15 32 0 1 1374614119.94 1373396734.64 146354302.0000 9.384054 0.000831 0.0000 0.0000 0.0000 0.0000 0.00 49136071.89 0.00 1322103.75 0.00 10572706.35 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 769660935.08 0.00 0.00 0.00 0.00 2377800.00 0.00 0.00 531075102.87 0.00 0.00 0.00 0.00 0.00 0.00 10469400.00 0.00 1140884.06 0.00 0.00 0.00 0.00 0.00 0.00 0.00 76501.24 0.00 1217385.30 0.00 0.00 0.00
-
-## 1351999 — Aviso aos Cotistas - Estruturado / Rendimentos e Amortizações — ref. 15/10/2026 — entregue 15/10/2026 16:38
-https://fnet.bmfbovespa.com.br/fnet/publico/downloadDocumento?id=1351999 — xml, 347 caracteres 
-
-RBR PLUS MULTI FII 41088458000121 BTG Pactual Serviços Financeiros S.A. DTVM 59281253000123 Leonardo Ferreira (11) 3383-3102 2026-10-15 2026 BRRBRXCTF006 RBRX11 2026-10-15 0.09 2026-10-22 Setembro-2026 Sim
-
-## 1356176 — Relatórios / Relatório Gerencial — ref. 30/09/2026 — entregue 21/10/2026 19:32
-https://fnet.bmfbovespa.com.br/fnet/publico/downloadDocumento?id=1356176 — pdf, 34294 caracteres 
-
-Real Estate Relatório Gerencial RBRX 11 Patria Plus Multiestratégia FII Setembro 2026 2 1 O Fundo tem como objetivo aplicar, primordialmente, em: (i) quaisquer direitos reais sobre bens imóveis, (ii) ações ou cotas de sociedades cujo único propósito se enquadre entre as atividades permitidas aos FII(“SPE”) (iii) cotas de fundos de investimento em participações que tenham como política de investimento, exclusivamente, atividades permitidas aos FII; (iv) cotas de outros FII, (v) certificados de recebíveis imobiliários; (vi) letras hipotecárias, letras de crédito Imobiliário e letras imobiliárias garantidas, e; (vii) outros ativos, títulos e valores mobiliários admitidos nos termos da Resolução CVM 175. Informações Gerais RBRX 11 Objetivo do Fundo realestate.patria.com realestate .patria.com *Termos e definições no glossário (clique aqui). Início das Atividades Junho 2021 Código de Negociação RBRX11 CNPJ 41.088.458/0001-21 Cotas Emitidas 146.354.302 Prazo Indeterminado Tipo Anbima Multiestratégia Gestão Ativa Gestor* Patria Gestão de Recursos Ltda Administrador e Escriturador * BTG Pactual Serviços Financeiros S/A DTVM Taxa de Administração Total* 1,25% a.a. do valor de mercado. Taxa de Performance* 20% dos rendimentos que superarem a variação positiva do IPCA + Yield IMA-B 5 Público Alvo Investidores em geral Para mais informações, clique aqui e acesse o Regulamento do Fundo Cadastre-se no mailing Cadastre - se no mailing Fale com o time de Relaçõescom Investidores de RE Fale c
+5 documentos.
 
 ## 1378172 — Informes Periódicos / Informe Mensal Estruturado — ref. 10/2026 — entregue 12/11/2026 11:00
 https://fnet.bmfbovespa.com.br/fnet/publico/downloadDocumento?id=1378172 — xml, 1930 caracteres 
