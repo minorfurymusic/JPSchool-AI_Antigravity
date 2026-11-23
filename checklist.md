@@ -162,6 +162,15 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [ ] Separar fundo de papel de fundo de imóveis nos estudos.
 - [ ] Refazer a estratégia 2 com a Selic líquida como régua.
 
+- [x] 2026-11-23 — Rotina diária no GitHub Actions (`.github/workflows/rotina-diaria.yml`, `estudos/rotina_diaria.py`), escolha do dono: seg–sex 23h de Brasília; o agendamento fica no branch padrão (`ccr-7db9dbe0-xd9hlv`, commit `ad15440`) e o trabalho no `claude/happy-bell-a81nvp`. 7 etapas independentes: preços B3 (COTAHIST), mercado e CDI, documentos do FNET (lista, avisos de rendimento, texto dos PDFs), dólar PTAX + IFIX + Ibovespa, IPCA e IGP-M, Focus (Selic, IPCA, câmbio), juros da B3. Tabelas em `planilhas/rotina/`; saída literal da última rodada em `docs/rotina_ultima_execucao.md`; histórico em `docs/rotina_historico.csv`. Primeira rodada real (commit `ad4583d`): preços 18 e 19/11 (506 linhas), mercado e CDI +2 dias, FNET 589 documentos (63 avisos lidos, 170 textos), dólar 2017–2026, IPCA/IGP-M 2017–10/2026; rodada `677d2a4`: Focus 14.719 linhas (2017–13/11/2026). Teste de acesso do GitHub às fontes: `docs/teste_rede.txt`.
+- [x] 2026-11-23 — `estudos/atualizar_precos.py`: a pasta do informe da CVM pode vir do ambiente (`CVM_MEN`); sem isso continua `/tmp/claude-0/cvm_men`.
+- [ ] Rotina: juros futuros da B3 (DI x pré e DI x IPCA) NÃO lidos — a página da B3 responde devagar ao GitHub e não abre como tabela (precisa ler o HTML real). Tesouro Transparente recusa a conexão do GitHub. Achar outra fonte do juro real longo (o que mais mexe com FII).
+- [ ] Rotina: IFIX só a partir de 23/11/2026, um pregão por rodada, pela B3 (nem B3 nem Yahoo deram o histórico). Para o passado, `planilhas/mercado.csv`.
+- [ ] Rotina: avisos de rendimento do FNET vão para `planilhas/rotina/fnet_rendimentos_AAAA.csv`, mas ainda NÃO alimentam `planilhas/rendimentos.csv` (que `atualizar_precos.py` usa): o rendimento mensal da base de preços fica parado no último conhecido até ligar os dois (decidir a regra de data conhecida).
+- [ ] Rotina: `atualizar_precos.py` lê o informe da CVM só de 2025 e 2026 e grava em `precos_<ano>.csv`; precisa de ajuste antes de janeiro de 2027.
+- [ ] Rotina: o FNET é relido com 3 dias de folga a cada rodada (~600 documentos, ~3 min); funciona, mas baixa de novo o que já tem.
+- [ ] `radar/radar_grafico.html` está mais velho que a página publicada (mudanças de 21 e 22/11: atalhos da carteira, botões do gráfico, painel do Kairi, fundamentos embaixo).
+
 ## Pendente: decisões do dono
 
 - [x] Onde usar: computador de casa (Windows 11 Pro), rodando às 20h.
