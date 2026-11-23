@@ -153,9 +153,7 @@ table.t tbody tr.f{cursor:pointer}table.t tbody tr.f:hover{background:var(--hove
           <div><button class="bt" type="button" id="edita-salva">Salvar</button> <button type="button" class="lnk" id="edita-padrao">voltar à lista do Investidor10</button></div>
         </div>
         <div class="atz"><button class="bt" type="button" id="b-atz" disabled>Atualizar preços</button><span class="meta" id="atz-st">Só funciona com a página aberta no Claude e o Bright Data conectado.</span></div>
-        <div id="atz-res"></div>
-        <p class="meta" style="margin:4px 0 0">Preço atual: último fechamento da base (o do fundo aberto é o mais recente). Depois de "Atualizar preços": preço do Status Invest (atraso de cerca de 15 minutos), só dos fundos da carteira e do fundo aberto.</p>
-      </div>
+        <div id="atz-res"></div>      </div>
       <div class="bloco">
         <h3>Análise</h3>
         <div class="tgs" id="tg-graf"></div>
@@ -437,11 +435,9 @@ async function atualizaPrecos(){
   };
   for(let i=0; i<lista.length; i+=3) await Promise.all(lista.slice(i, i+3).map(um));
   lsSet('radar-vivo', JSON.stringify(vivo));
-  const ok = lista.filter(c=>res[c].ok).length;
-  $('atz-st').textContent = `${ok} de ${lista.length} atualizados às ${new Date().toTimeString().slice(0,5)}`;
-  $('atz-res').innerHTML = `<table class="cart"><thead><tr><th>Fundo</th><th>Preço</th><th>Dia</th><th>Resultado</th></tr></thead><tbody>${lista.map(c=>{ const r = res[c];
-    return r.ok ? `<tr><td>${esc(c)}</td><td>${nf2.format(r.preco)}</td><td class="${r.varPct>=0?'up':'dn'}">${r.varPct>=0?'+':''}${nf2.format(r.varPct)}%</td><td class="ok">ok</td></tr>`
-                : `<tr><td>${esc(c)}</td><td>—</td><td>—</td><td class="motivo">${esc(r.motivo)}</td></tr>`; }).join('')}</tbody></table>`;
+  const falhas = lista.filter(c=>!res[c].ok);                   // só aparece o que falhou; tudo certo = nada na tela
+  $('atz-st').textContent = '';
+  $('atz-res').innerHTML = falhas.length ? `<table class="cart"><tbody>${falhas.map(c=>`<tr><td>${esc(c)}</td><td class="motivo">${esc(res[c].motivo)}</td></tr>`).join('')}</tbody></table>` : '';
   if(atual) lado(atual); else desenhaCarteira();
   b.disabled = false;
 }
