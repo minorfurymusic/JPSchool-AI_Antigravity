@@ -1,6 +1,6 @@
-# Rotina diária — rodada de 23/11/2026 08:02 (horário de Brasília)
+# Rotina diária — rodada de 23/11/2026 08:07 (horário de Brasília)
 
-Etapas com erro: 0. Saída literal de cada etapa abaixo.
+Etapas com erro: 1. Saída literal de cada etapa abaixo.
 
 ## 1 preços dos FIIs (B3) — OK (1s)
 
@@ -14,7 +14,7 @@ tabela ia até 19/11/2026; arquivos da B3 baixados: 0; sem arquivo (feriado ou a
 nada novo: mercado.csv já vai até 19/11/2026 (preços até 19/11/2026)
 ```
 
-## 3 documentos dos FIIs (FNET) — OK (189s)
+## 3 documentos dos FIIs (FNET) — OK (228s)
 
 ```
 período 16/11/2026 a 23/11/2026: 589 documentos listados, 589 novos; resultado: {'lido': 63, 'texto': 170}
@@ -34,7 +34,7 @@ indicadores_diarios.csv: 2480 -> 2480 linhas (dólar desde 09/11/2026; IFIX: só
 19/11/2026                 5.8889        3485.06           166376.0
 ```
 
-## 5 IPCA e IGP-M — OK (1s)
+## 5 IPCA e IGP-M — OK (2s)
 
 ```
 indicadores_mensais.csv: 118 meses, último 10/2026
@@ -56,9 +56,17 @@ focus.csv: 14719 -> 14719 linhas (desde 03/11/2026)
 13/11/2026     Selic            2027  12.7500
 ```
 
-## 7 juros futuros da B3 — OK (2s)
+## 7 juros futuros da B3 — ERRO (2s)
 
 ```
+Traceback (most recent call last):
+  File "/home/runner/work/JPSchool-AI_Antigravity/JPSchool-AI_Antigravity/estudos/rotina_diaria.py", line 351, in main
+    saida, status = f(), "OK"
+                    ^^^
+  File "/home/runner/work/JPSchool-AI_Antigravity/JPSchool-AI_Antigravity/estudos/rotina_diaria.py", line 327, in etapa_juros
+    raise RuntimeError("juros da B3 não lidos (pendência no checklist):\n" + "\n".join(linhas))
+RuntimeError: juros da B3 não lidos (pendência no checklist):
 19/11 DI x pré: não consegui ler a página (ImportError: `Import html5lib` failed.  Use pip, conda, or your preferred package management tool to install the html5lib package.); início: '\r\n<!doctype html>\r\n<html class="no-js" lang="pt-br">\r\n<head>\r\n<meta http-equiv="Content-Type" content="text/html; charse'
 19/11 DI x IPCA: não consegui ler a página (ImportError: `Import html5lib` failed.  Use pip, conda, or your preferred package management tool to install the html5lib package.); início: '\r\n<!doctype html>\r\n<html class="no-js" lang="pt-br">\r\n<head>\r\n<meta http-equiv="Content-Type" content="text/html; charse'
+
 ```

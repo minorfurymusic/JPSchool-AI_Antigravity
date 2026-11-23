@@ -20,3 +20,10 @@ rodada;etapa;status;segundos;resumo
 23/11/2026 08:02;5 IPCA e IGP-M;OK;1;indicadores_mensais.csv: 118 meses, último 10/2026
 23/11/2026 08:02;6 Boletim Focus;OK;0;focus.csv: 14719 -> 14719 linhas (desde 03/11/2026)
 23/11/2026 08:02;7 juros futuros da B3;OK;2;"19/11 DI x pré: não consegui ler a página (ImportError: `Import html5lib` failed.  Use pip, conda, or your preferred package management tool to install the html5lib package.); início: '\r\n<!doctype h"
+23/11/2026 08:07;1 preços dos FIIs (B3);OK;1;"tabela ia até 19/11/2026; arquivos da B3 baixados: 0; sem arquivo (feriado ou ainda não publicado): 20/11 (404), 23/11 (404)"
+23/11/2026 08:07;2 mercado de fundos e CDI;OK;0;nada novo: mercado.csv já vai até 19/11/2026 (preços até 19/11/2026)
+23/11/2026 08:07;3 documentos dos FIIs (FNET);OK;228;"período 16/11/2026 a 23/11/2026: 589 documentos listados, 589 novos; resultado: {'lido': 63, 'texto': 170}"
+23/11/2026 08:07;4 dólar, IFIX e Ibovespa;OK;1;"indicadores_diarios.csv: 2480 -> 2480 linhas (dólar desde 09/11/2026; IFIX: só o pregão de hoje, pela B3; Ibovespa pelo Yahoo Finance)"
+23/11/2026 08:07;5 IPCA e IGP-M;OK;2;indicadores_mensais.csv: 118 meses, último 10/2026
+23/11/2026 08:07;6 Boletim Focus;OK;0;focus.csv: 14719 -> 14719 linhas (desde 03/11/2026)
+23/11/2026 08:07;7 juros futuros da B3;ERRO;2;Traceback (most recent call last):
