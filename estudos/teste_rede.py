@@ -11,20 +11,18 @@ from pathlib import Path
 import requests
 
 b64 = lambda d: base64.b64encode(json.dumps(d).encode()).decode()
-FONTES = {
-    "FNET lista (19/11/2026)": "https://fnet.bmfbovespa.com.br/fnet/publico/pesquisarGerenciadorDocumentosDados?d=1&s=0&l=5"
-        "&tipoFundo=1&idCategoriaDocumento=0&idTipoDocumento=0&idEspecieDocumento=0&dataInicial=19/11/2026&dataFinal=19/11/2026",
-    "B3 COTAHIST diário 19/11/2026": "https://bvmf.bmfbovespa.com.br/InstDados/SerHist/COTAHIST_D19112026.ZIP",
-    "Banco Central dólar (série 1)": "https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados/ultimos/3?formato=json",
-    "Banco Central IPCA (série 433)": "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados/ultimos/3?formato=json",
-    "Banco Central IGP-M (série 189)": "https://api.bcb.gov.br/dados/serie/bcdata.sgs.189/dados/ultimos/3?formato=json",
-    "Banco Central Focus": "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$top=3&$format=json&$orderby=Data%20desc&$filter=Indicador%20eq%20'Selic'",
-    "Tesouro Direto taxas": "https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv",
-    "B3 IFIX histórico do ano": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsProxy/IndexCall/GetYearlyHistory/"
-        + b64({"language": "pt-br", "index": "IFIX", "year": "2026"}),
-    "B3 Ibovespa histórico do ano": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsProxy/IndexCall/GetYearlyHistory/"
-        + b64({"language": "pt-br", "index": "IBOV", "year": "2026"}),
-    "CVM informe mensal FII": "https://dados.cvm.gov.br/dados/FII/DOC/INF_MENSAL/DADOS/",
+FONTES = {  # rodada 2: alternativas para o que falhou na rodada 1 (Tesouro e índices da B3)
+    "Tesouro Transparente (página do conjunto)": "https://www.tesourotransparente.gov.br/ckan/dataset/taxas-dos-titulos-ofertados-pelo-tesouro-direto",
+    "Tesouro Direto taxas do dia (JSON)": "https://www.tesourodireto.com.br/json/br/com/b3/tesourodireto/service/api/treasurybondsinfo.json",
+    "B3 cotação IFIX": "https://cotacao.b3.com.br/mds/api/v1/instrumentQuotation/IFIX",
+    "B3 cotação IBOV": "https://cotacao.b3.com.br/mds/api/v1/instrumentQuotation/IBOV",
+    "B3 variação do dia IFIX": "https://cotacao.b3.com.br/mds/api/v1/DailyFluctuationHistory/IFIX",
+    "B3 IFIX carteira do dia": "https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/"
+        + b64({"language": "pt-br", "pageNumber": 1, "pageSize": 5, "index": "IFIX", "segment": "1"}),
+    "B3 IFIX estatística (GetYearlyHistory, ordem 2)": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsProxy/IndexCall/GetYearlyHistory/"
+        + b64({"index": "IFIX", "language": "pt-br", "year": "2026"}),
+    "Yahoo Ibovespa": "https://query1.finance.yahoo.com/v8/finance/chart/%5EBVSP?range=5d&interval=1d",
+    "Yahoo IFIX": "https://query1.finance.yahoo.com/v8/finance/chart/IFIX.SA?range=5d&interval=1d",
 }
 
 linhas = [f"Rodado em {dt.datetime.utcnow():%d/%m/%Y %H:%M} UTC"]
