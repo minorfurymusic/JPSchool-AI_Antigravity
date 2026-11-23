@@ -1,4 +1,4 @@
-# Rotina diária — rodada de 23/11/2026 07:50 (horário de Brasília)
+# Rotina diária — rodada de 23/11/2026 08:02 (horário de Brasília)
 
 Etapas com erro: 0. Saída literal de cada etapa abaixo.
 
@@ -14,7 +14,7 @@ tabela ia até 19/11/2026; arquivos da B3 baixados: 0; sem arquivo (feriado ou a
 nada novo: mercado.csv já vai até 19/11/2026 (preços até 19/11/2026)
 ```
 
-## 3 documentos dos FIIs (FNET) — OK (198s)
+## 3 documentos dos FIIs (FNET) — OK (189s)
 
 ```
 período 16/11/2026 a 23/11/2026: 589 documentos listados, 589 novos; resultado: {'lido': 63, 'texto': 170}
@@ -23,7 +23,7 @@ fnet_rendimentos_2026.csv: 71 -> 71 linhas
 textos de PDF guardados: 170 documentos
 ```
 
-## 4 dólar, IFIX e Ibovespa — OK (2s)
+## 4 dólar, IFIX e Ibovespa — OK (1s)
 
 ```
 indicadores_diarios.csv: 2480 -> 2480 linhas (dólar desde 09/11/2026; IFIX: só o pregão de hoje, pela B3; Ibovespa pelo Yahoo Finance)
@@ -34,7 +34,7 @@ indicadores_diarios.csv: 2480 -> 2480 linhas (dólar desde 09/11/2026; IFIX: só
 19/11/2026                 5.8889        3485.06           166376.0
 ```
 
-## 5 IPCA e IGP-M — OK (2s)
+## 5 IPCA e IGP-M — OK (1s)
 
 ```
 indicadores_mensais.csv: 118 meses, último 10/2026
@@ -43,10 +43,10 @@ indicadores_mensais.csv: 118 meses, último 10/2026
 10/2026          0.14          1.47               4.63               5.25
 ```
 
-## 6 Boletim Focus — OK (14s)
+## 6 Boletim Focus — OK (0s)
 
 ```
-focus.csv: 0 -> 14719 linhas (desde 01/01/2017)
+focus.csv: 14719 -> 14719 linhas (desde 03/11/2026)
       data indicador  ano_referencia  mediana
 13/11/2026    Câmbio            2026   5.4000
 13/11/2026    Câmbio            2027   5.4500
@@ -56,9 +56,9 @@ focus.csv: 0 -> 14719 linhas (desde 01/01/2017)
 13/11/2026     Selic            2027  12.7500
 ```
 
-## 7 juros futuros da B3 — OK (481s)
+## 7 juros futuros da B3 — OK (2s)
 
 ```
-19/11 DI x pré: sem resposta da B3 (ReadTimeout: HTTPSConnectionPool(host='www2.bmf.com.br', port=443): Read timed out. (read timeout=120))
-19/11 DI x IPCA: sem resposta da B3 (ReadTimeout: HTTPSConnectionPool(host='www2.bmf.com.br', port=443): Read timed out. (read timeout=120))
+19/11 DI x pré: não consegui ler a página (ImportError: `Import html5lib` failed.  Use pip, conda, or your preferred package management tool to install the html5lib package.); início: '\r\n<!doctype html>\r\n<html class="no-js" lang="pt-br">\r\n<head>\r\n<meta http-equiv="Content-Type" content="text/html; charse'
+19/11 DI x IPCA: não consegui ler a página (ImportError: `Import html5lib` failed.  Use pip, conda, or your preferred package management tool to install the html5lib package.); início: '\r\n<!doctype html>\r\n<html class="no-js" lang="pt-br">\r\n<head>\r\n<meta http-equiv="Content-Type" content="text/html; charse'
 ```
