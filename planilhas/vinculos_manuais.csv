@@ -1,0 +1,2 @@
+codigo;cnpj;nome_na_cvm;confirmado_por;data_confirmacao;situacao;observacao
+TRXF11;28.548.288/0001-52;TRX REAL ESTATE FUNDO DE INVESTIMENTO IMOBILIÁRIO - FII;dono;23/11/2026;ativo;Confirmado na conversa de 23/11/2026. O mesmo começo de ISIN aparece no CNPJ 63.134.454/0001-75 (Liquidez Projetos GD), que NÃO é o TRXF11. Para desfazer: trocar situacao para "desfeito" (não apagar a linha).
