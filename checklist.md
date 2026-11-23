@@ -178,6 +178,8 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-23 — Radar: primeiro clique real do dono dentro do Claude, 7 de 7 fundos atualizados às 10:26 (ex.: HABT11 57,07; TRXF11 53,30).
 - [x] 2026-11-23 — Pedido do dono: tirar da tela a linha "X de Y atualizados", a tabela de resultado e o texto explicativo. Agora só aparecem os fundos que falharam, com o motivo; tudo certo = nada na tela (versão publicada `1795440512-3cff`, hash `2c82d294`). Testado sem tela nos dois cenários (com falhas: 4 linhas com motivo; tudo certo: tela vazia), sem erro de JavaScript.
 - [ ] Radar: conferir se os preços do botão batem com a corretora.
+- [x] 2026-11-23 — Radar: dados refeitos e republicados até 19/11/2026 (`estudos/analise_grafica.py --todos`, 298 fundos, 0 erros, 50 s; versão publicada `1795441899-ab1e`). Motivo: a página estava com dados até 17/11 e com rendimentos antigos (ex.: RBRX11 mostrava R$ 0,09 e 16,9% ao ano; certo R$ 0,08 e 15,8%; Papel Padrão 1º → 3º; Kairi passou para a zona de sinal, −23,6%).
+- [ ] Radar: fundos com fonte "arquivo" (fora da base, ex.: TRXF11) continuam com preço até 17/11 — o arquivo `planilhas/tecnico/b3_cotahist_fii_2019_2026.csv.gz` não é atualizado pela rotina.
 - [ ] RBRX11: ler o relatório gerencial de outubro quando sair (pedir de novo pelo `docs/pedido_fnet.txt`) e a AGE de 06/01/2027 (troca de administrador, taxa 1,30% → 0,925%, compra de CRIs ligados ao gestor até 75% do PL, capital autorizado de R$ 30 bilhões).
 
 ## Pendente: decisões do dono
