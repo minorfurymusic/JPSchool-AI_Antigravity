@@ -1,10 +1,5 @@
-Rodado em 23/11/2026 10:37 UTC
-ERRO |  12.0s | Tesouro Transparente (página do conjunto) | ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
-410 |   0.2s | Tesouro Direto taxas do dia (JSON) | text/html | 4 bytes | início: b'gone'
-200 |   0.4s | B3 cotação IFIX | application/json; charset=utf-8 | ? bytes | início: b'{"BizSts":{"cd":"OK"},"Msg":{"dtTm":"2026-11-23 07:37:33"},"Trad":[{"scty":{"SctyQtn":{"opngPric":3513.56,"minPric":3474.87,"maxPric":3517.34,"avrgPric":3487.34'
-200 |   0.4s | B3 cotação IBOV | application/json; charset=utf-8 | ? bytes | início: b'{"BizSts":{"cd":"OK"},"Msg":{"dtTm":"2026-11-23 07:37:33"},"Trad":[{"scty":{"SctyQtn":{"opngPric":167559.89,"minPric":165833.29,"maxPric":168498.42,"avrgPric":1'
-200 |   0.4s | B3 variação do dia IFIX | application/json; charset=utf-8 | ? bytes | início: b'{"BizSts":{"cd":"OK"},"Msg":{"dtTm":"2026-11-23 07:37:34"},"TradgFlr":{"TradgFlrSts":{},"date":"2026-11-19","scty":{"lstQtn":[{"closPric":3513.56,"dtTm":"10:00:'
-200 |   0.4s | B3 IFIX carteira do dia | application/json; charset=utf-8 | ? bytes | início: b'{"page":{"pageNumber":1,"pageSize":5,"totalRecords":94,"totalPages":19},"header":{"date":"23/11/26","text":"Quantidade Te\xc3\xb3rica Total","part":"100,000","partAcu'
-404 |   0.4s | B3 IFIX estatística (GetYearlyHistory, ordem 2) |  | ? bytes | início: b''
-200 |   0.1s | Yahoo Ibovespa | application/json;charset=utf-8 | 1511 bytes | início: b'{"chart":{"result":[{"meta":{"currency":"BRL","symbol":"^BVSP","exchangeName":"SAO","fullExchangeName":"S\xc3\xa3o Paulo","instrumentType":"INDEX","firstTradeDate":73'
-200 |   0.1s | Yahoo IFIX | application/json;charset=utf-8 | 1187 bytes | início: b'{"chart":{"result":[{"meta":{"currency":"BRL","symbol":"IFIX.SA","exchangeName":"SAO","fullExchangeName":"S\xc3\xa3o Paulo","instrumentType":"INDEX","firstTradeDate":'
+Rodado em 23/11/2026 10:38 UTC
+ERRO |  12.3s | Tesouro Transparente (página inicial) | ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+ERRO |  90.2s | B3 taxas referenciais DI x IPCA (19/11/2026) | ReadTimeout: HTTPSConnectionPool(host='www2.bmf.com.br', port=443): Read timed out. (read timeout=90)
+200 |   0.9s | B3 taxas referenciais DI x pré (19/11/2026) | text/html | ? bytes | início: b'\r\n<!doctype html>\r\n<html class="no-js" lang="pt-br">\r\n<head>\r\n<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">\r\n<meta name="viewport" co'
+200 |   0.1s | Yahoo dólar (BRL=X) | application/json;charset=utf-8 | 1669 bytes | início: b'{"chart":{"result":[{"meta":{"currency":"BRL","symbol":"BRL=X","exchangeName":"CCY","fullExchangeName":"CCY","instrumentType":"CURRENCY","firstTradeDate":107023'
