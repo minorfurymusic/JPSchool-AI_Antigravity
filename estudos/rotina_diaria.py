@@ -323,7 +323,9 @@ def etapa_juros() -> str:
             L.append(t)
             linhas.append(f"{d:%d/%m} {nome}: {len(t)} pontos")
     if not L:
-        return "\n".join(linhas or ["nada novo"])
+        if linhas:  # tentou e não conseguiu: aparece como ERRO no resumo, não como OK
+            raise RuntimeError("juros da B3 não lidos (pendência no checklist):\n" + "\n".join(linhas))
+        return "nada novo"
     N = pd.concat(L, ignore_index=True)
     N["dias_corridos"] = pd.to_numeric(N["dias_corridos"], errors="coerce")
     N = N.dropna(subset=["dias_corridos"])
