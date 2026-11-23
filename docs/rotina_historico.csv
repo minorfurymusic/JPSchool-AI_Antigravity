@@ -1,0 +1,8 @@
+rodada;etapa;status;segundos;resumo
+23/11/2026 07:44;1 preços dos FIIs (B3);OK;11;"tabela ia até 17/11/2026; arquivos da B3 baixados: 2; sem arquivo (feriado ou ainda não publicado): 20/11 (404), 23/11 (404)"
+23/11/2026 07:44;2 mercado de fundos e CDI;OK;2;mercado.csv: +2 dias       data  selic_ano (%)  selic_liquida_ano (%)  indice_mercado  fundos_negociados  mediana_preco_sobre_valor_patrimonial
+23/11/2026 07:44;3 documentos dos FIIs (FNET);OK;191;"período 16/11/2026 a 23/11/2026: 589 documentos listados, 589 novos; resultado: {'lido': 63, 'texto': 170}"
+23/11/2026 07:44;4 dólar, IFIX e Ibovespa;OK;6;"indicadores_diarios.csv: 0 -> 2480 linhas (desde 01/01/2017; IFIX e Ibovespa pelo Yahoo Finance)"
+23/11/2026 07:44;5 IPCA e IGP-M;OK;2;indicadores_mensais.csv: 118 meses, último 10/2026
+23/11/2026 07:44;6 Boletim Focus;ERRO;1;Traceback (most recent call last):
+23/11/2026 07:44;7 juros futuros da B3;OK;61;19/11 DI x pré: sem resposta (ReadTimeout)
