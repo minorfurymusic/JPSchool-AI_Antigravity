@@ -1,0 +1,31 @@
+name: Documentos de um fundo no FNET (pedido em docs/pedido_fnet.txt)
+on:
+  push:
+    branches: [claude/happy-bell-a81nvp]
+    paths: ["docs/pedido_fnet.txt", "estudos/fnet_fundo.py"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fnet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Busca os documentos
+        run: |
+          NOME=$(sed -n 1p docs/pedido_fnet.txt); DESDE=$(sed -n 2p docs/pedido_fnet.txt)
+          PYTHONPATH=. python3 estudos/fnet_fundo.py "$NOME" "$DESDE"
+      - name: Grava no repositorio
+        run: |
+          git config user.name "rotina-github"
+          git config user.email "actions@users.noreply.github.com"
+          git add planilhas/tecnico docs/fnet_fundo_ultimo.md
+          git commit -m "FNET: documentos de $(sed -n 1p docs/pedido_fnet.txt)" || echo "nada a gravar"
+          git pull --rebase origin claude/happy-bell-a81nvp
+          git push origin HEAD:claude/happy-bell-a81nvp
