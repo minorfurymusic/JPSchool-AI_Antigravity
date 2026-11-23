@@ -1,0 +1,51 @@
+// Radar Gráfico de FIIs · TRXF11 · dados até 17/11/2026 · gerado por estudos/analise_grafica.py
+// Zonas, preço que invalida e ondas vêm do motor do projeto. Os caminhos são ILUSTRATIVOS: mostram a ordem, não o prazo.
+//@version=5
+indicator("Radar FII · TRXF11", overlay=true, max_lines_count=100, max_labels_count=100)
+entrada = input.float(53.99, "Preço de entrada")
+inval = input.float(52.85, "Preço que invalida")
+mostrarCaminhos = input.bool(true, "Mostrar caminhos ilustrativos")
+mostrarNiveis = input.bool(true, "Mostrar suportes e resistências")
+mostrarOndas = input.bool(true, "Mostrar ondas de Elliott")
+z1 = input.float(59.35, "Zona 1")
+z2 = input.float(63.37, "Zona 2")
+z3 = input.float(66.83, "Zona 3")
+z4 = input.float(69.87, "Zona 4")
+pct(x) => str.tostring((x / entrada - 1) * 100, '+#.0;-#.0') + '%'
+var bool feito = false
+if barstate.islast and not feito
+    feito := true
+    ini = bar_index - 120
+    fim = bar_index + 80
+    line.new(ini, entrada, fim, entrada, color=color.gray, style=line.style_dotted)
+    label.new(fim, entrada, 'Entrada ' + str.tostring(entrada, '#.00'), style=label.style_label_left, color=color.new(color.gray, 80), textcolor=color.gray, size=size.small)
+    line.new(ini, inval, fim, inval, color=color.red, style=line.style_dashed, width=2)
+    label.new(fim, inval, 'Abaixo: queda continua ' + str.tostring(inval, '#.00') + ' (' + pct(inval) + ')', style=label.style_label_left, color=color.new(color.red, 80), textcolor=color.red, size=size.small)
+    line.new(ini, z1, fim, z1, color=color.teal, width=2)
+    label.new(fim, z1, 'Zona 1 ' + str.tostring(z1, '#.00') + ' (' + pct(z1) + ')', style=label.style_label_left, color=color.new(color.teal, 75), textcolor=color.teal, size=size.small)
+    line.new(ini, z2, fim, z2, color=color.teal, width=2)
+    label.new(fim, z2, 'Zona 2 ' + str.tostring(z2, '#.00') + ' (' + pct(z2) + ')', style=label.style_label_left, color=color.new(color.teal, 75), textcolor=color.teal, size=size.small)
+    line.new(ini, z3, fim, z3, color=color.teal, width=2)
+    label.new(fim, z3, 'Zona 3 ' + str.tostring(z3, '#.00') + ' (' + pct(z3) + ')', style=label.style_label_left, color=color.new(color.teal, 75), textcolor=color.teal, size=size.small)
+    line.new(ini, z4, fim, z4, color=color.teal, width=2)
+    label.new(fim, z4, 'Zona 4 ' + str.tostring(z4, '#.00') + ' (' + pct(z4) + ')', style=label.style_label_left, color=color.new(color.teal, 75), textcolor=color.teal, size=size.small)
+    if mostrarCaminhos
+        line.new(bar_index, close, bar_index + 24, z2, color=color.green, style=line.style_dashed, width=2)
+        line.new(bar_index + 24, z2, bar_index + 39, z1, color=color.green, style=line.style_dashed, width=2)
+        line.new(bar_index + 39, z1, bar_index + 74, z4, color=color.green, style=line.style_dashed, width=2)
+        label.new(bar_index + 74, z4, 'Caminho: onda 5 completa', style=label.style_label_down, color=color.new(color.green, 80), textcolor=color.green, size=size.small)
+        line.new(bar_index, close, bar_index + 14, z1, color=color.orange, style=line.style_dashed, width=2)
+        line.new(bar_index + 14, z1, bar_index + 44, inval * 0.95, color=color.orange, style=line.style_dashed, width=2)
+        label.new(bar_index + 44, inval * 0.95, 'Caminho: ainda na onda 3', style=label.style_label_up, color=color.new(color.orange, 80), textcolor=color.orange, size=size.small)
+    if mostrarNiveis
+        line.new(ini, 66.39, bar_index, 66.39, color=color.new(color.maroon, 40), style=line.style_solid)
+        line.new(ini, 69.88, bar_index, 69.88, color=color.new(color.maroon, 40), style=line.style_solid)
+        line.new(ini, 89.00, bar_index, 89.00, color=color.new(color.maroon, 40), style=line.style_solid)
+        line.new(ini, 94.00, bar_index, 94.00, color=color.new(color.maroon, 40), style=line.style_solid)
+    if mostrarOndas
+        label.new(timestamp('America/Sao_Paulo', 2024, 2, 27, 10, 0), 114.81, 'Onda 0', xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.blue, 75), textcolor=color.blue, size=size.small)
+        label.new(timestamp('America/Sao_Paulo', 2024, 12, 5, 10, 0), 93.00, 'Onda 1', xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.blue, 75), textcolor=color.blue, size=size.small)
+        label.new(timestamp('America/Sao_Paulo', 2025, 3, 19, 10, 0), 105.63, 'Onda 2', xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.blue, 75), textcolor=color.blue, size=size.small)
+        label.new(timestamp('America/Sao_Paulo', 2026, 8, 24, 10, 0), 68.86, 'Onda 3', xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.blue, 75), textcolor=color.blue, size=size.small)
+        label.new(timestamp('America/Sao_Paulo', 2026, 8, 31, 10, 0), 80.38, 'Onda 4', xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.blue, 75), textcolor=color.blue, size=size.small)
+        label.new(timestamp('America/Sao_Paulo', 2026, 11, 13, 10, 0), 52.85, 'Onda 5', xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.blue, 75), textcolor=color.blue, size=size.small)

@@ -3,6 +3,7 @@ O mesmo cálculo serve às conversas (linha de comando) e à página do artefato
 
     PYTHONPATH=. python3 estudos/analise_grafica.py TRXF11 [OUTRO11 ...]     leitura item por item no terminal
     PYTHONPATH=. python3 estudos/analise_grafica.py --todos --saida PASTA     dados de todos os fundos para a página
+    PYTHONPATH=. python3 estudos/analise_grafica.py --pine TRXF11 --entrada 53,99   script do TradingView (radar/pine/TRXF11.pine)
 
 Fontes: fundos da base = planilhas/precos_AAAA.csv (preços ajustados por desdobramento); fundos fora da base =
 planilhas/tecnico/b3_cotahist_fii_2019_2026.csv.gz (arquivo oficial da B3, preços SEM ajuste: um salto de mais de 35% num
@@ -334,6 +335,64 @@ def projecao(pv8, niveis_, preco):
                          f"(na leitura de Elliott: ainda na onda 3, ou a onda 5 em andamento)"))
 
 
+def pine(A, entrada=None):
+    """Script Pine (TradingView, versão 5) que desenha a projeção, as ondas e os níveis do motor no gráfico do fundo."""
+    P, E = A["projecao"] or {}, A["elliott"]
+    ent = entrada or A["preco"]
+    zs = (P.get("zonas") or [])[:4]
+    inval = P.get("invalida", A["preco"])
+    sobe = P.get("sentido", "alta") == "alta"
+    L = [f"// Radar Gráfico de FIIs · {A['fundo']} · dados até {A['ultimo_pregao']} · gerado por estudos/analise_grafica.py",
+         "// Zonas, preço que invalida e ondas vêm do motor do projeto. Os caminhos são ILUSTRATIVOS: mostram a ordem, não o prazo.",
+         "//@version=5",
+         f'indicator("Radar FII · {A["fundo"]}", overlay=true, max_lines_count=100, max_labels_count=100)',
+         f'entrada = input.float({ent:.2f}, "Preço de entrada")',
+         f'inval = input.float({inval:.2f}, "Preço que invalida")',
+         'mostrarCaminhos = input.bool(true, "Mostrar caminhos ilustrativos")',
+         'mostrarNiveis = input.bool(true, "Mostrar suportes e resistências")',
+         'mostrarOndas = input.bool(true, "Mostrar ondas de Elliott")']
+    for i, z in enumerate(zs, 1):
+        L.append(f'z{i} = input.float({z["alvo"]:.2f}, "Zona {i}")')
+    L += ["pct(x) => str.tostring((x / entrada - 1) * 100, '+#.0;-#.0') + '%'",
+          "var bool feito = false",
+          "if barstate.islast and not feito",
+          "    feito := true",
+          "    ini = bar_index - 120",
+          "    fim = bar_index + 80",
+          "    line.new(ini, entrada, fim, entrada, color=color.gray, style=line.style_dotted)",
+          "    label.new(fim, entrada, 'Entrada ' + str.tostring(entrada, '#.00'), style=label.style_label_left, color=color.new(color.gray, 80), textcolor=color.gray, size=size.small)",
+          "    line.new(ini, inval, fim, inval, color=color.red, style=line.style_dashed, width=2)",
+          f"    label.new(fim, inval, '{'Abaixo: queda continua' if sobe else 'Acima: alta continua'} ' + str.tostring(inval, '#.00') + ' (' + pct(inval) + ')', style=label.style_label_left, color=color.new(color.red, 80), textcolor=color.red, size=size.small)"]
+    for i, z in enumerate(zs, 1):
+        L += [f"    line.new(ini, z{i}, fim, z{i}, color=color.teal, width=2)",
+              f"    label.new(fim, z{i}, 'Zona {i} ' + str.tostring(z{i}, '#.00') + ' (' + pct(z{i}) + ')', style=label.style_label_left, color=color.new(color.teal, 75), textcolor=color.teal, size=size.small)"]
+    if zs:
+        za = zs[1]["alvo"] if len(zs) > 1 else zs[0]["alvo"]
+        n1 = "z2" if len(zs) > 1 else "z1"
+        nmax = f"z{len(zs)}"
+        fundo = "inval * 0.95" if sobe else "inval * 1.05"
+        L += ["    if mostrarCaminhos",
+              f"        line.new(bar_index, close, bar_index + 24, {n1}, color=color.green, style=line.style_dashed, width=2)",
+              f"        line.new(bar_index + 24, {n1}, bar_index + 39, z1, color=color.green, style=line.style_dashed, width=2)",
+              f"        line.new(bar_index + 39, z1, bar_index + 74, {nmax}, color=color.green, style=line.style_dashed, width=2)",
+              f"        label.new(bar_index + 74, {nmax}, 'Caminho: onda 5 completa', style=label.style_label_down, color=color.new(color.green, 80), textcolor=color.green, size=size.small)",
+              "        line.new(bar_index, close, bar_index + 14, z1, color=color.orange, style=line.style_dashed, width=2)",
+              f"        line.new(bar_index + 14, z1, bar_index + 44, {fundo}, color=color.orange, style=line.style_dashed, width=2)",
+              f"        label.new(bar_index + 44, {fundo}, 'Caminho: ainda na onda 3', style=label.style_label_up, color=color.new(color.orange, 80), textcolor=color.orange, size=size.small)"]
+    L.append("    if mostrarNiveis")
+    for n in A["niveis"]:
+        cor = "color.green" if n["tipo"] == "suporte" else "color.maroon"
+        L.append(f"        line.new(ini, {n['preco']:.2f}, bar_index, {n['preco']:.2f}, color=color.new({cor}, 40), style=line.style_solid)")
+    L.append("    if mostrarOndas")
+    for r in E.get("rotulos") or []:
+        d, m, a = r["data"].split("/")
+        L.append(f"        label.new(timestamp('America/Sao_Paulo', {int(a)}, {int(m)}, {int(d)}, 10, 0), {r['preco']:.2f}, 'Onda {r['onda']}', "
+                 f"xloc=xloc.bar_time, style=label.style_label_down, color=color.new(color.blue, 75), textcolor=color.blue, size=size.small)")
+    if not (E.get("rotulos")):
+        L.append("        na")
+    return "\n".join(L) + "\n"
+
+
 @lru_cache(maxsize=1)
 def _papel_hoje():
     import estudos.descontado_saudavel as DS
@@ -542,6 +601,14 @@ if __name__ == "__main__":
         (saida / "dados" / "indice.json").write_text(json.dumps(dict(gerado=f"{ult:%d/%m/%Y}", fundos=indice), ensure_ascii=False,
                                                                 separators=(",", ":")), encoding="utf-8")
         print(f"gravado em {saida}/dados: {len(indice)} fundos em {len(grupos)} arquivos; erros: {len(erros)} {erros[:5]}")
+    elif "--pine" in args:
+        f = args[args.index("--pine") + 1].upper()
+        ent = float(args[args.index("--entrada") + 1].replace(",", ".")) if "--entrada" in args else None
+        A = analisar(f)
+        arq = RAIZ / "radar" / "pine" / f"{f}.pine"
+        arq.parent.mkdir(parents=True, exist_ok=True)
+        arq.write_text(pine(A, ent), encoding="utf-8")
+        print(f"gravado: {arq.relative_to(RAIZ)}")
     else:
         for f in args:
             imprimir(analisar(f))
