@@ -64,6 +64,8 @@ button,input,textarea{font:inherit;color:inherit}
 .cart th{font-size:11px;color:var(--muted);font-weight:500}.cart td:first-child,.cart th:first-child{text-align:left}
 .cart tr.f{cursor:pointer}.cart tr.f:hover{background:var(--hover)}.cart tr.atual td:first-child{font-weight:600;color:var(--accent)}
 .cart td{font-family:var(--mono)}
+.atz{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}.bt:disabled{opacity:.5;cursor:default}
+.cart td.motivo{font-family:inherit;white-space:normal;text-align:left;color:var(--down)}.cart td.ok{font-family:inherit;color:var(--up)}
 .lnk{border:0;background:none;color:var(--accent);padding:4px 0;cursor:pointer;font-size:12px;text-decoration:underline}
 .tgs{display:grid;gap:6px}
 .tg{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--panel);border-radius:6px;padding:0 10px;min-height:38px;cursor:pointer;font-weight:500;font-size:13px}
@@ -150,7 +152,9 @@ table.t tbody tr.f{cursor:pointer}table.t tbody tr.f:hover{background:var(--hove
           <textarea id="edita-txt" rows="8" spellcheck="false"></textarea>
           <div><button class="bt" type="button" id="edita-salva">Salvar</button> <button type="button" class="lnk" id="edita-padrao">voltar à lista do Investidor10</button></div>
         </div>
-        <p class="meta" style="margin:4px 0 0">Preço atual: último fechamento da base (o do fundo aberto é o mais recente).</p>
+        <div class="atz"><button class="bt" type="button" id="b-atz" disabled>Atualizar preços</button><span class="meta" id="atz-st">Só funciona com a página aberta no Claude e o Bright Data conectado.</span></div>
+        <div id="atz-res"></div>
+        <p class="meta" style="margin:4px 0 0">Preço atual: último fechamento da base (o do fundo aberto é o mais recente). Depois de "Atualizar preços": preço do Status Invest (atraso de cerca de 15 minutos), só dos fundos da carteira e do fundo aberto.</p>
       </div>
       <div class="bloco">
         <h3>Análise</h3>
@@ -374,6 +378,7 @@ function lado(A){
   $('cab').innerHTML = `<div class="cod">${esc(A.fundo)} <span class="nome">· ${esc(F.classe||'')}</span></div>`
     + `<div><span class="preco">${nf2.format(A.preco)}</span><span class="var ${v>=0?'up':'dn'}">${v>=0?'+':''}${nf2.format(S.c[n-1]-S.c[n-2])} (${pct(v)})</span></div>`
     + `<div class="meta">${esc(A.ultimo_pregao)} · ${esc(A.fonte)} · volume do dia ${mi(S.v[n-1])}</div>`
+    + (precoVivo(A.fundo) ? (x=>`<div class="meta">Agora: <b>${nf2.format(x.preco)}</b> <span class="${x.varPct>=0?'up':'dn'}">(${x.varPct>=0?'+':''}${nf2.format(x.varPct)}%)</span> · Status Invest às ${esc(x.hora)} de ${esc(x.dia.split('-').reverse().join('/'))}</div>`)(precoVivo(A.fundo)) : '')
     + (av.length?`<div class="avisos">${av.map(esc).join('<br>')}</div>`:'');
   $('est').innerHTML = FUND.map(([r,val,cls,txt])=>`<div title="${esc(txt)}"><span>${r}</span><span class="${cls(F)}">${esc(val(F))}</span></div>`).join('');
   $('v-mm200').textContent = F.distancia_media_200!=null ? pct(F.distancia_media_200) : '';
@@ -381,7 +386,7 @@ function lado(A){
   desenhaCarteira();
 }
 function desenhaCarteira(){
-  $('cart').innerHTML = carteira.map(([c,p])=>{ const compra = num(p), agora = atual && atual.fundo===c ? atual.preco : precoIndice(c);
+  $('cart').innerHTML = carteira.map(([c,p])=>{ const pv = precoVivo(c), compra = num(p), agora = pv ? pv.preco : atual && atual.fundo===c ? atual.preco : precoIndice(c);
     const r = compra && agora ? agora/compra-1 : null;
     return `<tr class="f ${atual&&atual.fundo===c?'atual':''}" data-c="${esc(c)}"><td>${esc(c)}</td><td>${compra?nf2.format(compra):'—'}</td>`
       + `<td>${agora?nf2.format(agora):'—'}</td><td class="${r==null?'':r>=0?'up':'dn'}">${r==null?'—':pct(r)}</td></tr>`; }).join('');
@@ -392,6 +397,57 @@ $('edita-salva').addEventListener('click', ()=>{
   carteira = $('edita-txt').value.split('\n').map(l=>l.split(/[;\t]/).map(s=>s.trim())).filter(x=>x[0]).map(x=>[x[0].toUpperCase(), x[1]||'']);
   lsSet('radar-carteira', JSON.stringify(carteira)); $('edita').hidden = true; desenhaCarteira(); desenhaBusca(); });
 $('edita-padrao').addEventListener('click', ()=>{ $('edita-txt').value = CARTEIRA_PADRAO.map(x=>x.join('; ')).join('\n'); });
+
+// ---------------- preço do dia pelo Bright Data: só os fundos da carteira e o fundo aberto (1 consulta por fundo, sem IA)
+let vivo = lerJson('radar-vivo', {}), MCP = null;
+const isoHoje = d => d.toLocaleDateString('sv-SE');            // AAAA-MM-DD no fuso de quem está vendo
+const precoVivo = c => { const x = vivo[c]; return x && indice && x.dia > dmy2iso(indice.gerado) ? x : null; };  // só se for mais novo que a base
+function lePreco(payload){                                     // "VALOR ATUAL R$ 141,28 arrow_downward -0,37%" da página do Status Invest
+  let t = payload && typeof payload==='object' ? (typeof payload.content==='string' ? payload.content : JSON.stringify(payload)) : String(payload ?? '');
+  t = t.replace(/\\n/g,' ').replace(/\s+/g,' ');
+  const m = t.match(/VALOR ATUAL R\$ ?([\d.]+,\d+) ?(arrow_upward|arrow_downward)? ?(-?[\d.]+,\d+) ?%/i);
+  if(!m) return null;
+  const p = num(m[1]); let v = parseFloat(m[3].replace(/\./g,'').replace(',','.'));
+  if(m[2]==='arrow_downward' && v>0) v = -v;
+  return p ? {preco:p, varPct:v} : null;
+}
+const ATZ_ERRO = {
+  needs_reauth:'Conexão do Bright Data venceu: reconecte em Configurações → Conectores do claude.ai.',
+  server_not_connected:'Bright Data não está conectado: adicione em Configurações → Conectores do claude.ai.',
+  selection_required:'Há mais de uma conexão do Bright Data: escolha uma quando o Claude perguntar.',
+  not_in_manifest:'Você não permitiu o Bright Data nesta página.',
+  approval_required:'Falta a sua permissão: clique de novo e permita.',
+  blocked_by_policy:'Bloqueado pela sua organização.',
+  tool_error:'O Bright Data não conseguiu abrir a página do fundo.',
+  server_unavailable:'Bright Data fora do ar agora; tente de novo em instantes.'};
+const listaAtz = () => [...new Set([...carteira.map(x=>x[0]), ...(atual?[atual.fundo]:[])])];
+async function atualizaPrecos(){
+  if(!MCP) return;
+  const lista = listaAtz(), res = {}, b = $('b-atz'); let feitos = 0;
+  b.disabled = true; $('atz-st').textContent = `0 de ${lista.length}…`;
+  const um = async c => {
+    try{
+      const r = await MCP.callTool('Bright Data', 'scrape_as_markdown', {url:`https://statusinvest.com.br/fundos-imobiliarios/${c.toLowerCase()}`, format:'text'}, {cache:false});
+      const x = lePreco(r.payload ?? (r.content||[]).map(k=>k.text||'').join(' ')), base = precoIndice(c);
+      if(!x) res[c] = {ok:false, motivo:'Preço não encontrado na página.'};
+      else if(base && Math.abs(x.preco/base-1) > 0.4) res[c] = {ok:false, motivo:`Valor estranho (${nf2.format(x.preco)} contra ${nf2.format(base)} da base); não usado.`};
+      else { const d = new Date(); vivo[c] = {preco:x.preco, varPct:x.varPct, dia:isoHoje(d), hora:d.toTimeString().slice(0,5)}; res[c] = {ok:true, ...vivo[c]}; }
+    }catch(e){ res[c] = {ok:false, motivo: ATZ_ERRO[e && e.code] || `Falhou (${(e && e.code) || 'erro'}).`}; }
+    $('atz-st').textContent = `${++feitos} de ${lista.length}…`;
+  };
+  for(let i=0; i<lista.length; i+=3) await Promise.all(lista.slice(i, i+3).map(um));
+  lsSet('radar-vivo', JSON.stringify(vivo));
+  const ok = lista.filter(c=>res[c].ok).length;
+  $('atz-st').textContent = `${ok} de ${lista.length} atualizados às ${new Date().toTimeString().slice(0,5)}`;
+  $('atz-res').innerHTML = `<table class="cart"><thead><tr><th>Fundo</th><th>Preço</th><th>Dia</th><th>Resultado</th></tr></thead><tbody>${lista.map(c=>{ const r = res[c];
+    return r.ok ? `<tr><td>${esc(c)}</td><td>${nf2.format(r.preco)}</td><td class="${r.varPct>=0?'up':'dn'}">${r.varPct>=0?'+':''}${nf2.format(r.varPct)}%</td><td class="ok">ok</td></tr>`
+                : `<tr><td>${esc(c)}</td><td>—</td><td>—</td><td class="motivo">${esc(r.motivo)}</td></tr>`; }).join('')}</tbody></table>`;
+  if(atual) lado(atual); else desenhaCarteira();
+  b.disabled = false;
+}
+$('b-atz').addEventListener('click', atualizaPrecos);
+if(window.claude && window.claude.use) window.claude.use('mcp').then(m=>{ MCP = m;
+  if(m){ $('b-atz').disabled = false; $('atz-st').textContent = '1 consulta ao Bright Data por fundo da carteira + o fundo aberto.'; } }).catch(()=>{});
 
 // ---------------- Analisar (texto)
 function analise(A){
