@@ -12,11 +12,9 @@ Etapas e tabelas:
   4 dólar, IFIX e Ibovespa (diário)                   -> planilhas/rotina/indicadores_diarios.csv
   5 IPCA e IGP-M (mensal)                             -> planilhas/rotina/indicadores_mensais.csv
   6 Boletim Focus (Selic, IPCA, câmbio)               -> planilhas/rotina/focus.csv
-  7 juros futuros da B3 (DI x pré e DI x IPCA)        -> planilhas/rotina/juros_b3.csv
+  7 juros dos títulos públicos (NTN-B = IPCA+)      -> planilhas/rotina/titulos_publicos_anbima.csv
 
-Fontes: B3 (COTAHIST, taxas referenciais), FNET, CVM, Banco Central (SGS e Focus) — oficiais.
-Ibovespa: Yahoo Finance (não oficial). IFIX: B3, só o pregão do dia, a partir de 23/11/2026 (nem a B3 nem o Yahoo deram o
-histórico do IFIX no teste de 23/11/2026; para o passado, usar planilhas/mercado.csv, índice próprio de FIIs desde 2017).
+Fontes, todas oficiais: B3 (COTAHIST e estatísticas históricas dos índices), FNET, CVM, Banco Central (SGS e Focus), ANBIMA.
 Os PDFs do FNET não são guardados no repositório (ficam no FNET; a tabela traz o link). O texto extraído é guardado.
 
     PYTHONPATH=. python3 estudos/rotina_diaria.py
@@ -197,47 +195,56 @@ def sgs(serie: int, ini: dt.date) -> pd.Series:
     return pd.Series(d["valor"].astype(float).values, index=pd.to_datetime(d["data"], dayfirst=True))
 
 
-def yahoo(simbolo: str, ini: dt.date) -> pd.Series:
-    p1 = int(dt.datetime(ini.year, ini.month, ini.day, tzinfo=dt.timezone.utc).timestamp())
-    p2 = int(dt.datetime.now(dt.timezone.utc).timestamp())
-    j = get(f"https://query1.finance.yahoo.com/v8/finance/chart/{simbolo}?period1={p1}&period2={p2}&interval=1d").json()
-    r = j["chart"]["result"][0]
-    datas = pd.to_datetime(r["timestamp"], unit="s", utc=True).tz_convert("America/Sao_Paulo").tz_localize(None).normalize()
-    s = pd.Series(r["indicators"]["quote"][0]["close"], index=datas, dtype=float).dropna()
-    return s[~s.index.duplicated(keep="last")].round(2)
+def b3_historico(codigo: str, anos: range) -> pd.Series:
+    """Fechamento de cada pregão de um índice da B3 (IFIX, IBOV), ano a ano — a mesma tabela da página
+    "Estatísticas históricas" do site da B3 (achado em 23/11/2026)."""
+    vals = {}
+    for ano in anos:
+        q = b64json({"index": codigo, "language": "pt-br", "year": str(ano)})
+        j = get(f"https://sistemaswebb3-listados.b3.com.br/indexStatisticsProxy/IndexCall/GetPortfolioDay/{q}").json()
+        for linha in j.get("results", []):
+            for mes in range(1, 13):
+                v = linha.get(f"rateValue{mes}")
+                if v:
+                    try:
+                        vals[pd.Timestamp(ano, mes, int(linha["day"]))] = float(v.replace(".", "").replace(",", "."))
+                    except ValueError:
+                        pass
+    return pd.Series(vals, dtype=float).sort_index()
 
 
-def b3_indice(codigo: str) -> pd.Series:
-    """Fechamento do último pregão de um índice, direto da B3 (só o dia; a B3 não deu histórico aberto no teste)."""
-    j = get(f"https://cotacao.b3.com.br/mds/api/v1/DailyFluctuationHistory/{codigo}").json()
-    pregao = j["TradgFlr"]
-    ultimo = pregao["scty"]["lstQtn"][-1]["closPric"]
-    return pd.Series([float(ultimo)], index=[pd.Timestamp(pregao["date"])])
+def b64json(d: dict) -> str:
+    import base64
+    import json
+    return base64.b64encode(json.dumps(d, separators=(",", ":")).encode()).decode()
 
 
 def etapa_diarios() -> str:
-    """Dólar (Banco Central) e Ibovespa (Yahoo) com histórico; IFIX só da B3, um dia por rodada, a partir de 23/11/2026
-    (o Yahoo não tem o histórico do IFIX: só o último dia). Valor já gravado não é apagado por um vazio novo."""
+    """Dólar PTAX (Banco Central) e fechamento do IFIX e do Ibovespa (B3), oficiais. Os índices são relidos inteiros
+    desde 2017 a cada rodada (são 20 consultas pequenas e corrigem qualquer buraco). Valor já gravado não é apagado
+    por um vazio novo."""
     arq = ROT / "indicadores_diarios.csv"
     velho = ler(arq)
     ini = INICIO_HIST if velho is None else (pd.to_datetime(velho["data"], dayfirst=True).max() - pd.Timedelta(days=10)).date()
-    s = {"dolar_ptax_venda (R$)": sgs(1, ini), "ifix (pontos)": b3_indice("IFIX"), "ibovespa (pontos)": yahoo("%5EBVSP", ini)}
+    anos = range(INICIO_HIST.year, hoje_brasil().year + 1)
+    s = {"dolar_ptax_venda (R$)": sgs(1, ini), "ifix (pontos)": b3_historico("IFIX", anos),
+         "ibovespa (pontos)": b3_historico("IBOV", anos)}
     N = pd.DataFrame(s).sort_index()
-    N = N[N.index.dayofweek < 5].dropna(how="all")
+    N = N[(N.index >= pd.Timestamp(INICIO_HIST)) & (N.index.dayofweek < 5)].dropna(how="all")
     antes = 0
     if velho is not None:
         antes = len(velho)
-        V = velho.assign(data=pd.to_datetime(velho["data"], dayfirst=True)).set_index("data")
-        N = N.combine_first(V)[list(s)]
+        V = velho.assign(data=pd.to_datetime(velho["data"], dayfirst=True)).set_index("data")[["dolar_ptax_venda (R$)"]]
+        N = N.combine_first(V)[list(s)]  # índices: só a B3 (relidos inteiros); dólar: o já gravado fica
     N = N.sort_index()
     N.insert(0, "data", N.index.strftime("%d/%m/%Y"))
     arq.parent.mkdir(parents=True, exist_ok=True)
     N.to_csv(arq, **GRAVA)
-    return (f"indicadores_diarios.csv: {antes} -> {len(N)} linhas (dólar desde {ini:%d/%m/%Y}; IFIX: só o pregão de hoje, pela B3; "
-            f"Ibovespa pelo Yahoo Finance)\núltimos dias:\n{N.tail(3).to_string(index=False)}")
+    vazios = {c: int(N[c].isna().sum()) for c in s}
+    return (f"indicadores_diarios.csv: {antes} -> {len(N)} linhas (dólar: Banco Central; IFIX e Ibovespa: B3, desde 2017); "
+            f"dias sem valor: {vazios}\núltimos dias:\n{N.tail(3).to_string(index=False)}")
 
 
-# ---------------------------------------------------------------- 5 IPCA e IGP-M
 def etapa_mensais() -> str:
     ini = dt.date(2015, 1, 1)
     M = pd.DataFrame({"ipca_mes (%)": sgs(433, ini), "igpm_mes (%)": sgs(189, ini)}).sort_index()
@@ -281,62 +288,43 @@ def etapa_focus() -> str:
 
 # ---------------------------------------------------------------- 7 juros da B3
 def etapa_juros() -> str:
-    arq = ROT / "juros_b3.csv"
+    """Taxas dos títulos públicos do dia (ANBIMA, arquivo diário público): NTN-B = juro real (IPCA+), LTN e NTN-F =
+    prefixado, LFT = Selic. A ANBIMA só deixa os arquivos recentes no ar (o de 19/11/2021 deu 404 em 23/11/2026):
+    a rotina pega os dias que faltam, até 15 dias úteis para trás. O histórico antigo vem do Tesouro (pendência)."""
+    arq = ROT / "titulos_publicos_anbima.csv"
     velho = ler(arq)
-    p = ultima_data_precos()
-    if velho is None:
-        dias = [p]
-    else:
-        u = pd.to_datetime(velho["data"], dayfirst=True).max().date()
-        dias = sorted({d.date() for d in pd.bdate_range(u + dt.timedelta(days=1), p)})[-10:]
-    L, linhas = [], []
+    fim = hoje_brasil()
+    ini = fim - dt.timedelta(days=21) if velho is None else pd.to_datetime(velho["data"], dayfirst=True).max().date() + dt.timedelta(days=1)
+    dias = [d.date() for d in pd.bdate_range(ini, fim)][-15:]
+    L, faltam = [], []
     for d in dias:
-        for codigo, nome in (("PRE", "DI x pré"), ("DIC", "DI x IPCA")):
-            url = (f"https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-taxas-referenciais-bmf-ptBR.asp?"
-                   f"Data={d:%d/%m/%Y}&Data1={d:%Y%m%d}&slcTaxa={codigo}")
-            html, erro = None, ""
-            for _ in range(1):  # 23/11/2026: o site respondeu 1 vez em 4 a partir do GitHub; esperar mais só atrasava a rotina
-                try:
-                    html = get(url, timeout=45).content.decode("latin-1")
-                    break
-                except Exception as e:  # noqa: BLE001
-                    erro = f"{type(e).__name__}: {str(e)[:120]}"
-            if html is None:
-                linhas.append(f"{d:%d/%m} {nome}: sem resposta da B3 ({erro})")
-                continue
-            try:
-                tabs = pd.read_html(io.StringIO(html), decimal=",", thousands=".")
-            except Exception as e:  # noqa: BLE001
-                linhas.append(f"{d:%d/%m} {nome}: não consegui ler a página ({type(e).__name__}: {str(e)[:160]}); início: {html[:120]!r}")
-                continue
-            t = next((t for t in tabs if t.shape[1] >= 2 and t.shape[0] > 3), None)
-            if t is None:
-                linhas.append(f"{d:%d/%m} {nome}: página sem tabela")
-                continue
-            t.columns = [" ".join(str(x) for x in (c if isinstance(c, tuple) else (c,))).strip() for c in t.columns]
-            t = t.rename(columns={t.columns[0]: "dias_corridos"})
-            t = t.melt(id_vars="dias_corridos", var_name="coluna", value_name="taxa (% ao ano)")
-            t["taxa (% ao ano)"] = pd.to_numeric(t["taxa (% ao ano)"], errors="coerce")
-            t = t.dropna(subset=["taxa (% ao ano)"])
-            t.insert(0, "curva", nome)
-            t.insert(0, "data", f"{d:%d/%m/%Y}")
-            L.append(t)
-            linhas.append(f"{d:%d/%m} {nome}: {len(t)} pontos")
+        r = requests.get(f"https://www.anbima.com.br/informacoes/merc-sec/arqs/ms{d:%y%m%d}.txt", timeout=60, headers=UA)
+        if r.status_code != 200 or not r.content.startswith(b"ANBIMA"):
+            faltam.append(f"{d:%d/%m} ({r.status_code})")
+            continue
+        t = pd.read_csv(io.StringIO(r.content.decode("latin-1")), sep="@", skiprows=2, decimal=",", thousands=".", dtype={"Data Referencia": str, "Data Vencimento": str})
+        t = t[t["Titulo"].notna() & t["Data Vencimento"].notna()]
+        L.append(pd.DataFrame({"data": pd.to_datetime(t["Data Referencia"], format="%Y%m%d").dt.strftime("%d/%m/%Y"),
+                               "titulo": t["Titulo"].str.strip(),
+                               "vencimento": pd.to_datetime(t["Data Vencimento"], format="%Y%m%d").dt.strftime("%d/%m/%Y"),
+                               "taxa_indicativa (% ao ano)": pd.to_numeric(t["Tx. Indicativas"], errors="coerce").round(4),
+                               "pu (R$)": pd.to_numeric(t["PU"], errors="coerce").round(6)}))
+    linhas = [f"arquivos da ANBIMA lidos: {len(L)}; sem arquivo: {', '.join(faltam) or 'nenhum'}"]
     if not L:
-        if linhas:  # tentou e não conseguiu: aparece como ERRO no resumo, não como OK
-            raise RuntimeError("juros da B3 não lidos (pendência no checklist):\n" + "\n".join(linhas))
-        return "nada novo"
+        if faltam and velho is None:
+            raise RuntimeError("\n".join(linhas))
+        return linhas[0]
     N = pd.concat(L, ignore_index=True)
-    N["dias_corridos"] = pd.to_numeric(N["dias_corridos"], errors="coerce")
-    N = N.dropna(subset=["dias_corridos"])
-    N["dias_corridos"] = N["dias_corridos"].astype(int)
-    a, b = juntar(arq, N, ["data", "curva", "coluna", "dias_corridos"], ["data", "curva", "dias_corridos"])
-    return "\n".join([f"juros_b3.csv: {a} -> {b} linhas"] + linhas)
+    a, b = juntar(arq, N, ["data", "titulo", "vencimento"], ["data", "titulo", "vencimento"])
+    linhas.insert(0, f"titulos_publicos_anbima.csv: {a} -> {b} linhas")
+    u = N[N["data"] == N["data"].iloc[-1]]
+    linhas.append(f"NTN-B (juro real, IPCA+) em {u['data'].iloc[0]}:\n" + u[u["titulo"] == "NTN-B"].to_string(index=False))
+    return "\n".join(linhas)
 
 
 ETAPAS = [("1 preços dos FIIs (B3)", etapa_precos), ("2 mercado de fundos e CDI", etapa_mercado),
           ("3 documentos dos FIIs (FNET)", etapa_fnet), ("4 dólar, IFIX e Ibovespa", etapa_diarios),
-          ("5 IPCA e IGP-M", etapa_mensais), ("6 Boletim Focus", etapa_focus), ("7 juros futuros da B3", etapa_juros)]
+          ("5 IPCA e IGP-M", etapa_mensais), ("6 Boletim Focus", etapa_focus), ("7 juros dos títulos públicos (ANBIMA)", etapa_juros)]
 
 
 def main() -> int:
