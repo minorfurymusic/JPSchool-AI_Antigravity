@@ -11,18 +11,11 @@ from pathlib import Path
 import requests
 
 b64 = lambda d: base64.b64encode(json.dumps(d).encode()).decode()
-FONTES = {  # rodada 2: alternativas para o que falhou na rodada 1 (Tesouro e índices da B3)
-    "Tesouro Transparente (página do conjunto)": "https://www.tesourotransparente.gov.br/ckan/dataset/taxas-dos-titulos-ofertados-pelo-tesouro-direto",
-    "Tesouro Direto taxas do dia (JSON)": "https://www.tesourodireto.com.br/json/br/com/b3/tesourodireto/service/api/treasurybondsinfo.json",
-    "B3 cotação IFIX": "https://cotacao.b3.com.br/mds/api/v1/instrumentQuotation/IFIX",
-    "B3 cotação IBOV": "https://cotacao.b3.com.br/mds/api/v1/instrumentQuotation/IBOV",
-    "B3 variação do dia IFIX": "https://cotacao.b3.com.br/mds/api/v1/DailyFluctuationHistory/IFIX",
-    "B3 IFIX carteira do dia": "https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/"
-        + b64({"language": "pt-br", "pageNumber": 1, "pageSize": 5, "index": "IFIX", "segment": "1"}),
-    "B3 IFIX estatística (GetYearlyHistory, ordem 2)": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsProxy/IndexCall/GetYearlyHistory/"
-        + b64({"index": "IFIX", "language": "pt-br", "year": "2026"}),
-    "Yahoo Ibovespa": "https://query1.finance.yahoo.com/v8/finance/chart/%5EBVSP?range=5d&interval=1d",
-    "Yahoo IFIX": "https://query1.finance.yahoo.com/v8/finance/chart/IFIX.SA?range=5d&interval=1d",
+FONTES = {  # rodada 3: juro longo (o Tesouro Transparente recusou a conexão do GitHub nas rodadas 1 e 2)
+    "Tesouro Transparente (página inicial)": "https://www.tesourotransparente.gov.br/",
+    "B3 taxas referenciais DI x IPCA (19/11/2026)": "https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-taxas-referenciais-bmf-ptBR.asp?Data=19/11/2026&Data1=20261119&slcTaxa=DIC",
+    "B3 taxas referenciais DI x pré (19/11/2026)": "https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-taxas-referenciais-bmf-ptBR.asp?Data=19/11/2026&Data1=20261119&slcTaxa=PRE",
+    "Yahoo dólar (BRL=X)": "https://query1.finance.yahoo.com/v8/finance/chart/BRL%3DX?range=5d&interval=1d",
 }
 
 linhas = [f"Rodado em {dt.datetime.utcnow():%d/%m/%Y %H:%M} UTC"]
