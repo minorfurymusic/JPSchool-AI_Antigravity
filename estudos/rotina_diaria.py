@@ -15,7 +15,8 @@ Etapas e tabelas:
   7 juros futuros da B3 (DI x pré e DI x IPCA)        -> planilhas/rotina/juros_b3.csv
 
 Fontes: B3 (COTAHIST, taxas referenciais), FNET, CVM, Banco Central (SGS e Focus) — oficiais.
-IFIX e Ibovespa: Yahoo Finance (não oficial; a B3 não tem histórico diário aberto que funcionou no teste de 23/11/2026).
+Ibovespa: Yahoo Finance (não oficial). IFIX: B3, só o pregão do dia, a partir de 23/11/2026 (nem a B3 nem o Yahoo deram o
+histórico do IFIX no teste de 23/11/2026; para o passado, usar planilhas/mercado.csv, índice próprio de FIIs desde 2017).
 Os PDFs do FNET não são guardados no repositório (ficam no FNET; a tabela traz o link). O texto extraído é guardado.
 
     PYTHONPATH=. python3 estudos/rotina_diaria.py
@@ -30,6 +31,7 @@ import sys
 import tempfile
 import traceback
 from pathlib import Path
+from urllib.parse import quote
 
 import pandas as pd
 import requests
@@ -205,17 +207,34 @@ def yahoo(simbolo: str, ini: dt.date) -> pd.Series:
     return s[~s.index.duplicated(keep="last")].round(2)
 
 
+def b3_indice(codigo: str) -> pd.Series:
+    """Fechamento do último pregão de um índice, direto da B3 (só o dia; a B3 não deu histórico aberto no teste)."""
+    j = get(f"https://cotacao.b3.com.br/mds/api/v1/DailyFluctuationHistory/{codigo}").json()
+    pregao = j["TradgFlr"]
+    ultimo = pregao["scty"]["lstQtn"][-1]["closPric"]
+    return pd.Series([float(ultimo)], index=[pd.Timestamp(pregao["date"])])
+
+
 def etapa_diarios() -> str:
+    """Dólar (Banco Central) e Ibovespa (Yahoo) com histórico; IFIX só da B3, um dia por rodada, a partir de 23/11/2026
+    (o Yahoo não tem o histórico do IFIX: só o último dia). Valor já gravado não é apagado por um vazio novo."""
     arq = ROT / "indicadores_diarios.csv"
     velho = ler(arq)
     ini = INICIO_HIST if velho is None else (pd.to_datetime(velho["data"], dayfirst=True).max() - pd.Timedelta(days=10)).date()
-    s = {"dolar_ptax_venda (R$)": sgs(1, ini), "ifix (pontos)": yahoo("IFIX.SA", ini), "ibovespa (pontos)": yahoo("%5EBVSP", ini)}
+    s = {"dolar_ptax_venda (R$)": sgs(1, ini), "ifix (pontos)": b3_indice("IFIX"), "ibovespa (pontos)": yahoo("%5EBVSP", ini)}
     N = pd.DataFrame(s).sort_index()
     N = N[N.index.dayofweek < 5].dropna(how="all")
+    antes = 0
+    if velho is not None:
+        antes = len(velho)
+        V = velho.assign(data=pd.to_datetime(velho["data"], dayfirst=True)).set_index("data")
+        N = N.combine_first(V)[list(s)]
+    N = N.sort_index()
     N.insert(0, "data", N.index.strftime("%d/%m/%Y"))
-    a, b = juntar(arq, N.reset_index(drop=True), ["data"], ["data"])
-    ult = N.tail(3).to_string(index=False)
-    return f"indicadores_diarios.csv: {a} -> {b} linhas (desde {ini:%d/%m/%Y}; IFIX e Ibovespa pelo Yahoo Finance)\núltimos dias:\n{ult}"
+    arq.parent.mkdir(parents=True, exist_ok=True)
+    N.to_csv(arq, **GRAVA)
+    return (f"indicadores_diarios.csv: {antes} -> {len(N)} linhas (dólar desde {ini:%d/%m/%Y}; IFIX: só o pregão de hoje, pela B3; "
+            f"Ibovespa pelo Yahoo Finance)\núltimos dias:\n{N.tail(3).to_string(index=False)}")
 
 
 # ---------------------------------------------------------------- 5 IPCA e IGP-M
@@ -241,8 +260,8 @@ def etapa_focus() -> str:
     filtro = (f"(Indicador eq 'Selic' or Indicador eq 'IPCA' or Indicador eq 'Câmbio') and Data ge '{ini:%Y-%m-%d}' and baseCalculo eq 0")
     L, pulo = [], 0
     while True:
-        r = get(base, params={"$filter": filtro, "$select": "Indicador,Data,DataReferencia,Mediana", "$format": "json",
-                              "$top": 5000, "$skip": pulo, "$orderby": "Data"})
+        r = get(f"{base}?$filter={quote(filtro)}&$select=Indicador,Data,DataReferencia,Mediana&$format=json"
+                f"&$top=5000&$skip={pulo}&$orderby=Data")
         v = r.json()["value"]
         L += v
         if len(v) < 5000:
@@ -275,11 +294,20 @@ def etapa_juros() -> str:
         for codigo, nome in (("PRE", "DI x pré"), ("DIC", "DI x IPCA")):
             url = (f"https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-taxas-referenciais-bmf-ptBR.asp?"
                    f"Data={d:%d/%m/%Y}&Data1={d:%Y%m%d}&slcTaxa={codigo}")
+            html, erro = None, ""
+            for _ in range(2):
+                try:
+                    html = get(url, timeout=120).content.decode("latin-1")
+                    break
+                except Exception as e:  # noqa: BLE001
+                    erro = f"{type(e).__name__}: {str(e)[:120]}"
+            if html is None:
+                linhas.append(f"{d:%d/%m} {nome}: sem resposta da B3 ({erro})")
+                continue
             try:
-                html = get(url, timeout=60).content.decode("latin-1")
                 tabs = pd.read_html(io.StringIO(html), decimal=",", thousands=".")
             except Exception as e:  # noqa: BLE001
-                linhas.append(f"{d:%d/%m} {nome}: sem resposta ({type(e).__name__})")
+                linhas.append(f"{d:%d/%m} {nome}: não consegui ler a página ({type(e).__name__}: {str(e)[:160]}); início: {html[:120]!r}")
                 continue
             t = next((t for t in tabs if t.shape[1] >= 2 and t.shape[0] > 3), None)
             if t is None:
