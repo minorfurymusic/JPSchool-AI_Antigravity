@@ -1,162 +1,237 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Radar Gráfico de FIIs</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: barra de busca fixa; faixa de fundamentos; gráfico principal com painéis sincronizados; leitura item a item ao lado (empilha no celular). */
-:root{
-  --bg:#f4f6f5; --surface:#ffffff; --fg:#1b2422; --muted:#5d6b67; --line:#d9e0dd; --grid:#e9eeec;
-  --accent:#1f6f8b; --up:#23875a; --down:#c2453a; --warn:#b7791f; --info:#6b5bb5;
-  --mm21:#1f6f8b; --mm50:#b7791f; --mm200:#8a4fb0; --band:#9aa8a4;
-  --f-display:"Space Grotesk",system-ui,sans-serif; --f-text:"IBM Plex Sans",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#111715; --surface:#18201e; --fg:#e3e9e6; --muted:#97a6a1; --line:#2a3532; --grid:#1f2826;
-  --accent:#5fb3cf; --up:#4cc38a; --down:#ef6f63; --warn:#e0a84a; --info:#a597e8;
-  --mm21:#5fb3cf; --mm50:#e0a84a; --mm200:#c58be3; --band:#5d6b67; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#111715; --surface:#18201e; --fg:#e3e9e6; --muted:#97a6a1; --line:#2a3532; --grid:#1f2826;
-  --accent:#5fb3cf; --up:#4cc38a; --down:#ef6f63; --warn:#e0a84a; --info:#a597e8;
-  --mm21:#5fb3cf; --mm50:#e0a84a; --mm200:#c58be3; --band:#5d6b67; color-scheme:dark}
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--f-text);font-size:14px;line-height:1.45;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 32px}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;flex-wrap:wrap;gap:12px 20px;
-  align-items:center;padding-block:14px 12px;border-bottom:1px solid var(--line)}
-h1{font-family:var(--f-display);font-weight:600;font-size:20px;margin:0;letter-spacing:-.01em}
-h2{font-family:var(--f-display);font-weight:600;font-size:15px;margin:0 0 8px;text-wrap:balance}
-.busca{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-width:0}
-.busca input{font-family:var(--f-mono);font-size:15px;text-transform:uppercase;width:9.5em;padding:7px 10px;border:1px solid var(--line);
-  border-radius:6px;background:var(--surface);color:var(--fg)}
-.busca input:focus-visible,button:focus-visible,label:focus-within{outline:2px solid var(--accent);outline-offset:2px}
-button{font-family:var(--f-text);font-size:13px;padding:7px 12px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);
-  color:var(--surface);cursor:pointer}
-.meta{color:var(--muted);font-size:12px}
-.cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin:16px 0 10px}
-.cab .cod{font-family:var(--f-display);font-size:28px;font-weight:600}
-.cab .preco{font-family:var(--f-mono);font-size:22px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.chip{display:inline-flex;gap:6px;align-items:baseline;padding:4px 9px;border-radius:999px;border:1px solid var(--line);background:var(--surface);
-  font-size:12px;white-space:normal;max-width:100%}
-.chip b{font-family:var(--f-mono);font-weight:500}
-.chip.bom{border-color:var(--up)} .chip.ruim{border-color:var(--down)} .chip.atencao{border-color:var(--warn)}
-.grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,420px);gap:16px;align-items:start}
-@media (max-width:960px){.grade{grid-template-columns:minmax(0,1fr)}}
-.painel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;min-width:0}
-.camadas{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted);margin-bottom:6px}
-.camadas label{display:inline-flex;gap:5px;align-items:center;cursor:pointer}
-.legenda{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11px;color:var(--muted);margin-top:4px}
-.legenda i{display:inline-block;width:14px;height:2px;vertical-align:middle;margin-right:4px}
-#principal{height:420px} .sub{height:110px;border-top:1px solid var(--line);position:relative}
-.sub .rot{position:absolute;left:6px;top:4px;z-index:2;font-size:11px;color:var(--muted);background:var(--surface);padding:0 4px}
-@media (max-width:600px){#principal{height:320px}.sub{height:90px}}
-table{width:100%;border-collapse:collapse;font-size:12.5px}
-th,td{text-align:left;padding:6px 6px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
-td.num,.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
-.conf{font-size:10.5px;padding:1px 6px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
-.conf.subjetivo{border-color:var(--warn);color:var(--warn)}
-.lista{display:grid;gap:4px;font-size:12.5px}
-.lista div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding-block:3px}
-.perfil{display:grid;gap:2px}
-.perfil .lin{display:grid;grid-template-columns:7.5em 1fr;gap:6px;align-items:center;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
-.perfil .bar{height:9px;background:var(--band);border-radius:2px}
-.perfil .lin.poc .bar{background:var(--accent)} .perfil .lin.atual{color:var(--fg);font-weight:500}
-.avisos{border-left:3px solid var(--warn);padding:6px 10px;background:var(--surface);margin-bottom:10px;font-size:12.5px}
-.tabwrap{overflow-x:auto}
-.secao{display:grid;gap:16px}
+/* VOICE: ferramenta de consulta rápida, sóbria como uma corretora.
+   IDEA: a tela de gráfico do TradingView: gráfico grande à esquerda, coluna fixa à direita.
+   PICTURE: um só gráfico com painéis (preço + volume, Kairi e os que o dono ligar), zoom e arraste nativos.
+   COLOUR and TYPE: branco, cinza claro de grade, velas verde #26a69a / vermelha #ef5350; Inter + IBM Plex Mono nos números.
+   LAYOUT: barra de cima (fundo, entrada, Radar/Busca/Analisar); embaixo do gráfico, os períodos; coluna da direita com carteira,
+   botões de análise e estatísticas. No celular a coluna desce para baixo do gráfico. */
+:root{color-scheme:light dark;
+  --bg:light-dark(#ffffff,#131722);--panel:light-dark(#ffffff,#1e222d);--ink:light-dark(#131722,#d1d4dc);--muted:light-dark(#6a6d78,#8a8e99);
+  --line:light-dark(#e0e3eb,#2a2e39);--grid:light-dark(#f0f3fa,#1f2430);--hover:light-dark(#f0f3fa,#2a2e39);
+  --accent:light-dark(#2962ff,#4c7dff);--up:#26a69a;--down:#ef5350;--warn:light-dark(#c77c02,#f0b44c);--info:light-dark(#7e57c2,#b39ddb);
+  --mm21:light-dark(#2962ff,#5b8cff);--mm50:light-dark(#f57c00,#ffa726);--mm200:light-dark(#9c27b0,#ce93d8);--band:light-dark(#9598a1,#6a6d78);
+  --f:"Inter",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--f);overflow-x:clip;
+  padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+button,input,textarea{font:inherit;color:inherit}
+.topo{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:8px 12px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;background:var(--bg)}
+.topo form{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.topo input{border:1px solid var(--line);border-radius:6px;background:var(--panel);padding:6px 9px;font-size:16px;height:36px}
+#cod{width:8.5em;font-family:var(--mono);font-weight:500;text-transform:uppercase}
+#entrada{width:6.5em;font-family:var(--mono)}
+.rot{font-size:12px;color:var(--muted)}
+.abas{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-left:auto}
+.abas button{border:0;background:transparent;padding:0 16px;height:36px;cursor:pointer;font-weight:500}
+.abas button+button{border-left:1px solid var(--line)}
+.abas button[aria-selected=true]{background:var(--ink);color:var(--bg)}
+.meta{font-size:12px;color:var(--muted)}
 .erro{color:var(--down);font-size:13px}
+.vista{display:none}.vista.ativa{display:block}
+/* Radar */
+.radar{display:grid;grid-template-columns:minmax(0,1fr) 300px;height:calc(100vh - 53px);min-height:420px}
+.grafico{display:flex;flex-direction:column;border-right:1px solid var(--line)}
+.area{position:relative;flex:1;min-height:300px}
+#chart{position:absolute;inset:0}
+.legenda{position:absolute;left:10px;top:6px;z-index:3;pointer-events:none;font-size:12.5px;display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;max-width:calc(100% - 90px)}
+.legenda b{font-size:13.5px;font-weight:600}.legenda .mono{font-family:var(--mono)}
+.up{color:var(--up)}.dn{color:var(--down)}
+.rotpane{position:absolute;left:10px;z-index:3;pointer-events:none;font-size:11.5px;color:var(--muted)}
+.periodos{display:flex;gap:2px;align-items:center;padding:4px 8px;border-top:1px solid var(--line);flex-wrap:wrap}
+.periodos button{border:0;background:transparent;padding:4px 9px;border-radius:4px;cursor:pointer;font-size:13px;min-height:32px}
+.periodos button:hover{background:var(--hover)}.periodos button[aria-pressed=true]{color:var(--accent);font-weight:600}
+.periodos .meta{margin-left:auto}
+.lado{overflow-y:auto;background:var(--panel)}
+.bloco{padding:12px 14px;border-bottom:1px solid var(--line)}
+.bloco h3{margin:0 0 8px;font-size:13px;font-weight:600}
+.cab .cod{font-weight:600;font-size:15px}.cab .nome{font-size:12px;color:var(--muted)}
+.cab .preco{font-family:var(--mono);font-size:28px;font-weight:500;letter-spacing:-.02em;line-height:1.2}
+.cab .var{font-family:var(--mono);font-size:14px;margin-left:6px}
+.avisos{margin-top:6px;font-size:12px;border-left:3px solid var(--warn);padding:4px 8px;background:var(--hover)}
+.cart{width:100%;border-collapse:collapse;font-size:13px}
+.cart td,.cart th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.cart th{font-size:11px;color:var(--muted);font-weight:500}.cart td:first-child,.cart th:first-child{text-align:left}
+.cart tr.f{cursor:pointer}.cart tr.f:hover{background:var(--hover)}.cart tr.atual td:first-child{font-weight:600;color:var(--accent)}
+.cart td{font-family:var(--mono)}
+.lnk{border:0;background:none;color:var(--accent);padding:4px 0;cursor:pointer;font-size:12px;text-decoration:underline}
+.tgs{display:grid;gap:6px}
+.tg{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--panel);border-radius:6px;padding:0 10px;min-height:38px;cursor:pointer;font-weight:500;font-size:13px}
+.tg i{width:12px;height:3px;border-radius:2px;flex:none}
+.tg b{margin-left:auto;font-family:var(--mono);font-weight:400;font-size:12px;color:var(--muted)}
+.tg[aria-pressed=true]{border-color:var(--ink)}
+.tg[aria-pressed=false]{color:var(--muted)}
+.tg:hover{background:var(--hover)}
+.sub{font-size:11px;color:var(--muted);margin:10px 0 4px}
+.est{display:grid;gap:0}
+.est div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.est span:last-child{font-family:var(--mono);text-align:right}
+.bom{color:var(--up)}.ruim{color:var(--down)}.atencao{color:var(--warn)}
+.edita{display:grid;gap:6px;margin-top:6px}
+.edita textarea{font-family:var(--mono);font-size:16px;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg)}
+.bt{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:6px;padding:0 12px;min-height:34px;cursor:pointer}
+/* Busca e Analisar */
+.pagina{max-width:1100px;margin:0 auto;padding:16px}
+.filtros{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.filtros input{border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:16px;height:38px;background:var(--panel)}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:0 12px;min-height:32px;cursor:pointer;font-size:13px}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px}
+table.t th,table.t td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.t th{font-size:11.5px;color:var(--muted);font-weight:500}
+table.t td.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+table.t tbody tr.f{cursor:pointer}table.t tbody tr.f:hover{background:var(--hover)}
+.pagina h2{font-size:17px;margin:22px 0 8px}
+.pagina h2:first-child{margin-top:0}
+.conf{font-size:11px;padding:1px 6px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.conf.subjetivo{border-color:var(--warn);color:var(--warn)}
+.lista div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding:5px 0;font-size:13px}
+.perfil{display:grid;gap:2px;max-width:620px}
+.perfil .lin{display:grid;grid-template-columns:8em 1fr;gap:6px;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.perfil .bar{height:9px;background:var(--band);border-radius:2px}.perfil .poc .bar{background:var(--accent)}.perfil .atual{color:var(--ink);font-weight:500}
+.scroll{overflow-x:auto}
+@media (max-width:860px){
+  .radar{grid-template-columns:minmax(0,1fr);height:auto}
+  .grafico{border-right:0;height:72vh;min-height:430px}
+  .abas{margin-left:0}
+}
+@media (max-width:600px){table.t{font-size:13px}}
 </style>
-
-<header>
-  <h1>Radar Gráfico de FIIs</h1>
-  <form class="busca" id="form" autocomplete="off">
-    <label for="cod" class="meta">Fundo</label>
+</head>
+<body>
+<header class="topo">
+  <form id="form" autocomplete="off">
     <input id="cod" list="fundos" value="TRXF11" spellcheck="false" aria-label="Código do fundo">
     <datalist id="fundos"></datalist>
-    <label for="entrada" class="meta">Entrada R$</label>
-    <input id="entrada" inputmode="decimal" placeholder="último preço" style="width:7em;text-transform:none" aria-label="Preço de entrada">
-    <button type="submit">Analisar</button>
+    <span class="rot">Entrada R$</span>
+    <input id="entrada" inputmode="decimal" placeholder="último" aria-label="Preço de entrada">
+    <button class="bt" type="submit">Abrir</button>
   </form>
-  <span class="meta" id="gerado">carregando dados…</span>
+  <span class="meta" id="gerado">carregando…</span>
   <span class="erro" id="erro" hidden></span>
+  <nav class="abas" role="tablist">
+    <button role="tab" data-v="radar" aria-selected="true">Radar</button>
+    <button role="tab" data-v="busca" aria-selected="false">Busca</button>
+    <button role="tab" data-v="analisar" aria-selected="false">Analisar</button>
+  </nav>
 </header>
 
-<main>
-  <div class="cab"><span class="cod" id="t-cod">—</span><span class="preco" id="t-preco"></span><span class="meta" id="t-fonte"></span></div>
-  <div class="avisos" id="avisos" hidden></div>
-  <div class="chips" id="chips"></div>
-  <div class="grade">
-    <div class="secao">
-      <div class="painel">
-        <div class="camadas" id="camadas">
-          <label><input type="checkbox" id="c-medias" checked> médias 21/50/200</label>
-          <label><input type="checkbox" id="c-bandas" checked> Bollinger</label>
-          <label><input type="checkbox" id="c-niveis" checked> suportes e resistências</label>
-          <label><input type="checkbox" id="c-fib"> Fibonacci</label>
-          <label><input type="checkbox" id="c-liq"> zonas de liquidez</label>
-          <label><input type="checkbox" id="c-elliott" checked> ondas de Elliott</label>
-          <label><input type="checkbox" id="c-candles" checked> padrões de candle</label>
-          <label><input type="checkbox" id="c-proj" checked> projeção (alvos e caminhos)</label>
-        </div>
-        <div id="principal"></div>
-        <div class="sub" id="s-vol"><span class="rot">Volume (R$)</span></div>
-        <div class="sub" id="s-ifr"><span class="rot">IFR 14 (30 / 70)</span></div>
-        <div class="sub" id="s-macd"><span class="rot">MACD 12/26/9</span></div>
-        <div class="sub" id="s-est"><span class="rot">Estocástico 14/3/3 (20 / 80)</span></div>
-        <div class="sub" id="s-rel"><span class="rot">Força relativa contra o mercado de fundos (base 100)</span></div>
-        <div class="legenda">
-          <span><i style="background:var(--mm21)"></i>média 21</span><span><i style="background:var(--mm50)"></i>média 50</span>
-          <span><i style="background:var(--mm200)"></i>média 200</span><span><i style="background:var(--band)"></i>Bollinger</span>
-          <span><i style="background:var(--up)"></i>suporte</span><span><i style="background:var(--down)"></i>resistência</span>
-          <span><i style="background:var(--info)"></i>Fibonacci</span><span><i style="background:var(--warn)"></i>liquidez</span>
-          <span><i style="background:var(--accent)"></i>alvos da projeção</span><span><i style="background:var(--up);height:0;border-top:2px dashed var(--up)"></i>caminho "onda 5 completa"</span>
-          <span><i style="background:var(--warn);height:0;border-top:2px dashed var(--warn)"></i>caminho "ainda na onda 3"</span>
-        </div>
+<section class="vista ativa" id="v-radar">
+  <div class="radar">
+    <div class="grafico">
+      <div class="area" id="area">
+        <div id="chart"></div>
+        <div class="legenda" id="leg"></div>
       </div>
-      <div class="painel">
-        <h2>Volume por faixa de preço (12 meses)</h2>
-        <div class="perfil" id="perfil"></div>
-        <p class="meta" id="perfil-nota"></p>
+      <div class="periodos" id="periodos">
+        <button data-p="1M">1M</button><button data-p="3M">3M</button><button data-p="6M">6M</button><button data-p="YTD">no ano</button>
+        <button data-p="1A" aria-pressed="true">1A</button><button data-p="2A">2A</button><button data-p="5A">5A</button><button data-p="T">Todos</button>
+        <span class="meta">roda do mouse: zoom · arrastar: mover · duplo clique no eixo: ajustar</span>
       </div>
     </div>
-    <div class="secao">
-      <div class="painel">
-        <h2>Projeção: alvos do repique</h2>
-        <p class="meta" id="proj-nota"></p>
-        <div class="tabwrap"><table><thead><tr><th>Zona</th><th>Alvo</th><th>Sobre a entrada</th><th>Por quê</th></tr></thead><tbody id="proj"></tbody></table></div>
-        <p class="meta">Os caminhos desenhados no gráfico são ilustrativos: mostram a ordem provável dos movimentos em cada leitura de Elliott, não o prazo. Não há teste no passado que preveja quando o preço chega a cada zona.</p>
+    <aside class="lado">
+      <div class="bloco cab" id="cab"></div>
+      <div class="bloco">
+        <h3>Fundos na carteira</h3>
+        <table class="cart"><thead><tr><th>Fundo</th><th>Compra</th><th>Atual</th><th>%</th></tr></thead><tbody id="cart"></tbody></table>
+        <button class="lnk" id="b-edita">editar lista</button>
+        <div class="edita" id="edita" hidden>
+          <label for="edita-txt" class="meta">Um fundo por linha: código; preço de compra</label>
+          <textarea id="edita-txt" rows="8" spellcheck="false"></textarea>
+          <div><button class="bt" type="button" id="edita-salva">Salvar</button> <button type="button" class="lnk" id="edita-padrao">voltar à lista do Investidor10</button></div>
+        </div>
+        <p class="meta" style="margin:4px 0 0">Preço atual: último fechamento da base (o do fundo aberto é o mais recente).</p>
       </div>
-      <div class="painel">
-        <h2>Leitura item a item</h2>
-        <div class="tabwrap"><table><thead><tr><th>#</th><th>Item</th><th>Valor e leitura</th></tr></thead><tbody id="leitura"></tbody></table></div>
+      <div class="bloco">
+        <h3>Análise</h3>
+        <div class="tgs" id="tg-graf"></div>
+        <div class="sub">Painéis embaixo do preço</div>
+        <div class="tgs" id="tg-pain"></div>
       </div>
-      <div class="painel"><h2>Suportes e resistências</h2><div class="lista" id="niveis"></div></div>
-      <div class="painel"><h2>Zonas de liquidez</h2><p class="meta">Deduzidas do desenho do preço; sem livro de ofertas.</p><div class="lista" id="liq"></div></div>
-      <div class="painel"><h2>Ondas de Elliott</h2><p class="meta">Leitura subjetiva: o mesmo gráfico aceita outras contagens.</p><div class="lista" id="elliott"></div></div>
-    </div>
+      <div class="bloco">
+        <h3>Principais estatísticas</h3>
+        <div class="est" id="est"></div>
+        <button class="lnk" data-ir="analisar">o que cada número quer dizer</button>
+      </div>
+    </aside>
   </div>
-  <p class="meta" style="margin-top:16px">Motor: <span class="mono">estudos/analise_grafica.py</span> (repositório JPSchool-AI_Antigravity). Os mesmos números saem na conversa com a Skill de análise gráfica. Indicadores descrevem o momento; não são regra testada.</p>
-</main>
+</section>
 
-<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<section class="vista" id="v-busca">
+  <div class="pagina">
+    <div class="filtros">
+      <input id="q" placeholder="Procurar código" aria-label="Procurar código" spellcheck="false">
+      <div id="classes" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+      <span class="meta" id="nbusca"></span>
+    </div>
+    <div class="scroll"><table class="t"><thead><tr><th>Fundo</th><th>Classe</th><th style="text-align:right">Preço</th><th>Carteira</th></tr></thead><tbody id="busca"></tbody></table></div>
+  </div>
+</section>
+
+<section class="vista" id="v-analisar">
+  <div class="pagina" id="analise"></div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js"></script>
 <script>
-(function(){
+{
 const LW = window.LightweightCharts;
 const $ = id => document.getElementById(id);
 const nf2 = new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const pct = v => v==null?'—':(v>0?'+':'')+new Intl.NumberFormat('pt-BR',{style:'percent',minimumFractionDigits:1,maximumFractionDigits:1}).format(v);
+const pct = v => v==null||isNaN(v)?'—':(v>0?'+':'')+new Intl.NumberFormat('pt-BR',{style:'percent',minimumFractionDigits:1,maximumFractionDigits:1}).format(v);
 const brl = v => v==null?'—':'R$ '+nf2.format(v);
 const mi = v => v==null?'—':'R$ '+new Intl.NumberFormat('pt-BR',{maximumFractionDigits:1}).format(v/1e6)+' mi';
-const cache = {}; let indice = null, graficos = [], atual = null, redesenhaProj = ()=>{};
-function entrada(A){ const v = parseFloat(($('entrada').value||'').replace(',','.')); return v>0 ? v : A.preco; }
-const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const esc = s => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const _sonda = document.createElement('span'); _sonda.style.display = 'none'; document.body.appendChild(_sonda);
+const css = k => { _sonda.style.color = `var(${k})`; return getComputedStyle(_sonda).color; };  // resolve light-dark() para a cor final
+const alfa = (c, a) => c.startsWith('rgb(') ? c.replace('rgb(', 'rgba(').replace(')', `, ${a})`) : c;
 const dmy2iso = s => { const [d,m,y] = s.split('/'); return `${y}-${m}-${d}`; };
+const lsGet = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
+const lsSet = (k,v) => { try{ localStorage.setItem(k,v); }catch(e){} };
+const lerJson = (k, p) => { try{ const v = JSON.parse(lsGet(k)); return v ?? p; }catch(e){ return p; } };
+const mostraErro = t => { $('erro').textContent = t||''; $('erro').hidden = !t; };
 
+let indice = null, atual = null, chart = null, cand = null, marc = null, periodo = '1A';
+const cache = {};
+const CARTEIRA_PADRAO = [['HABT11','62,00'],['SAPI11','7,98'],['RZAK11','73,81'],['SPXS11','7,16'],['CLIN11','82,91'],['TRXF11','53,99'],['RBRX11','6,39']];
+let carteira = lerJson('radar-carteira', CARTEIRA_PADRAO);
+const num = s => { const v = parseFloat(String(s||'').replace(/\./g,'').replace(',','.')); return v>0?v:null; };
+
+// ---------------- botões de análise (o que aparece no gráfico)
+const GRAF = [
+  ['mm21','Média 21','--mm21',true],['mm50','Média 50','--mm50',true],['mm200','Média 200','--mm200',true],
+  ['bb','Bollinger','--band',false],['niv','Suportes e resistências','--down',true],['fib','Fibonacci','--info',false],
+  ['liq','Zonas de liquidez','--warn',false],['ell','Ondas de Elliott','--accent',true],['cdl','Padrões de candle','--up',false],
+  ['proj','Projeção (alvos e caminhos)','--accent',false]];
+const PAIN = [['vol','Volume','--band',true],['kairi','Kairi (média 200)','--info',true],['ifr','IFR 14','--accent',false],
+  ['macd','MACD','--mm50',false],['est','Estocástico','--accent',false],['rel','Força relativa','--info',false]];
+let liga = Object.assign(Object.fromEntries([...GRAF,...PAIN].map(x=>[x[0],x[3]])), lerJson('radar-liga2', {}));
+function botoes(){
+  const b = (lista, alvo) => { $(alvo).innerHTML = lista.map(([k,n,cor])=>`<button class="tg" data-k="${k}" aria-pressed="${!!liga[k]}"><i style="background:var(${cor})"></i>${n}<b id="v-${k}"></b></button>`).join(''); };
+  b(GRAF,'tg-graf'); b(PAIN,'tg-pain');
+}
+botoes();
+['tg-graf','tg-pain'].forEach(id => $(id).addEventListener('click', e => {
+  const t = e.target.closest('.tg'); if(!t) return;
+  liga[t.dataset.k] = !liga[t.dataset.k]; t.setAttribute('aria-pressed', liga[t.dataset.k]);
+  lsSet('radar-liga2', JSON.stringify(liga));
+  if(atual) desenha(atual, true);
+}));
+
+// ---------------- dados
 async function carregaIndice(){
   try{
-    const r = await fetch('dados/indice.json'); indice = await r.json();
+    indice = await (await fetch('dados/indice.json')).json();
     $('gerado').textContent = `${indice.fundos.length} fundos · dados até ${indice.gerado}`;
     $('fundos').innerHTML = indice.fundos.map(f=>`<option value="${f.fundo}">${f.classe||''}</option>`).join('');
   }catch(e){ mostraErro('Não consegui carregar a lista de fundos. Recarregue a página.'); }
@@ -166,167 +241,233 @@ async function pega(cod){
   if(!cache[L]){ const r = await fetch(`dados/${L}.json`); if(!r.ok) throw new Error('arquivo'); cache[L] = await r.json(); }
   return cache[L][cod];
 }
-function mostraErro(t){ $('erro').textContent = t; $('erro').hidden = !t; }
+const precoIndice = c => { const f = indice && indice.fundos.find(x=>x.fundo===c); return f ? f.preco : null; };
 
-function opcoesBase(alt){
-  return {autoSize:true, layout:{background:{type:'solid',color:css('--surface')}, textColor:css('--muted'), fontFamily:'IBM Plex Sans, system-ui'},
-    grid:{vertLines:{color:css('--grid')}, horzLines:{color:css('--grid')}},
-    rightPriceScale:{borderColor:css('--line'), minimumWidth:78}, timeScale:{borderColor:css('--line'), visible:!!alt},
-    crosshair:{mode:0}, localization:{locale:'pt-BR', priceFormatter:p=>nf2.format(p)}, handleScroll:true, handleScale:true};
+// ---------------- gráfico (um só, com painéis: o zoom e o arraste valem para todos juntos)
+const linhaDe = (t, arr) => t.map((x,i)=>arr && arr[i]!=null?{time:x,value:arr[i]}:null).filter(Boolean);
+function kairi(S){
+  const k = []; let soma = 0;
+  for(let i=0;i<S.c.length;i++){ if(i>=200) k.push(+((S.c[i]/(soma/200)-1)*100).toFixed(2)); else k.push(null);
+    soma += S.c[i]; if(i>=200) soma -= S.c[i-200]; }
+  return k;
 }
-const serieLinha = (t, arr) => t.map((x,i)=>arr[i]==null?null:{time:x,value:arr[i]}).filter(Boolean);
+function entradaDe(A){ return num($('entrada').value) || A.preco; }
 
-function desenha(A){
-  graficos.forEach(g=>g.remove()); graficos = [];
+function desenha(A, manterVista){
+  const vista = manterVista && chart ? chart.timeScale().getVisibleLogicalRange() : null;
+  if(chart){ chart.remove(); chart = null; }
+  document.querySelectorAll('.rotpane').forEach(n=>n.remove());
   const S = A.serie, t = S.t;
-  const main = LW.createChart($('principal'), opcoesBase(true)); graficos.push(main);
-  const cand = main.addCandlestickSeries({upColor:css('--up'),downColor:css('--down'),borderVisible:false,wickUpColor:css('--up'),wickDownColor:css('--down'),
-    priceFormat:{type:'price',precision:2,minMove:0.01}});
+  chart = LW.createChart($('chart'), {autoSize:true,
+    layout:{background:{type:'solid',color:css('--bg')}, textColor:css('--muted'), fontFamily:'Inter, system-ui', fontSize:11,
+      panes:{separatorColor:css('--line'), separatorHoverColor:css('--hover'), enableResize:true}},
+    grid:{vertLines:{color:css('--grid')}, horzLines:{color:css('--grid')}},
+    rightPriceScale:{borderColor:css('--line'), minimumWidth:70}, timeScale:{borderColor:css('--line'), rightOffset:8},
+    crosshair:{mode:0}, localization:{locale:'pt-BR', priceFormatter:p=>nf2.format(p)},
+    handleScroll:{mouseWheel:false, pressedMouseMove:true, horzTouchDrag:true, vertTouchDrag:false},
+    handleScale:{mouseWheel:true, pinch:true, axisPressedMouseMove:{time:true, price:true}, axisDoubleClickReset:true}});
+  cand = chart.addSeries(LW.CandlestickSeries, {upColor:css('--up'), downColor:css('--down'), borderVisible:false,
+    wickUpColor:css('--up'), wickDownColor:css('--down'), priceFormat:{type:'price',precision:2,minMove:0.01}}, 0);
   cand.setData(t.map((x,i)=>({time:x,open:S.o[i],high:S.h[i],low:S.l[i],close:S.c[i]})));
-  const lin = (cor, arr, w=1, est=0) => { const s = main.addLineSeries({color:cor,lineWidth:w,lineStyle:est,priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false}); s.setData(serieLinha(t,arr)); return s; };
-  const medias = [lin(css('--mm21'),S.mm21), lin(css('--mm50'),S.mm50), lin(css('--mm200'),S.mm200,2)];
-  const bandas = [lin(css('--band'),S.bb_sup,1,2), lin(css('--band'),S.bb_inf,1,2)];
-  const vis = (arr, on) => arr.forEach(s=>s.applyOptions({visible:on}));
-  // linhas de preço por camada
-  let linhas = {niveis:[], fib:[], liq:[], proj:[]};
-  const caminhoA = main.addLineSeries({color:css('--up'),lineWidth:2,lineStyle:2,priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false});
-  const caminhoB = main.addLineSeries({color:css('--warn'),lineWidth:2,lineStyle:2,priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false});
-  const limpa = k => { linhas[k].forEach(p=>cand.removePriceLine(p)); linhas[k] = []; };
-  const pl = (k, price, cor, title, est=2) => linhas[k].push(cand.createPriceLine({price, color:cor, lineWidth:1, lineStyle:est, axisLabelVisible:true, title}));
-  function camadaNiveis(on){ limpa('niveis'); if(on) A.niveis.forEach(n=>pl('niveis', n.preco, n.tipo==='suporte'?css('--up'):css('--down'), `${n.tipo==='suporte'?'S':'R'} ${n.toques}×`, 0)); }
-  function camadaFib(on){ limpa('fib'); if(on) Object.entries(A.fibonacci.niveis).forEach(([k,v])=>pl('fib', v, css('--info'), `Fib ${k}`)); }
-  function camadaLiq(on){ limpa('liq'); if(!on) return; const p = A.preco;
-    const z = [...A.liquidez].sort((a,b)=>Math.abs(a.preco-p)-Math.abs(b.preco-p)).slice(0,8);
-    z.forEach(x=>pl('liq', x.preco, css('--warn'), x.tipo.split(' (')[0], 1)); }
-  function camadaProj(on){
-    limpa('proj'); caminhoA.setData([]); caminhoB.setData([]);
-    const P = A.projecao; if(!on || !P || !P.zonas.length) return;
-    const ent = entrada(A);
-    P.zonas.forEach((z,i)=>pl('proj', z.alvo, css('--accent'), `Zona ${i+1} ${pct(z.alvo/ent-1)}`, 0));
-    pl('proj', P.invalida, css('--down'), P.sentido==='alta'?'abaixo: queda continua':'acima: alta continua', 3);
-    // datas futuras (dias úteis) a partir do último pregão
+  const linha = (cor, arr, w=1, est=0, pane=0) => { const s = chart.addSeries(LW.LineSeries, {color:cor, lineWidth:w, lineStyle:est,
+    priceLineVisible:false, lastValueVisible:false, crosshairMarkerVisible:false}, pane); s.setData(linhaDe(t,arr)); return s; };
+  if(liga.mm21) linha(css('--mm21'), S.mm21);
+  if(liga.mm50) linha(css('--mm50'), S.mm50);
+  if(liga.mm200) linha(css('--mm200'), S.mm200, 2);
+  if(liga.bb){ linha(css('--band'), S.bb_sup, 1, 2); linha(css('--band'), S.bb_inf, 1, 2); }
+  if(liga.vol){ const v = chart.addSeries(LW.HistogramSeries, {priceScaleId:'vol', priceFormat:{type:'volume'}, priceLineVisible:false, lastValueVisible:false}, 0);
+    v.setData(t.map((x,i)=>({time:x, value:S.v[i], color:alfa(S.c[i]>=S.o[i]?css('--up'):css('--down'), 0.35)})));
+    v.priceScale().applyOptions({scaleMargins:{top:0.82, bottom:0}}); }
+  const pl = (price, cor, title, est=2) => cand.createPriceLine({price, color:cor, lineWidth:1, lineStyle:est, axisLabelVisible:true, title});
+  if(liga.niv) A.niveis.forEach(n=>pl(n.preco, n.tipo==='suporte'?css('--up'):css('--down'), `${n.tipo==='suporte'?'S':'R'} ${n.toques}×`, 0));
+  if(liga.fib) Object.entries(A.fibonacci.niveis).forEach(([k,v])=>pl(v, css('--info'), `Fib ${k}`));
+  if(liga.liq){ const p = A.preco; [...A.liquidez].sort((a,b)=>Math.abs(a.preco-p)-Math.abs(b.preco-p)).slice(0,8).forEach(x=>pl(x.preco, css('--warn'), x.tipo.split(' (')[0], 1)); }
+  const P = A.projecao;
+  if(liga.proj && P && P.zonas.length){
+    const ent = entradaDe(A);
+    P.zonas.forEach((z,i)=>pl(z.alvo, css('--accent'), `Zona ${i+1} ${pct(z.alvo/ent-1)}`, 0));
+    pl(P.invalida, css('--down'), P.sentido==='alta'?'abaixo: queda continua':'acima: alta continua', 3);
     const fut = []; let d = new Date(t[t.length-1]+'T12:00:00Z');
     while(fut.length < 90){ d = new Date(d.getTime()+86400000); const w = d.getUTCDay(); if(w!==0 && w!==6) fut.push(d.toISOString().slice(0,10)); }
     const ult = {time:t[t.length-1], value:S.c[S.c.length-1]}, Z = P.zonas.map(z=>z.alvo);
     const fim = P.sentido==='alta' ? P.invalida*0.95 : P.invalida*1.05;
-    // liga os pontos em linha reta, um valor por dia útil (a escala de tempo só tem os dias que têm ponto)
-    const traça = nos => { const out = [ult]; let v0 = ult.value, k0 = -1;
+    const traca = nos => { const out = [ult]; let v0 = ult.value, k0 = -1;
       nos.forEach(([k,v])=>{ for(let j=k0+1;j<=k;j++) out.push({time:fut[j], value:+(v0+(v-v0)*(j-k0)/(k-k0)).toFixed(2)}); v0 = v; k0 = k; });
       for(let j=k0+1;j<fut.length;j++) out.push({time:fut[j]}); return out; };
-    caminhoB.setData(traça([[14,Z[0]],[44,fim]]));
-    const zA = Z.length>1 ? Z[1] : Z[0], zMax = Z[Z.length-1];
-    caminhoA.setData(traça([[24,zA],[39,Z[0]],[74,zMax]]));
+    const cam = cor => chart.addSeries(LW.LineSeries, {color:cor, lineWidth:2, lineStyle:2, priceLineVisible:false, lastValueVisible:false, crosshairMarkerVisible:false}, 0);
+    cam(css('--warn')).setData(traca([[14,Z[0]],[44,fim]]));
+    cam(css('--up')).setData(traca([[24,Z.length>1?Z[1]:Z[0]],[39,Z[0]],[74,Z[Z.length-1]]]));
   }
-  function marcadores(){
-    const M = [];
-    if($('c-elliott').checked) (A.elliott.rotulos||[]).forEach(r=>{ const d = dmy2iso(r.data); if(d>=t[0]) M.push({time:d, position:'aboveBar', color:css('--accent'), shape:'circle', text:'Onda '+r.onda}); });
-    if($('c-candles').checked) (A.candles||[]).forEach(c=>{ const d = dmy2iso(c.data); M.push({time:d, position:c.sentido==='alta'?'belowBar':'aboveBar',
-      color:c.sentido==='alta'?css('--up'):c.sentido==='baixa'?css('--down'):css('--muted'), shape:c.sentido==='alta'?'arrowUp':c.sentido==='baixa'?'arrowDown':'square', text:c.padrao}); });
-    M.sort((a,b)=>a.time<b.time?-1:a.time>b.time?1:0); cand.setMarkers(M);
-  }
-  vis(medias,$('c-medias').checked); vis(bandas,$('c-bandas').checked);
-  camadaNiveis($('c-niveis').checked); camadaFib($('c-fib').checked); camadaLiq($('c-liq').checked); camadaProj($('c-proj').checked); marcadores();
-  $('c-proj').onchange = e=>camadaProj(e.target.checked);
-  redesenhaProj = ()=>camadaProj($('c-proj').checked);
-  $('c-medias').onchange = e=>vis(medias,e.target.checked); $('c-bandas').onchange = e=>vis(bandas,e.target.checked);
-  $('c-niveis').onchange = e=>camadaNiveis(e.target.checked); $('c-fib').onchange = e=>camadaFib(e.target.checked);
-  $('c-liq').onchange = e=>camadaLiq(e.target.checked); $('c-elliott').onchange = marcadores; $('c-candles').onchange = marcadores;
-  // painéis
-  const sub = (id, fn, ult, fmt) => { const el = $(id); el.querySelectorAll('.tv-lightweight-charts').forEach(n=>n.remove());
-    const o = opcoesBase(ult); if(fmt) o.localization = {locale:'pt-BR', priceFormatter:fmt};
-    const c = LW.createChart(el, o); graficos.push(c); fn(c); return c; };
-  sub('s-vol', c=>{ const s = c.addHistogramSeries({priceLineVisible:false,lastValueVisible:false});
-    s.setData(t.map((x,i)=>({time:x,value:S.v[i],color:S.c[i]>=S.o[i]?css('--up'):css('--down')}))); }, false,
-    v=>new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0}).format(v/1e6)+' mi');
-  sub('s-ifr', c=>{ const s = c.addLineSeries({color:css('--accent'),lineWidth:1,priceLineVisible:false}); s.setData(serieLinha(t,S.ifr14));
-    [30,70].forEach(v=>s.createPriceLine({price:v,color:css('--band'),lineWidth:1,lineStyle:2,axisLabelVisible:false})); });
-  sub('s-macd', c=>{ const h = c.addHistogramSeries({priceLineVisible:false,lastValueVisible:false});
-    h.setData(t.map((x,i)=>S.macd_hist[i]==null?null:{time:x,value:S.macd_hist[i],color:S.macd_hist[i]>=0?css('--up'):css('--down')}).filter(Boolean));
-    const a = c.addLineSeries({color:css('--accent'),lineWidth:1,priceLineVisible:false,lastValueVisible:false}); a.setData(serieLinha(t,S.macd));
-    const b = c.addLineSeries({color:css('--mm50'),lineWidth:1,priceLineVisible:false,lastValueVisible:false}); b.setData(serieLinha(t,S.macd_sinal)); });
-  sub('s-est', c=>{ const k = c.addLineSeries({color:css('--accent'),lineWidth:1,priceLineVisible:false}); k.setData(serieLinha(t,S.est_k));
-    const d = c.addLineSeries({color:css('--mm50'),lineWidth:1,priceLineVisible:false,lastValueVisible:false}); d.setData(serieLinha(t,S.est_d));
-    [20,80].forEach(v=>k.createPriceLine({price:v,color:css('--band'),lineWidth:1,lineStyle:2,axisLabelVisible:false})); });
-  sub('s-rel', c=>{ const s = c.addLineSeries({color:css('--info'),lineWidth:1,priceLineVisible:false}); s.setData(serieLinha(t,S.rel)); }, true);
-  // sincroniza os eixos de tempo
-  let travado = false;
-  graficos.forEach(g=>g.timeScale().subscribeVisibleLogicalRangeChange(r=>{ if(travado||!r) return; travado = true;
-    graficos.forEach(o=>{ if(o!==g) o.timeScale().setVisibleLogicalRange(r); }); travado = false; }));
-  const n = t.length; main.timeScale().setVisibleLogicalRange($('c-proj').checked ? {from:Math.max(0,n-130), to:n+78} : {from:Math.max(0,n-200), to:n+3});
+  const M = [];
+  if(liga.ell) (A.elliott.rotulos||[]).forEach(r=>{ const d = dmy2iso(r.data); if(d>=t[0]) M.push({time:d, position:'aboveBar', color:css('--accent'), shape:'circle', text:'Onda '+r.onda}); });
+  if(liga.cdl) (A.candles||[]).forEach(c=>M.push({time:dmy2iso(c.data), position:c.sentido==='alta'?'belowBar':'aboveBar',
+    color:c.sentido==='alta'?css('--up'):c.sentido==='baixa'?css('--down'):css('--muted'), shape:c.sentido==='alta'?'arrowUp':c.sentido==='baixa'?'arrowDown':'square', text:c.padrao}));
+  M.sort((a,b)=>a.time<b.time?-1:a.time>b.time?1:0);
+  marc = LW.createSeriesMarkers(cand, M);
+  // painéis de baixo
+  const rot = [];
+  let pane = 0;
+  const novo = nome => { pane++; rot.push([pane, nome]); return pane; };
+  if(liga.kairi){ const p = novo('Kairi: distância da média 200 (%)');
+    const s = chart.addSeries(LW.LineSeries, {color:css('--info'), lineWidth:2, priceLineVisible:false, priceFormat:{type:'custom', formatter:v=>nf2.format(v)+'%'}}, p);
+    s.setData(linhaDe(t, kairi(S)));
+    const neg = A.fundamentos.negociacao_tipica, lim = neg>=1e6?20:neg>=5e5?25:null;
+    s.createPriceLine({price:0, color:css('--band'), lineWidth:1, lineStyle:2, axisLabelVisible:false});
+    if(lim) s.createPriceLine({price:-lim, color:css('--down'), lineWidth:1, lineStyle:2, axisLabelVisible:true, title:`sinal −${lim}%`}); }
+  if(liga.ifr){ const p = novo('IFR 14 (30 / 70)'); const s = linha(css('--accent'), S.ifr14, 1, 0, p);
+    [30,70].forEach(v=>s.createPriceLine({price:v, color:css('--band'), lineWidth:1, lineStyle:2, axisLabelVisible:false})); }
+  if(liga.macd){ const p = novo('MACD 12/26/9'); const h = chart.addSeries(LW.HistogramSeries, {priceLineVisible:false, lastValueVisible:false}, p);
+    h.setData(t.map((x,i)=>S.macd_hist[i]==null?null:{time:x, value:S.macd_hist[i], color:S.macd_hist[i]>=0?css('--up'):css('--down')}).filter(Boolean));
+    linha(css('--accent'), S.macd, 1, 0, p); linha(css('--mm50'), S.macd_sinal, 1, 0, p); }
+  if(liga.est){ const p = novo('Estocástico 14/3/3 (20 / 80)'); const k = linha(css('--accent'), S.est_k, 1, 0, p); linha(css('--mm50'), S.est_d, 1, 0, p);
+    [20,80].forEach(v=>k.createPriceLine({price:v, color:css('--band'), lineWidth:1, lineStyle:2, axisLabelVisible:false})); }
+  if(liga.rel){ const p = novo('Força relativa contra o mercado de FIIs (base 100)'); linha(css('--info'), S.rel, 1, 0, p); }
+  const panes = chart.panes(), altura = $('area').clientHeight;
+  const baixo = Math.min(130, Math.max(80, altura*0.18));
+  panes.forEach((p,i)=>{ if(i>0) p.setHeight(baixo); });
+  if(panes.length) panes[0].setHeight(Math.max(200, altura - baixo*(panes.length-1)));
+  requestAnimationFrame(()=>{ const topo = $('area').getBoundingClientRect().top;
+    rot.forEach(([i,nome])=>{ const el = chart.panes()[i] && chart.panes()[i].getHTMLElement(); if(!el) return;
+      const d = document.createElement('div'); d.className = 'rotpane'; d.textContent = nome; d.style.top = (el.getBoundingClientRect().top - topo + 4)+'px';
+      $('area').appendChild(d); }); });
+  // legenda que segue o cursor (como no TradingView)
+  const leg = i => { const k = i ?? t.length-1, ant = k>0?S.c[k-1]:S.c[k], v = S.c[k]-ant, cls = v>=0?'up':'dn';
+    $('leg').innerHTML = `<b>${esc(A.fundo)}</b><span class="meta">1D · B3</span>`
+      + `<span>Abr <span class="mono ${cls}">${nf2.format(S.o[k])}</span></span><span>Máx <span class="mono ${cls}">${nf2.format(S.h[k])}</span></span>`
+      + `<span>Mín <span class="mono ${cls}">${nf2.format(S.l[k])}</span></span><span>Fch <span class="mono ${cls}">${nf2.format(S.c[k])}</span></span>`
+      + `<span class="mono ${cls}">${v>=0?'+':''}${nf2.format(v)} (${pct(ant?v/ant:0)})</span><span class="meta">${t[k].split('-').reverse().join('/')} · Vol ${mi(S.v[k])}</span>`; };
+  leg();
+  const pos = new Map(t.map((x,i)=>[x,i]));
+  chart.subscribeCrosshairMove(p => leg(p && p.time ? pos.get(typeof p.time==='string'?p.time:`${p.time.year}-${String(p.time.month).padStart(2,'0')}-${String(p.time.day).padStart(2,'0')}`) : null));
+  if(vista) chart.timeScale().setVisibleLogicalRange(vista); else aplicaPeriodo(periodo);
 }
 
-function tabelas(A){
-  const F = A.fundamentos;
-  $('t-cod').textContent = A.fundo; $('t-preco').textContent = brl(A.preco);
-  $('t-fonte').textContent = `${A.ultimo_pregao} · ${A.fonte}`;
-  const av = [...(A.avisos||[]), ...(F.aviso?[F.aviso]:[]), ...((F.problemas||[]).map(p=>'Avaliação de saúde: '+p))];
-  $('avisos').hidden = !av.length; $('avisos').innerHTML = av.map(x=>`<div>${x}</div>`).join('');
-  const chip = (rot, val, cls='') => `<span class="chip ${cls}">${rot} <b>${val}</b></span>`;
-  const saudeCls = F.saude==='NÃO COMPRAR'?'ruim':F.saude==='ATENÇÃO'?'atencao':F.saude==='SAUDÁVEL'?'bom':'';
-  $('chips').innerHTML = [
-    chip('Classe', F.classe||'—'),
-    chip('Preço ÷ patrimônio', F.preco_sobre_patrimonio!=null?nf2.format(F.preco_sobre_patrimonio):'—'),
-    chip('Rendimento ao ano', F.rendimento_ano!=null?pct(F.rendimento_ano).replace('+',''):'—'),
-    chip('Rendimento mensal', F.rendimento_mensal!=null?brl(F.rendimento_mensal):'—'),
-    chip('Cobertura', F.cobertura!=null?nf2.format(F.cobertura):'—', F.cobertura!=null?(F.cobertura>=1?'bom':F.cobertura<0.9?'ruim':'atencao'):''),
-    chip('Saúde', F.saude||'—', saudeCls),
-    chip('Distância da média 200', pct(F.distancia_media_200), F.distancia_media_200<=-0.2?'atencao':''),
-    chip('Negociação típica', mi(F.negociacao_tipica)),
-    chip('Kairi', (F.kairi||'—').replace(' (zona de sinal; o sinal é o dia do cruzamento)',' · zona de sinal')),
-    chip('Papel Padrão', F.papel_padrao||'—'),
-  ].join('');
-  $('leitura').innerHTML = A.leitura.map(r=>`<tr><td class="num">${r.item}</td><td>${r.nome}<br><span class="conf ${r.confianca.startsWith('subjetivo')?'subjetivo':''}">${r.confianca}</span></td>
-    <td><span class="mono">${r.valor}</span><br>${r.leitura}</td></tr>`).join('');
-  $('niveis').innerHTML = A.niveis.length ? A.niveis.map(n=>`<div><span>${n.tipo} · ${n.toques} toques · último ${n.ultimo}</span><span class="mono">${nf2.format(n.preco)} (${pct(n.distancia)})</span></div>`).join('')
-    : '<div><span>Nenhum nível com 2 ou mais toques.</span></div>';
-  const lq = [...A.liquidez].sort((a,b)=>b.preco-a.preco);
-  $('liq').innerHTML = lq.length ? lq.map(z=>`<div><span>${z.tipo} · ${z.datas}</span><span class="mono">${nf2.format(z.preco)}${z.ate?'–'+nf2.format(z.ate):''}</span></div>`).join('')
-    : '<div><span>Nenhuma zona encontrada.</span></div>';
-  const E = A.elliott;
-  $('elliott').innerHTML = `<div><span>${E.contagem}</span></div>` + (E.leitura?`<div><span>${E.leitura}</span></div>`:'') +
-    (E.rotulos||[]).map(r=>`<div><span>Onda ${r.onda} · ${r.data}</span><span class="mono">${nf2.format(r.preco)}</span></div>`).join('');
-  tabelaProj(A);
-  const P = A.perfil, mx = Math.max(...P.faixas.map(f=>f.volume));
-  $('perfil').innerHTML = [...P.faixas].reverse().map(f=>{ const poc = f.de===P.maior_volume.de; const at = A.preco>=f.de && A.preco<=f.ate;
-    return `<div class="lin ${poc?'poc':''} ${at?'atual':''}"><span>${nf2.format(f.de)}–${nf2.format(f.ate)}${at?' ◀':''}</span><span class="bar" style="width:${(f.volume/mx*100).toFixed(1)}%"></span></div>`; }).join('');
-  $('perfil-nota').textContent = `Faixa de maior volume ${nf2.format(P.maior_volume.de)}–${nf2.format(P.maior_volume.ate)}; 70% do volume entre ${nf2.format(P.area_70.de)} e ${nf2.format(P.area_70.ate)}. Preço médio pago desde o topo de 12 meses: ${brl(A.vwap.desde_topo)}; desde o fundo: ${brl(A.vwap.desde_fundo)}.`;
+function aplicaPeriodo(p){
+  periodo = p; document.querySelectorAll('#periodos button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.p===p));
+  if(!chart || !atual) return;
+  const t = atual.serie.t, n = t.length, ult = new Date(t[n-1]+'T12:00:00Z');
+  if(p==='T'){ chart.timeScale().fitContent(); return; }
+  const ini = new Date(ult);
+  if(p==='YTD') ini.setUTCMonth(0,1); else { const m = {'1M':1,'3M':3,'6M':6,'1A':12,'2A':24,'5A':60}[p]; ini.setUTCMonth(ini.getUTCMonth()-m); }
+  const iso = ini.toISOString().slice(0,10), k = Math.max(0, t.findIndex(x=>x>=iso));
+  const extra = liga.proj ? 80 : 6;
+  chart.timeScale().setVisibleLogicalRange({from:k, to:n-1+extra});
+}
+$('periodos').addEventListener('click', e=>{ const b = e.target.closest('button'); if(b) aplicaPeriodo(b.dataset.p); });
+
+// ---------------- coluna da direita
+const FUND = [
+  ['Classe', F=>F.classe||'—', ()=>'', 'Tipo do fundo pela carteira (informe mensal da CVM): Papel, Tijolo, Fundo de fundos ou Híbrido.'],
+  ['Preço ÷ patrimônio', F=>F.preco_sobre_patrimonio!=null?nf2.format(F.preco_sobre_patrimonio):'—', F=>F.preco_sobre_patrimonio!=null&&F.preco_sobre_patrimonio<1?'bom':'', 'Abaixo de 1,00 a cota está mais barata que o patrimônio (desconto).'],
+  ['Rendimento ao ano', F=>F.rendimento_ano!=null?pct(F.rendimento_ano).replace('+',''):'—', ()=>'', 'Rendimentos de 12 meses ÷ preço de hoje.'],
+  ['Rendimento mensal', F=>F.rendimento_mensal!=null?brl(F.rendimento_mensal):'—', ()=>'', 'Último rendimento pago por cota.'],
+  ['Cobertura', F=>F.cobertura!=null?nf2.format(F.cobertura):'—', F=>F.cobertura!=null?(F.cobertura>=1?'bom':F.cobertura<0.9?'ruim':'atencao'):'', 'Ganho ÷ distribuído. 1,00 ou mais: paga o que ganha; abaixo de 0,90: paga mais do que ganha.'],
+  ['Saúde', F=>F.saude||'—', F=>F.saude==='NÃO COMPRAR'?'ruim':F.saude==='ATENÇÃO'?'atencao':F.saude==='SAUDÁVEL'?'bom':'', 'Avaliação de saúde do programa do repositório.'],
+  ['Distância da média 200', F=>pct(F.distancia_media_200), F=>F.distancia_media_200!=null&&F.distancia_media_200<=-0.2?'atencao':'', 'Quanto o preço está acima ou abaixo da média dos últimos 200 pregões.'],
+  ['Kairi Padrão', F=>(F.kairi||'—').replace(' (zona de sinal; o sinal é o dia do cruzamento)',' · zona de sinal'), ()=>'', 'Abaixo da linha de −20% (ou −25% em fundo menos negociado) é a zona de sinal; o sinal é o dia do cruzamento.'],
+  ['Negociação típica', F=>mi(F.negociacao_tipica), ()=>'', 'Valor negociado num dia normal (mediana de 60 pregões).'],
+  ['Papel Padrão', F=>F.papel_padrao||'—', ()=>'', 'Situação do fundo na estratégia Papel Padrão (só fundos de Papel).']];
+
+function lado(A){
+  const S = A.serie, n = S.c.length, v = n>1 ? S.c[n-1]/S.c[n-2]-1 : 0, F = A.fundamentos;
+  const av = [...(A.avisos||[]), ...(F.aviso?[F.aviso]:[]), ...((F.problemas||[]).map(p=>'Saúde: '+p))];
+  $('cab').innerHTML = `<div class="cod">${esc(A.fundo)} <span class="nome">· ${esc(F.classe||'')}</span></div>`
+    + `<div><span class="preco">${nf2.format(A.preco)}</span><span class="var ${v>=0?'up':'dn'}">${v>=0?'+':''}${nf2.format(S.c[n-1]-S.c[n-2])} (${pct(v)})</span></div>`
+    + `<div class="meta">${esc(A.ultimo_pregao)} · ${esc(A.fonte)} · volume do dia ${mi(S.v[n-1])}</div>`
+    + (av.length?`<div class="avisos">${av.map(esc).join('<br>')}</div>`:'');
+  $('est').innerHTML = FUND.map(([r,val,cls,txt])=>`<div title="${esc(txt)}"><span>${r}</span><span class="${cls(F)}">${esc(val(F))}</span></div>`).join('');
+  $('v-mm200').textContent = F.distancia_media_200!=null ? pct(F.distancia_media_200) : '';
+  const kz = F.kairi||''; $('v-kairi').textContent = kz.startsWith('abaixo') ? 'zona de sinal' : '';
+  desenhaCarteira();
+}
+function desenhaCarteira(){
+  $('cart').innerHTML = carteira.map(([c,p])=>{ const compra = num(p), agora = atual && atual.fundo===c ? atual.preco : precoIndice(c);
+    const r = compra && agora ? agora/compra-1 : null;
+    return `<tr class="f ${atual&&atual.fundo===c?'atual':''}" data-c="${esc(c)}"><td>${esc(c)}</td><td>${compra?nf2.format(compra):'—'}</td>`
+      + `<td>${agora?nf2.format(agora):'—'}</td><td class="${r==null?'':r>=0?'up':'dn'}">${r==null?'—':pct(r)}</td></tr>`; }).join('');
+}
+$('cart').addEventListener('click', e=>{ const tr = e.target.closest('tr'); if(tr){ $('cod').value = tr.dataset.c; abre(tr.dataset.c); } });
+$('b-edita').addEventListener('click', ()=>{ const ed = $('edita'); ed.hidden = !ed.hidden; if(!ed.hidden) $('edita-txt').value = carteira.map(x=>x.join('; ')).join('\n'); });
+$('edita-salva').addEventListener('click', ()=>{
+  carteira = $('edita-txt').value.split('\n').map(l=>l.split(/[;\t]/).map(s=>s.trim())).filter(x=>x[0]).map(x=>[x[0].toUpperCase(), x[1]||'']);
+  lsSet('radar-carteira', JSON.stringify(carteira)); $('edita').hidden = true; desenhaCarteira(); desenhaBusca(); });
+$('edita-padrao').addEventListener('click', ()=>{ $('edita-txt').value = CARTEIRA_PADRAO.map(x=>x.join('; ')).join('\n'); });
+
+// ---------------- Analisar (texto)
+function analise(A){
+  const P = A.projecao, ent = entradaDe(A), F = A.fundamentos, E = A.elliott, PF = A.perfil;
+  const proj = !P || !P.zonas.length ? '<p class="meta">Sem zonas calculadas para este fundo.</p>' :
+    `<p class="meta">Última perna de ${P.sentido==='alta'?'queda':'alta'}: ${nf2.format(P.ultima_perna.de)} → ${nf2.format(P.ultima_perna.ate)}. Entrada usada: ${brl(ent)}${$('entrada').value?'':' (último preço)'}. ${esc(P.leitura.replace(/(\d+)\.(\d+)/g,'$1,$2'))}.</p>
+    <div class="scroll"><table class="t"><thead><tr><th>Zona</th><th style="text-align:right">Alvo</th><th style="text-align:right">Sobre a entrada</th><th>Por quê</th></tr></thead><tbody>`
+    + P.zonas.map((z,i)=>`<tr><td>${i+1}</td><td class="n">${z.de!==z.ate?nf2.format(z.de)+'–'+nf2.format(z.ate):nf2.format(z.alvo)}</td><td class="n">${pct(z.alvo/ent-1)}</td><td>${esc(z.motivos.join('; '))}${z.confluencia>1?` <span class="conf">${z.confluencia} medidas juntas</span>`:''}</td></tr>`).join('')
+    + `<tr><td>—</td><td class="n">${nf2.format(P.invalida)}</td><td class="n">${pct(P.invalida/ent-1)}</td><td>${P.sentido==='alta'?'abaixo daqui a queda continua':'acima daqui a alta continua'}</td></tr></tbody></table></div>
+    <p class="meta">Os caminhos desenhados são ilustrativos: mostram a ordem provável dos movimentos, não o prazo.</p>`;
+  const mx = Math.max(...PF.faixas.map(f=>f.volume));
+  $('analise').innerHTML = `<h2>${esc(A.fundo)} — ${brl(A.preco)} em ${esc(A.ultimo_pregao)}</h2>
+    <div class="scroll"><table class="t"><thead><tr><th>Número</th><th style="text-align:right">Valor</th><th>O que significa</th></tr></thead><tbody>
+    ${FUND.map(([r,val,cls,txt])=>`<tr><td>${r}</td><td class="n ${cls(F)}">${esc(val(F))}</td><td>${txt}</td></tr>`).join('')}</tbody></table></div>
+    <h2>Projeção: alvos do repique</h2>${proj}
+    <h2>Leitura item a item</h2><div class="scroll"><table class="t"><thead><tr><th>#</th><th>Item</th><th>Valor e leitura</th></tr></thead><tbody>
+    ${A.leitura.map(r=>`<tr><td>${r.item}</td><td>${esc(r.nome)}<br><span class="conf ${r.confianca.startsWith('subjetivo')?'subjetivo':''}">${esc(r.confianca)}</span></td><td><span style="font-family:var(--mono)">${esc(r.valor)}</span><br>${esc(r.leitura)}</td></tr>`).join('')}</tbody></table></div>
+    <h2>Suportes e resistências</h2><div class="lista">${A.niveis.length?A.niveis.map(n=>`<div><span>${n.tipo} · ${n.toques} toques · último ${n.ultimo}</span><span>${nf2.format(n.preco)} (${pct(n.distancia)})</span></div>`).join(''):'<div><span>Nenhum nível com 2 ou mais toques.</span></div>'}</div>
+    <h2>Zonas de liquidez</h2><p class="meta">Deduzidas do desenho do preço; sem livro de ofertas.</p><div class="lista">${[...A.liquidez].sort((a,b)=>b.preco-a.preco).map(z=>`<div><span>${esc(z.tipo)} · ${esc(z.datas)}</span><span>${nf2.format(z.preco)}${z.ate?'–'+nf2.format(z.ate):''}</span></div>`).join('')||'<div><span>Nenhuma zona encontrada.</span></div>'}</div>
+    <h2>Ondas de Elliott</h2><p class="meta">Leitura subjetiva: o mesmo gráfico aceita outras contagens.</p><div class="lista"><div><span>${esc(E.contagem)}</span></div>${E.leitura?`<div><span>${esc(E.leitura)}</span></div>`:''}${(E.rotulos||[]).map(r=>`<div><span>Onda ${r.onda} · ${r.data}</span><span>${nf2.format(r.preco)}</span></div>`).join('')}</div>
+    <h2>Volume por faixa de preço (12 meses)</h2><div class="perfil">${[...PF.faixas].reverse().map(f=>{ const poc = f.de===PF.maior_volume.de, at = A.preco>=f.de && A.preco<=f.ate;
+      return `<div class="lin ${poc?'poc':''} ${at?'atual':''}"><span>${nf2.format(f.de)}–${nf2.format(f.ate)}${at?' ◀':''}</span><span class="bar" style="width:${(f.volume/mx*100).toFixed(1)}%"></span></div>`; }).join('')}</div>
+    <p class="meta">Faixa de maior volume ${nf2.format(PF.maior_volume.de)}–${nf2.format(PF.maior_volume.ate)}; 70% do volume entre ${nf2.format(PF.area_70.de)} e ${nf2.format(PF.area_70.ate)}. Preço médio pago desde o topo de 12 meses: ${brl(A.vwap.desde_topo)}; desde o fundo: ${brl(A.vwap.desde_fundo)}.</p>
+    <p class="meta" style="margin-top:20px">Motor: estudos/analise_grafica.py (repositório JPSchool-AI_Antigravity). Indicadores descrevem o momento; não são regra testada.</p>`;
 }
 
-function tabelaProj(A){
-  const P = A.projecao, ent = entrada(A);
-  if(!P || !P.zonas.length){ $('proj').innerHTML = '<tr><td colspan="4">Sem zonas calculadas para este fundo.</td></tr>'; $('proj-nota').textContent=''; return; }
-  $('proj-nota').textContent = `Última perna de ${P.sentido==='alta'?'queda':'alta'}: ${nf2.format(P.ultima_perna.de)} → ${nf2.format(P.ultima_perna.ate)}. `
-    + `Entrada usada: ${brl(ent)}${$('entrada').value?'':' (último preço)'}. ${P.leitura.replace(/(\d+)\.(\d+)/g,'$1,$2')}.`;
-  $('proj').innerHTML = P.zonas.map((z,i)=>`<tr><td class="num">${i+1}</td><td class="num">${z.de!==z.ate?nf2.format(z.de)+'–'+nf2.format(z.ate):nf2.format(z.alvo)}</td>
-    <td class="num">${pct(z.alvo/ent-1)}</td><td>${z.motivos.join('; ')}${z.confluencia>1?` <span class="conf">${z.confluencia} medidas juntas</span>`:''}</td></tr>`).join('')
-    + `<tr><td>—</td><td class="num">${nf2.format(P.invalida)}</td><td class="num">${pct(P.invalida/ent-1)}</td><td>${P.sentido==='alta'?'abaixo daqui a queda continua':'acima daqui a alta continua'}</td></tr>`;
+// ---------------- Busca
+let classeSel = '';
+function desenhaBusca(){
+  if(!indice) return;
+  const cl = [...new Set(indice.fundos.map(f=>f.classe||'—'))].sort();
+  $('classes').innerHTML = ['', ...cl].map(c=>`<button class="chip" data-c="${esc(c)}" aria-pressed="${classeSel===c}">${c||'Todas'}</button>`).join('');
+  const q = $('q').value.trim().toUpperCase(), minhas = new Set(carteira.map(x=>x[0]));
+  const L = indice.fundos.filter(f=>(!q || f.fundo.includes(q)) && (!classeSel || (f.classe||'—')===classeSel));
+  $('nbusca').textContent = `${L.length} fundos · preço de ${indice.gerado}`;
+  $('busca').innerHTML = L.map(f=>`<tr class="f" data-c="${f.fundo}"><td><b>${f.fundo}</b></td><td>${esc(f.classe||'—')}</td><td class="n">${f.preco!=null?nf2.format(f.preco):'—'}</td><td>${minhas.has(f.fundo)?'✓':''}</td></tr>`).join('');
 }
+$('q').addEventListener('input', desenhaBusca);
+$('classes').addEventListener('click', e=>{ const b = e.target.closest('.chip'); if(b){ classeSel = b.dataset.c; desenhaBusca(); } });
+$('busca').addEventListener('click', e=>{ const tr = e.target.closest('tr'); if(tr){ $('cod').value = tr.dataset.c; abre(tr.dataset.c); vista('radar'); } });
+
+// ---------------- abas, abrir fundo
+function vista(v){
+  document.querySelectorAll('.abas button').forEach(b=>b.setAttribute('aria-selected', b.dataset.v===v));
+  document.querySelectorAll('.vista').forEach(s=>s.classList.toggle('ativa', s.id==='v-'+v));
+  if(v==='radar' && atual) requestAnimationFrame(()=>desenha(atual, true));
+}
+document.querySelector('.abas').addEventListener('click', e=>{ const b = e.target.closest('button'); if(b) vista(b.dataset.v); });
+document.querySelector('[data-ir=analisar]').addEventListener('click', ()=>vista('analisar'));
+
 async function abre(cod){
   cod = (cod||'').trim().toUpperCase(); if(!cod) return;
   mostraErro('');
   try{
     const A = await pega(cod);
-    if(!A){ mostraErro(`${cod} não está na lista. Use um código da lista (fundos negociados nos últimos 20 dias com 120+ pregões).`); return; }
-    let ent = ''; try{ ent = localStorage.getItem('radar-entrada-'+cod) || ''; }catch(e){}
-    if(!ent && cod==='TRXF11') ent = '53,99';
+    if(!A){ mostraErro(`${cod} não está na lista (fundos negociados nos últimos 20 dias com 120+ pregões).`); return; }
+    let ent = lsGet('radar-entrada-'+cod) || '';
+    if(!ent){ const k = carteira.find(x=>x[0]===cod); if(k) ent = k[1]; }
     $('entrada').value = ent;
-    atual = A; tabelas(A);
-    if(LW) desenha(A); else mostraErro('A biblioteca do gráfico não carregou; a leitura abaixo está completa.');
-    try{ localStorage.setItem('radar-ultimo', cod); }catch(e){}
+    atual = A; lado(A); analise(A);
+    if(LW) desenha(A, false); else mostraErro('A biblioteca do gráfico não carregou; a aba Analisar está completa.');
+    lsSet('radar-ultimo', cod);
     if(location.hash.slice(1)!==cod) history.replaceState(null,'','#'+cod);
   }catch(e){ mostraErro('Não consegui carregar os dados desse fundo. Tente de novo.'); }
 }
 $('form').addEventListener('submit', e=>{ e.preventDefault(); abre($('cod').value); });
-$('entrada').addEventListener('input', ()=>{ if(!atual) return; tabelaProj(atual); redesenhaProj();
-  try{ localStorage.setItem('radar-entrada-'+atual.fundo, $('entrada').value); }catch(e){} });
-window.addEventListener('hashchange', ()=>{ const c = location.hash.slice(1); if(c){ $('cod').value = c; abre(c); } });
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>{ if(atual && LW) desenha(atual); });
-new MutationObserver(()=>{ if(atual && LW) desenha(atual); }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+$('entrada').addEventListener('change', ()=>{ if(!atual) return; lsSet('radar-entrada-'+atual.fundo, $('entrada').value); analise(atual); if(liga.proj) desenha(atual, true); });
+window.addEventListener('hashchange', ()=>{ const c = location.hash.slice(1); if(c && (!atual || c!==atual.fundo)){ $('cod').value = c; abre(c); } });
+new MutationObserver(()=>{ if(atual && LW) desenha(atual, true); }).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>{ if(atual && LW) desenha(atual, true); });
 (async()=>{
-  await carregaIndice();
-  let ini = location.hash.slice(1);
-  if(!ini){ try{ ini = localStorage.getItem('radar-ultimo'); }catch(e){} }
-  ini = ini || 'TRXF11'; $('cod').value = ini; abre(ini);
+  await carregaIndice(); desenhaBusca();
+  let ini = location.hash.slice(1) || lsGet('radar-ultimo') || 'TRXF11';
+  $('cod').value = ini; abre(ini);
 })();
-})();
+}
 </script>
+</body>
+</html>
