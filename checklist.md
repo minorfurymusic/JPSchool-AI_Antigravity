@@ -186,6 +186,7 @@ Histórico de pendências. Atualizar a cada entrega, sem apagar o que já foi fe
 - [x] 2026-11-23 — DECISÃO DO DONO: "confirmo todos que batem" → 40 fundos (candidato da CVM = CNPJ do Investidor10) marcados S na planilha e gravados em `planilhas/vinculos_manuais.csv` (40 linhas, TRXF11 incluído).
 - [ ] Dono decidir os 20 "só o Investidor10 tem" (sem candidato nos dados locais da CVM) e os 7 sem página no Investidor10.
 - [ ] Montar o histórico desde 2017 dos fundos ligados à mão (preços B3 2017–2026, valor patrimonial CVM, rendimentos FNET) — só roda no GitHub (o ambiente da conversa não alcança CVM/B3/FNET); muda Kairi, Papel Padrão e demais estudos.
+- [x] 2026-11-24 — Radar: dados republicados até 23/11/2026 (rotina das 08:56 trouxe o pregão de 23/11; 297 fundos, 0 erros; BICE11 saiu por pouca negociação; versão publicada `1795541536-b156`).
 - [ ] Radar: fundos com fonte "arquivo" (fora da base, ex.: TRXF11) continuam com preço até 17/11 — o arquivo `planilhas/tecnico/b3_cotahist_fii_2019_2026.csv.gz` não é atualizado pela rotina.
 - [ ] RBRX11: ler o relatório gerencial de outubro quando sair (pedir de novo pelo `docs/pedido_fnet.txt`) e a AGE de 06/01/2027 (troca de administrador, taxa 1,30% → 0,925%, compra de CRIs ligados ao gestor até 75% do PL, capital autorizado de R$ 30 bilhões).
 
