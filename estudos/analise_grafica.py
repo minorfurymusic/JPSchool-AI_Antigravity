@@ -53,6 +53,9 @@ def _base():
 @lru_cache(maxsize=1)
 def _b3():
     X = pd.read_csv(RAIZ / "planilhas/tecnico/b3_cotahist_fii_2019_2026.csv.gz", **OP)
+    novo = RAIZ / "planilhas/tecnico/b3_cotahist_fii_diario.csv"  # dias seguintes, acrescentados pela rotina diária
+    if novo.exists():
+        X = pd.concat([X, pd.read_csv(novo, **OP)], ignore_index=True).drop_duplicates(["data", "ticker"], keep="last")
     X["data"] = pd.to_datetime(X["data"])
     return {f: x.set_index("data").sort_index() for f, x in X.groupby("ticker")}
 

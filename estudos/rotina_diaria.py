@@ -9,6 +9,8 @@ Etapas e tabelas (nesta ordem: o rendimento novo entra na base antes dos preços
                                                          planilhas/rotina/fnet_textos/AAAA-MM-DD.csv.gz (texto dos PDFs do dia)
   2 rendimentos novos na base de preços               -> planilhas/rendimentos.csv (acrescenta) e precos_AAAA.csv (corrige)
   3 preços dos FIIs (arquivo diário COTAHIST da B3)  -> planilhas/precos_AAAA.csv      (estudos/atualizar_precos.py)
+                                                         planilhas/tecnico/b3_cotahist_fii_diario.csv (TODOS os FIIs negociados,
+                                                         inclusive os fora da base; continua o b3_cotahist_fii_2019_2026.csv.gz)
   4 mercado de fundos e CDI                           -> planilhas/mercado.csv, cdi.csv (estudos/atualizar_mercado_cdi.py)
   5 dólar, IFIX e Ibovespa (diário)                   -> planilhas/rotina/indicadores_diarios.csv
   6 IPCA e IGP-M (mensal)                             -> planilhas/rotina/indicadores_mensais.csv
@@ -163,10 +165,38 @@ def etapa_rendimentos() -> str:
 
 
 # ---------------------------------------------------------------- preços
+# Arquivo da B3 com TODOS os FIIs (inclusive os que não estão na base). O grande (2019 até 17/11/2026) não é regravado
+# todo dia (11 MB compactado incharia o repositório); os dias seguintes vão para um arquivo pequeno, só acrescentado.
+# Pedido do dono em 25/11/2026: fundos fora da base (ex.: TRXF11) estavam parados em 17/11 no Radar.
+ARQ_B3 = RAIZ / "planilhas/tecnico/b3_cotahist_fii_2019_2026.csv.gz"
+ARQ_B3_NOVO = RAIZ / "planilhas/tecnico/b3_cotahist_fii_diario.csv"
+
+
+def ultima_data_arquivo_b3() -> dt.date:
+    p = ARQ_B3_NOVO if ARQ_B3_NOVO.exists() else ARQ_B3
+    return pd.to_datetime(pd.read_csv(p, usecols=[0], **OP).iloc[:, 0], format="%Y-%m-%d").max().date()
+
+
+def gravar_arquivo_b3(zips: list[str]) -> str:
+    from fii.b3_cotacoes import ler_arquivo
+
+    ult = ultima_data_arquivo_b3()
+    N = pd.concat([ler_arquivo(Path(z)) for z in zips], ignore_index=True)
+    N = N[N["data"].dt.date > ult]
+    if N.empty:
+        return f"{ARQ_B3_NOVO.relative_to(RAIZ)}: nada novo (vai até {ult:%d/%m/%Y})"
+    dias = sorted(N["data"].dt.date.unique())
+    N["data"] = N["data"].dt.strftime("%Y-%m-%d")
+    a, b = juntar(ARQ_B3_NOVO, N, ["data", "ticker"], ["data", "ticker"])
+    return (f"{ARQ_B3_NOVO.relative_to(RAIZ)}: {a} -> {b} linhas; ia até {ult:%d/%m/%Y}; pregões acrescentados: "
+            f"{', '.join(f'{x:%d/%m}' for x in dias)}; {N['ticker'].nunique()} códigos")
+
+
 def etapa_precos() -> str:
     ult = ultima_data_precos()
+    ult_b3 = ultima_data_arquivo_b3()
     zips, faltam = [], []
-    d = ult + dt.timedelta(days=1)
+    d = min(ult, ult_b3) + dt.timedelta(days=1)
     while d <= hoje_brasil():
         if d.weekday() < 5:
             r = requests.get(f"https://bvmf.bmfbovespa.com.br/InstDados/SerHist/COTAHIST_D{d:%d%m%Y}.ZIP", timeout=120, headers=UA)
@@ -181,6 +211,7 @@ def etapa_precos() -> str:
               + (", ".join(faltam) or "nenhum")]
     if not zips:
         return linhas[0]
+    linhas.append(gravar_arquivo_b3(zips))
     cvm = TMP / "cvm_men"
     cvm.mkdir(exist_ok=True)
     for a in (2025, 2026):  # os anos que estudos/atualizar_precos.py lê
