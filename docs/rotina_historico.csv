@@ -75,3 +75,11 @@ rodada;etapa;status;segundos;resumo
 26/11/2026 07:20;6 IPCA e IGP-M;OK;1;indicadores_mensais.csv: 118 meses, último 10/2026
 26/11/2026 07:20;7 Boletim Focus;OK;1;focus.csv: 14743 -> 14743 linhas (desde 09/11/2026)
 26/11/2026 07:20;8 juros dos títulos públicos (ANBIMA);OK;0;titulos_publicos_anbima.csv: 350 -> 400 linhas
+27/11/2026 07:26;1 documentos dos FIIs (FNET);OK;205;"período 23/11/2026 a 27/11/2026: 439 documentos listados, 439 novos; resultado: {'texto': 201, 'lido': 24}"
+27/11/2026 07:26;2 rendimentos novos na base de preços;OK;0;"planilhas/rendimentos.csv: +1 avisos novos do FNET (data conhecida = dia da entrega; depois das 18h, pregão seguinte)"
+27/11/2026 07:26;3 preços dos FIIs (B3);OK;3;"tabela ia até 25/11/2026; arquivos da B3 baixados: 1; sem arquivo (feriado ou ainda não publicado): 27/11 (404)"
+27/11/2026 07:26;4 mercado de fundos e CDI;OK;3;mercado.csv: +1 dias       data  selic_ano (%)  selic_liquida_ano (%)  indice_mercado  fundos_negociados  mediana_preco_sobre_valor_patrimonial
+27/11/2026 07:26;5 dólar, IFIX e Ibovespa;OK;11;"indicadores_diarios.csv: 2483 -> 2484 linhas (dólar: Banco Central; IFIX e Ibovespa: B3, desde 2017); dias sem valor: {'dolar_ptax_venda (R$)': 0, 'ifix (pontos)': 25, 'ibovespa (pontos)': 25}"
+27/11/2026 07:26;6 IPCA e IGP-M;OK;2;indicadores_mensais.csv: 118 meses, último 10/2026
+27/11/2026 07:26;7 Boletim Focus;OK;1;focus.csv: 14743 -> 14743 linhas (desde 09/11/2026)
+27/11/2026 07:26;8 juros dos títulos públicos (ANBIMA);OK;0;titulos_publicos_anbima.csv: 400 -> 450 linhas
